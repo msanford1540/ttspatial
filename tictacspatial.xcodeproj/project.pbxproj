@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F5036B312BBC7AF400847D6A /* tictacspatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B302BBC7AF400847D6A /* tictacspatialApp.swift */; };
+		F5036B332BBC7AF400847D6A /* Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B322BBC7AF400847D6A /* Gameboard.swift */; };
+		F5036B352BBC7AF600847D6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B342BBC7AF600847D6A /* Assets.xcassets */; };
+		F5036B382BBC7AF600847D6A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */; };
+		F5036B432BBC7AF600847D6A /* tictacspatialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */; };
+		F5036B512BBCC10900847D6A /* ttt.rkassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B502BBCC10900847D6A /* ttt.rkassets */; };
+		F5A19BFB2BBE26C8007D8C1E /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F5036B3F2BBC7AF600847D6A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5036B212BBC7AF400847D6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5036B282BBC7AF400847D6A;
+			remoteInfo = tictacspatial;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F5036B292BBC7AF400847D6A /* tictacspatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tictacspatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5036B302BBC7AF400847D6A /* tictacspatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tictacspatialApp.swift; sourceTree = "<group>"; };
+		F5036B322BBC7AF400847D6A /* Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
+		F5036B342BBC7AF600847D6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F5036B392BBC7AF600847D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5036B3E2BBC7AF600847D6A /* tictacspatialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tictacspatialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tictacspatialTests.swift; sourceTree = "<group>"; };
+		F5036B502BBCC10900847D6A /* ttt.rkassets */ = {isa = PBXFileReference; lastKnownFileType = folder.rkassets; path = ttt.rkassets; sourceTree = "<group>"; };
+		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F5036B262BBC7AF400847D6A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5036B3B2BBC7AF600847D6A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F5036B202BBC7AF400847D6A = {
+			isa = PBXGroup;
+			children = (
+				F5036B2B2BBC7AF400847D6A /* tictacspatial */,
+				F5036B412BBC7AF600847D6A /* tictacspatialTests */,
+				F5036B2A2BBC7AF400847D6A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F5036B2A2BBC7AF400847D6A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F5036B292BBC7AF400847D6A /* tictacspatial.app */,
+				F5036B3E2BBC7AF600847D6A /* tictacspatialTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F5036B2B2BBC7AF400847D6A /* tictacspatial */ = {
+			isa = PBXGroup;
+			children = (
+				F5036B302BBC7AF400847D6A /* tictacspatialApp.swift */,
+				F5036B322BBC7AF400847D6A /* Gameboard.swift */,
+				F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */,
+				F5036B342BBC7AF600847D6A /* Assets.xcassets */,
+				F5036B502BBCC10900847D6A /* ttt.rkassets */,
+				F5036B392BBC7AF600847D6A /* Info.plist */,
+				F5036B362BBC7AF600847D6A /* Preview Content */,
+			);
+			path = tictacspatial;
+			sourceTree = "<group>";
+		};
+		F5036B362BBC7AF600847D6A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F5036B412BBC7AF600847D6A /* tictacspatialTests */ = {
+			isa = PBXGroup;
+			children = (
+				F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */,
+			);
+			path = tictacspatialTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F5036B282BBC7AF400847D6A /* tictacspatial */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5036B462BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatial" */;
+			buildPhases = (
+				F5036B252BBC7AF400847D6A /* Sources */,
+				F5036B262BBC7AF400847D6A /* Frameworks */,
+				F5036B272BBC7AF400847D6A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tictacspatial;
+			packageProductDependencies = (
+			);
+			productName = tictacspatial;
+			productReference = F5036B292BBC7AF400847D6A /* tictacspatial.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F5036B3D2BBC7AF600847D6A /* tictacspatialTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5036B492BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatialTests" */;
+			buildPhases = (
+				F5036B3A2BBC7AF600847D6A /* Sources */,
+				F5036B3B2BBC7AF600847D6A /* Frameworks */,
+				F5036B3C2BBC7AF600847D6A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F5036B402BBC7AF600847D6A /* PBXTargetDependency */,
+			);
+			name = tictacspatialTests;
+			productName = tictacspatialTests;
+			productReference = F5036B3E2BBC7AF600847D6A /* tictacspatialTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F5036B212BBC7AF400847D6A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					F5036B282BBC7AF400847D6A = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					F5036B3D2BBC7AF600847D6A = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = F5036B282BBC7AF400847D6A;
+					};
+				};
+			};
+			buildConfigurationList = F5036B242BBC7AF400847D6A /* Build configuration list for PBXProject "tictacspatial" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F5036B202BBC7AF400847D6A;
+			productRefGroup = F5036B2A2BBC7AF400847D6A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F5036B282BBC7AF400847D6A /* tictacspatial */,
+				F5036B3D2BBC7AF600847D6A /* tictacspatialTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F5036B272BBC7AF400847D6A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5036B512BBCC10900847D6A /* ttt.rkassets in Resources */,
+				F5036B382BBC7AF600847D6A /* Preview Assets.xcassets in Resources */,
+				F5036B352BBC7AF600847D6A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5036B3C2BBC7AF600847D6A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F5036B252BBC7AF400847D6A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5036B332BBC7AF400847D6A /* Gameboard.swift in Sources */,
+				F5A19BFB2BBE26C8007D8C1E /* GameEngine.swift in Sources */,
+				F5036B312BBC7AF400847D6A /* tictacspatialApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5036B3A2BBC7AF600847D6A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5036B432BBC7AF600847D6A /* tictacspatialTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F5036B402BBC7AF600847D6A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5036B282BBC7AF400847D6A /* tictacspatial */;
+			targetProxy = F5036B3F2BBC7AF600847D6A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F5036B442BBC7AF600847D6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = xros;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				XROS_DEPLOYMENT_TARGET = 1.1;
+			};
+			name = Debug;
+		};
+		F5036B452BBC7AF600847D6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = xros;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.1;
+			};
+			name = Release;
+		};
+		F5036B472BBC7AF600847D6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"tictacspatial/Preview Content\"";
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+			};
+			name = Debug;
+		};
+		F5036B482BBC7AF600847D6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"tictacspatial/Preview Content\"";
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+			};
+			name = Release;
+		};
+		F5036B4A2BBC7AF600847D6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatialTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tictacspatial.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tictacspatial";
+				XROS_DEPLOYMENT_TARGET = 1.1;
+			};
+			name = Debug;
+		};
+		F5036B4B2BBC7AF600847D6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatialTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tictacspatial.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tictacspatial";
+				XROS_DEPLOYMENT_TARGET = 1.1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F5036B242BBC7AF400847D6A /* Build configuration list for PBXProject "tictacspatial" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5036B442BBC7AF600847D6A /* Debug */,
+				F5036B452BBC7AF600847D6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5036B462BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatial" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5036B472BBC7AF600847D6A /* Debug */,
+				F5036B482BBC7AF600847D6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5036B492BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatialTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5036B4A2BBC7AF600847D6A /* Debug */,
+				F5036B4B2BBC7AF600847D6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F5036B212BBC7AF400847D6A /* Project object */;
+}
