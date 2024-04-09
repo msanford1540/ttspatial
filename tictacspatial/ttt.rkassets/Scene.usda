@@ -138,7 +138,7 @@ def Xform "Root"
     )
     {
         float3 xformOp:scale = (1, 1, 1)
-        float3 xformOp:translate = (0, 0.05, 0)
+        float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 
@@ -151,7 +151,7 @@ def Xform "Root"
     )
     {
         quatf xformOp:orient = (0.92387956, 0, 0, 0.38268334)
-        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:scale = (1.14, 1.14, 1)
         float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
@@ -165,9 +165,13 @@ def Xform "Root"
 
         def "top_left" (
             active = true
-            references = @Block.usdz@
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
         )
         {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
             quatf xformOp:orient = (1, 0, 0, 0)
             float3 xformOp:scale = (1, 1, 1)
             float3 xformOp:translate = (-0.15, 0.28, 0)
@@ -199,7 +203,7 @@ def Xform "Root"
 
         def "middle_left" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)
@@ -238,7 +242,7 @@ def Xform "Root"
 
         def "bottom_left" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)
@@ -277,7 +281,7 @@ def Xform "Root"
 
         def "top_right" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)
@@ -316,7 +320,7 @@ def Xform "Root"
 
         def "middle_right" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)
@@ -355,7 +359,7 @@ def Xform "Root"
 
         def "bottom_right" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)
@@ -394,7 +398,7 @@ def Xform "Root"
 
         def "bottom_middle" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)
@@ -433,7 +437,7 @@ def Xform "Root"
 
         def "middle" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)
@@ -472,7 +476,7 @@ def Xform "Root"
 
         def "top_middle" (
             active = true
-            references = @Block.usdz@
+            references = @Block2.usdz@
         )
         {
             quatf xformOp:orient = (1, 0, 0, 0)

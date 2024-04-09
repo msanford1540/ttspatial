@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
+import Combine
 
 @main
 struct TicTacSpatialApp: App {
     var body: some Scene {
         WindowGroup {
             Gameboard()
-                .environmentObject(GameEngine())
+                .environmentObject(GameSession.shared.gameEngine)
         }
         .windowStyle(.volumetric)
-        .defaultSize(width: 1, height: 1.2, depth: 0.1, in: .meters)
+        .defaultSize(width: 1, height: 1.3, depth: 0.1, in: .meters)
     }
 }

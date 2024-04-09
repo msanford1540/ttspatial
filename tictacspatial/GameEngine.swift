@@ -131,6 +131,24 @@ struct WinningInfo: CustomStringConvertible {
     }
 }
 
+
+struct GameSnapshot {
+    enum GridCellState: Hashable, CustomStringConvertible {
+        case marked(PlayerMarker)
+        case unmarked(Bool)
+    
+        var description: String {
+            switch self {
+            case .marked(let marker): "\(marker)"
+            case .unmarked(let isEnabled): "(blank-\(isEnabled))"
+            }
+        }
+    }
+
+    let cells: [GridLocation: GridCellState]
+    let winningLines: Set<WinningLine>
+}
+
 class GameEngine: ObservableObject, CustomStringConvertible {
     @Published private var markers: [GridLocation: PlayerMarker] = [:]
     @Published private(set) var currentTurn: PlayerMarker = .x
@@ -156,6 +174,21 @@ class GameEngine: ObservableObject, CustomStringConvertible {
         currentTurn = .x
         winningInfo = nil
         isGameOver = false
+    }
+
+    var snapshot: GameSnapshot {
+        var cells: [GridLocation: GameSnapshot.GridCellState] = .empty
+        let unmarkedState: GameSnapshot.GridCellState = .unmarked(!isGameOver)
+        for location in GridLocation.allCases {
+            let cellState: GameSnapshot.GridCellState
+            if let mark = markers[location] {
+                cellState = .marked(mark)
+            } else {
+                cellState = unmarkedState
+            }
+            cells[location] = cellState
+        }
+        return .init(cells: cells, winningLines: winningInfo?.lines ?? .empty)
     }
 
     func marker(for location: GridLocation) -> PlayerMarker? {
