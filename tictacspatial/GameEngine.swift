@@ -137,17 +137,17 @@ enum StartingPlayerOption {
     case alternate
 }
 
-struct GameConfig {
+struct GameConfig: Sendable {
     let meMarker: PlayerMarker
     let startingPlayer: StartingPlayerOption
 }
 
 class GameEngine: CustomStringConvertible {
-    private var markers: [GridLocation: PlayerMarker] = .empty
-    private(set) var currentTurn: PlayerMarker? = .x
-    private(set) var winningInfo: WinningInfo?
-    private(set) var isGameOver: Bool = false
     let updates = PassthroughSubject<GameStateUpdate, Never>()
+    private(set) var currentTurn: PlayerMarker? = .x
+    private var markers: [GridLocation: PlayerMarker] = .empty
+    private var winningInfo: WinningInfo?
+    private var isGameOver: Bool = false
 
     var description: String {
         func text(_ verticalPosition: GridLocation.VerticalPosition, _ horizontalPosition: GridLocation.HorizontalPosition) -> String {
@@ -202,8 +202,8 @@ class GameEngine: CustomStringConvertible {
 #endif
     }
 
-    private func sendUpdate(_ gameEvent: GameEvent, _ currentTurn: PlayerMarker?) {
-        updates.send(.init(gameEvent, currentTurn))
+    private func sendUpdate(_ event: GameEvent, _ currentTurn: PlayerMarker?) {
+        updates.send(.init(event: event, currentTurn: currentTurn))
     }
 
     func mark(at location: GridLocation) {

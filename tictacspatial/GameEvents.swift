@@ -23,12 +23,12 @@ enum GameEvent {
     case reset
 }
 
-struct GameStateUpdate: Hashable {
+struct GameStateUpdate: Hashable, Sendable {
     private let id: UUID
     let event: GameEvent
     let currentTurn: PlayerMarker?
 
-    init(_ event: GameEvent, _ currentTurn: PlayerMarker?) {
+    init(event: GameEvent, currentTurn: PlayerMarker?) {
         self.id = UUID()
         self.event = event
         self.currentTurn = currentTurn

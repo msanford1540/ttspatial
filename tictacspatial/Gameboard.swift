@@ -95,7 +95,7 @@ struct Gameboard: View {
             switch update {
             case .move(let gameMove):
                 try await onMove(gameMove)
-            case .undo(let gameMove):
+            case .undo:
                 break
             case .gameOver(let winningInfo):
                 try await onGameOver(winningInfo)
