@@ -39,70 +39,28 @@ struct Gameboard: View {
         var oEntities: [GridLocation: Entity] = .empty
         var lineEntities: [WinningLine: Entity] = .empty
         var blankEntities: [GridLocation: Entity] = .empty
-
-        var snapsnot: GameSnapshot {
-            var cellStates: [GridLocation: GameSnapshot.GridCellState] = .empty
-            for location in GridLocation.allCases {
-                if xEntities[location] != nil {
-                    cellStates[location] = .marked(.x)
-                } else if oEntities[location] != nil {
-                    cellStates[location] = .marked(.o)
-                } else if let entity = blankEntities[location] {
-                    cellStates[location] = .unmarked(entity.isEnabled)
-                } else {
-                    assertionFailure("unexpected gameboard state")
-                }
-            }
-            assert(cellStates.count == GridLocation.allCases.count)
-            return .init(cells: cellStates, winningLines: Set(lineEntities.keys))
-        }
+        var subscribers: Set<AnyCancellable> = .empty
     }
 
-    private func stateChanges(from: GameSnapshot, to: GameSnapshot) -> [StateChange] {
-        assert(from.cells.count == GridLocation.allCases.count)
-        assert(to.cells.count == GridLocation.allCases.count)
-
-        let addLines = to.winningLines.subtracting(from.winningLines).map(StateChange.addWinningLine)
-        let removeLines = from.winningLines.subtracting(to.winningLines).map(StateChange.removeWinningLine)
-        let cellChanges: [StateChange] = GridLocation.allCases.reduce(into: .empty) { result, location in
-            guard let fromState = from.cells[location], let toState = to.cells[location] else {
-                assertionFailure("missing state")
-                return
-            }
-            if fromState != toState {
-                result.append(.changeCell(location, from: fromState, to: toState))
-            }
-        }
-        return addLines + removeLines + cellChanges
-    }
-
-    private enum StateChange: CustomStringConvertible {
-        case addWinningLine(WinningLine)
-        case removeWinningLine(WinningLine)
-        case changeCell(GridLocation, from: GameSnapshot.GridCellState, to: GameSnapshot.GridCellState)
-    
-        var description: String {
-            switch self {
-            case .addWinningLine(let winningLine): "[add line: \(winningLine)]"
-            case .removeWinningLine(let winningLine): "[remove line: \(winningLine)]"
-            case .changeCell(let location, let from, let to): "[change cell: [\(location)] \(from) -> \(to)]"
-            }
-        }
-    }
-
-    @EnvironmentObject var gameEngine: GameEngine
+    private let gameSession: GameSession
+    @ObservedObject private var viewModel: GameboardViewModel
     private let entities = Entities()
     private let state = GameboardState()
+
+    init(gameSession: GameSession) {
+        self.gameSession = gameSession
+        viewModel = gameSession.eventQueue
+    }
 
     var body: some View {
         RealityView { content, attachments in
             guard let scene = try? await Entity(named: "Scene", in: .main) else { return }
             content.add(scene)
             entities.setup(scene: scene)
-
             GridLocation.allCases.forEach { location in
                 scene.findEntity(named: location.name).map {
                     $0.components.set([
+                        OpacityComponent(opacity: 1),
                         HoverEffectComponent(),
                         location
                     ])
@@ -111,97 +69,78 @@ struct Gameboard: View {
             }
 
             if let controlsAttachment = attachments.entity(for: "controls") {
-                controlsAttachment.position = [0, -0.55, 0]
+                controlsAttachment.position = [0, -0.55, 0.1]
                 scene.addChild(controlsAttachment)
             }
         } update: { _, _  in
-            let changes = stateChanges(from: state.snapsnot, to: gameEngine.snapshot)
-            print("changes: \(changes)")
-            updateChanges(changes)
+            updateNextGameEvent()
         } placeholder: {
             ProgressView()
         } attachments: {
             Attachment(id: "controls") {
-                Dashboard()
-                    .environmentObject(GameSession.shared)
+                Dashboard(gameSession: gameSession)
             }
         }
         .gesture(TapGesture().targetedToAnyEntity()
             .onEnded { value in
                 guard let location = value.entity.components[GridLocation.self] else { return }
-                gameEngine.mark(at: location)
+                gameSession.gameEngine.mark(at: location)
             }
         )
     }
 
-    private func updateChanges(_ changes: [StateChange]) {
-        for change in changes {
-            switch change {
-            case .addWinningLine(let line):
-                addWinningLine(line)
-            case .removeWinningLine(let line):
-                removeWinningLine(line)
-            case .changeCell(let location, let from, let to):
-                changeCell(at: location, from: from, to: to)
+    private func updateNextGameEvent() {
+        Task { @MainActor in
+            guard let update = viewModel.pendingGameEvent else { return }
+            switch update {
+            case .move(let gameMove):
+                try await onMove(gameMove)
+            case .undo(let gameMove):
+                break
+            case .gameOver(let winningInfo):
+                try await onGameOver(winningInfo)
+            case .reset:
+                try await onReset()
             }
+            viewModel.completedEvent()
         }
     }
 
-    private func changeCell(at location: GridLocation, from: GameSnapshot.GridCellState, to: GameSnapshot.GridCellState) {
-        switch (from, to) {
-        case (.unmarked(true), .marked(let mark)):
-            addMark(mark, at: location)
-        case (.unmarked(false), .unmarked(true)):
-            enableUnmarkedCell(at: location)
-        case (.unmarked(true), .unmarked(false)):
-            disableUnmarkedCell(at: location)
-        case (.marked(let mark), .unmarked(true)):
-            removeMark(mark, at: location)
-        default:
-            assertionFailure("change type not supported. from: \(from), to: \(to)")
+    private func onReset() async throws {
+        var didAnimate = false
+        let animationDuration: Duration = .removeDuration
+        (Array(state.xEntities.values) + Array(state.oEntities.values) + Array(state.lineEntities.values)).forEach { entity in
+            didAnimate = true
+            entity.animateOpacity(to: 0, duration: animationDuration) { entity.removeFromParent() }
+        }
+        state.xEntities = .empty
+        state.oEntities = .empty
+        state.lineEntities = .empty
+        state.blankEntities.values.forEach {
+            if $0.isEnabled, let opacityComponent = $0.components[OpacityComponent.self], opacityComponent.opacity >= (1 - .ulpOfOne) {
+                return
+            }
+            didAnimate = true
+            $0.isEnabled = true
+            $0.animateOpacity(to: 1, duration: animationDuration)
+        }
+        if didAnimate {
+            try await Task.sleep(for: animationDuration)
         }
     }
 
-    private func removeMark(_ mark: PlayerMarker, at location: GridLocation) {
-        let entity: Entity?
-        switch mark {
-        case .x:
-            entity = state.xEntities[location]
-            state.xEntities[location] = nil
-        case .o:
-            entity = state.oEntities[location]
-            state.oEntities[location] = nil
-        }
-        guard let entity else { return }
-        entity.animateOpacity(to: .zero, duration: .removeDuration) {
-            entity.removeFromParent()
-        }
-        state.blankEntities[location]?.isEnabled = true
-    }
-    
-    private func enableUnmarkedCell(at location: GridLocation) {
-        guard let entity = state.blankEntities[location] else {
-            assertionFailure("expected entity")
-            return
-        }
-        entity.isEnabled = true
-    }
-    
-    private func disableUnmarkedCell(at location: GridLocation) {
-        guard let entity = state.blankEntities[location] else {
-            assertionFailure("expected entity")
-            return
-        }
-        entity.isEnabled = false
-    }
-    
-    private func addMark(_ mark: PlayerMarker, at location: GridLocation) {
+    private func onMove(_ gameMove: GameMove) async throws {
+        let location = gameMove.location
+        let mark = gameMove.playerID
+        let animationDuration: Duration = .markDuration
         guard let blankEntity = state.blankEntities[location] else {
             assertionFailure("expected entity")
             return
         }
         let postion = blankEntity.position
-        blankEntity.isEnabled = false
+        blankEntity.animateOpacity(to: 0, duration: animationDuration / 2) {
+            blankEntity.isEnabled = false
+        }
         let templateEntity = templateEntity(for: mark)
         let markedEntity = templateEntity.clone(recursive: true)
         markedEntity.position = postion
@@ -211,13 +150,32 @@ struct Gameboard: View {
             OpacityComponent(opacity: 0)
         ])
         entities.places.addChild(markedEntity)
-        markedEntity.animateOpacity(to: 1, duration: .markDuration)
+        markedEntity.animateOpacity(to: 1, duration: animationDuration)
         switch mark {
         case .x: state.xEntities[location] = markedEntity
         case .o: state.oEntities[location] = markedEntity
         }
+        try await Task.sleep(for: animationDuration / 2)
     }
-    
+
+    private func onGameOver(_ winningInfo: WinningInfo?) async throws {
+        winningInfo?.lines.forEach { addWinningLine($0) }
+
+        let animationDuration: Duration = .markDuration
+        var didAnimate = false
+        state.blankEntities.values.forEach { entity in
+            guard entity.isEnabled else { return }
+            didAnimate = true
+            entity.animateOpacity(to: 0, duration: animationDuration) {
+                entity.isEnabled = false
+            }
+        }
+
+        if didAnimate {
+            try await Task.sleep(for: animationDuration)
+        }
+    }
+
     private func addWinningLine(_ line: WinningLine) {
         let rowOffset: Float = 0.30
         guard state.lineEntities[line] == nil else {
@@ -258,17 +216,6 @@ struct Gameboard: View {
         newLine.animateScale(to: .init(x: 1, y: 1, z: scale), duration: .drawLineDuration)
     }
 
-    private func removeWinningLine(_ line: WinningLine) {
-        guard let entity = state.lineEntities[line] else {
-            assertionFailure("expected entity")
-            return
-        }
-        entity.animateOpacity(to: 0, duration: .removeDuration) {
-            entity.removeFromParent()
-        }
-        state.lineEntities[line] = nil
-    }
-
     private func templateEntity(for marker: PlayerMarker) -> Entity {
         switch marker {
         case .x: return entities.xTemplateEntity
@@ -278,7 +225,7 @@ struct Gameboard: View {
 }
 
 #Preview(windowStyle: .volumetric) {
-    Gameboard()
+    Gameboard(gameSession: GameSession())
 }
 
 private extension Entity {
@@ -333,16 +280,16 @@ private extension Transform {
 }
 
 private extension Entity {
-    func animateScale(to scale: SIMD3<Float>, duration: TimeInterval = 1.0, completion: (@Sendable () -> Void)? = nil) {
+    func animateScale(to scale: SIMD3<Float>, duration: Duration = .seconds(1), completion: (@Sendable () -> Void)? = nil) {
         var transform = self.transform
         transform.scale = scale
         if let animation = try? AnimationResource.generate(
-            with: FromToByAnimation(to: transform, duration: duration, bindTarget: .transform)
+            with: FromToByAnimation(to: transform, duration: TimeInterval(duration), bindTarget: .transform)
         ) {
             playAnimation(animation)
             if let completion {
-                Task {
-                    try await Task.sleep(nanoseconds: .init(duration * 1_000_000_000))
+                Task { @MainActor in
+                    try await Task.sleep(for: duration)
                     completion()
                 }
             }
@@ -352,7 +299,7 @@ private extension Entity {
         }
     }
 
-    func animateOpacity(to opacity: Float, duration: TimeInterval = 1.0, completion: (() -> Void)? = nil) {
+    func animateOpacity(to opacity: Float, duration: Duration = .seconds(1), completion: (() -> Void)? = nil) {
         let fromOpacity: Float?
         if let opacityComponent = components[OpacityComponent.self] {
             fromOpacity = opacityComponent.opacity
@@ -360,12 +307,12 @@ private extension Entity {
             fromOpacity = nil
         }
         if let animation = try? AnimationResource.generate(
-            with: FromToByAnimation(from: fromOpacity, to: opacity, duration: duration, bindTarget: .opacity)
+            with: FromToByAnimation(from: fromOpacity, to: opacity, duration: TimeInterval(duration), bindTarget: .opacity)
         ) {
             playAnimation(animation)
             if let completion {
-                Task {
-                    try await Task.sleep(nanoseconds: .init(duration * 1_000_000_000))
+                Task { @MainActor in
+                    try await Task.sleep(for: duration)
                     completion()
                 }
             }
@@ -376,8 +323,16 @@ private extension Entity {
     }
 }
 
-private extension TimeInterval {
-    static let removeDuration: TimeInterval = 0.5
-    static let markDuration: TimeInterval = 0.25
-    static let drawLineDuration: TimeInterval = 0.5
+private extension Duration {
+    static let removeDuration: Duration = .milliseconds(250)
+    static let markDuration: Duration = .milliseconds(250)
+    static let drawLineDuration: Duration = .milliseconds(500)
+}
+
+extension TimeInterval {
+    init(_ duration: Duration) {
+        let (seconds, attoseconds) = duration.components
+        let attosecondsInSeconds = Double(attoseconds) / Double(1_000_000_000_000_000_000)
+        self = TimeInterval(seconds) + TimeInterval(attosecondsInSeconds)
+    }
 }

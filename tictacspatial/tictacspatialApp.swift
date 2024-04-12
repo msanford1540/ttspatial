@@ -12,8 +12,7 @@ import Combine
 struct TicTacSpatialApp: App {
     var body: some Scene {
         WindowGroup {
-            Gameboard()
-                .environmentObject(GameSession.shared.gameEngine)
+            Gameboard(gameSession: GameSession())
         }
         .windowStyle(.volumetric)
         .defaultSize(width: 1, height: 1.3, depth: 0.1, in: .meters)

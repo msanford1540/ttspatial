@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 enum PlayerMarker: CustomStringConvertible {
     case x
@@ -122,7 +123,7 @@ private extension WinningLine {
     }
 }
 
-struct WinningInfo: CustomStringConvertible {
+struct WinningInfo: Equatable, CustomStringConvertible {
     let player: PlayerMarker
     let lines: Set<WinningLine>
 
@@ -131,29 +132,22 @@ struct WinningInfo: CustomStringConvertible {
     }
 }
 
-
-struct GameSnapshot {
-    enum GridCellState: Hashable, CustomStringConvertible {
-        case marked(PlayerMarker)
-        case unmarked(Bool)
-    
-        var description: String {
-            switch self {
-            case .marked(let marker): "\(marker)"
-            case .unmarked(let isEnabled): "(blank-\(isEnabled))"
-            }
-        }
-    }
-
-    let cells: [GridLocation: GridCellState]
-    let winningLines: Set<WinningLine>
+enum StartingPlayerOption {
+    case player(PlayerID)
+    case alternate
 }
 
-class GameEngine: ObservableObject, CustomStringConvertible {
-    @Published private var markers: [GridLocation: PlayerMarker] = [:]
-    @Published private(set) var currentTurn: PlayerMarker = .x
-    @Published private(set) var winningInfo: WinningInfo?
-    @Published private(set) var isGameOver: Bool = false
+struct GameConfig {
+    let meMarker: PlayerMarker
+    let startingPlayer: StartingPlayerOption
+}
+
+class GameEngine: CustomStringConvertible {
+    private var markers: [GridLocation: PlayerMarker] = .empty
+    private(set) var currentTurn: PlayerMarker? = .x
+    private(set) var winningInfo: WinningInfo?
+    private(set) var isGameOver: Bool = false
+    let updates = PassthroughSubject<GameStateUpdate, Never>()
 
     var description: String {
         func text(_ verticalPosition: GridLocation.VerticalPosition, _ horizontalPosition: GridLocation.HorizontalPosition) -> String {
@@ -165,30 +159,16 @@ class GameEngine: ObservableObject, CustomStringConvertible {
         let row2 = "\(text(.middle, .left))|\(text(.middle, .middle))|\(text(.middle, .right))"
         let row3 = "\(text(.bottom, .left))|\(text(.bottom, .middle))|\(text(.bottom, .right))"
         let hLine = "-----"
-        let status = isGameOver ? winningInfo.map { "winner: \($0)" } ?? "tie game" : "turn: \(currentTurn)"
+        let status = isGameOver ? winningInfo.map { "winner: \($0)" } ?? "tie game" : "turn: \(currentTurn?.description ?? .empty)"
         return [row1, hLine, row2, hLine, row3, status, ""].joined(separator: "\n")
     }
 
     func reset() {
-        markers = [:]
+        markers = .empty
         currentTurn = .x
         winningInfo = nil
         isGameOver = false
-    }
-
-    var snapshot: GameSnapshot {
-        var cells: [GridLocation: GameSnapshot.GridCellState] = .empty
-        let unmarkedState: GameSnapshot.GridCellState = .unmarked(!isGameOver)
-        for location in GridLocation.allCases {
-            let cellState: GameSnapshot.GridCellState
-            if let mark = markers[location] {
-                cellState = .marked(mark)
-            } else {
-                cellState = unmarkedState
-            }
-            cells[location] = cellState
-        }
-        return .init(cells: cells, winningLines: winningInfo?.lines ?? .empty)
+        sendUpdate(.reset, .x)
     }
 
     func marker(for location: GridLocation) -> PlayerMarker? {
@@ -198,22 +178,36 @@ class GameEngine: ObservableObject, CustomStringConvertible {
     func mark(_ mark: PlayerMarker, at location: GridLocation) {
         guard marker(for: location) == nil, !isGameOver else { return }
         markers[location] = mark
-        currentTurn = currentTurn.opponent
-                
+
         let winningLines = WinningLine.allCases.filter { $0.winner(markers) != nil }
         if winningLines.isEmpty {
             isGameOver = GridLocation.allCases.count == markers.count
+            if isGameOver {
+                sendUpdate(.move(.init(location: location, playerID: mark)), currentTurn)
+                sendUpdate(.gameOver(nil), nil)
+            } else {
+                currentTurn = currentTurn?.opponent
+                sendUpdate(.move(.init(location: location, playerID: mark)), currentTurn)
+            }
         } else {
             winningLines.forEach { assert(marker(for: $0.locations.0) == mark) }
             let winningInfo = WinningInfo(player: mark, lines: winningLines)
             self.winningInfo = winningInfo
             isGameOver = true
+            sendUpdate(.move(.init(location: location, playerID: mark)), currentTurn)
+            sendUpdate(.gameOver(winningInfo), nil)
         }
+#if DEBUG
         print("\(self)")
+#endif
+    }
+
+    private func sendUpdate(_ gameEvent: GameEvent, _ currentTurn: PlayerMarker?) {
+        updates.send(.init(gameEvent, currentTurn))
     }
 
     func mark(at location: GridLocation) {
-        mark(currentTurn, at: location)
+        mark(currentTurn!, at: location)
     }
 }
 

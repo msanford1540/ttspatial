@@ -8,17 +8,17 @@
 import Combine
 
 class GameSession: ObservableObject {
-    static let shared: GameSession = .init()
-
     @Published private(set) var xWinCount: Int = 0
     @Published private(set) var oWinCount: Int = 0
+    @Published private(set) var eventQueue: GameboardViewModel
     private(set) var oppononetName: String = "Bot"
     let gameEngine = GameEngine()
     private var subscribers = Set<AnyCancellable>()
 
     init() {
-        gameEngine.$winningInfo
-            .compactMap { $0?.player }
+        eventQueue = GameboardViewModel(gameEngine: gameEngine)
+        gameEngine.updates
+            .compactMap { $0.event.winningInfo?.player }
             .sink { [unowned self] winningPlayer in
                 switch winningPlayer {
                 case .x: xWinCount += 1
@@ -26,5 +26,14 @@ class GameSession: ObservableObject {
                 }
             }
             .store(in: &subscribers)
+    }
+}
+
+private extension GameEvent {
+    var winningInfo: WinningInfo? {
+        switch self {
+        case .move, .undo, .reset: nil
+        case .gameOver(let winningInfo): winningInfo
+        }
     }
 }

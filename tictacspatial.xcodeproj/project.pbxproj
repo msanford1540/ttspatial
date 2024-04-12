@@ -17,6 +17,9 @@
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
 		F51E95CC2BC4221B00FC33D3 /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CB2BC4221B00FC33D3 /* GameSession.swift */; };
 		F51E95CE2BC4258300FC33D3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CD2BC4258300FC33D3 /* Utilities.swift */; };
+		F51E95D02BC6C8BB00FC33D3 /* GameEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */; };
+		F51E95D22BC8275200FC33D3 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95D12BC8275200FC33D3 /* Queue.swift */; };
+		F51E95D42BC8292B00FC33D3 /* GameboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95D32BC8292B00FC33D3 /* GameboardViewModel.swift */; };
 		F5A19BFB2BBE26C8007D8C1E /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +47,9 @@
 		F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F51E95CB2BC4221B00FC33D3 /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		F51E95CD2BC4258300FC33D3 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvents.swift; sourceTree = "<group>"; };
+		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		F51E95D32BC8292B00FC33D3 /* GameboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardViewModel.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,8 +97,11 @@
 				F5036B322BBC7AF400847D6A /* Gameboard.swift */,
 				F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */,
 				F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */,
+				F51E95D32BC8292B00FC33D3 /* GameboardViewModel.swift */,
+				F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */,
 				F51E95CB2BC4221B00FC33D3 /* GameSession.swift */,
 				F51E95CD2BC4258300FC33D3 /* Utilities.swift */,
+				F51E95D12BC8275200FC33D3 /* Queue.swift */,
 				F5036B342BBC7AF600847D6A /* Assets.xcassets */,
 				F5036B502BBCC10900847D6A /* ttt.rkassets */,
 				F5036B392BBC7AF600847D6A /* Info.plist */,
@@ -222,8 +231,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F51E95CE2BC4258300FC33D3 /* Utilities.swift in Sources */,
+				F51E95D42BC8292B00FC33D3 /* GameboardViewModel.swift in Sources */,
 				F5036B332BBC7AF400847D6A /* Gameboard.swift in Sources */,
 				F5A19BFB2BBE26C8007D8C1E /* GameEngine.swift in Sources */,
+				F51E95D22BC8275200FC33D3 /* Queue.swift in Sources */,
+				F51E95D02BC6C8BB00FC33D3 /* GameEvents.swift in Sources */,
 				F51E95CC2BC4221B00FC33D3 /* GameSession.swift in Sources */,
 				F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */,
 				F5036B312BBC7AF400847D6A /* tictacspatialApp.swift in Sources */,

@@ -10,29 +10,69 @@ import RealityKit
 import SwiftUI
 import Combine
 
+private let dashboardWidth: CGFloat = 1200
+private let turnMarkerOffset: CGFloat = dashboardWidth / 2 - 66
+
 struct Dashboard: View {
-    @EnvironmentObject private var gameSession: GameSession
+    @ObservedObject private var gameSession: GameSession
+    @ObservedObject private var viewModel: GameboardViewModel
+    @State private var isCurrentTurnHidden: Bool
+    @State private var currentTurnOffset: CGFloat
+
+    init(gameSession: GameSession) {
+        self.gameSession = gameSession
+        self.viewModel = gameSession.eventQueue
+        _isCurrentTurnHidden = State(wrappedValue: gameSession.gameEngine.currentTurn == nil)
+        _currentTurnOffset = State(wrappedValue: gameSession.gameEngine.currentTurn == .x ? -turnMarkerOffset : turnMarkerOffset)
+    }
 
     var body: some View {
-        HStack {
-                PlayerView(marker: .x, name: "me", isLeading: true)
-            Spacer()
+        ZStack {
+            VStack {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 36)
+                    .opacity(isCurrentTurnHidden ? 0 : 1)
+                    .offset(x: currentTurnOffset)
+                HStack {
+                    PlayerView(marker: .x, name: "me", isLeading: true)
+                    Spacer()
+                    PlayerView(marker: .o, name: "bot", isLeading: false)
+                }
+            }
+            .padding()
             Button("Start Over") {
                 gameSession.gameEngine.reset()
             }
-                .font(.extraLargeTitle)
-            Spacer()
-                PlayerView(marker: .o, name: "bot", isLeading: false)
+            .font(.extraLargeTitle)
         }
+        .frame(width: dashboardWidth)
         .font(.largeTitle)
-        .padding()
-        .frame(width: 800)
         .glassBackgroundEffect()
+        .environmentObject(gameSession)
+        .onChange(of: viewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
+            switch (oldCurrentTurn, newCurrentTurn) {
+            case (.none, .none), (.x, .x), (.o, .o):
+                return
+            case (.x, .o):
+                withAnimation { currentTurnOffset = turnMarkerOffset }
+            case (.o, .x):
+                withAnimation { currentTurnOffset = -turnMarkerOffset }
+            case (.x, .none), (.o, .none):
+                withAnimation { isCurrentTurnHidden = true }
+            case (.none, .x):
+                currentTurnOffset = -turnMarkerOffset
+                withAnimation { isCurrentTurnHidden = false }
+            case (.none, .o):
+                currentTurnOffset = turnMarkerOffset
+                withAnimation { isCurrentTurnHidden = false }
+            }
+        }
     }
 }
 
 #Preview {
-    Dashboard().environmentObject(GameSession.shared)
+    return Dashboard(gameSession: GameSession())
 }
 
 private struct PlayerView: View {
