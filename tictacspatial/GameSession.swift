@@ -30,17 +30,9 @@ class GameSession: ObservableObject {
 
     private func onGameStateUpdate(_ update: GameStateUpdate) {
         if pendingGameEvent == nil {
-            pendingGameEvent = update.event
-            currentTurn = update.currentTurn
+            updateGameState(with: update)
         } else {
             queue.enqueue(update)
-        }
-
-        if let winningPlayer = update.event.winningInfo?.player {
-            switch winningPlayer {
-            case .x: xWinCount += 1
-            case .o: oWinCount += 1
-            }
         }
     }
     
@@ -60,13 +52,20 @@ class GameSession: ObservableObject {
     }
     
     func onCompletedEvent() {
-        if let nextUpdate = queue.dequeue() {
-            Task { @MainActor in
-                pendingGameEvent = nextUpdate.event
-                currentTurn = nextUpdate.currentTurn
+        assert(pendingGameEvent == nil)
+        guard let nextUpdate = queue.dequeue() else { return }
+        updateGameState(with: nextUpdate)
+    }
+
+    private func updateGameState(with update: GameStateUpdate) {
+        pendingGameEvent = update.event
+        currentTurn = update.currentTurn
+
+        if let winningPlayer = update.event.winningInfo?.player {
+            switch winningPlayer {
+            case .x: xWinCount += 1
+            case .o: oWinCount += 1
             }
-        } else {
-            pendingGameEvent = nil
         }
     }
 }
