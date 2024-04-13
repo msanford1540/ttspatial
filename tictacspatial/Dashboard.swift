@@ -15,15 +15,13 @@ private let turnMarkerOffset: CGFloat = dashboardWidth / 2 - 66
 
 struct Dashboard: View {
     @ObservedObject private var gameSession: GameSession
-    @ObservedObject private var viewModel: GameboardViewModel
     @State private var isCurrentTurnHidden: Bool
     @State private var currentTurnOffset: CGFloat
 
     init(gameSession: GameSession) {
         self.gameSession = gameSession
-        self.viewModel = gameSession.eventQueue
-        _isCurrentTurnHidden = State(wrappedValue: gameSession.gameEngine.currentTurn == nil)
-        _currentTurnOffset = State(wrappedValue: gameSession.gameEngine.currentTurn == .x ? -turnMarkerOffset : turnMarkerOffset)
+        _isCurrentTurnHidden = State(wrappedValue: gameSession.currentTurn == nil)
+        _currentTurnOffset = State(wrappedValue: gameSession.currentTurn?.currentTurnOffset ?? .zero)
     }
 
     var body: some View {
@@ -42,7 +40,7 @@ struct Dashboard: View {
             }
             .padding()
             Button("Start Over") {
-                gameSession.gameEngine.reset()
+                gameSession.reset()
             }
             .font(.extraLargeTitle)
         }
@@ -50,23 +48,27 @@ struct Dashboard: View {
         .font(.largeTitle)
         .glassBackgroundEffect()
         .environmentObject(gameSession)
-        .onChange(of: viewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
-            switch (oldCurrentTurn, newCurrentTurn) {
-            case (.none, .none), (.x, .x), (.o, .o):
-                return
-            case (.x, .o):
-                withAnimation { currentTurnOffset = turnMarkerOffset }
-            case (.o, .x):
-                withAnimation { currentTurnOffset = -turnMarkerOffset }
-            case (.x, .none), (.o, .none):
-                withAnimation { isCurrentTurnHidden = true }
-            case (.none, .x):
-                currentTurnOffset = -turnMarkerOffset
-                withAnimation { isCurrentTurnHidden = false }
-            case (.none, .o):
-                currentTurnOffset = turnMarkerOffset
-                withAnimation { isCurrentTurnHidden = false }
+        .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in
+            if oldCurrentTurn != nil, newCurrentTurn != nil {
+                withAnimation { updateCurrentTurnOffset(for: newCurrentTurn) }
+            } else {
+                updateCurrentTurnOffset(for: newCurrentTurn)
+                withAnimation { isCurrentTurnHidden = newCurrentTurn == nil }
             }
+        }
+    }
+
+    private func updateCurrentTurnOffset(for mark: PlayerMarker?) {
+        guard let mark else { return }
+        currentTurnOffset = mark.currentTurnOffset
+    }
+}
+
+private extension PlayerMarker {
+    var currentTurnOffset: CGFloat {
+        switch self {
+        case .x: -turnMarkerOffset
+        case .o: turnMarkerOffset
         }
     }
 }
@@ -74,6 +76,7 @@ struct Dashboard: View {
 #Preview {
     return Dashboard(gameSession: GameSession())
 }
+
 
 private struct PlayerView: View {
     @EnvironmentObject private var gameSession: GameSession

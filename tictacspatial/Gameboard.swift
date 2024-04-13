@@ -42,14 +42,13 @@ struct Gameboard: View {
         var subscribers: Set<AnyCancellable> = .empty
     }
 
-    private let gameSession: GameSession
-    @ObservedObject private var viewModel: GameboardViewModel
+    @ObservedObject private var gameSession: GameSession
     private let entities = Entities()
     private let state = GameboardState()
+    private var isProcessingUpdate: Bool = false
 
     init(gameSession: GameSession) {
         self.gameSession = gameSession
-        viewModel = gameSession.eventQueue
     }
 
     var body: some View {
@@ -84,15 +83,15 @@ struct Gameboard: View {
         .gesture(TapGesture().targetedToAnyEntity()
             .onEnded { value in
                 guard let location = value.entity.components[GridLocation.self] else { return }
-                gameSession.gameEngine.mark(at: location)
+                gameSession.mark(at: location)
             }
         )
     }
 
     private func updateNextGameEvent() {
         Task { @MainActor in
-            guard let update = viewModel.pendingGameEvent else { return }
-            switch update {
+            guard let event = gameSession.dequeueEvent() else { return }
+            switch event {
             case .move(let gameMove):
                 try await onMove(gameMove)
             case .undo:
@@ -102,7 +101,7 @@ struct Gameboard: View {
             case .reset:
                 try await onReset()
             }
-            viewModel.completedEvent()
+            gameSession.onCompletedEvent()
         }
     }
 

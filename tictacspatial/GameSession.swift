@@ -10,22 +10,64 @@ import Combine
 class GameSession: ObservableObject {
     @Published private(set) var xWinCount: Int = 0
     @Published private(set) var oWinCount: Int = 0
-    @Published private(set) var eventQueue: GameboardViewModel
+    @Published private var pendingGameEvent: GameEvent?
+    @Published private(set) var currentTurn: PlayerMarker?
     private(set) var oppononetName: String = "Bot"
-    let gameEngine = GameEngine()
-    private var subscribers = Set<AnyCancellable>()
+
+    private var queue = Queue<GameStateUpdate>()
+    private let gameEngine: GameEngine
+    private var startingPlayer: PlayerMarker = .x
 
     init() {
-        eventQueue = GameboardViewModel(gameEngine: gameEngine)
-        gameEngine.updates
-            .compactMap { $0.event.winningInfo?.player }
-            .sink { [unowned self] winningPlayer in
-                switch winningPlayer {
-                case .x: xWinCount += 1
-                case .o: oWinCount += 1
-                }
+        gameEngine = GameEngine(startingPlayer: startingPlayer)
+
+        Task { @MainActor in
+            for await update in gameEngine.updateStream {
+                onGameStateUpdate(update)
             }
-            .store(in: &subscribers)
+        }
+    }
+
+    private func onGameStateUpdate(_ update: GameStateUpdate) {
+        if pendingGameEvent == nil {
+            pendingGameEvent = update.event
+            currentTurn = update.currentTurn
+        } else {
+            queue.enqueue(update)
+        }
+
+        if let winningPlayer = update.event.winningInfo?.player {
+            switch winningPlayer {
+            case .x: xWinCount += 1
+            case .o: oWinCount += 1
+            }
+        }
+    }
+    
+    func mark(at location: GridLocation) {
+        gameEngine.mark(at: location)
+    }
+
+    func reset() {
+        startingPlayer = startingPlayer.opponent
+        gameEngine.reset(startingPlayer: startingPlayer)
+    }
+
+    func dequeueEvent() -> GameEvent? {
+        guard let pendingGameEvent else { return nil }
+        self.pendingGameEvent = nil
+        return pendingGameEvent
+    }
+    
+    func onCompletedEvent() {
+        if let nextUpdate = queue.dequeue() {
+            Task { @MainActor in
+                pendingGameEvent = nextUpdate.event
+                currentTurn = nextUpdate.currentTurn
+            }
+        } else {
+            pendingGameEvent = nil
+        }
     }
 }
 
