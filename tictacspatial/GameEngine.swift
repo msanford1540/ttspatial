@@ -160,7 +160,7 @@ private struct CandidateWinningLine: Hashable, CustomStringConvertible {
     }
 
     var unmarkedCount: Int {
-        3 - markCount.count
+        WinningLine.count - markCount.count
     }
 }
 
@@ -176,6 +176,8 @@ private extension WinningInfo {
 }
 
 private extension WinningLine {
+    static let count: Int = 3
+
     var locations: (GridLocation, GridLocation, GridLocation) {
         switch self {
         case .horizontal(let verticalPosition):
