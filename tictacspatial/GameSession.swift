@@ -7,6 +7,7 @@
 
 import Combine
 
+@MainActor
 class GameSession: ObservableObject {
     @Published private(set) var xWinCount: Int = 0
     @Published private(set) var oWinCount: Int = 0
@@ -15,17 +16,12 @@ class GameSession: ObservableObject {
     private(set) var oppononetName: String = "Bot"
 
     private var queue = Queue<GameStateUpdate>()
-    private let gameEngine: GameEngine
+    private var gameEngine: GameEngine
     private var startingPlayer: PlayerMarker = .x
 
     init() {
         gameEngine = GameEngine(startingPlayer: startingPlayer)
-
-        Task { @MainActor in
-            for await update in gameEngine.updateStream {
-                onGameStateUpdate(update)
-            }
-        }
+        observeGameEngineUpdates()
     }
 
     private func onGameStateUpdate(_ update: GameStateUpdate) {
@@ -37,12 +33,23 @@ class GameSession: ObservableObject {
     }
     
     func mark(at location: GridLocation) {
-        gameEngine.mark(at: location)
+        Task {
+            await gameEngine.mark(at: location)
+        }
+    }
+
+    private func observeGameEngineUpdates() {
+        Task {
+            for await update in gameEngine.updateStream {
+                onGameStateUpdate(update)
+            }
+        }
     }
 
     func reset() {
         startingPlayer = startingPlayer.opponent
-        gameEngine.reset(startingPlayer: startingPlayer)
+        gameEngine = GameEngine(startingPlayer: startingPlayer)
+        observeGameEngineUpdates()
     }
 
     func dequeueEvent() -> GameEvent? {

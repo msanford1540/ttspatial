@@ -7,7 +7,6 @@
 
 import SwiftUI
 import RealityKit
-import Combine
 
 struct Gameboard: View {
     private class Entities {
@@ -39,7 +38,6 @@ struct Gameboard: View {
         var oEntities: [GridLocation: Entity] = .empty
         var lineEntities: [WinningLine: Entity] = .empty
         var blankEntities: [GridLocation: Entity] = .empty
-        var subscribers: Set<AnyCancellable> = .empty
     }
 
     @ObservedObject private var gameSession: GameSession
@@ -89,7 +87,7 @@ struct Gameboard: View {
     }
 
     private func updateNextGameEvent() {
-        Task { @MainActor in
+        Task {
             guard let event = gameSession.dequeueEvent() else { return }
             switch event {
             case .move(let gameMove):
@@ -105,30 +103,35 @@ struct Gameboard: View {
         }
     }
 
-    private func onReset() async throws {
+    @MainActor private func onReset() async throws {
         var didAnimate = false
         let animationDuration: Duration = .removeDuration
         (Array(state.xEntities.values) + Array(state.oEntities.values) + Array(state.lineEntities.values)).forEach { entity in
             didAnimate = true
-            entity.animateOpacity(to: 0, duration: animationDuration) { entity.removeFromParent() }
+            Task {
+                await entity.animateOpacity(to: 0, duration: animationDuration)
+                entity.removeFromParent()
+            }
         }
         state.xEntities = .empty
         state.oEntities = .empty
         state.lineEntities = .empty
-        state.blankEntities.values.forEach {
-            if $0.isEnabled, let opacityComponent = $0.components[OpacityComponent.self], opacityComponent.opacity >= (1 - .ulpOfOne) {
+        state.blankEntities.values.forEach { entity in
+            if entity.isEnabled, let opacityComponent = entity.components[OpacityComponent.self], opacityComponent.opacity >= (1 - .ulpOfOne) {
                 return
             }
             didAnimate = true
-            $0.isEnabled = true
-            $0.animateOpacity(to: 1, duration: animationDuration)
+            entity.isEnabled = true
+            Task {
+                await entity.animateOpacity(to: 1, duration: animationDuration)
+            }
         }
         if didAnimate {
             try await Task.sleep(for: animationDuration)
         }
     }
 
-    private func onMove(_ gameMove: GameMove) async throws {
+    @MainActor private func onMove(_ gameMove: GameMove) async throws {
         let location = gameMove.location
         let mark = gameMove.playerID
         let animationDuration: Duration = .markDuration
@@ -137,7 +140,8 @@ struct Gameboard: View {
             return
         }
         let postion = blankEntity.position
-        blankEntity.animateOpacity(to: 0, duration: animationDuration / 2) {
+        Task {
+            await blankEntity.animateOpacity(to: 0, duration: animationDuration / 2)
             blankEntity.isEnabled = false
         }
         let templateEntity = templateEntity(for: mark)
@@ -149,7 +153,9 @@ struct Gameboard: View {
             OpacityComponent(opacity: 0)
         ])
         entities.places.addChild(markedEntity)
-        markedEntity.animateOpacity(to: 1, duration: animationDuration)
+        Task {
+            await markedEntity.animateOpacity(to: 1, duration: animationDuration)
+        }
         switch mark {
         case .x: state.xEntities[location] = markedEntity
         case .o: state.oEntities[location] = markedEntity
@@ -157,7 +163,7 @@ struct Gameboard: View {
         try await Task.sleep(for: animationDuration / 2)
     }
 
-    private func onGameOver(_ winningInfo: WinningInfo?) async throws {
+    @MainActor private func onGameOver(_ winningInfo: WinningInfo?) async throws {
         winningInfo?.lines.forEach { addWinningLine($0) }
 
         let animationDuration: Duration = .markDuration
@@ -165,7 +171,8 @@ struct Gameboard: View {
         state.blankEntities.values.forEach { entity in
             guard entity.isEnabled else { return }
             didAnimate = true
-            entity.animateOpacity(to: 0, duration: animationDuration) {
+            Task {
+                await entity.animateOpacity(to: 0, duration: animationDuration)
                 entity.isEnabled = false
             }
         }
@@ -212,7 +219,9 @@ struct Gameboard: View {
         newLine.transform.setRotationAngles(xRotationDegrees, 90, 0)
         state.lineEntities[line] = newLine
         entities.places.parent?.addChild(newLine)
-        newLine.animateScale(to: .init(x: 1, y: 1, z: scale), duration: .drawLineDuration)
+        Task {
+            await newLine.animateScale(to: .init(x: 1, y: 1, z: scale), duration: .drawLineDuration)
+        }
     }
 
     private func templateEntity(for marker: PlayerMarker) -> Entity {
@@ -279,26 +288,20 @@ private extension Transform {
 }
 
 private extension Entity {
-    func animateScale(to scale: SIMD3<Float>, duration: Duration = .seconds(1), completion: (@Sendable () -> Void)? = nil) {
+    @MainActor func animateScale(to scale: SIMD3<Float>, duration: Duration = .seconds(1)) async {
         var transform = self.transform
         transform.scale = scale
         if let animation = try? AnimationResource.generate(
             with: FromToByAnimation(to: transform, duration: TimeInterval(duration), bindTarget: .transform)
         ) {
             playAnimation(animation)
-            if let completion {
-                Task { @MainActor in
-                    try await Task.sleep(for: duration)
-                    completion()
-                }
-            }
+            try? await Task.sleep(for: duration)
         } else {
             self.transform = transform
-            completion?()
         }
     }
 
-    func animateOpacity(to opacity: Float, duration: Duration = .seconds(1), completion: (() -> Void)? = nil) {
+    @MainActor func animateOpacity(to opacity: Float, duration: Duration = .seconds(1)) async {
         let fromOpacity: Float?
         if let opacityComponent = components[OpacityComponent.self] {
             fromOpacity = opacityComponent.opacity
@@ -309,15 +312,9 @@ private extension Entity {
             with: FromToByAnimation(from: fromOpacity, to: opacity, duration: TimeInterval(duration), bindTarget: .opacity)
         ) {
             playAnimation(animation)
-            if let completion {
-                Task { @MainActor in
-                    try await Task.sleep(for: duration)
-                    completion()
-                }
-            }
+            try? await Task.sleep(for: duration)
         } else {
             components.set(OpacityComponent(opacity: opacity))
-            completion?()
         }
     }
 }
