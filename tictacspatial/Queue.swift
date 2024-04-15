@@ -57,7 +57,7 @@ public struct Queue<Element>: Sequence {
     public var peek: Element? {
         elements.first
     }
-    
+
     public func makeIterator() -> some IteratorProtocol {
         elements.makeIterator()
     }
