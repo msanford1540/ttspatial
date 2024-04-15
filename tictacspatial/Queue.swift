@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Queue<Element> {
+public struct Queue<Element>: Sequence {
     public let maxCount: Int?
 
     fileprivate var elements: [Element] = .empty
@@ -56,6 +56,10 @@ public struct Queue<Element> {
 
     public var peek: Element? {
         elements.first
+    }
+    
+    public func makeIterator() -> some IteratorProtocol {
+        elements.makeIterator()
     }
 }
 
