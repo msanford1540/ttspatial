@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealityKit
+import TicTacToeEngine
 
 struct TicTacSpatialView: View {
     @ObservedObject private var gameSession: GameSession

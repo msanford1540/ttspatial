@@ -1,24 +1,24 @@
 //
-//  Utilities.swift
-//  TicTacSpatial
+//  Collection+Convience.swift
+//  TicTacSpatialCore
 //
 //  Created by Mike Sanford (1540) on 4/8/24.
 //
 
 import Foundation
 
-extension ExpressibleByArrayLiteral {
+public extension ExpressibleByArrayLiteral {
     static var empty: Self { [] }
 }
 
-extension ExpressibleByDictionaryLiteral {
+public extension ExpressibleByDictionaryLiteral {
     static var empty: Self { [:] }
 }
 
-extension ExpressibleByStringLiteral {
+public extension ExpressibleByStringLiteral {
     static var empty: Self { "" }
 }
 
-extension Collection {
+public extension Collection {
     var isNotEmpty: Bool { !isEmpty }
 }

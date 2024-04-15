@@ -15,14 +15,25 @@
 		F5036B512BBCC10900847D6A /* ttt.rkassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B502BBCC10900847D6A /* ttt.rkassets */; };
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
-		F51E95CC2BC4221B00FC33D3 /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CB2BC4221B00FC33D3 /* GameSession.swift */; };
-		F51E95CE2BC4258300FC33D3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CD2BC4258300FC33D3 /* Utilities.swift */; };
-		F51E95D02BC6C8BB00FC33D3 /* GameEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */; };
-		F51E95D22BC8275200FC33D3 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95D12BC8275200FC33D3 /* Queue.swift */; };
-		F5A19BFB2BBE26C8007D8C1E /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */; };
 		F5FDC9492BCD6531001EC38B /* GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9482BCD6531001EC38B /* GameboardController.swift */; };
 		F5FDC94B2BCD68E1001EC38B /* Entity+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */; };
 		F5FDC94D2BCD696D001EC38B /* Transform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */; };
+		F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */; };
+		F5FDC9572BCDD8CE001EC38B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9562BCDD8CE001EC38B /* ContentView.swift */; };
+		F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */; };
+		F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */; };
+		F5FDC9672BCDD8D0001EC38B /* TicTacSpatialXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9662BCDD8D0001EC38B /* TicTacSpatialXTests.swift */; };
+		F5FDC9902BCDE366001EC38B /* GameCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC98F2BCDE366001EC38B /* GameCore.docc */; };
+		F5FDC9962BCDE366001EC38B /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
+		F5FDC99D2BCDE366001EC38B /* GameCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC99C2BCDE366001EC38B /* GameCoreTests.swift */; };
+		F5FDC99E2BCDE366001EC38B /* TicTacToeEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = F5FDC98E2BCDE366001EC38B /* TicTacToeEngine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F5FDC9AA2BCDE387001EC38B /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CB2BC4221B00FC33D3 /* GameSession.swift */; };
+		F5FDC9AB2BCDE387001EC38B /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */; };
+		F5FDC9AC2BCDE387001EC38B /* GameEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */; };
+		F5FDC9AD2BCDE38C001EC38B /* Collection+Convience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95CD2BC4258300FC33D3 /* Collection+Convience.swift */; };
+		F5FDC9AE2BCDE38C001EC38B /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95D12BC8275200FC33D3 /* Queue.swift */; };
+		F5FDC9B02BCDE5CD001EC38B /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
+		F5FDC9B12BCDE5CD001EC38B /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,28 +44,83 @@
 			remoteGlobalIDString = F5036B282BBC7AF400847D6A;
 			remoteInfo = tictacspatial;
 		};
+		F5FDC9632BCDD8D0001EC38B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5036B212BBC7AF400847D6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5FDC9512BCDD8CE001EC38B;
+			remoteInfo = TicTacSpatialX;
+		};
+		F5FDC9972BCDE366001EC38B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5036B212BBC7AF400847D6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5FDC98B2BCDE366001EC38B;
+			remoteInfo = GameCore;
+		};
+		F5FDC9992BCDE366001EC38B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5036B212BBC7AF400847D6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5036B282BBC7AF400847D6A;
+			remoteInfo = "TicTacSpactial-visionOS";
+		};
+		F5FDC9B22BCDE5CD001EC38B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5036B212BBC7AF400847D6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5FDC98B2BCDE366001EC38B;
+			remoteInfo = GameCore;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F5FDC9B42BCDE5CD001EC38B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F5FDC9B12BCDE5CD001EC38B /* TicTacToeEngine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		F5036B292BBC7AF400847D6A /* tictacspatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tictacspatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5036B292BBC7AF400847D6A /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
 		F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialView.swift; sourceTree = "<group>"; };
 		F5036B342BBC7AF600847D6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5036B392BBC7AF600847D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F5036B3E2BBC7AF600847D6A /* tictacspatialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tictacspatialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5036B3E2BBC7AF600847D6A /* TicTacSpactial-visionOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TicTacSpactial-visionOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tictacspatialTests.swift; sourceTree = "<group>"; };
 		F5036B502BBCC10900847D6A /* ttt.rkassets */ = {isa = PBXFileReference; lastKnownFileType = folder.rkassets; path = ttt.rkassets; sourceTree = "<group>"; };
 		F51E959B2BC3289D00FC33D3 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = SOURCE_ROOT; };
 		F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F51E95CB2BC4221B00FC33D3 /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
-		F51E95CD2BC4258300FC33D3 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		F51E95CD2BC4258300FC33D3 /* Collection+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Convience.swift"; sourceTree = "<group>"; };
 		F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvents.swift; sourceTree = "<group>"; };
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5FDC9482BCD6531001EC38B /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Animations.swift"; sourceTree = "<group>"; };
 		F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transform+Rotation.swift"; sourceTree = "<group>"; };
+		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TicTacSpatial-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
+		F5FDC9562BCDD8CE001EC38B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F5FDC95A2BCDD8CF001EC38B /* TicTacSpatial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TicTacSpatial.entitlements; sourceTree = "<group>"; };
+		F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F5FDC9622BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TicTacSpatial-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FDC9662BCDD8D0001EC38B /* TicTacSpatialXTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialXTests.swift; sourceTree = "<group>"; };
+		F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToeEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FDC98E2BCDE366001EC38B /* TicTacToeEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TicTacToeEngine.h; sourceTree = "<group>"; };
+		F5FDC98F2BCDE366001EC38B /* GameCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = GameCore.docc; sourceTree = "<group>"; };
+		F5FDC9952BCDE366001EC38B /* TicTacToeEngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeEngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FDC99C2BCDE366001EC38B /* GameCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5FDC9B02BCDE5CD001EC38B /* TicTacToeEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +136,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC94F2BCDD8CE001EC38B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC95F2BCDD8D0001EC38B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC9892BCDE366001EC38B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC9922BCDE366001EC38B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FDC9962BCDE366001EC38B /* TicTacToeEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,16 +176,25 @@
 			children = (
 				F51E959B2BC3289D00FC33D3 /* readme.md */,
 				F5036B2B2BBC7AF400847D6A /* TicTacSpatial */,
-				F5036B412BBC7AF600847D6A /* tictacspatialTests */,
+				F5036B412BBC7AF600847D6A /* TicTacSpatialTests */,
+				F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */,
+				F5FDC9652BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests */,
+				F5FDC98D2BCDE366001EC38B /* TicTacToeEngine */,
+				F5FDC99B2BCDE366001EC38B /* TicTacToeEngineTests */,
 				F5036B2A2BBC7AF400847D6A /* Products */,
+				F5FDC9AF2BCDE5CD001EC38B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		F5036B2A2BBC7AF400847D6A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F5036B292BBC7AF400847D6A /* tictacspatial.app */,
-				F5036B3E2BBC7AF600847D6A /* tictacspatialTests.xctest */,
+				F5036B292BBC7AF400847D6A /* TicTacSpatial.app */,
+				F5036B3E2BBC7AF600847D6A /* TicTacSpactial-visionOS-Tests.xctest */,
+				F5FDC9522BCDD8CE001EC38B /* TicTacSpatial-iOS.app */,
+				F5FDC9622BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests.xctest */,
+				F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */,
+				F5FDC9952BCDE366001EC38B /* TicTacToeEngineTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,17 +202,7 @@
 		F5036B2B2BBC7AF400847D6A /* TicTacSpatial */ = {
 			isa = PBXGroup;
 			children = (
-				F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */,
-				F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */,
-				F5FDC9482BCD6531001EC38B /* GameboardController.swift */,
-				F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */,
-				F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */,
-				F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */,
-				F51E95CB2BC4221B00FC33D3 /* GameSession.swift */,
-				F51E95CD2BC4258300FC33D3 /* Utilities.swift */,
-				F51E95D12BC8275200FC33D3 /* Queue.swift */,
-				F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */,
-				F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */,
+				F5FDC9842BCDDA75001EC38B /* Source */,
 				F5036B342BBC7AF600847D6A /* Assets.xcassets */,
 				F5036B502BBCC10900847D6A /* ttt.rkassets */,
 				F5036B392BBC7AF600847D6A /* Info.plist */,
@@ -124,40 +219,147 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		F5036B412BBC7AF600847D6A /* tictacspatialTests */ = {
+		F5036B412BBC7AF600847D6A /* TicTacSpatialTests */ = {
 			isa = PBXGroup;
 			children = (
 				F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */,
 			);
-			path = tictacspatialTests;
+			path = TicTacSpatialTests;
+			sourceTree = "<group>";
+		};
+		F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F5FDC9B62BCDED5B001EC38B /* Source */,
+				F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */,
+				F5FDC95A2BCDD8CF001EC38B /* TicTacSpatial.entitlements */,
+				F5FDC95B2BCDD8CF001EC38B /* Preview Content */,
+			);
+			path = "TicTacSpatial-iOS";
+			sourceTree = "<group>";
+		};
+		F5FDC95B2BCDD8CF001EC38B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F5FDC9652BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F5FDC9662BCDD8D0001EC38B /* TicTacSpatialXTests.swift */,
+			);
+			path = "TicTacSpatial-iOS-Tests";
+			sourceTree = "<group>";
+		};
+		F5FDC9842BCDDA75001EC38B /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */,
+				F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */,
+				F5FDC9482BCD6531001EC38B /* GameboardController.swift */,
+				F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */,
+				F5FDC9B52BCDEA1A001EC38B /* Utilities */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		F5FDC9852BCDDFC7001EC38B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F51E95CD2BC4258300FC33D3 /* Collection+Convience.swift */,
+				F51E95D12BC8275200FC33D3 /* Queue.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F5FDC98D2BCDE366001EC38B /* TicTacToeEngine */ = {
+			isa = PBXGroup;
+			children = (
+				F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */,
+				F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */,
+				F51E95CB2BC4221B00FC33D3 /* GameSession.swift */,
+				F5FDC9852BCDDFC7001EC38B /* Utilities */,
+				F5FDC98E2BCDE366001EC38B /* TicTacToeEngine.h */,
+				F5FDC98F2BCDE366001EC38B /* GameCore.docc */,
+			);
+			path = TicTacToeEngine;
+			sourceTree = "<group>";
+		};
+		F5FDC99B2BCDE366001EC38B /* TicTacToeEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				F5FDC99C2BCDE366001EC38B /* GameCoreTests.swift */,
+			);
+			path = TicTacToeEngineTests;
+			sourceTree = "<group>";
+		};
+		F5FDC9AF2BCDE5CD001EC38B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F5FDC9B52BCDEA1A001EC38B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */,
+				F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F5FDC9B62BCDED5B001EC38B /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */,
+				F5FDC9562BCDD8CE001EC38B /* ContentView.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		F5FDC9872BCDE366001EC38B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FDC99E2BCDE366001EC38B /* TicTacToeEngine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		F5036B282BBC7AF400847D6A /* tictacspatial */ = {
+		F5036B282BBC7AF400847D6A /* TicTacSpactial-visionOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F5036B462BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatial" */;
+			buildConfigurationList = F5036B462BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "TicTacSpactial-visionOS" */;
 			buildPhases = (
 				F5036B252BBC7AF400847D6A /* Sources */,
 				F5036B262BBC7AF400847D6A /* Frameworks */,
 				F5036B272BBC7AF400847D6A /* Resources */,
 				F5529AF62BCCF03400DE8DF9 /* ShellScript */,
+				F5FDC9B42BCDE5CD001EC38B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F5FDC9B32BCDE5CD001EC38B /* PBXTargetDependency */,
 			);
-			name = tictacspatial;
+			name = "TicTacSpactial-visionOS";
 			packageProductDependencies = (
 			);
 			productName = tictacspatial;
-			productReference = F5036B292BBC7AF400847D6A /* tictacspatial.app */;
+			productReference = F5036B292BBC7AF400847D6A /* TicTacSpatial.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F5036B3D2BBC7AF600847D6A /* tictacspatialTests */ = {
+		F5036B3D2BBC7AF600847D6A /* TicTacSpactial-visionOS-Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F5036B492BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatialTests" */;
+			buildConfigurationList = F5036B492BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "TicTacSpactial-visionOS-Tests" */;
 			buildPhases = (
 				F5036B3A2BBC7AF600847D6A /* Sources */,
 				F5036B3B2BBC7AF600847D6A /* Frameworks */,
@@ -168,9 +370,81 @@
 			dependencies = (
 				F5036B402BBC7AF600847D6A /* PBXTargetDependency */,
 			);
-			name = tictacspatialTests;
+			name = "TicTacSpactial-visionOS-Tests";
 			productName = tictacspatialTests;
-			productReference = F5036B3E2BBC7AF600847D6A /* tictacspatialTests.xctest */;
+			productReference = F5036B3E2BBC7AF600847D6A /* TicTacSpactial-visionOS-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F5FDC9512BCDD8CE001EC38B /* TicTacSpatial-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5FDC9742BCDD8D0001EC38B /* Build configuration list for PBXNativeTarget "TicTacSpatial-iOS" */;
+			buildPhases = (
+				F5FDC94E2BCDD8CE001EC38B /* Sources */,
+				F5FDC94F2BCDD8CE001EC38B /* Frameworks */,
+				F5FDC9502BCDD8CE001EC38B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TicTacSpatial-iOS";
+			productName = TicTacSpatialX;
+			productReference = F5FDC9522BCDD8CE001EC38B /* TicTacSpatial-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F5FDC9612BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5FDC9772BCDD8D0001EC38B /* Build configuration list for PBXNativeTarget "TicTacSpatial-iOS-Tests" */;
+			buildPhases = (
+				F5FDC95E2BCDD8D0001EC38B /* Sources */,
+				F5FDC95F2BCDD8D0001EC38B /* Frameworks */,
+				F5FDC9602BCDD8D0001EC38B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F5FDC9642BCDD8D0001EC38B /* PBXTargetDependency */,
+			);
+			name = "TicTacSpatial-iOS-Tests";
+			productName = TicTacSpatialXTests;
+			productReference = F5FDC9622BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F5FDC98B2BCDE366001EC38B /* TicTacToeEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5FDC9A32BCDE366001EC38B /* Build configuration list for PBXNativeTarget "TicTacToeEngine" */;
+			buildPhases = (
+				F5FDC9872BCDE366001EC38B /* Headers */,
+				F5FDC9882BCDE366001EC38B /* Sources */,
+				F5FDC9892BCDE366001EC38B /* Frameworks */,
+				F5FDC98A2BCDE366001EC38B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TicTacToeEngine;
+			productName = GameCore;
+			productReference = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F5FDC9942BCDE366001EC38B /* TicTacToeEngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5FDC9A72BCDE366001EC38B /* Build configuration list for PBXNativeTarget "TicTacToeEngineTests" */;
+			buildPhases = (
+				F5FDC9912BCDE366001EC38B /* Sources */,
+				F5FDC9922BCDE366001EC38B /* Frameworks */,
+				F5FDC9932BCDE366001EC38B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F5FDC9982BCDE366001EC38B /* PBXTargetDependency */,
+				F5FDC99A2BCDE366001EC38B /* PBXTargetDependency */,
+			);
+			name = TicTacToeEngineTests;
+			productName = GameCoreTests;
+			productReference = F5FDC9952BCDE366001EC38B /* TicTacToeEngineTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -187,6 +461,20 @@
 						CreatedOnToolsVersion = 15.3;
 					};
 					F5036B3D2BBC7AF600847D6A = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = F5036B282BBC7AF400847D6A;
+					};
+					F5FDC9512BCDD8CE001EC38B = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					F5FDC9612BCDD8D0001EC38B = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = F5FDC9512BCDD8CE001EC38B;
+					};
+					F5FDC98B2BCDE366001EC38B = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					F5FDC9942BCDE366001EC38B = {
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = F5036B282BBC7AF400847D6A;
 					};
@@ -207,8 +495,12 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F5036B282BBC7AF400847D6A /* tictacspatial */,
-				F5036B3D2BBC7AF600847D6A /* tictacspatialTests */,
+				F5036B282BBC7AF400847D6A /* TicTacSpactial-visionOS */,
+				F5036B3D2BBC7AF600847D6A /* TicTacSpactial-visionOS-Tests */,
+				F5FDC9512BCDD8CE001EC38B /* TicTacSpatial-iOS */,
+				F5FDC9612BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests */,
+				F5FDC98B2BCDE366001EC38B /* TicTacToeEngine */,
+				F5FDC9942BCDE366001EC38B /* TicTacToeEngineTests */,
 			);
 		};
 /* End PBXProject section */
@@ -226,6 +518,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F5036B3C2BBC7AF600847D6A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC9502BCDD8CE001EC38B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */,
+				F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC9602BCDD8D0001EC38B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC98A2BCDE366001EC38B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC9932BCDE366001EC38B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -260,15 +582,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F51E95CE2BC4258300FC33D3 /* Utilities.swift in Sources */,
 				F5FDC9492BCD6531001EC38B /* GameboardController.swift in Sources */,
 				F5036B332BBC7AF400847D6A /* TicTacSpatialView.swift in Sources */,
-				F5A19BFB2BBE26C8007D8C1E /* GameEngine.swift in Sources */,
 				F5FDC94D2BCD696D001EC38B /* Transform+Rotation.swift in Sources */,
-				F51E95D22BC8275200FC33D3 /* Queue.swift in Sources */,
 				F5FDC94B2BCD68E1001EC38B /* Entity+Animations.swift in Sources */,
-				F51E95D02BC6C8BB00FC33D3 /* GameEvents.swift in Sources */,
-				F51E95CC2BC4221B00FC33D3 /* GameSession.swift in Sources */,
 				F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */,
 				F5036B312BBC7AF400847D6A /* TicTacSpatialApp.swift in Sources */,
 			);
@@ -282,13 +599,71 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F5FDC94E2BCDD8CE001EC38B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FDC9572BCDD8CE001EC38B /* ContentView.swift in Sources */,
+				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC95E2BCDD8D0001EC38B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FDC9672BCDD8D0001EC38B /* TicTacSpatialXTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC9882BCDE366001EC38B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FDC9902BCDE366001EC38B /* GameCore.docc in Sources */,
+				F5FDC9AA2BCDE387001EC38B /* GameSession.swift in Sources */,
+				F5FDC9AD2BCDE38C001EC38B /* Collection+Convience.swift in Sources */,
+				F5FDC9AE2BCDE38C001EC38B /* Queue.swift in Sources */,
+				F5FDC9AB2BCDE387001EC38B /* GameEngine.swift in Sources */,
+				F5FDC9AC2BCDE387001EC38B /* GameEvents.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5FDC9912BCDE366001EC38B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5FDC99D2BCDE366001EC38B /* GameCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		F5036B402BBC7AF600847D6A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F5036B282BBC7AF400847D6A /* tictacspatial */;
+			target = F5036B282BBC7AF400847D6A /* TicTacSpactial-visionOS */;
 			targetProxy = F5036B3F2BBC7AF600847D6A /* PBXContainerItemProxy */;
+		};
+		F5FDC9642BCDD8D0001EC38B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5FDC9512BCDD8CE001EC38B /* TicTacSpatial-iOS */;
+			targetProxy = F5FDC9632BCDD8D0001EC38B /* PBXContainerItemProxy */;
+		};
+		F5FDC9982BCDE366001EC38B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5FDC98B2BCDE366001EC38B /* TicTacToeEngine */;
+			targetProxy = F5FDC9972BCDE366001EC38B /* PBXContainerItemProxy */;
+		};
+		F5FDC99A2BCDE366001EC38B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5036B282BBC7AF400847D6A /* TicTacSpactial-visionOS */;
+			targetProxy = F5FDC9992BCDE366001EC38B /* PBXContainerItemProxy */;
+		};
+		F5FDC9B32BCDE5CD001EC38B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5FDC98B2BCDE366001EC38B /* TicTacToeEngine */;
+			targetProxy = F5FDC9B22BCDE5CD001EC38B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -423,14 +798,14 @@
 				DEVELOPMENT_TEAM = 66GSQHF5G6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INFOPLIST_FILE = TicTacSpatial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TicTacSpatial;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -449,14 +824,14 @@
 				DEVELOPMENT_TEAM = 66GSQHF5G6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INFOPLIST_FILE = TicTacSpatial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TicTacSpatial;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -506,6 +881,268 @@
 			};
 			name = Release;
 		};
+		F5FDC9752BCDD8D0001EC38B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TicTacSpatial-iOS/TicTacSpatial.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TicTacSpatial-iOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacSpatialX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F5FDC9762BCDD8D0001EC38B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TicTacSpatial-iOS/TicTacSpatial.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"TicTacSpatial-iOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacSpatialX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F5FDC9782BCDD8D0001EC38B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacSpatialXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpatialX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpatialX";
+			};
+			name = Debug;
+		};
+		F5FDC9792BCDD8D0001EC38B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacSpatialXTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpatialX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpatialX";
+			};
+			name = Release;
+		};
+		F5FDC9A42BCDE366001EC38B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.GameCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F5FDC9A52BCDE366001EC38B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.GameCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F5FDC9A82BCDE366001EC38B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.GameCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpactial-visionOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpactial-visionOS";
+			};
+			name = Debug;
+		};
+		F5FDC9A92BCDE366001EC38B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.GameCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpactial-visionOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpactial-visionOS";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -518,7 +1155,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F5036B462BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatial" */ = {
+		F5036B462BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "TicTacSpactial-visionOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5036B472BBC7AF600847D6A /* Debug */,
@@ -527,11 +1164,47 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F5036B492BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "tictacspatialTests" */ = {
+		F5036B492BBC7AF600847D6A /* Build configuration list for PBXNativeTarget "TicTacSpactial-visionOS-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5036B4A2BBC7AF600847D6A /* Debug */,
 				F5036B4B2BBC7AF600847D6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5FDC9742BCDD8D0001EC38B /* Build configuration list for PBXNativeTarget "TicTacSpatial-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5FDC9752BCDD8D0001EC38B /* Debug */,
+				F5FDC9762BCDD8D0001EC38B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5FDC9772BCDD8D0001EC38B /* Build configuration list for PBXNativeTarget "TicTacSpatial-iOS-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5FDC9782BCDD8D0001EC38B /* Debug */,
+				F5FDC9792BCDD8D0001EC38B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5FDC9A32BCDE366001EC38B /* Build configuration list for PBXNativeTarget "TicTacToeEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5FDC9A42BCDE366001EC38B /* Debug */,
+				F5FDC9A52BCDE366001EC38B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5FDC9A72BCDE366001EC38B /* Build configuration list for PBXNativeTarget "TicTacToeEngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5FDC9A82BCDE366001EC38B /* Debug */,
+				F5FDC9A92BCDE366001EC38B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

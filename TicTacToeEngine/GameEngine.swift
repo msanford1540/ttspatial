@@ -1,14 +1,14 @@
 //
 //  GameEngine.swift
-//  TicTacSpatial
+//  TicTacSpatialCore
 //
 //  Created by Mike Sanford (1540) on 4/3/24.
 //
 
 import Foundation
 
-actor GameEngine {
-    let updateStream: AsyncStream<GameStateUpdate>
+public actor GameEngine {
+    public let updateStream: AsyncStream<GameStateUpdate>
     private var currentTurn: PlayerMarker? = .x
     private var markers: [GridLocation: PlayerMarker] = .empty
     private var winningInfo: WinningInfo?
@@ -71,18 +71,18 @@ actor GameEngine {
             let possibleWinningLines = candidateWinningLines.filter { isPossible($0, turn: opponent) }
             isGameOver = possibleWinningLines.isEmpty
             if isGameOver {
-                sendUpdate(.move(.init(location: location, playerID: mark)), currentTurn)
+                sendUpdate(.move(.init(location: location, mark: mark)), currentTurn)
                 sendUpdate(.gameOver(nil), nil)
             } else {
                 self.currentTurn = opponent
-                sendUpdate(.move(.init(location: location, playerID: mark)), opponent)
+                sendUpdate(.move(.init(location: location, mark: mark)), opponent)
             }
         } else {
             winningLines.forEach { assert(marker(for: $0.locations[0]) == mark) }
             let winningInfo = WinningInfo(player: mark, lines: winningLines)
             self.winningInfo = winningInfo
             isGameOver = true
-            sendUpdate(.move(.init(location: location, playerID: mark)), currentTurn)
+            sendUpdate(.move(.init(location: location, mark: mark)), currentTurn)
             sendUpdate(.gameOver(winningInfo), nil)
         }
 #if DEBUG

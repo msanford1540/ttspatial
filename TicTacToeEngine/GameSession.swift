@@ -1,27 +1,52 @@
 //
 //  GameSession.swift
-//  TicTacSpatial
+//  TicTacSpatialCore
 //
 //  Created by Mike Sanford (1540) on 4/8/24.
 //
 
+import Foundation
 import Combine
 
 @MainActor
-class GameSession: ObservableObject {
-    @Published private(set) var xWinCount: Int = 0
-    @Published private(set) var oWinCount: Int = 0
+public class GameSession: ObservableObject {
+    @Published public private(set) var xWinCount: Int = 0
+    @Published public private(set) var oWinCount: Int = 0
     @Published private var pendingGameEvent: GameEvent?
-    @Published private(set) var currentTurn: PlayerMarker?
-    private(set) var oppononetName: String = "Bot"
+    @Published public private(set) var currentTurn: PlayerMarker?
+    public private(set) var oppononetName: String = "Bot"
 
     private var queue = Queue<GameStateUpdate>()
     private var gameEngine: GameEngine
     private var startingPlayer: PlayerMarker = .x
 
-    init() {
+    public init() {
         gameEngine = GameEngine(startingPlayer: startingPlayer)
         observeGameEngineUpdates()
+    }
+
+    public func mark(at location: GridLocation) {
+        Task {
+            await gameEngine.mark(at: location)
+        }
+    }
+
+    public func reset() {
+        startingPlayer = startingPlayer.opponent
+        gameEngine = GameEngine(startingPlayer: startingPlayer)
+        observeGameEngineUpdates()
+    }
+
+    public func dequeueEvent() -> GameEvent? {
+        guard let pendingGameEvent else { return nil }
+        self.pendingGameEvent = nil
+        return pendingGameEvent
+    }
+
+    public func onCompletedEvent() {
+        assert(pendingGameEvent == nil)
+        guard let nextUpdate = queue.dequeue() else { return }
+        updateGameState(with: nextUpdate)
     }
 
     private func onGameStateUpdate(_ update: GameStateUpdate) {
@@ -32,36 +57,12 @@ class GameSession: ObservableObject {
         }
     }
 
-    func mark(at location: GridLocation) {
-        Task {
-            await gameEngine.mark(at: location)
-        }
-    }
-
     private func observeGameEngineUpdates() {
         Task {
             for await update in gameEngine.updateStream {
                 onGameStateUpdate(update)
             }
         }
-    }
-
-    func reset() {
-        startingPlayer = startingPlayer.opponent
-        gameEngine = GameEngine(startingPlayer: startingPlayer)
-        observeGameEngineUpdates()
-    }
-
-    func dequeueEvent() -> GameEvent? {
-        guard let pendingGameEvent else { return nil }
-        self.pendingGameEvent = nil
-        return pendingGameEvent
-    }
-
-    func onCompletedEvent() {
-        assert(pendingGameEvent == nil)
-        guard let nextUpdate = queue.dequeue() else { return }
-        updateGameState(with: nextUpdate)
     }
 
     private func updateGameState(with update: GameStateUpdate) {

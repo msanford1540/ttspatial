@@ -8,6 +8,7 @@
 import Foundation
 import RealityKit
 import SwiftUI
+import TicTacToeEngine
 
 private let dashboardWidth: CGFloat = 1200
 private let turnMarkerOffset: CGFloat = dashboardWidth / 2 - 66

@@ -6,6 +6,7 @@
 //
 
 import RealityKit
+import TicTacToeEngine
 
 @MainActor class GameboardController {
     private(set) var places: Entity = .empty
@@ -56,12 +57,14 @@ import RealityKit
             try await onGameOver(winningInfo)
         case .reset:
             try await onReset()
+        @unknown default:
+            assertionFailure("unknown game event type")
         }
     }
 
     func onMove(_ gameMove: GameMove) async throws {
         let location = gameMove.location
-        let mark = gameMove.playerID
+        let mark = gameMove.mark
         let animationDuration: Duration = .markDuration
         guard let blankEntity = blankEntities[location] else {
             assertionFailure("expected entity")

@@ -1,13 +1,14 @@
 //
 //  GameEvents.swift
-//  TicTacSpatial
+//  TicTacSpatialCore
 //
 //  Created by Mike Sanford (1540) on 4/10/24.
 //
 
 import Foundation
 
-enum PlayerMarker: CustomStringConvertible {
+@frozen
+public enum PlayerMarker: CustomStringConvertible {
     // swiftlint:disable identifier_name
     case x
     case o
@@ -20,7 +21,7 @@ enum PlayerMarker: CustomStringConvertible {
         }
     }
 
-    var description: String {
+    public var description: String {
         switch self {
         case .x: return "X"
         case .o: return "O"
@@ -28,11 +29,11 @@ enum PlayerMarker: CustomStringConvertible {
     }
 }
 
-struct GridLocation: Hashable, CustomStringConvertible {
-    enum VerticalPosition: CaseIterable, CustomStringConvertible {
+public struct GridLocation: Hashable, Sendable, CustomStringConvertible {
+    @frozen public enum VerticalPosition: Sendable, CaseIterable, CustomStringConvertible {
         case top, middle, bottom
 
-        var description: String {
+        public var description: String {
             switch self {
             case .top: return "top"
             case .middle: return "middle"
@@ -40,10 +41,11 @@ struct GridLocation: Hashable, CustomStringConvertible {
             }
         }
     }
-    enum HorizontalPosition: CaseIterable, CustomStringConvertible {
+
+    @frozen public enum HorizontalPosition: Sendable, CaseIterable, CustomStringConvertible {
         case left, middle, right
 
-        var description: String {
+        public var description: String {
             switch self {
             case .left: return "left"
             case .middle: return "middle"
@@ -53,8 +55,8 @@ struct GridLocation: Hashable, CustomStringConvertible {
     }
 
     // swiftlint:disable identifier_name
-    let x: HorizontalPosition
-    let y: VerticalPosition
+    public let x: HorizontalPosition
+    public let y: VerticalPosition
 
     init(_ y: VerticalPosition, _ x: HorizontalPosition) {
         self.x = x
@@ -62,11 +64,11 @@ struct GridLocation: Hashable, CustomStringConvertible {
     }
     // swiftlint:enable identifier_name
 
-    var description: String {
+    public var description: String {
         x == .middle && y == .middle ? "\(x)" : "\(y)-\(x)"
     }
 
-    static var allCases: Set<GridLocation> = {
+    public static var allCases: Set<GridLocation> = {
         VerticalPosition.allCases.reduce(into: .init()) { result, vPos in
             HorizontalPosition.allCases.forEach { hPos in
                 result.insert(.init(vPos, hPos))
@@ -75,7 +77,8 @@ struct GridLocation: Hashable, CustomStringConvertible {
     }()
 }
 
-enum WinningLine: Hashable, CustomStringConvertible {
+@frozen
+public enum WinningLine: Hashable, Sendable, CustomStringConvertible {
     case horizontal(GridLocation.VerticalPosition)
     case vertical(GridLocation.HorizontalPosition)
     case diagonal(isBackslash: Bool) // forwardslash: "/", backslash: "\"
@@ -96,45 +99,31 @@ enum WinningLine: Hashable, CustomStringConvertible {
     }
 }
 
-struct WinningInfo: Equatable, CustomStringConvertible {
-    let player: PlayerMarker
-    let lines: Set<WinningLine>
+public struct WinningInfo: Equatable, Sendable, CustomStringConvertible {
+    public let player: PlayerMarker
+    public let lines: Set<WinningLine>
 
-    var description: String {
+    public var description: String {
         "(winner: \(player), lines: \(lines))"
     }
 }
 
-enum StartingPlayerOption {
-    case player(PlayerID)
-    case alternate
+public struct GameMove: Sendable {
+    public let location: GridLocation
+    public let mark: PlayerMarker
 }
 
-struct GameConfig: Sendable {
-    let meMarker: PlayerMarker
-    let startingPlayer: StartingPlayerOption
-}
-
-enum PlayerID {
-    case player1, player2
-}
-
-struct GameMove {
-    let location: GridLocation
-    let playerID: PlayerMarker
-}
-
-enum GameEvent {
+public enum GameEvent: Sendable {
     case move(GameMove)
     case undo(GameMove)
     case gameOver(WinningInfo?)
     case reset
 }
 
-struct GameStateUpdate: Hashable, Sendable {
+public struct GameStateUpdate: Hashable, Sendable {
     private let id: UUID
-    let event: GameEvent
-    let currentTurn: PlayerMarker?
+    public let event: GameEvent
+    public let currentTurn: PlayerMarker?
 
     init(event: GameEvent, currentTurn: PlayerMarker?) {
         self.id = UUID()
@@ -142,11 +131,11 @@ struct GameStateUpdate: Hashable, Sendable {
         self.currentTurn = currentTurn
     }
 
-    static func == (lhs: GameStateUpdate, rhs: GameStateUpdate) -> Bool {
+    public static func == (lhs: GameStateUpdate, rhs: GameStateUpdate) -> Bool {
         lhs.id == rhs.id
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
