@@ -7,31 +7,28 @@
 
 import Foundation
 
-private class StreamContainer {
-    var continuation: AsyncStream<GameStateUpdate>.Continuation?
-}
-
 actor GameEngine {
     let updateStream: AsyncStream<GameStateUpdate>
     private var currentTurn: PlayerMarker? = .x
     private var markers: [GridLocation: PlayerMarker] = .empty
     private var winningInfo: WinningInfo?
     private var isGameOver: Bool = false
-    private var container: StreamContainer?
+    private let continuation: AsyncStream<GameStateUpdate>.Continuation?
 
     init(startingPlayer: PlayerMarker) {
         self.currentTurn = startingPlayer
-        let container = StreamContainer()
-        self.container = container
-        self.updateStream = AsyncStream { (continuation: AsyncStream<GameStateUpdate>.Continuation) -> Void in
-            container.continuation = continuation
-            continuation.yield(.init(event: .reset, currentTurn: startingPlayer))
+        var continuation: AsyncStream<GameStateUpdate>.Continuation?
+        self.updateStream = AsyncStream {
+            continuation = $0
+            $0.yield(.init(event: .reset, currentTurn: startingPlayer))
         }
+        self.continuation = continuation
+        assert(continuation != nil)
     }
 
     var description: String {
-        func text(_ verticalPosition: GridLocation.VerticalPosition, _ horizontalPosition: GridLocation.HorizontalPosition) -> String {
-            let location = GridLocation(verticalPosition, horizontalPosition)
+        func text(_ vPos: GridLocation.VerticalPosition, _ hPos: GridLocation.HorizontalPosition) -> String {
+            let location = GridLocation(vPos, hPos)
             return winningInfo?.winningLineText(at: location) ?? marker(for: location).map(\.description) ?? " "
         }
 
@@ -39,7 +36,8 @@ actor GameEngine {
         let row2 = "\(text(.middle, .left))|\(text(.middle, .middle))|\(text(.middle, .right))"
         let row3 = "\(text(.bottom, .left))|\(text(.bottom, .middle))|\(text(.bottom, .right))"
         let hLine = "-----"
-        let status = isGameOver ? winningInfo.map { "winner: \($0)" } ?? "tie game" : "turn: \(currentTurn?.description ?? .empty)"
+        let turn = currentTurn?.description ?? .empty
+        let status = isGameOver ? winningInfo.map { "winner: \($0)" } ?? "tie game" : "turn: \(turn)"
         return [row1, hLine, row2, hLine, row3, status, ""].joined(separator: "\n")
     }
 
@@ -76,7 +74,7 @@ actor GameEngine {
                 sendUpdate(.move(.init(location: location, playerID: mark)), opponent)
             }
         } else {
-            winningLines.forEach { assert(marker(for: $0.locations.0) == mark) }
+            winningLines.forEach { assert(marker(for: $0.locations[0]) == mark) }
             let winningInfo = WinningInfo(player: mark, lines: winningLines)
             self.winningInfo = winningInfo
             isGameOver = true
@@ -89,7 +87,7 @@ actor GameEngine {
     }
 
     private func sendUpdate(_ event: GameEvent, _ currentTurn: PlayerMarker?) {
-        container?.continuation?.yield(.init(event: event, currentTurn: currentTurn))
+        continuation?.yield(.init(event: event, currentTurn: currentTurn))
     }
 
     private func isPossible(_ line: CandidateWinningLine, turn: PlayerMarker) -> Bool {
@@ -107,8 +105,8 @@ actor GameEngine {
 
     private var candidateWinningLines: Set<CandidateWinningLine> {
         WinningLine.allCases.reduce(into: .empty) { result, line in
-            let (loc1, loc2, loc3) = line.locations
-            let locations = [loc1, loc2, loc3]
+            let lineLocations = line.locations
+            let locations = [lineLocations.first, lineLocations.second, lineLocations.third]
             let marks = locations.map { marker(for: $0) }
             let xMarks = marks.filter { $0 == .x }.count
             let oMarks = marks.filter { $0 == .o }.count
@@ -178,27 +176,58 @@ private extension WinningInfo {
 private extension WinningLine {
     static let count: Int = 3
 
-    var locations: (GridLocation, GridLocation, GridLocation) {
+    struct LineLocations {
+        let first: GridLocation
+        let second: GridLocation
+        let third: GridLocation
+
+        init(_ first: GridLocation, _ second: GridLocation, _ third: GridLocation) {
+            self.first = first
+            self.second = second
+            self.third = third
+        }
+
+        subscript(index: Int) -> GridLocation {
+            if index == 0 { return first }
+            if index == 1 { return second }
+            if index == 2 { return third }
+            fatalError("index out of bounds")
+        }
+    }
+
+    var locations: LineLocations {
         switch self {
         case .horizontal(let verticalPosition):
-            return (.init(verticalPosition, .left), .init(verticalPosition, .middle), .init(verticalPosition, .right))
+            return .init(
+                .init(verticalPosition, .left),
+                .init(verticalPosition, .middle),
+                .init(verticalPosition, .right)
+            )
         case .vertical(let horizontalPosition):
-            return (.init(.top, horizontalPosition), .init(.middle, horizontalPosition), .init(.bottom, horizontalPosition))
+            return .init(
+                .init(.top, horizontalPosition),
+                .init(.middle, horizontalPosition),
+                .init(.bottom, horizontalPosition)
+            )
         case .diagonal(let isBackslash):
-            return (.init(isBackslash ? .top : .bottom, .left), .init(.middle, .middle), .init(isBackslash ? .bottom : .top, .right))
+            return .init(
+                .init(isBackslash ? .top : .bottom, .left),
+                .init(.middle, .middle),
+                .init(isBackslash ? .bottom : .top, .right)
+            )
         }
     }
 
     func winner(_ markers: [GridLocation: PlayerMarker]) -> PlayerMarker? {
         let locations = self.locations
-        guard let marker1 = markers[locations.0] else { return nil }
-        return marker1 == markers[locations.1] && marker1 == markers[locations.2] ? marker1 : nil
+        guard let marker1 = markers[locations[0]] else { return nil }
+        return marker1 == markers[locations[1]] && marker1 == markers[locations[2]] ? marker1 : nil
     }
 
     func text(_ location: GridLocation, _ marker: PlayerMarker) -> String? {
         let locations = self.locations
-        if locations.1 == location { return marker.description }
-        guard locations.0 == location || locations.2 == location else { return nil }
+        if locations[1] == location { return marker.description }
+        guard locations[0] == location || locations[2] == location else { return nil }
         switch self {
         case .horizontal: return "-"
         case .vertical: return "|"

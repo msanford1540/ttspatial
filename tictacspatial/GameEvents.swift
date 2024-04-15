@@ -8,8 +8,10 @@
 import Foundation
 
 enum PlayerMarker: CustomStringConvertible {
+    // swiftlint:disable identifier_name
     case x
     case o
+    // swiftlint:enable identifier_name
 
     var opponent: PlayerMarker {
         switch self {
@@ -50,6 +52,7 @@ struct GridLocation: Hashable, CustomStringConvertible {
         }
     }
 
+    // swiftlint:disable identifier_name
     let x: HorizontalPosition
     let y: VerticalPosition
 
@@ -57,6 +60,7 @@ struct GridLocation: Hashable, CustomStringConvertible {
         self.x = x
         self.y = y
     }
+    // swiftlint:enable identifier_name
 
     var description: String {
         x == .middle && y == .middle ? "\(x)" : "\(y)-\(x)"

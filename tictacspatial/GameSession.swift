@@ -31,7 +31,7 @@ class GameSession: ObservableObject {
             queue.enqueue(update)
         }
     }
-    
+
     func mark(at location: GridLocation) {
         Task {
             await gameEngine.mark(at: location)
@@ -57,7 +57,7 @@ class GameSession: ObservableObject {
         self.pendingGameEvent = nil
         return pendingGameEvent
     }
-    
+
     func onCompletedEvent() {
         assert(pendingGameEvent == nil)
         guard let nextUpdate = queue.dequeue() else { return }

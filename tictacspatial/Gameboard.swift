@@ -22,7 +22,7 @@ struct Gameboard: View {
                   let lineEntity = scene.findEntity(named: "line_horizontal") else {
                 fatalError("invalid scene")
             }
-            
+
             self.places = places
             xTemplateEntity = xEntity
             xTemplateEntity.isEnabled = false
@@ -106,7 +106,8 @@ struct Gameboard: View {
     @MainActor private func onReset() async throws {
         var didAnimate = false
         let animationDuration: Duration = .removeDuration
-        (Array(state.xEntities.values) + Array(state.oEntities.values) + Array(state.lineEntities.values)).forEach { entity in
+        let entities = Array(state.xEntities.values) + Array(state.oEntities.values) + Array(state.lineEntities.values)
+        entities.forEach { entity in
             didAnimate = true
             Task {
                 await entity.animateOpacity(to: 0, duration: animationDuration)
@@ -117,7 +118,8 @@ struct Gameboard: View {
         state.oEntities = .empty
         state.lineEntities = .empty
         state.blankEntities.values.forEach { entity in
-            if entity.isEnabled, let opacityComponent = entity.components[OpacityComponent.self], opacityComponent.opacity >= (1 - .ulpOfOne) {
+            let opacity = entity.components[OpacityComponent.self]?.opacity
+            if entity.isEnabled, let opacity, opacity >= (1 - Float.ulpOfOne) {
                 return
             }
             didAnimate = true
@@ -308,9 +310,13 @@ private extension Entity {
         } else {
             fromOpacity = nil
         }
-        if let animation = try? AnimationResource.generate(
-            with: FromToByAnimation(from: fromOpacity, to: opacity, duration: TimeInterval(duration), bindTarget: .opacity)
-        ) {
+        let fromToAnimation = FromToByAnimation(
+            from: fromOpacity,
+            to: opacity,
+            duration: TimeInterval(duration),
+            bindTarget: .opacity
+        )
+        if let animation = try? AnimationResource.generate(with: fromToAnimation) {
             playAnimation(animation)
             try? await Task.sleep(for: duration)
         } else {

@@ -76,7 +76,6 @@ private extension PlayerMarker {
     return Dashboard(gameSession: GameSession())
 }
 
-
 private struct PlayerView: View {
     @EnvironmentObject private var gameSession: GameSession
     let marker: PlayerMarker
