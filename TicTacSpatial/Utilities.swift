@@ -1,6 +1,6 @@
 //
 //  Utilities.swift
-//  tictacspatial
+//  TicTacSpatial
 //
 //  Created by Mike Sanford (1540) on 4/8/24.
 //

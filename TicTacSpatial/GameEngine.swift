@@ -1,6 +1,6 @@
 //
 //  GameEngine.swift
-//  tictacspatial
+//  TicTacSpatial
 //
 //  Created by Mike Sanford (1540) on 4/3/24.
 //

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F5036B312BBC7AF400847D6A /* tictacspatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B302BBC7AF400847D6A /* tictacspatialApp.swift */; };
+		F5036B312BBC7AF400847D6A /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */; };
 		F5036B332BBC7AF400847D6A /* TicTacSpatialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */; };
 		F5036B352BBC7AF600847D6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B342BBC7AF600847D6A /* Assets.xcassets */; };
 		F5036B382BBC7AF600847D6A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */; };
@@ -37,7 +37,7 @@
 
 /* Begin PBXFileReference section */
 		F5036B292BBC7AF400847D6A /* tictacspatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tictacspatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5036B302BBC7AF400847D6A /* tictacspatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tictacspatialApp.swift; sourceTree = "<group>"; };
+		F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
 		F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialView.swift; sourceTree = "<group>"; };
 		F5036B342BBC7AF600847D6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				F51E959B2BC3289D00FC33D3 /* readme.md */,
-				F5036B2B2BBC7AF400847D6A /* tictacspatial */,
+				F5036B2B2BBC7AF400847D6A /* TicTacSpatial */,
 				F5036B412BBC7AF600847D6A /* tictacspatialTests */,
 				F5036B2A2BBC7AF400847D6A /* Products */,
 			);
@@ -94,10 +94,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F5036B2B2BBC7AF400847D6A /* tictacspatial */ = {
+		F5036B2B2BBC7AF400847D6A /* TicTacSpatial */ = {
 			isa = PBXGroup;
 			children = (
-				F5036B302BBC7AF400847D6A /* tictacspatialApp.swift */,
+				F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */,
 				F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */,
 				F5FDC9482BCD6531001EC38B /* GameboardController.swift */,
 				F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */,
@@ -113,7 +113,7 @@
 				F5036B392BBC7AF600847D6A /* Info.plist */,
 				F5036B362BBC7AF600847D6A /* Preview Content */,
 			);
-			path = tictacspatial;
+			path = TicTacSpatial;
 			sourceTree = "<group>";
 		};
 		F5036B362BBC7AF600847D6A /* Preview Content */ = {
@@ -270,7 +270,7 @@
 				F51E95D02BC6C8BB00FC33D3 /* GameEvents.swift in Sources */,
 				F51E95CC2BC4221B00FC33D3 /* GameSession.swift in Sources */,
 				F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */,
-				F5036B312BBC7AF400847D6A /* tictacspatialApp.swift in Sources */,
+				F5036B312BBC7AF400847D6A /* TicTacSpatialApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
