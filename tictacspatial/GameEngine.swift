@@ -50,7 +50,11 @@ actor GameEngine {
     }
 
     func mark(at location: GridLocation) {
-        mark(currentTurn!, at: location)
+        guard let currentTurn else {
+            assertionFailure("expected non-nil currentTurn when making a move")
+            return
+        }
+        mark(currentTurn, at: location)
     }
 
     private func marker(for location: GridLocation) -> PlayerMarker? {
