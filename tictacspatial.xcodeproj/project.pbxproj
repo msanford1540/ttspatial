@@ -108,7 +108,7 @@
 		F5FDC9482BCD6531001EC38B /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Animations.swift"; sourceTree = "<group>"; };
 		F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transform+Rotation.swift"; sourceTree = "<group>"; };
-		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TicTacSpatial-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
 		F5FDC9562BCDD8CE001EC38B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 			children = (
 				F5036B292BBC7AF400847D6A /* TicTacSpatial.app */,
 				F5036B3E2BBC7AF600847D6A /* TicTacSpactial-visionOS-Tests.xctest */,
-				F5FDC9522BCDD8CE001EC38B /* TicTacSpatial-iOS.app */,
+				F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */,
 				F5FDC9622BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests.xctest */,
 				F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */,
 				F5FDC9952BCDE366001EC38B /* TicTacToeEngineTests.xctest */,
@@ -389,7 +389,7 @@
 			);
 			name = "TicTacSpatial-iOS";
 			productName = TicTacSpatialX;
-			productReference = F5FDC9522BCDD8CE001EC38B /* TicTacSpatial-iOS.app */;
+			productReference = F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F5FDC9612BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests */ = {
@@ -910,8 +910,8 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacSpatialX;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
+				PRODUCT_NAME = TicTacSpatial;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -949,8 +949,8 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacSpatialX;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
+				PRODUCT_NAME = TicTacSpatial;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_EMIT_LOC_STRINGS = YES;
