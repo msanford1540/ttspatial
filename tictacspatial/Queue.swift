@@ -27,8 +27,9 @@ public struct Queue<Element> {
     public mutating func enqueue(_ item: Element) {
         elements.append(item)
 
-        guard let maxCount = maxCount, count > maxCount else { return }
-        elements.removeFirst()
+        if let maxCount, count > maxCount {
+            elements.removeFirst()
+        }
     }
 
     public mutating func enqueue(_ items: [Element]) {

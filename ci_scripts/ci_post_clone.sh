@@ -1,1 +1,1 @@
-brew intall swiftlint
+brew install swiftlint
