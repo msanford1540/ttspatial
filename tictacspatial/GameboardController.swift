@@ -1,14 +1,13 @@
 //
-//  GameboardState.swift
+//  GameboardController.swift
 //  tictacspatial
 //
 //  Created by Mike Sanford (1540) on 4/15/24.
 //
 
-import Foundation
 import RealityKit
 
-@MainActor class GameboardState {
+@MainActor class GameboardController {
     private(set) var places: Entity = .empty
     private(set) var xTemplateEntity: Entity = .empty
     private(set) var oTemplateEntity: Entity = .empty
@@ -47,7 +46,7 @@ import RealityKit
         }
     }
 
-    func processEvent(_ event: GameEvent) async throws {
+    func updateUI(_ event: GameEvent) async throws {
         switch event {
         case .move(let gameMove):
             try await onMove(gameMove)
@@ -191,8 +190,6 @@ import RealityKit
     }
 }
 
-extension GridLocation: Component {}
-
 private extension GridLocation {
     var name: String {
         x == .middle && y == .middle
@@ -221,67 +218,8 @@ private extension GridLocation.VerticalPosition {
     }
 }
 
-private func deg2rad<FloatType: BinaryFloatingPoint>(_ degrees: FloatType) -> FloatType {
-    degrees * FloatType.pi / 180
-}
-
-private extension Transform {
-    mutating func setRotationAngles(_ xDegrees: Float, _ yDegrees: Float, _ zDegrees: Float) {
-        let xRotation = simd_quatf(angle: deg2rad(xDegrees), axis: .init(x: 1, y: 0, z: 0))
-        let yRotation = simd_quatf(angle: deg2rad(yDegrees), axis: .init(x: 0, y: 1, z: 0))
-        let zRotation = simd_quatf(angle: deg2rad(zDegrees), axis: .init(x: 0, y: 0, z: 1))
-        self.rotation = zRotation * yRotation * xRotation
-    }
-}
-
-private extension Entity {
-    static let empty: Entity = .init()
-
-    @MainActor func animateScale(to scale: SIMD3<Float>, duration: Duration = .seconds(1)) async {
-        var transform = self.transform
-        transform.scale = scale
-        if let animation = try? AnimationResource.generate(
-            with: FromToByAnimation(to: transform, duration: TimeInterval(duration), bindTarget: .transform)
-        ) {
-            playAnimation(animation)
-            try? await Task.sleep(for: duration)
-        } else {
-            self.transform = transform
-        }
-    }
-
-    @MainActor func animateOpacity(to opacity: Float, duration: Duration = .seconds(1)) async {
-        let fromOpacity: Float?
-        if let opacityComponent = components[OpacityComponent.self] {
-            fromOpacity = opacityComponent.opacity
-        } else {
-            fromOpacity = nil
-        }
-        let fromToAnimation = FromToByAnimation(
-            from: fromOpacity,
-            to: opacity,
-            duration: TimeInterval(duration),
-            bindTarget: .opacity
-        )
-        if let animation = try? AnimationResource.generate(with: fromToAnimation) {
-            playAnimation(animation)
-            try? await Task.sleep(for: duration)
-        } else {
-            components.set(OpacityComponent(opacity: opacity))
-        }
-    }
-}
-
 private extension Duration {
     static let removeDuration: Duration = .milliseconds(250)
     static let markDuration: Duration = .milliseconds(250)
     static let drawLineDuration: Duration = .milliseconds(500)
-}
-
-private extension TimeInterval {
-    init(_ duration: Duration) {
-        let (seconds, attoseconds) = duration.components
-        let attosecondsInSeconds = Double(attoseconds) / Double(1_000_000_000_000_000_000)
-        self = TimeInterval(seconds) + TimeInterval(attosecondsInSeconds)
-    }
 }

@@ -1,5 +1,5 @@
 //
-//  Gameboard.swift
+//  TicTacSpatialView.swift
 //  tictacspatial
 //
 //  Created by Mike Sanford (1540) on 4/2/24.
@@ -8,9 +8,9 @@
 import SwiftUI
 import RealityKit
 
-struct Gameboard: View {
+struct TicTacSpatialView: View {
     @ObservedObject private var gameSession: GameSession
-    private let state = GameboardState()
+    private let gameboard = GameboardController()
 
     init(gameSession: GameSession) {
         self.gameSession = gameSession
@@ -20,7 +20,7 @@ struct Gameboard: View {
         RealityView { content, attachments in
             guard let scene = try? await Entity(named: "Scene", in: .main) else { return }
             content.add(scene)
-            state.setup(scene: scene)
+            gameboard.setup(scene: scene)
 
             if let controlsAttachment = attachments.entity(for: "controls") {
                 controlsAttachment.position = [0, -0.55, 0.1]
@@ -29,7 +29,7 @@ struct Gameboard: View {
         } update: { _, _  in
             Task {
                 guard let event = gameSession.dequeueEvent() else { return }
-                try await state.processEvent(event)
+                try await gameboard.updateUI(event)
                 gameSession.onCompletedEvent()
             }
         } placeholder: {
@@ -48,6 +48,8 @@ struct Gameboard: View {
     }
 }
 
+extension GridLocation: Component {}
+
 #Preview(windowStyle: .volumetric) {
-    Gameboard(gameSession: GameSession())
+    TicTacSpatialView(gameSession: GameSession())
 }
