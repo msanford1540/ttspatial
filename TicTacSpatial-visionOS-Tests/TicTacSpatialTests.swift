@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import tictacspatial
+@testable import TicTacSpatial
 
 class TicTacSpatialTests: XCTestCase {
 

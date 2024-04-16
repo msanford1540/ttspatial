@@ -11,7 +11,7 @@
 		F5036B332BBC7AF400847D6A /* TicTacSpatialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */; };
 		F5036B352BBC7AF600847D6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B342BBC7AF600847D6A /* Assets.xcassets */; };
 		F5036B382BBC7AF600847D6A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */; };
-		F5036B432BBC7AF600847D6A /* tictacspatialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */; };
+		F5036B432BBC7AF600847D6A /* TicTacSpatialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B422BBC7AF600847D6A /* TicTacSpatialTests.swift */; };
 		F5036B512BBCC10900847D6A /* ttt.rkassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B502BBCC10900847D6A /* ttt.rkassets */; };
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
@@ -96,7 +96,7 @@
 		F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5036B392BBC7AF600847D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5036B3E2BBC7AF600847D6A /* TicTacSpactial-visionOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TicTacSpactial-visionOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tictacspatialTests.swift; sourceTree = "<group>"; };
+		F5036B422BBC7AF600847D6A /* TicTacSpatialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialTests.swift; sourceTree = "<group>"; };
 		F5036B502BBCC10900847D6A /* ttt.rkassets */ = {isa = PBXFileReference; lastKnownFileType = folder.rkassets; path = ttt.rkassets; sourceTree = "<group>"; };
 		F51E959B2BC3289D00FC33D3 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = SOURCE_ROOT; };
 		F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -175,8 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				F51E959B2BC3289D00FC33D3 /* readme.md */,
-				F5036B2B2BBC7AF400847D6A /* TicTacSpatial */,
-				F5036B412BBC7AF600847D6A /* TicTacSpatialTests */,
+				F5036B2B2BBC7AF400847D6A /* TicTacSpatial-visionOS */,
+				F5036B412BBC7AF600847D6A /* TicTacSpatial-visionOS-Tests */,
 				F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */,
 				F5FDC9652BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests */,
 				F5FDC98D2BCDE366001EC38B /* TicTacToeEngine */,
@@ -199,7 +199,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F5036B2B2BBC7AF400847D6A /* TicTacSpatial */ = {
+		F5036B2B2BBC7AF400847D6A /* TicTacSpatial-visionOS */ = {
 			isa = PBXGroup;
 			children = (
 				F5FDC9842BCDDA75001EC38B /* Source */,
@@ -208,7 +208,7 @@
 				F5036B392BBC7AF600847D6A /* Info.plist */,
 				F5036B362BBC7AF600847D6A /* Preview Content */,
 			);
-			path = TicTacSpatial;
+			path = "TicTacSpatial-visionOS";
 			sourceTree = "<group>";
 		};
 		F5036B362BBC7AF600847D6A /* Preview Content */ = {
@@ -219,12 +219,12 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		F5036B412BBC7AF600847D6A /* TicTacSpatialTests */ = {
+		F5036B412BBC7AF600847D6A /* TicTacSpatial-visionOS-Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F5036B422BBC7AF600847D6A /* tictacspatialTests.swift */,
+				F5036B422BBC7AF600847D6A /* TicTacSpatialTests.swift */,
 			);
-			path = TicTacSpatialTests;
+			path = "TicTacSpatial-visionOS-Tests";
 			sourceTree = "<group>";
 		};
 		F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */ = {
@@ -595,7 +595,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5036B432BBC7AF600847D6A /* tictacspatialTests.swift in Sources */,
+				F5036B432BBC7AF600847D6A /* TicTacSpatialTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,11 +794,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"tictacspatial/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"TicTacSpatial-visionOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 66GSQHF5G6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TicTacSpatial/Info.plist;
+				INFOPLIST_FILE = "TicTacSpatial-visionOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -820,11 +820,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"tictacspatial/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"TicTacSpatial-visionOS/Preview Content\"";
 				DEVELOPMENT_TEAM = 66GSQHF5G6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TicTacSpatial/Info.plist;
+				INFOPLIST_FILE = "TicTacSpatial-visionOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
