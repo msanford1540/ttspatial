@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5FDC9512BCDD8CE001EC38B"
-               BuildableName = "TicTacSpatialX.app"
-               BlueprintName = "TicTacSpatialX"
+               BuildableName = "TicTacSpatial.app"
+               BlueprintName = "TicTacSpatial-iOS"
                ReferencedContainer = "container:tictacspatial.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -36,8 +36,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5FDC9612BCDD8D0001EC38B"
-               BuildableName = "TicTacSpatialXTests.xctest"
-               BlueprintName = "TicTacSpatialXTests"
+               BuildableName = "TicTacSpatial-iOS-Tests.xctest"
+               BlueprintName = "TicTacSpatial-iOS-Tests"
                ReferencedContainer = "container:tictacspatial.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -69,8 +69,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5FDC9512BCDD8CE001EC38B"
-            BuildableName = "TicTacSpatialX.app"
-            BlueprintName = "TicTacSpatialX"
+            BuildableName = "TicTacSpatial.app"
+            BlueprintName = "TicTacSpatial-iOS"
             ReferencedContainer = "container:tictacspatial.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -86,8 +86,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5FDC9512BCDD8CE001EC38B"
-            BuildableName = "TicTacSpatialX.app"
-            BlueprintName = "TicTacSpatialX"
+            BuildableName = "TicTacSpatial.app"
+            BlueprintName = "TicTacSpatial-iOS"
             ReferencedContainer = "container:tictacspatial.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

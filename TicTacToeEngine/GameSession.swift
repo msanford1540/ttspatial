@@ -12,8 +12,9 @@ import Combine
 public class GameSession: ObservableObject {
     @Published public private(set) var xWinCount: Int = 0
     @Published public private(set) var oWinCount: Int = 0
-    @Published private var pendingGameEvent: GameEvent?
+    @Published public private(set) var eventID: UUID = .init()
     @Published public private(set) var currentTurn: PlayerMarker?
+    private var pendingGameEvent: GameEvent?
     public private(set) var oppononetName: String = "Bot"
 
     private var queue = Queue<GameStateUpdate>()
@@ -66,6 +67,7 @@ public class GameSession: ObservableObject {
     }
 
     private func updateGameState(with update: GameStateUpdate) {
+        eventID = update.id
         pendingGameEvent = update.event
         currentTurn = update.currentTurn
 

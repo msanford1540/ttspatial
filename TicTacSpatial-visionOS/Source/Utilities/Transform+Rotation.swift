@@ -6,10 +6,7 @@
 //
 
 import RealityKit
-
-private func deg2rad<FloatType: BinaryFloatingPoint>(_ degrees: FloatType) -> FloatType {
-    degrees * FloatType.pi / 180
-}
+import TicTacToeEngine
 
 extension Transform {
     mutating func setRotationAngles(_ xDegrees: Float, _ yDegrees: Float, _ zDegrees: Float) {

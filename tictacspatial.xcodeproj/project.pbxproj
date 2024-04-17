@@ -15,6 +15,9 @@
 		F5036B512BBCC10900847D6A /* ttt.rkassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B502BBCC10900847D6A /* ttt.rkassets */; };
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
+		F59776452BCF07DA0090DF5F /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59776442BCF07DA0090DF5F /* MathUtilities.swift */; };
+		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
+		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5FDC9492BCD6531001EC38B /* GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9482BCD6531001EC38B /* GameboardController.swift */; };
 		F5FDC94B2BCD68E1001EC38B /* Entity+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */; };
 		F5FDC94D2BCD696D001EC38B /* Transform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */; };
@@ -34,6 +37,13 @@
 		F5FDC9AE2BCDE38C001EC38B /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95D12BC8275200FC33D3 /* Queue.swift */; };
 		F5FDC9B02BCDE5CD001EC38B /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F5FDC9B12BCDE5CD001EC38B /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F5FDC9B82BCDFB0C001EC38B /* TTTScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9B72BCDFB0C001EC38B /* TTTScene.scn */; };
+		F5FDC9BE2BCDFB7E001EC38B /* Block2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9B92BCDFB7E001EC38B /* Block2.usdz */; };
+		F5FDC9BF2BCDFB7E001EC38B /* Line.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9BA2BCDFB7E001EC38B /* Line.usdz */; };
+		F5FDC9C02BCDFB7E001EC38B /* marker-o.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9BB2BCDFB7E001EC38B /* marker-o.usdz */; };
+		F5FDC9C12BCDFB7E001EC38B /* marker-x.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9BC2BCDFB7E001EC38B /* marker-x.usdz */; };
+		F5FDC9C32BCDFBFA001EC38B /* TTTScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9C22BCDFBFA001EC38B /* TTTScene.swift */; };
+		F5FDC9C52BCEA878001EC38B /* Pole.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9C42BCEA878001EC38B /* Pole.usdz */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +53,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = F5036B282BBC7AF400847D6A;
 			remoteInfo = tictacspatial;
+		};
+		F59776482BCF08240090DF5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F5036B212BBC7AF400847D6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F5FDC98B2BCDE366001EC38B;
+			remoteInfo = TicTacToeEngine;
 		};
 		F5FDC9632BCDD8D0001EC38B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -75,6 +92,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		F597764A2BCF08240090DF5F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F5FDC9B42BCDE5CD001EC38B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -104,6 +132,7 @@
 		F51E95CD2BC4258300FC33D3 /* Collection+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Convience.swift"; sourceTree = "<group>"; };
 		F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvents.swift; sourceTree = "<group>"; };
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		F59776442BCF07DA0090DF5F /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5FDC9482BCD6531001EC38B /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Animations.swift"; sourceTree = "<group>"; };
@@ -121,6 +150,13 @@
 		F5FDC98F2BCDE366001EC38B /* GameCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = GameCore.docc; sourceTree = "<group>"; };
 		F5FDC9952BCDE366001EC38B /* TicTacToeEngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeEngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC99C2BCDE366001EC38B /* GameCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoreTests.swift; sourceTree = "<group>"; };
+		F5FDC9B72BCDFB0C001EC38B /* TTTScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = TTTScene.scn; sourceTree = "<group>"; };
+		F5FDC9B92BCDFB7E001EC38B /* Block2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Block2.usdz; sourceTree = "<group>"; };
+		F5FDC9BA2BCDFB7E001EC38B /* Line.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Line.usdz; sourceTree = "<group>"; };
+		F5FDC9BB2BCDFB7E001EC38B /* marker-o.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "marker-o.usdz"; sourceTree = "<group>"; };
+		F5FDC9BC2BCDFB7E001EC38B /* marker-x.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "marker-x.usdz"; sourceTree = "<group>"; };
+		F5FDC9C22BCDFBFA001EC38B /* TTTScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTTScene.swift; sourceTree = "<group>"; };
+		F5FDC9C42BCEA878001EC38B /* Pole.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Pole.usdz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				F5FDC9B62BCDED5B001EC38B /* Source */,
+				F5FDC9BD2BCDFB7E001EC38B /* Resources */,
 				F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */,
 				F5FDC95A2BCDD8CF001EC38B /* TicTacSpatial.entitlements */,
 				F5FDC95B2BCDD8CF001EC38B /* Preview Content */,
@@ -271,6 +309,7 @@
 			children = (
 				F51E95CD2BC4258300FC33D3 /* Collection+Convience.swift */,
 				F51E95D12BC8275200FC33D3 /* Queue.swift */,
+				F59776442BCF07DA0090DF5F /* MathUtilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -317,9 +356,24 @@
 			children = (
 				F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */,
 				F5FDC9562BCDD8CE001EC38B /* ContentView.swift */,
+				F5FDC9C22BCDFBFA001EC38B /* TTTScene.swift */,
+				F5FDC9B72BCDFB0C001EC38B /* TTTScene.scn */,
 			);
 			path = Source;
 			sourceTree = "<group>";
+		};
+		F5FDC9BD2BCDFB7E001EC38B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F5FDC9C42BCEA878001EC38B /* Pole.usdz */,
+				F5FDC9B92BCDFB7E001EC38B /* Block2.usdz */,
+				F5FDC9BA2BCDFB7E001EC38B /* Line.usdz */,
+				F5FDC9BB2BCDFB7E001EC38B /* marker-o.usdz */,
+				F5FDC9BC2BCDFB7E001EC38B /* marker-x.usdz */,
+			);
+			name = Resources;
+			path = "TicTacSpatial-iOS/Resources";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -382,10 +436,12 @@
 				F5FDC94E2BCDD8CE001EC38B /* Sources */,
 				F5FDC94F2BCDD8CE001EC38B /* Frameworks */,
 				F5FDC9502BCDD8CE001EC38B /* Resources */,
+				F597764A2BCF08240090DF5F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F59776492BCF08240090DF5F /* PBXTargetDependency */,
 			);
 			name = "TicTacSpatial-iOS";
 			productName = TicTacSpatialX;
@@ -528,8 +584,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5FDC9C12BCDFB7E001EC38B /* marker-x.usdz in Resources */,
+				F5FDC9BE2BCDFB7E001EC38B /* Block2.usdz in Resources */,
+				F5FDC9C02BCDFB7E001EC38B /* marker-o.usdz in Resources */,
 				F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */,
 				F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */,
+				F5FDC9C52BCEA878001EC38B /* Pole.usdz in Resources */,
+				F5FDC9B82BCDFB0C001EC38B /* TTTScene.scn in Resources */,
+				F5FDC9BF2BCDFB7E001EC38B /* Line.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +667,7 @@
 			files = (
 				F5FDC9572BCDD8CE001EC38B /* ContentView.swift in Sources */,
 				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
+				F5FDC9C32BCDFBFA001EC38B /* TTTScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +683,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F59776452BCF07DA0090DF5F /* MathUtilities.swift in Sources */,
 				F5FDC9902BCDE366001EC38B /* GameCore.docc in Sources */,
 				F5FDC9AA2BCDE387001EC38B /* GameSession.swift in Sources */,
 				F5FDC9AD2BCDE38C001EC38B /* Collection+Convience.swift in Sources */,
@@ -644,6 +708,11 @@
 			isa = PBXTargetDependency;
 			target = F5036B282BBC7AF400847D6A /* TicTacSpactial-visionOS */;
 			targetProxy = F5036B3F2BBC7AF600847D6A /* PBXContainerItemProxy */;
+		};
+		F59776492BCF08240090DF5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F5FDC98B2BCDE366001EC38B /* TicTacToeEngine */;
+			targetProxy = F59776482BCF08240090DF5F /* PBXContainerItemProxy */;
 		};
 		F5FDC9642BCDD8D0001EC38B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -979,7 +1048,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpatialX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpatialX";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpatial.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpatial";
 			};
 			name = Debug;
 		};
@@ -1003,7 +1072,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpatialX.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpatialX";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TicTacSpatial.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TicTacSpatial";
 			};
 			name = Release;
 		};

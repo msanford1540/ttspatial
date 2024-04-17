@@ -121,7 +121,7 @@ public enum GameEvent: Sendable {
 }
 
 public struct GameStateUpdate: Hashable, Sendable {
-    private let id: UUID
+    public let id: UUID
     public let event: GameEvent
     public let currentTurn: PlayerMarker?
 
@@ -137,5 +137,33 @@ public struct GameStateUpdate: Hashable, Sendable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+}
+
+public extension GridLocation {
+    var name: String {
+        x == .middle && y == .middle
+            ? x.name
+            : "\(y.name)_\(x.name)"
+    }
+}
+
+public extension GridLocation.HorizontalPosition {
+    var name: String {
+        switch self {
+        case .left: return "left"
+        case .middle: return "middle"
+        case .right: return "right"
+        }
+    }
+}
+
+public extension GridLocation.VerticalPosition {
+    var name: String {
+        switch self {
+        case .top: return "top"
+        case .middle: return "middle"
+        case .bottom: return "bottom"
+        }
     }
 }

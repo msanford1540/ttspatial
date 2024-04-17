@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5036B282BBC7AF400847D6A"
-               BuildableName = "TicTacSpactial-visionOS.app"
+               BuildableName = "TicTacSpatial.app"
                BlueprintName = "TicTacSpactial-visionOS"
                ReferencedContainer = "container:tictacspatial.xcodeproj">
             </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5036B282BBC7AF400847D6A"
-            BuildableName = "TicTacSpactial-visionOS.app"
+            BuildableName = "TicTacSpatial.app"
             BlueprintName = "TicTacSpactial-visionOS"
             ReferencedContainer = "container:tictacspatial.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5036B282BBC7AF400847D6A"
-            BuildableName = "TicTacSpactial-visionOS.app"
+            BuildableName = "TicTacSpatial.app"
             BlueprintName = "TicTacSpactial-visionOS"
             ReferencedContainer = "container:tictacspatial.xcodeproj">
          </BuildableReference>
