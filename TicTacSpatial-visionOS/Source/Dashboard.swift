@@ -45,7 +45,7 @@ struct Dashboard: View {
             .font(.extraLargeTitle)
         }
         .frame(width: dashboardWidth)
-        .font(.largeTitle)
+        .font(.extraLargeTitle)
         .glassBackgroundEffect()
         .environmentObject(gameSession)
         .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in

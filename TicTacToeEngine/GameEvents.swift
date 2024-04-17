@@ -8,7 +8,7 @@
 import Foundation
 
 @frozen
-public enum PlayerMarker: CustomStringConvertible {
+public enum PlayerMarker: Codable, CustomStringConvertible {
     // swiftlint:disable identifier_name
     case x
     case o
@@ -29,8 +29,8 @@ public enum PlayerMarker: CustomStringConvertible {
     }
 }
 
-public struct GridLocation: Hashable, Sendable, CustomStringConvertible {
-    @frozen public enum VerticalPosition: Sendable, CaseIterable, CustomStringConvertible {
+public struct GridLocation: Hashable, Sendable, Codable, CustomStringConvertible {
+    @frozen public enum VerticalPosition: Sendable, Codable, CaseIterable, CustomStringConvertible {
         case top, middle, bottom
 
         public var description: String {
@@ -42,7 +42,7 @@ public struct GridLocation: Hashable, Sendable, CustomStringConvertible {
         }
     }
 
-    @frozen public enum HorizontalPosition: Sendable, CaseIterable, CustomStringConvertible {
+    @frozen public enum HorizontalPosition: Sendable, Codable, CaseIterable, CustomStringConvertible {
         case left, middle, right
 
         public var description: String {
@@ -78,7 +78,7 @@ public struct GridLocation: Hashable, Sendable, CustomStringConvertible {
 }
 
 @frozen
-public enum WinningLine: Hashable, Sendable, CustomStringConvertible {
+public enum WinningLine: Hashable, Sendable, Codable, CustomStringConvertible {
     case horizontal(GridLocation.VerticalPosition)
     case vertical(GridLocation.HorizontalPosition)
     case diagonal(isBackslash: Bool) // forwardslash: "/", backslash: "\"
@@ -99,7 +99,7 @@ public enum WinningLine: Hashable, Sendable, CustomStringConvertible {
     }
 }
 
-public struct WinningInfo: Equatable, Sendable, CustomStringConvertible {
+public struct WinningInfo: Equatable, Sendable, Codable, CustomStringConvertible {
     public let player: PlayerMarker
     public let lines: Set<WinningLine>
 
@@ -108,19 +108,19 @@ public struct WinningInfo: Equatable, Sendable, CustomStringConvertible {
     }
 }
 
-public struct GameMove: Sendable {
+public struct GameMove: Sendable, Codable {
     public let location: GridLocation
     public let mark: PlayerMarker
 }
 
-public enum GameEvent: Sendable {
+public enum GameEvent: Sendable, Codable {
     case move(GameMove)
     case undo(GameMove)
     case gameOver(WinningInfo?)
     case reset
 }
 
-public struct GameStateUpdate: Hashable, Sendable {
+public struct GameStateUpdate: Hashable, Sendable, Codable {
     public let id: UUID
     public let event: GameEvent
     public let currentTurn: PlayerMarker?
