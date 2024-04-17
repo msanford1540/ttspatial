@@ -18,6 +18,7 @@
 		F59776452BCF07DA0090DF5F /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59776442BCF07DA0090DF5F /* MathUtilities.swift */; };
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
 		F5FDC9492BCD6531001EC38B /* GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9482BCD6531001EC38B /* GameboardController.swift */; };
 		F5FDC94B2BCD68E1001EC38B /* Entity+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */; };
 		F5FDC94D2BCD696D001EC38B /* Transform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */; };
@@ -134,6 +135,7 @@
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		F59776442BCF07DA0090DF5F /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5FDC9482BCD6531001EC38B /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Animations.swift"; sourceTree = "<group>"; };
 		F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transform+Rotation.swift"; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 			children = (
 				F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */,
 				F5FDC9562BCDD8CE001EC38B /* ContentView.swift */,
+				F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */,
 				F5FDC9C22BCDFBFA001EC38B /* TTTScene.swift */,
 				F5FDC9B72BCDFB0C001EC38B /* TTTScene.scn */,
 			);
@@ -667,6 +670,7 @@
 			files = (
 				F5FDC9572BCDD8CE001EC38B /* ContentView.swift in Sources */,
 				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
+				F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */,
 				F5FDC9C32BCDFBFA001EC38B /* TTTScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

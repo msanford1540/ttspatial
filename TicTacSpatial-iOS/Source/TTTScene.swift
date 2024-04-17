@@ -11,7 +11,7 @@ import TicTacToeEngine
 
 class TTTScene: SCNScene {
     let cameraNode = SCNNode()
-    private let cameraPosition = SCNVector3Make(0, 0, 2)
+    private let cameraPosition = SCNVector3Make(0, 0, 1.6)
     private let lightPosition =  SCNVector3Make(0, 0, 2)
     private let gameboard = SCNNode()
     private let grid = SCNNode()
@@ -70,26 +70,39 @@ class TTTScene: SCNScene {
             unmarkedNode.isHidden = true
         }
         guard let lines = winningInfo?.lines, lines.isNotEmpty else { return }
+
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 0.5
+        SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
+
         lines.forEach { line in
             let newLineNode = lineNode.clone()
             newLineNode.position = .init(0, 0, 0.05)
+            newLineNode.scale = .init(1, 1, 0)
+            lineNodes[line] = newLineNode
+            let scaleFactor: Float
             switch line {
             case .horizontal(let vPos):
                 newLineNode.eulerAngles = SCNVector3(degrees: 0, 90, 0)
                 newLineNode.position.y = cellOffset * vPos.offset
-                newLineNode.scale = .init(1, 1, 1.15)
+                scaleFactor = 1.15
                 places.addChildNode(newLineNode)
             case .vertical(let hPos):
                 newLineNode.eulerAngles = SCNVector3(degrees: 90, 0, 0)
                 newLineNode.position.x = cellOffset * hPos.offset
-                newLineNode.scale = .init(1, 1, 1.15)
+                scaleFactor = 1.15
                 places.addChildNode(newLineNode)
             case .diagonal(let isBackslash):
                 newLineNode.eulerAngles = SCNVector3(degrees: isBackslash ? 45 : 135, 90, 0)
-                newLineNode.scale = .init(1, 1, 1.35)
+                scaleFactor = 1.35
                 places.addChildNode(newLineNode)
             }
+            newLineNode.scale.x = 1
+            newLineNode.scale.y = 1
+            newLineNode.scale.z = scaleFactor
         }
+
+        SCNTransaction.commit()
     }
 
     @MainActor private func onMove(_ gameMove: GameMove) async throws {
@@ -101,7 +114,10 @@ class TTTScene: SCNScene {
         case .o: oNodes[gameMove.location] = markNode
         }
         markNode.position = unmarkedNode.position
+        markNode.opacity = 0
         unmarkedNode.parent?.addChildNode(markNode)
+        let action = SCNAction.fadeIn(duration: 0.25)
+        await markNode.runAction(action)
     }
 
     @MainActor private func onReset() async throws {
@@ -179,6 +195,7 @@ class TTTScene: SCNScene {
     private func setupAmbientLight() {
         let light = SCNLight()
         light.type = .ambient
+        light.intensity = 600
         let ambientLightNode = SCNNode()
         ambientLightNode.light = light
         rootNode.addChildNode(ambientLightNode)
@@ -240,7 +257,6 @@ final class UNMarkedGridCellNode: SCNNode {
     convenience init(location: GridLocation, blockNode: SCNNode, cellOffset: Float) {
         self.init(location: location)
         let clone = blockNode.clone()
-        print("[debug]", "\(location.name) - \(clone.name ?? "<nil>")")
         clone.name = "block_\(location.name)"
         addChildNode(clone)
         position = .init(x: cellOffset * location.x.offset, y: cellOffset * location.y.offset, z: 0)

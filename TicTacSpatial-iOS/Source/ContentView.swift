@@ -10,33 +10,36 @@ import SceneKit
 import TicTacToeEngine
 
 struct ContentView: View {
-    @ObservedObject private var gameSession = GameSession()
+    @StateObject private var gameSession = GameSession()
     private let scene = TTTScene()
     private let renderDelegate = RenderDelegate()
 
     var body: some View {
-        SceneView(
-            scene: scene,
-            pointOfView: scene.cameraNode,
-            options: [.autoenablesDefaultLighting, .temporalAntialiasingEnabled, .allowsCameraControl],
-            delegate: renderDelegate
-        )
-        .gesture(
-            SpatialTapGesture(count: 1)
-                .onEnded { event in
-                    // hit test
-                    let tap = renderDelegate.lastRenderer?.hitTest(event.location, options: nil).first
-                    if let location = location(for: tap?.node) {
-                        gameSession.mark(at: location)
+        VStack(spacing: 0) {
+            SceneView(
+                scene: scene,
+                pointOfView: scene.cameraNode,
+                options: [.autoenablesDefaultLighting, .temporalAntialiasingEnabled, .allowsCameraControl],
+                delegate: renderDelegate
+            )
+            .gesture(
+                SpatialTapGesture(count: 1)
+                    .onEnded { event in
+                        // hit test
+                        let tap = renderDelegate.lastRenderer?.hitTest(event.location, options: nil).first
+                        if let location = location(for: tap?.node) {
+                            gameSession.mark(at: location)
+                        }
                     }
+            )
+            .onChange(of: gameSession.eventID) { _, _ in
+                Task {
+                    guard let event = gameSession.dequeueEvent() else { return }
+                    try? await scene.updateUI(event)
+                    gameSession.onCompletedEvent()
                 }
-        )
-        .onChange(of: gameSession.eventID) { _, _ in
-            Task {
-                guard let event = gameSession.dequeueEvent() else { return }
-                try? await scene.updateUI(event)
-                gameSession.onCompletedEvent()
             }
+            Dashboard(gameSession: gameSession)
         }
     }
 

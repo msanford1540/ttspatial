@@ -87,22 +87,15 @@ private struct PlayerView: View {
         VStack(alignment: isLeading ? .leading : .trailing) {
             HStack(spacing: 24) {
                 if isLeading {
-                    InnerPlayerMarker(modelName: modelName)
+                    InnerPlayerMarker(marker: marker)
                     Text("\(winCount)")
                 } else {
                     Text("\(winCount)")
-                    InnerPlayerMarker(modelName: modelName)
+                    InnerPlayerMarker(marker: marker)
                 }
             }
             Text(name)
                 .frame(width: 100)
-        }
-    }
-
-    private var modelName: String {
-        switch marker {
-        case .x: "marker-x"
-        case .o: "marker-o"
         }
     }
 
@@ -115,7 +108,7 @@ private struct PlayerView: View {
 }
 
 private struct InnerPlayerMarker: View {
-    let modelName: String
+    let marker: PlayerMarker
 
     var body: some View {
         Model3D(named: modelName) { model in
@@ -130,4 +123,12 @@ private struct InnerPlayerMarker: View {
         .frame(depth: 1)
         .frame(width: 100, height: 100)
     }
+
+    private var modelName: String {
+        switch marker {
+        case .x: "marker-x"
+        case .o: "marker-o"
+        }
+    }
+
 }
