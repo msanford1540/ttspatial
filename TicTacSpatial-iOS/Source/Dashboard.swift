@@ -7,10 +7,8 @@
 
 import Foundation
 import SwiftUI
+import SceneKit
 import TicTacToeEngine
-
-private let dashboardWidth: CGFloat = 1200
-//private let turnMarkerOffset: CGFloat = dashboardWidth / 2 - 66
 
 struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -44,7 +42,7 @@ struct Dashboard: View {
                 Button("Start Over") {
                     gameSession.reset()
                 }
-                .font(.title)
+                .font(.headline)
             }
             .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in
                 if oldCurrentTurn != nil, newCurrentTurn != nil {
@@ -62,7 +60,7 @@ struct Dashboard: View {
     }
 
     private func currentTurnOffset(for mark: PlayerMarker?, _ geometry: GeometryProxy) -> CGFloat {
-        let baseOffset = geometry.size.width / 2 - 26
+        let baseOffset = geometry.size.width / 2 - 36
         return switch mark {
         case .x: -baseOffset
         case .o: baseOffset
@@ -89,6 +87,7 @@ struct Dashboard: View {
 }
 
 private struct PlayerView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var gameSession: GameSession
     let marker: PlayerMarker
     let name: String
@@ -98,15 +97,16 @@ private struct PlayerView: View {
         VStack(alignment: isLeading ? .leading : .trailing) {
             HStack(spacing: 24) {
                 if isLeading {
-                    InnerPlayerMarker(marker: marker)
+                    InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
                     Text("\(winCount)")
                 } else {
                     Text("\(winCount)")
-                    InnerPlayerMarker(marker: marker)
+                    InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
                 }
             }
             Text(name)
-                .frame(width: 64)
+                .font(.caption)
+                .frame(width: 42)
         }
         .frame(height: 64)
     }
@@ -121,29 +121,52 @@ private struct PlayerView: View {
 
 private struct InnerPlayerMarker: View {
     let marker: PlayerMarker
+    let scene: SCNScene
+    let cameraNode = SCNNode()
 
+    init(marker: PlayerMarker, colorScheme: ColorScheme) {
+        self.marker = marker
+        guard let scene = SCNScene(named: "\(Self.modelName(for: marker)).usdz") else {
+            fatalError()
+        }
+        self.scene = scene
+        let rootNode = scene.rootNode
+        rootNode.eulerAngles = .init(degrees: 0, 0, 45)
+        if marker == .x {
+            rootNode.scale = .init(1.15, 1.15, 1)
+        }
+        scene.background.contents = Self.backgroundColor(for: colorScheme)
+        let light = SCNLight()
+        light.type = .ambient
+        light.intensity = 300
+        let ambientLightNode = SCNNode()
+        ambientLightNode.light = light
+        cameraNode.camera = SCNCamera()
+        cameraNode.position = .init(0, 0, 0.2)
+        cameraNode.scale = .init(0.01, 0.01, 0.01)
+        cameraNode.eulerAngles = .init(degrees: 0, 0, 0)
+        cameraNode.addChildNode(cameraNode)
+        rootNode.addChildNode(ambientLightNode)
+
+    }
+    
     var body: some View {
-        Text(marker.description)
-            .font(.largeTitle)
-            .monospaced()
-            .bold()
+        SceneView(scene: scene, pointOfView: cameraNode)
+            .frame(width: 42, height: 42)
+    }
+
+    private static func modelName(for marker: PlayerMarker) -> String {
+        switch marker {
+        case .x: "marker-x"
+        case .o: "marker-o"
+        }
+    }
+
+    private static func backgroundColor(for colorScheme: ColorScheme) -> UIColor {
+        switch colorScheme {
+        case .light: .init(white: 0.875, alpha: 1)
+        case .dark: .init(white: 0.125, alpha: 1)
+        @unknown default: .init(white: 0.875, alpha: 1)
+        }
     }
 }
-
-//private struct InnerPlayerMarker: View {
-//    let modelName: String
-//
-//    var body: some View {
-//        Model3D(named: modelName) { model in
-//            model
-//                .resizable()
-//                .scaledToFit()
-//                .rotation3DEffect(.degrees(90), axis: (1, 0, 0))
-//                .rotation3DEffect(.degrees(45), axis: (0, 0, 1))
-//        } placeholder: {
-//            ProgressView()
-//        }
-//        .frame(depth: 1)
-//        .frame(width: 100, height: 100)
-//    }
-//}

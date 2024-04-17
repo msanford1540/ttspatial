@@ -130,5 +130,4 @@ private struct InnerPlayerMarker: View {
         case .o: "marker-o"
         }
     }
-
 }
