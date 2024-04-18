@@ -26,6 +26,12 @@ public class GameSession: ObservableObject {
         observeGameEngineUpdates()
     }
 
+    public var snapshot: GameSnapshot {
+        get async {
+            await gameEngine.snapshot
+        }
+    }
+
     public func mark(at location: GridLocation) {
         Task {
             await gameEngine.mark(at: location)

@@ -15,15 +15,31 @@ public actor GameEngine {
     private var isGameOver: Bool = false
     private let continuation: AsyncStream<GameStateUpdate>.Continuation?
 
-    init(startingPlayer: PlayerMarker) {
-        self.currentTurn = startingPlayer
+    private init(currentTurn: PlayerMarker?, markers: [GridLocation: PlayerMarker] = .empty) {
         var continuation: AsyncStream<GameStateUpdate>.Continuation?
         self.updateStream = AsyncStream {
             continuation = $0
-            $0.yield(.init(event: .reset, currentTurn: startingPlayer))
         }
         self.continuation = continuation
         assert(continuation != nil)
+        self.currentTurn = currentTurn
+        self.markers = markers
+    }
+
+    init(startingPlayer: PlayerMarker) {
+        self.init(currentTurn: startingPlayer)
+        continuation?.yield(.init(event: .reset, currentTurn: startingPlayer))
+    }
+
+    init(gameSnapshot: GameSnapshot) {
+        self.init(currentTurn: gameSnapshot.currentTurn, markers: gameSnapshot.markers)
+        Task {
+            await updateState()
+        }
+    }
+
+    public var snapshot: GameSnapshot {
+        .init(markers: markers, currentTurn: currentTurn)
     }
 
     var description: String {
@@ -84,6 +100,42 @@ public actor GameEngine {
             isGameOver = true
             sendUpdate(.move(.init(location: location, mark: mark)), currentTurn)
             sendUpdate(.gameOver(winningInfo), nil)
+        }
+#if DEBUG
+        print("\(description)")
+#endif
+    }
+
+    private func updateState() {
+        if let currentTurn {
+            let winningLines = WinningLine.allCases.filter { $0.winner(markers) != nil }
+            if winningLines.isEmpty {
+                let opponent = currentTurn.opponent
+                let possibleWinningLines = candidateWinningLines.filter { isPossible($0, turn: opponent) }
+                isGameOver = possibleWinningLines.isEmpty
+                if isGameOver {
+                    sendUpdate(.gameOver(nil), nil)
+                }
+            } else {
+                let winningInfo = WinningInfo(player: currentTurn, lines: winningLines)
+                self.winningInfo = winningInfo
+                isGameOver = true
+                sendUpdate(.gameOver(winningInfo), nil)
+            }
+        } else {
+            isGameOver = true
+            let winningLines = WinningLine.allCases.filter { $0.winner(markers) != nil }
+            if winningLines.isEmpty {
+                sendUpdate(.gameOver(nil), nil)
+            } else {
+                guard let winningLocation = winningLines.first?.locations[0], let winner = marker(for: winningLocation) else {
+                    assertionFailure("unexpected state")
+                    return
+                }
+                let winningInfo = WinningInfo(player: winner, lines: winningLines)
+                self.winningInfo = winningInfo
+                sendUpdate(.gameOver(winningInfo), nil)
+            }
         }
 #if DEBUG
         print("\(description)")

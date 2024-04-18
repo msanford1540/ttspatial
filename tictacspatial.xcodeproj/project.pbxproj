@@ -19,6 +19,9 @@
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
+		F5CC50C02BD0525400EC88FB /* TicTacSpatialActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */; };
+		F5CC50FF2BD099B500EC88FB /* cloudy-sky.hdr in Resources */ = {isa = PBXBuildFile; fileRef = F5CC50FE2BD099B500EC88FB /* cloudy-sky.hdr */; };
+		F5CC51012BD09A3A00EC88FB /* sky.hdr in Resources */ = {isa = PBXBuildFile; fileRef = F5CC51002BD09A3A00EC88FB /* sky.hdr */; };
 		F5FDC9492BCD6531001EC38B /* GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9482BCD6531001EC38B /* GameboardController.swift */; };
 		F5FDC94B2BCD68E1001EC38B /* Entity+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */; };
 		F5FDC94D2BCD696D001EC38B /* Transform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */; };
@@ -136,6 +139,9 @@
 		F59776442BCF07DA0090DF5F /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
+		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
+		F5CC50FE2BD099B500EC88FB /* cloudy-sky.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cloudy-sky.hdr"; sourceTree = "<group>"; };
+		F5CC51002BD09A3A00EC88FB /* sky.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = sky.hdr; sourceTree = "<group>"; };
 		F5FDC9482BCD6531001EC38B /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+Animations.swift"; sourceTree = "<group>"; };
 		F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transform+Rotation.swift"; sourceTree = "<group>"; };
@@ -359,6 +365,7 @@
 				F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */,
 				F5FDC9562BCDD8CE001EC38B /* ContentView.swift */,
 				F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */,
+				F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */,
 				F5FDC9C22BCDFBFA001EC38B /* TTTScene.swift */,
 				F5FDC9B72BCDFB0C001EC38B /* TTTScene.scn */,
 			);
@@ -368,6 +375,8 @@
 		F5FDC9BD2BCDFB7E001EC38B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F5CC50FE2BD099B500EC88FB /* cloudy-sky.hdr */,
+				F5CC51002BD09A3A00EC88FB /* sky.hdr */,
 				F5FDC9C42BCEA878001EC38B /* Pole.usdz */,
 				F5FDC9B92BCDFB7E001EC38B /* Block2.usdz */,
 				F5FDC9BA2BCDFB7E001EC38B /* Line.usdz */,
@@ -589,7 +598,9 @@
 			files = (
 				F5FDC9C12BCDFB7E001EC38B /* marker-x.usdz in Resources */,
 				F5FDC9BE2BCDFB7E001EC38B /* Block2.usdz in Resources */,
+				F5CC51012BD09A3A00EC88FB /* sky.hdr in Resources */,
 				F5FDC9C02BCDFB7E001EC38B /* marker-o.usdz in Resources */,
+				F5CC50FF2BD099B500EC88FB /* cloudy-sky.hdr in Resources */,
 				F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */,
 				F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */,
 				F5FDC9C52BCEA878001EC38B /* Pole.usdz in Resources */,
@@ -671,6 +682,7 @@
 				F5FDC9572BCDD8CE001EC38B /* ContentView.swift in Sources */,
 				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
 				F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */,
+				F5CC50C02BD0525400EC88FB /* TicTacSpatialActivity.swift in Sources */,
 				F5FDC9C32BCDFBFA001EC38B /* TTTScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -968,6 +980,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -986,7 +999,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
 				PRODUCT_NAME = TicTacSpatial;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1007,6 +1021,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -1025,7 +1040,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
 				PRODUCT_NAME = TicTacSpatial;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1110,11 +1126,12 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.GameCore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacToeEngine;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;
@@ -1154,11 +1171,12 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.GameCore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.TicTacToeEngine;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_VERSION = 5.0;

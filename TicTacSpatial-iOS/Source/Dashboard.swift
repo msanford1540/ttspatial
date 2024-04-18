@@ -8,10 +8,12 @@
 import Foundation
 import SwiftUI
 import SceneKit
+import GroupActivities
 import TicTacToeEngine
 
 struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject private var sharePlayObserver = GroupStateObserver()
     @ObservedObject private var gameSession: GameSession
     @State private var isCurrentTurnHidden: Bool
     @State private var currentTurnOffset: CGFloat
@@ -39,10 +41,21 @@ struct Dashboard: View {
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 8)
-                Button("Start Over") {
-                    gameSession.reset()
+                VStack(spacing: 20) {
+                    Button {
+                        SharePlayGameSession.shared.startSharing()
+                    } label: {
+                        Label("Start Activity", systemImage: "shareplay")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .font(.headline)
+                    .disabled(!sharePlayObserver.isEligibleForGroupSession)
+
+                    Button("Start Over") {
+                        gameSession.reset()
+                    }
+                    .font(.headline)
                 }
-                .font(.headline)
             }
             .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in
                 if oldCurrentTurn != nil, newCurrentTurn != nil {
@@ -149,7 +162,7 @@ private struct InnerPlayerMarker: View {
         rootNode.addChildNode(ambientLightNode)
 
     }
-    
+
     var body: some View {
         SceneView(scene: scene, pointOfView: cameraNode)
             .frame(width: 42, height: 42)
@@ -162,7 +175,7 @@ private struct InnerPlayerMarker: View {
         }
     }
 
-    private static func backgroundColor(for colorScheme: ColorScheme) -> UIColor {
+    private static func backgroundColor(for colorScheme: ColorScheme) -> DarwinColor {
         switch colorScheme {
         case .light: .init(white: 0.875, alpha: 1)
         case .dark: .init(white: 0.125, alpha: 1)
@@ -170,3 +183,12 @@ private struct InnerPlayerMarker: View {
         }
     }
 }
+
+#if os(macOS)
+typealias DarwinColor = NSColor
+typealias SCNFloat = CGFloat
+#endif
+#if os(iOS)
+typealias DarwinColor = UIColor
+typealias SCNFloat = Float
+#endif

@@ -41,6 +41,11 @@ struct ContentView: View {
             }
             Dashboard(gameSession: gameSession)
         }
+        .task {
+            for await session in TicTacSpatialActivity.sessions() {
+                SharePlayGameSession.shared.configureSession(gameSession, session)
+            }
+        }
     }
 
     private func location(for node: SCNNode?) -> GridLocation? {

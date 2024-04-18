@@ -108,6 +108,15 @@ public struct WinningInfo: Equatable, Sendable, Codable, CustomStringConvertible
     }
 }
 
+public struct GameSnapshot: Sendable, Codable {
+    let markers: [GridLocation: PlayerMarker]
+    let currentTurn: PlayerMarker?
+
+    var isGameOver: Bool {
+        currentTurn == nil
+    }
+}
+
 public struct GameMove: Sendable, Codable {
     public let location: GridLocation
     public let mark: PlayerMarker
