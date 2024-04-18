@@ -42,6 +42,7 @@ struct Dashboard: View {
                 .padding(.horizontal)
                 .padding(.vertical, 8)
                 VStack {
+                    Spacer()
                     Button {
                         SharePlayGameSession.shared.startSharing()
                     } label: {
@@ -56,7 +57,7 @@ struct Dashboard: View {
                     }
                     .font(.headline)
                 }
-                .padding(.top)
+                .padding(.vertical, 8)
             }
             .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in
                 if oldCurrentTurn != nil, newCurrentTurn != nil {

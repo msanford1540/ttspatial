@@ -16,27 +16,32 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            SceneView(
-                scene: scene,
-                pointOfView: scene.cameraNode,
-                options: [.autoenablesDefaultLighting, .temporalAntialiasingEnabled, .allowsCameraControl],
-                delegate: renderDelegate
-            )
-            .gesture(
-                SpatialTapGesture(count: 1)
-                    .onEnded { event in
-                        // hit test
-                        let tap = renderDelegate.lastRenderer?.hitTest(event.location, options: nil).first
-                        if let location = location(for: tap?.node) {
-                            gameSession.mark(at: location)
+            GeometryReader { geometry in
+                SceneView(
+                    scene: scene,
+                    pointOfView: scene.cameraNode,
+                    options: [.autoenablesDefaultLighting, .temporalAntialiasingEnabled, .allowsCameraControl],
+                    delegate: renderDelegate
+                )
+                .gesture(
+                    SpatialTapGesture(count: 1)
+                        .onEnded { event in
+                            // hit test
+                            let tap = renderDelegate.lastRenderer?.hitTest(event.location, options: nil).first
+                            if let location = location(for: tap?.node) {
+                                gameSession.mark(at: location)
+                            }
                         }
+                )
+                .onChange(of: gameSession.eventID) { _, _ in
+                    Task {
+                        guard let event = gameSession.dequeueEvent() else { return }
+                        try? await scene.updateUI(event)
+                        gameSession.onCompletedEvent()
                     }
-            )
-            .onChange(of: gameSession.eventID) { _, _ in
-                Task {
-                    guard let event = gameSession.dequeueEvent() else { return }
-                    try? await scene.updateUI(event)
-                    gameSession.onCompletedEvent()
+                }
+                .onAppear {
+                    scene.cameraNode.position = .init(0, 0, cameraDistance(with: geometry))
                 }
             }
             Dashboard(gameSession: gameSession)
@@ -46,6 +51,12 @@ struct ContentView: View {
                 SharePlayGameSession.shared.configureSession(gameSession, session)
             }
         }
+    }
+
+    private func cameraDistance(with geometry: GeometryProxy) -> Float {
+        let viewportSize = Float(min(geometry.size.width, geometry.size.height))
+        let value = powf(460 / viewportSize, 2.5)
+        return value < 1 ? 1.6 : value
     }
 
     private func location(for node: SCNNode?) -> GridLocation? {
