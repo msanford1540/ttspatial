@@ -11,12 +11,12 @@ import TicTacToeEngine
 
 class TTTScene: SCNScene {
     let cameraNode = SCNNode()
-    private let cameraPosition = SCNVector3Make(0, 0, 1.1)
+    private let cameraPosition = SCNVector3Make(0, 0, 1.6)
     private let lightPosition =  SCNVector3Make(0, 0, 2)
     private let gameboard = SCNNode()
     private let grid = SCNNode()
     private let places = SCNNode()
-    private var gridLength: SCNFloat = .zero
+    private var gridLength: Float = .zero
     private var xNode: SCNNode!
     private var oNode: SCNNode!
     private var lineNode: SCNNode!
@@ -24,7 +24,7 @@ class TTTScene: SCNScene {
     private var xNodes: [GridLocation: SCNNode] = .empty
     private var oNodes: [GridLocation: SCNNode] = .empty
     private var lineNodes: [WinningLine: SCNNode] = .empty
-    private var cellOffset: SCNFloat = .zero
+    private var cellOffset: Float = .zero
 
     override init() {
         super.init()
@@ -75,12 +75,12 @@ class TTTScene: SCNScene {
             switch line {
             case .horizontal(let vPos):
                 newLineNode.eulerAngles = SCNVector3(degrees: 0, 90, 0)
-                newLineNode.position.y = SCNFloat(SCNFloat(cellOffset) * SCNFloat(vPos.offset))
+                newLineNode.position.y = cellOffset * vPos.offset
                 scaleFactor = 1.15
                 places.addChildNode(newLineNode)
             case .vertical(let hPos):
                 newLineNode.eulerAngles = SCNVector3(degrees: 90, 0, 0)
-                newLineNode.position.x = SCNFloat(SCNFloat(cellOffset) * SCNFloat(hPos.offset))
+                newLineNode.position.x = cellOffset * hPos.offset
                 scaleFactor = 1.15
                 places.addChildNode(newLineNode)
             case .diagonal(let isBackslash):
@@ -90,7 +90,7 @@ class TTTScene: SCNScene {
             }
             newLineNode.scale.x = 1
             newLineNode.scale.y = 1
-            newLineNode.scale.z = SCNFloat(scaleFactor)
+            newLineNode.scale.z = scaleFactor
         }
 
         SCNTransaction.commit()
@@ -217,7 +217,7 @@ extension SCNVector3 {
 }
 
 private extension GridLocation.HorizontalPosition {
-    var offset: SCNFloat {
+    var offset: Float {
         switch self {
         case .left: -1
         case .middle: 0
@@ -227,7 +227,7 @@ private extension GridLocation.HorizontalPosition {
 }
 
 private extension GridLocation.VerticalPosition {
-    var offset: SCNFloat {
+    var offset: Float {
         switch self {
         case .top: 1
         case .middle: 0
@@ -246,7 +246,7 @@ final class UNMarkedGridCellNode: SCNNode {
         focusBehavior = .focusable
     }
 
-    convenience init(location: GridLocation, blockNode: SCNNode, cellOffset: SCNFloat) {
+    convenience init(location: GridLocation, blockNode: SCNNode, cellOffset: Float) {
         self.init(location: location)
         let clone = blockNode.clone()
         clone.name = "block_\(location.name)"

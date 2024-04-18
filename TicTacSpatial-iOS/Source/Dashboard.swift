@@ -41,7 +41,7 @@ struct Dashboard: View {
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 8)
-                VStack(spacing: 20) {
+                VStack {
                     Button {
                         SharePlayGameSession.shared.startSharing()
                     } label: {
@@ -56,6 +56,7 @@ struct Dashboard: View {
                     }
                     .font(.headline)
                 }
+                .padding(.top)
             }
             .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in
                 if oldCurrentTurn != nil, newCurrentTurn != nil {
@@ -175,7 +176,7 @@ private struct InnerPlayerMarker: View {
         }
     }
 
-    private static func backgroundColor(for colorScheme: ColorScheme) -> DarwinColor {
+    private static func backgroundColor(for colorScheme: ColorScheme) -> UIColor {
         switch colorScheme {
         case .light: .init(white: 0.875, alpha: 1)
         case .dark: .init(white: 0.125, alpha: 1)
@@ -183,12 +184,3 @@ private struct InnerPlayerMarker: View {
         }
     }
 }
-
-#if os(macOS)
-typealias DarwinColor = NSColor
-typealias SCNFloat = CGFloat
-#endif
-#if os(iOS)
-typealias DarwinColor = UIColor
-typealias SCNFloat = Float
-#endif
