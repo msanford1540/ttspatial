@@ -9,7 +9,7 @@ import Foundation
 
 public actor GameEngine {
     public let updateStream: AsyncStream<GameStateUpdate>
-    private var currentTurn: PlayerMarker? = .x
+    private(set) var currentTurn: PlayerMarker? = .x
     private var markers: [GridLocation: PlayerMarker] = .empty
     private var winningInfo: WinningInfo?
     private var isGameOver: Bool = false
@@ -160,52 +160,66 @@ public actor GameEngine {
     }
 
     private var candidateWinningLines: Set<CandidateWinningLine> {
-        WinningLine.allCases.reduce(into: .empty) { result, line in
-            let lineLocations = line.locations
-            let locations = [lineLocations.first, lineLocations.second, lineLocations.third]
-            let marks = locations.map { marker(for: $0) }
-            let xMarks = marks.filter { $0 == .x }.count
-            let oMarks = marks.filter { $0 == .o }.count
-            let markCount: CandidateWinningLine.MarkCount
-            if xMarks > 0 {
-                guard oMarks == 0 else { return }
-                markCount = .marks(.x, xMarks)
-            } else if oMarks > 0 {
-                markCount = .marks(.o, oMarks)
-            } else {
-                markCount = .empty
-            }
-            result.insert(.init(winningLine: line, markCount: markCount))
-        }
+        CandidateWinningLine.candidateWinningLines(for: markers)
     }
 }
 
-private struct CandidateWinningLine: Hashable, CustomStringConvertible {
+struct CandidateWinningLine: Hashable, CustomStringConvertible {
+    static let count: Int = 3
+
     enum MarkCount: Hashable, CustomStringConvertible {
         case empty
-        case marks(PlayerMarker, Int)
+        case marks(PlayerMarker, Int, [GridLocation])
 
         var description: String {
             switch self {
             case .empty: "empty"
-            case .marks(let playerMarker, let count): "\(playerMarker),\(count)"
+            case .marks(let playerMarker, let count, let unmarkedLocations): "\(playerMarker),\(count),\(unmarkedLocations)"
             }
         }
 
         var mark: PlayerMarker? {
             switch self {
             case .empty: nil
-            case .marks(let mark, _): mark
+            case .marks(let mark, _, _): mark
             }
         }
 
         var count: Int {
             switch self {
             case .empty: 0
-            case .marks(_, let count): count
+            case .marks(_, let count, _): count
+            }
+        }
+
+        var unmarkedLocations: [GridLocation] {
+            switch self {
+            case .empty: .empty
+            case .marks(_, _, let unmarkedLocations): unmarkedLocations
             }
         }
     }
+
+    static func candidateWinningLines(for markers: [GridLocation: PlayerMarker]) -> Set<CandidateWinningLine> {
+        WinningLine.allCases.reduce(into: .empty) { result, line in
+            let marks = line.locations.compactMap { markers[$0] }
+            let xMarks = marks.filter { $0 == .x }.count
+            let oMarks = marks.filter { $0 == .o }.count
+            let unmarkedLocations = line.locations.compactMap { markers[$0] == nil ? $0 : nil }
+
+            let markCount: CandidateWinningLine.MarkCount
+            if xMarks > 0 {
+                guard oMarks == 0 else { return }
+                markCount = .marks(.x, xMarks, unmarkedLocations)
+            } else if oMarks > 0 {
+                markCount = .marks(.o, oMarks, unmarkedLocations)
+            } else {
+                markCount = .empty
+            }
+            result.insert(.init(winningLine: line, markCount: markCount))
+        }
+    }
+
     let winningLine: WinningLine
     let markCount: MarkCount
 
@@ -214,7 +228,7 @@ private struct CandidateWinningLine: Hashable, CustomStringConvertible {
     }
 
     var unmarkedCount: Int {
-        WinningLine.count - markCount.count
+        Self.count - markCount.count
     }
 }
 
@@ -230,9 +244,7 @@ private extension WinningInfo {
 }
 
 private extension WinningLine {
-    static let count: Int = 3
-
-    struct LineLocations {
+    struct LineLocations: Sequence {
         let first: GridLocation
         let second: GridLocation
         let third: GridLocation
@@ -248,6 +260,10 @@ private extension WinningLine {
             if index == 1 { return second }
             if index == 2 { return third }
             fatalError("index out of bounds")
+        }
+
+        func makeIterator() -> Set<GridLocation>.Iterator {
+            Set([first, second, third]).makeIterator()
         }
     }
 

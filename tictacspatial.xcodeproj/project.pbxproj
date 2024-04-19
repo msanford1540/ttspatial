@@ -15,6 +15,7 @@
 		F5036B512BBCC10900847D6A /* ttt.rkassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B502BBCC10900847D6A /* ttt.rkassets */; };
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
+		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
 		F59776452BCF07DA0090DF5F /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59776442BCF07DA0090DF5F /* MathUtilities.swift */; };
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -136,6 +137,7 @@
 		F51E95CD2BC4258300FC33D3 /* Collection+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Convience.swift"; sourceTree = "<group>"; };
 		F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvents.swift; sourceTree = "<group>"; };
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		F555D5C62BD2B17F00B92AA4 /* GameBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBot.swift; sourceTree = "<group>"; };
 		F59776442BCF07DA0090DF5F /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */,
 				F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */,
 				F51E95CB2BC4221B00FC33D3 /* GameSession.swift */,
+				F555D5C62BD2B17F00B92AA4 /* GameBot.swift */,
 				F5FDC9852BCDDFC7001EC38B /* Utilities */,
 				F5FDC98E2BCDE366001EC38B /* TicTacToeEngine.h */,
 				F5FDC98F2BCDE366001EC38B /* GameCore.docc */,
@@ -448,6 +451,7 @@
 				F5FDC94E2BCDD8CE001EC38B /* Sources */,
 				F5FDC94F2BCDD8CE001EC38B /* Frameworks */,
 				F5FDC9502BCDD8CE001EC38B /* Resources */,
+				F555D5C82BD2DAE900B92AA4 /* ShellScript */,
 				F597764A2BCF08240090DF5F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -651,6 +655,24 @@
 			shellPath = /bin/sh;
 			shellScript = "PATH=\"/opt/homebrew/bin:$PATH\"\nif which swiftlint > /dev/null; then\n    swiftlint\nelse\n    echo \"warning: swiftlint not installed\"\nfi\n";
 		};
+		F555D5C82BD2DAE900B92AA4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH=\"/opt/homebrew/bin:$PATH\"\nif which swiftlint > /dev/null; then\n    swiftlint\nelse\n    echo \"warning: swiftlint not installed\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -706,6 +728,7 @@
 				F5FDC9AE2BCDE38C001EC38B /* Queue.swift in Sources */,
 				F5FDC9AB2BCDE387001EC38B /* GameEngine.swift in Sources */,
 				F5FDC9AC2BCDE387001EC38B /* GameEvents.swift in Sources */,
+				F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,7 +1001,6 @@
 				DEVELOPMENT_TEAM = 66GSQHF5G6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -1019,7 +1041,6 @@
 				DEVELOPMENT_TEAM = 66GSQHF5G6;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

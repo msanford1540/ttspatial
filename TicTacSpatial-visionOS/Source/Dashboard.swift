@@ -33,9 +33,9 @@ struct Dashboard: View {
                     .opacity(isCurrentTurnHidden ? 0 : 1)
                     .offset(x: currentTurnOffset)
                 HStack {
-                    PlayerView(marker: .x, name: "me", isLeading: true)
+                    PlayerView(marker: .x, name: gameSession.xPlayerName, isLeading: true)
                     Spacer()
-                    PlayerView(marker: .o, name: "bot", isLeading: false)
+                    PlayerView(marker: .o, name: gameSession.oPlayerName, isLeading: false)
                 }
             }
             .padding()

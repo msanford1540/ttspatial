@@ -26,10 +26,14 @@ struct ContentView: View {
                 .gesture(
                     SpatialTapGesture(count: 1)
                         .onEnded { event in
+                            guard gameSession.isHumanTurn else { return }
                             // hit test
                             let tap = renderDelegate.lastRenderer?.hitTest(event.location, options: nil).first
                             if let location = location(for: tap?.node) {
                                 gameSession.mark(at: location)
+                                if SharePlayGameSession.shared.isActive {
+                                    SharePlayGameSession.shared.sendMove(at: location)
+                                }
                             }
                         }
                 )
