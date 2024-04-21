@@ -40,6 +40,7 @@ public struct CurrentTurnMarker: View {
     }
 }
 
+@MainActor
 private class CurrentTurnMarkerViewModel: ObservableObject {
     @Published public private(set) var isCurrentTurnHidden: Bool = true
     @Published public private(set) var currentTurnOffset: CGFloat = .zero

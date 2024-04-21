@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealityKit
+import TicTacToeController
 import TicTacToeEngine
 
 struct TicTacSpatialView: View {
@@ -46,6 +47,11 @@ struct TicTacSpatialView: View {
                 gameSession.mark(at: location)
             }
         )
+        .task {
+            for await session in TicTacSpatialActivity.sessions() {
+                SharePlayGameSession.shared.configureSession(gameSession, session)
+            }
+        }
     }
 }
 
