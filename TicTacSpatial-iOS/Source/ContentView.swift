@@ -8,6 +8,7 @@
 import SwiftUI
 import SceneKit
 import TicTacToeEngine
+import TicTacToeController
 
 struct ContentView: View {
     @StateObject private var gameSession = GameSession()

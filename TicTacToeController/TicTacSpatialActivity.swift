@@ -10,8 +10,8 @@ import Combine
 import GroupActivities
 import TicTacToeEngine
 
-struct TicTacSpatialActivity: GroupActivity {
-    var metadata: GroupActivityMetadata {
+public struct TicTacSpatialActivity: GroupActivity {
+    public var metadata: GroupActivityMetadata {
         var metadata = GroupActivityMetadata()
         metadata.title = NSLocalizedString("Tic-Tac-Spatial", comment: "Title of group activity")
         metadata.type = .generic
@@ -20,20 +20,20 @@ struct TicTacSpatialActivity: GroupActivity {
 }
 
 @MainActor
-class SharePlayGameSession: ObservableObject {
-    static let shared: SharePlayGameSession = .init()
+public class SharePlayGameSession: ObservableObject {
+    public static let shared: SharePlayGameSession = .init()
 
     private var gameSession: GameSession?
     private var messenger: GroupSessionMessenger?
     @Published var groupSession: GroupSession<TicTacSpatialActivity>?
     private var subscribers: Set<AnyCancellable> = .empty
     private var tasks = Set<Task<Void, Never>>()
-    private(set) var isActive: Bool = false
+    public private(set) var isActive: Bool = false
     var meMarker: PlayerMarker?
 
     private init() {}
 
-    func startSharing() {
+    public func startSharing() {
         Task {
             do {
                 _ = try await TicTacSpatialActivity().activate()
@@ -43,7 +43,7 @@ class SharePlayGameSession: ObservableObject {
         }
     }
 
-    func sendMove(at location: GridLocation) {
+    public func sendMove(at location: GridLocation) {
         guard let meMarker else { return }
         let move = GameMove(location: location, mark: meMarker)
         print("[debug] sending move: \(move)")
@@ -52,7 +52,7 @@ class SharePlayGameSession: ObservableObject {
         }
     }
 
-    func configureSession(_ gameSession: GameSession, _ groupSession: GroupSession<TicTacSpatialActivity>) {
+    public func configureSession(_ gameSession: GameSession, _ groupSession: GroupSession<TicTacSpatialActivity>) {
         self.gameSession = gameSession
         self.groupSession = groupSession
         let messenger = GroupSessionMessenger(session: groupSession)

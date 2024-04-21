@@ -32,23 +32,38 @@ public class GameSession: ObservableObject {
     @Published public private(set) var oWinCount: Int = 0
     @Published public private(set) var eventID: UUID = .init()
     @Published public private(set) var currentTurn: PlayerMarker?
+    @Published public private(set) var xPlayerName: String = .empty
+    @Published public private(set) var oPlayerName: String = .empty
     private var pendingGameEvent: GameEvent?
     public private(set) var oppononetName: String = "Bot"
 
     private var queue = Queue<GameStateUpdate>()
     private var gameEngine: GameEngine
     private var startingPlayer: PlayerMarker = .x
-    private var xPlayer: Player = .human
-    private var oPlayer: Player = .bot(EasyBot())
+    @Published private var xPlayer: Player = .human
+    @Published private var oPlayer: Player = .bot(EasyBot())
 
     public init() {
         gameEngine = GameEngine(startingPlayer: startingPlayer)
         startNewGame()
+        setupPipelines()
+    }
+
+    private func setupPipelines() {
+        $xPlayer
+            .map { [unowned self] player in playerName(for: .x, player) }
+            .assign(to: &$xPlayerName)
+
+        $oPlayer
+            .map { [unowned self] player in playerName(for: .o, player) }
+            .assign(to: &$oPlayerName)
     }
 
     public func setHumanPlayer(_ mark: PlayerMarker) {
         switch mark {
-        case .x: xPlayer = .human
+        case .x:
+            xPlayer = .human
+            xPlayerName = playerName(for: .x, .human)
         case .o: oPlayer = .human
         }
     }
@@ -60,19 +75,12 @@ public class GameSession: ObservableObject {
         }
     }
 
-    public var oPlayerName: String {
-        switch oPlayer {
-        case .bot(let bot): bot.name
-        case .remote: "Friend"
-        case .human: "me2"
-        }
-    }
-
-    public var xPlayerName: String {
-        switch xPlayer {
-        case .bot(let bot): bot.name
-        case .remote: "Friend"
-        case .human: "me"
+    private func playerName(for marker: PlayerMarker, _ player: Player) -> String {
+        switch (marker, player) {
+        case (_, .bot(let bot)): bot.name
+        case (_, .remote): "Friend"
+        case (.x, .human): "me"
+        case (.o, .human): "me2"
         }
     }
 
