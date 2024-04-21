@@ -34,12 +34,15 @@ public struct CurrentTurnMarker: View {
             .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in
                 viewModel.onCurrentTurnChange(oldCurrentTurn, newCurrentTurn)
             }
+            .onAppear {
+                viewModel.update(with: gameSession.currentTurn)
+            }
     }
 }
 
 private class CurrentTurnMarkerViewModel: ObservableObject {
-    @Published public var isCurrentTurnHidden: Bool = true
-    @Published public var currentTurnOffset: CGFloat = .zero
+    @Published public private(set) var isCurrentTurnHidden: Bool = true
+    @Published public private(set) var currentTurnOffset: CGFloat = .zero
     public var width: CGFloat = .zero
     private let margin: CGFloat
     private var subscribers: Set<AnyCancellable> = .empty
@@ -47,6 +50,10 @@ private class CurrentTurnMarkerViewModel: ObservableObject {
     init(width: CGFloat = .zero, margin: CGFloat) {
         self.width = width
         self.margin = margin
+    }
+
+    func update(with currentTurn: PlayerMarker?) {
+        onCurrentTurnChange(nil, currentTurn)
     }
 
     func onCurrentTurnChange(_ oldCurrentTurn: PlayerMarker?, _ newCurrentTurn: PlayerMarker?) {
@@ -70,12 +77,18 @@ private class CurrentTurnMarkerViewModel: ObservableObject {
 
 public struct StartOverButton: View {
     @EnvironmentObject private var gameSession: GameSession
+    private let padding: CGFloat
 
-    public init() {}
+    public init(padding: CGFloat = .zero) {
+        self.padding = padding
+    }
 
     public var body: some View {
-        Button("Start Over") {
+        Button {
             gameSession.reset()
+        } label: {
+            Text("Start Over")
+                .padding(padding)
         }
     }
 }
@@ -83,15 +96,20 @@ public struct StartOverButton: View {
 public struct SharePlayButton: View {
     @EnvironmentObject private var sharePlaySession: SharePlayGameSession
     @ObservedObject private var sharePlayObserver = GroupStateObserver()
+    private let padding: CGFloat
 
-    public init() {}
+    public init(padding: CGFloat = .zero) {
+        self.padding = padding
+    }
 
     public var body: some View {
         Button {
             sharePlaySession.startSharing()
         } label: {
             Label("Start Activity", systemImage: "shareplay")
+                .padding(padding)
         }
+        .buttonStyle(.borderedProminent)
         .disabled(!sharePlayObserver.isEligibleForGroupSession)
     }
 }

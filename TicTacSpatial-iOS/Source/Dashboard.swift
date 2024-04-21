@@ -27,7 +27,7 @@ struct Dashboard: View {
                     CurrentTurnMarker(width: geometry.size.width, margin: 36)
                         .frame(width: 18)
                     PlayersDashboard { marker in
-                        InnerPlayerMarker(marker, colorScheme)
+                        InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
                     } winCountView: { marker in
                         WinCountView(marker)
                     } nameView: { playerName in
@@ -39,11 +39,9 @@ struct Dashboard: View {
                 VStack {
                     Spacer()
                     SharePlayButton()
-                        .buttonStyle(.borderedProminent)
-                        .font(.headline)
                     StartOverButton()
-                        .font(.headline)
                 }
+                .font(.headline)
                 .padding(.vertical, 8)
             }
         }
@@ -76,7 +74,7 @@ private struct InnerPlayerMarker: View {
     let scene: SCNScene
     let cameraNode = SCNNode()
 
-    init(_ marker: PlayerMarker, _ colorScheme: ColorScheme) {
+    init(marker: PlayerMarker, colorScheme: ColorScheme) {
         self.marker = marker
         guard let scene = SCNScene(named: "\(modelName(for: marker)).usdz") else {
             fatalError()
