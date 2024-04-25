@@ -91,7 +91,6 @@ private struct InnerPlayerMarker: View {
         cameraNode.eulerAngles = .init(degrees: 0, 0, 0)
         cameraNode.addChildNode(cameraNode)
         rootNode.addChildNode(ambientLightNode)
-
     }
 
     var body: some View {
