@@ -21,29 +21,23 @@ struct Dashboard: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                VStack(spacing: 8) {
-                    CurrentTurnMarker(width: geometry.size.width, margin: 36)
-                        .frame(width: 18)
-                    PlayersDashboard { marker in
-                        InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
-                    } winCountView: { marker in
-                        WinCountView(marker)
-                    } nameView: { playerName in
-                        Text(playerName)
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                VStack {
-                    Spacer()
-                    SharePlayButton()
-                    StartOverButton()
-                }
-                .font(.headline)
-                .padding(.vertical, 8)
+        ZStack {
+            PlayersDashboard(margin: 20, turnMarkerSize: 18) { marker in
+                InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
+            } winCountView: { count in
+                WinCountView(count)
+            } nameView: { playerName in
+                Text(playerName)
             }
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+            VStack {
+                Spacer()
+                SharePlayButton()
+                StartOverButton()
+            }
+            .font(.headline)
+            .padding(.vertical, 8)
         }
         .frame(height: 120)
         .background(backgroundColor)

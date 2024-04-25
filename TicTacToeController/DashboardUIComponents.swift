@@ -117,56 +117,61 @@ public struct SharePlayButton: View {
 
 public struct WinCountView: View {
     @EnvironmentObject private var gameSession: GameSession
-    let marker: PlayerMarker
+    private let count: Int
 
-    public init(_ marker: PlayerMarker) {
-        self.marker = marker
+    public init(_ count: Int) {
+        self.count = count
     }
 
     public var body: some View {
-        Text("\(winCount)")
-    }
-
-    private var winCount: Int {
-        switch marker {
-        case .x: gameSession.xWinCount
-        case .o: gameSession.oWinCount
-        }
+        Text("\(count)")
     }
 }
 
 public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameContent: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    let innerPlayerView: (PlayerMarker) -> PlayerContent
-    let winCountView: (PlayerMarker) -> WinContent
-    let nameView: (String) -> NameContent
+    private let margin: CGFloat
+    private let turnMarkerSize: CGFloat
+    private let innerPlayerView: (PlayerMarker) -> PlayerContent
+    private let winCountView: (Int) -> WinContent
+    private let nameView: (String) -> NameContent
 
     public init(
+        margin: CGFloat,
+        turnMarkerSize: CGFloat,
         innerPlayerView: @escaping (PlayerMarker) -> PlayerContent,
-        winCountView: @escaping (PlayerMarker) -> WinContent,
+        winCountView: @escaping (Int) -> WinContent,
         nameView: @escaping (String) -> NameContent
     ) {
+        self.margin = margin
+        self.turnMarkerSize = turnMarkerSize
         self.innerPlayerView = innerPlayerView
         self.winCountView = winCountView
         self.nameView = nameView
     }
 
     public var body: some View {
-        HStack {
-            PlayerView(marker: .x) { marker in
-                innerPlayerView(marker)
-            } winCountView: { marker in
-                winCountView(marker)
-            } nameView: { playerName in
-                nameView(playerName)
-            }
-            Spacer()
-            PlayerView(marker: .o) { marker in
-                innerPlayerView(marker)
-            } winCountView: { marker in
-                winCountView(marker)
-            } nameView: { playerName in
-                nameView(playerName)
+        GeometryReader { geometry in
+            VStack {
+                CurrentTurnMarker(width: geometry.size.width, margin: margin)
+                    .frame(width: turnMarkerSize)
+                HStack {
+                    PlayerView(marker: .x) { marker in
+                        innerPlayerView(marker)
+                    } winCountView: { count in
+                        winCountView(count)
+                    } nameView: { playerName in
+                        nameView(playerName)
+                    }
+                    Spacer()
+                    PlayerView(marker: .o) { marker in
+                        innerPlayerView(marker)
+                    } winCountView: { marker in
+                        winCountView(marker)
+                    } nameView: { playerName in
+                        nameView(playerName)
+                    }
+                }
             }
         }
     }
@@ -177,7 +182,7 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
     @EnvironmentObject private var gameSession: GameSession
     let marker: PlayerMarker
     let innerPlayerView: (PlayerMarker) -> PlayerContent
-    let winCountView: (PlayerMarker) -> WinContent
+    let winCountView: (Int) -> WinContent
     let nameView: (String) -> NameContent
 
     var body: some View {
@@ -185,9 +190,9 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
             HStack(spacing: 24) {
                 if isLeading {
                     innerPlayerView(marker)
-                    winCountView(marker)
+                    winCountView(winCount)
                 } else {
-                    winCountView(marker)
+                    winCountView(winCount)
                     innerPlayerView(marker)
                 }
             }
@@ -203,6 +208,13 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
         switch marker {
         case .x: gameSession.xPlayerName
         case .o: gameSession.oPlayerName
+        }
+    }
+
+    private var winCount: Int {
+        switch marker {
+        case .x: gameSession.xWinCount
+        case .o: gameSession.oWinCount
         }
     }
 }

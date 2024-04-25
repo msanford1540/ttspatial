@@ -43,8 +43,11 @@ struct TicTacSpatialView: View {
         }
         .gesture(TapGesture().targetedToAnyEntity()
             .onEnded { value in
-                guard let location = value.entity.components[GridLocation.self] else { return }
+                guard gameSession.isHumanTurn, let location = value.entity.components[GridLocation.self] else { return }
                 gameSession.mark(at: location)
+                if SharePlayGameSession.shared.isActive {
+                    SharePlayGameSession.shared.sendMove(at: location)
+                }
             }
         )
         .task {

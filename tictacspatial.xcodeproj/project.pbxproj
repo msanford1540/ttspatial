@@ -16,10 +16,8 @@
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
 		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
-		F555D5D22BD4488600B92AA4 /* TicTacToeController.docc in Sources */ = {isa = PBXBuildFile; fileRef = F555D5D12BD4488600B92AA4 /* TicTacToeController.docc */; };
 		F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */; };
-		F555D5E02BD4488600B92AA4 /* TicTacToeController.h in Headers */ = {isa = PBXBuildFile; fileRef = F555D5D02BD4488600B92AA4 /* TicTacToeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F555D5E32BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; platformFilter = ios; };
 		F555D5E42BD4488600B92AA4 /* TicTacToeController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F555D5EF2BD448E700B92AA4 /* TicTacToeController.docc in Sources */ = {isa = PBXBuildFile; fileRef = F555D5EC2BD448E700B92AA4 /* TicTacToeController.docc */; };
@@ -30,6 +28,7 @@
 		F555D5F82BD4496500B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5F92BD4496500B92AA4 /* TicTacToeController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D6002BD4CC6A00B92AA4 /* DashboardUIComponents.swift */; };
+		F555D6052BDAD4A500B92AA4 /* TicTacToeController.h in Headers */ = {isa = PBXBuildFile; fileRef = F555D5ED2BD448E700B92AA4 /* TicTacToeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F59776452BCF07DA0090DF5F /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59776442BCF07DA0090DF5F /* MathUtilities.swift */; };
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -200,13 +199,12 @@
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		F555D5C62BD2B17F00B92AA4 /* GameBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBot.swift; sourceTree = "<group>"; };
 		F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToeController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F555D5D02BD4488600B92AA4 /* TicTacToeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TicTacToeController.h; sourceTree = "<group>"; };
-		F555D5D12BD4488600B92AA4 /* TicTacToeController.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = TicTacToeController.docc; sourceTree = "<group>"; };
 		F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeControllerTests.swift; sourceTree = "<group>"; };
 		F555D5EC2BD448E700B92AA4 /* TicTacToeController.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = TicTacToeController.docc; sourceTree = "<group>"; };
 		F555D5ED2BD448E700B92AA4 /* TicTacToeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TicTacToeController.h; sourceTree = "<group>"; };
 		F555D6002BD4CC6A00B92AA4 /* DashboardUIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardUIComponents.swift; sourceTree = "<group>"; };
+		F555D6042BD4F81400B92AA4 /* TicTacSpactial-visionOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TicTacSpactial-visionOS.entitlements"; sourceTree = "<group>"; };
 		F59776442BCF07DA0090DF5F /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
@@ -314,10 +312,9 @@
 				F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */,
 				F5FDC9652BCDD8D0001EC38B /* TicTacSpatial-iOS-Tests */,
 				F555D5EE2BD448E700B92AA4 /* TicTacToeController */,
+				F555D5DD2BD4488600B92AA4 /* TicTacToeControllerTests */,
 				F5FDC98D2BCDE366001EC38B /* TicTacToeEngine */,
 				F5FDC99B2BCDE366001EC38B /* TicTacToeEngineTests */,
-				F555D5CF2BD4488600B92AA4 /* TicTacToeController */,
-				F555D5DD2BD4488600B92AA4 /* TicTacToeControllerTests */,
 				F5036B2A2BBC7AF400847D6A /* Products */,
 				F5FDC9AF2BCDE5CD001EC38B /* Frameworks */,
 			);
@@ -343,6 +340,7 @@
 			children = (
 				F5FDC9842BCDDA75001EC38B /* Source */,
 				F5036B342BBC7AF600847D6A /* Assets.xcassets */,
+				F555D6042BD4F81400B92AA4 /* TicTacSpactial-visionOS.entitlements */,
 				F5036B502BBCC10900847D6A /* ttt.rkassets */,
 				F5036B392BBC7AF600847D6A /* Info.plist */,
 				F5036B362BBC7AF600847D6A /* Preview Content */,
@@ -364,15 +362,6 @@
 				F5036B422BBC7AF600847D6A /* TicTacSpatialTests.swift */,
 			);
 			path = "TicTacSpatial-visionOS-Tests";
-			sourceTree = "<group>";
-		};
-		F555D5CF2BD4488600B92AA4 /* TicTacToeController */ = {
-			isa = PBXGroup;
-			children = (
-				F555D5D02BD4488600B92AA4 /* TicTacToeController.h */,
-				F555D5D12BD4488600B92AA4 /* TicTacToeController.docc */,
-			);
-			path = TicTacToeController;
 			sourceTree = "<group>";
 		};
 		F555D5DD2BD4488600B92AA4 /* TicTacToeControllerTests */ = {
@@ -516,7 +505,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F555D5E02BD4488600B92AA4 /* TicTacToeController.h in Headers */,
+				F555D6052BDAD4A500B92AA4 /* TicTacToeController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,7 +882,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F555D5D22BD4488600B92AA4 /* TicTacToeController.docc in Sources */,
 				F555D5F72BD4494000B92AA4 /* TicTacSpatialActivity.swift in Sources */,
 				F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */,
 			);
@@ -1135,6 +1123,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TicTacSpatial-visionOS/TicTacSpactial-visionOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TicTacSpatial-visionOS/Preview Content\"";
@@ -1142,6 +1131,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TicTacSpatial-visionOS/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1161,6 +1151,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TicTacSpatial-visionOS/TicTacSpactial-visionOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TicTacSpatial-visionOS/Preview Content\"";
@@ -1168,6 +1159,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TicTacSpatial-visionOS/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.board-games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

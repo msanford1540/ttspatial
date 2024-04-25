@@ -11,8 +11,6 @@ import SwiftUI
 import TicTacToeController
 import TicTacToeEngine
 
-private let dashboardWidth: CGFloat = 1200
-
 struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject private var gameSession: GameSession
@@ -23,17 +21,13 @@ struct Dashboard: View {
 
     var body: some View {
         ZStack {
-            VStack {
-                CurrentTurnMarker(width: dashboardWidth, margin: 66)
-                    .frame(width: 48)
-                PlayersDashboard { marker in
-                    InnerPlayerMarker(marker: marker)
-                } winCountView: { marker in
-                    WinCountView(marker)
-                } nameView: { playerName in
-                    Text(playerName)
-                        .frame(width: 120)
-                }
+            PlayersDashboard(margin: 48, turnMarkerSize: 48) { marker in
+                InnerPlayerMarker(marker: marker)
+            } winCountView: { marker in
+                WinCountView(marker)
+            } nameView: { playerName in
+                Text(playerName)
+                    .frame(width: 120)
             }
             .padding()
             VStack {
@@ -43,7 +37,7 @@ struct Dashboard: View {
             .font(.extraLargeTitle)
             .padding(.top, 36)
         }
-        .frame(width: dashboardWidth)
+        .frame(width: 1200, height: 300)
         .font(.extraLargeTitle)
         .glassBackgroundEffect()
         .environmentObject(gameSession)

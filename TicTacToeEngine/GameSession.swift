@@ -51,19 +51,17 @@ public class GameSession: ObservableObject {
 
     private func setupPipelines() {
         $xPlayer
-            .map { [unowned self] player in playerName(for: .x, player) }
+            .map { [unowned self] player in playerName(for: player) }
             .assign(to: &$xPlayerName)
 
         $oPlayer
-            .map { [unowned self] player in playerName(for: .o, player) }
+            .map { [unowned self] player in playerName(for: player) }
             .assign(to: &$oPlayerName)
     }
 
     public func setHumanPlayer(_ mark: PlayerMarker) {
         switch mark {
-        case .x:
-            xPlayer = .human
-            xPlayerName = playerName(for: .x, .human)
+        case .x: xPlayer = .human
         case .o: oPlayer = .human
         }
     }
@@ -75,12 +73,11 @@ public class GameSession: ObservableObject {
         }
     }
 
-    private func playerName(for marker: PlayerMarker, _ player: Player) -> String {
-        switch (marker, player) {
-        case (_, .bot(let bot)): bot.name
-        case (_, .remote): "Friend"
-        case (.x, .human): "me"
-        case (.o, .human): "me2"
+    private func playerName(for player: Player) -> String {
+        switch player {
+        case .bot(let bot): bot.name
+        case .remote: "Friend"
+        case .human: "me"
         }
     }
 
