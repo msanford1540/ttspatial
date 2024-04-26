@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import TicTacToeController
 
-@main
+@main @MainActor
 struct TicTacSpatialApp: App {
+    let sharePlaySession = SharePlayGameSession()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TicTacSpatialSceneKitView()
+                .environmentObject(sharePlaySession)
+                .environmentObject(sharePlaySession.gameSession)
         }
     }
 }

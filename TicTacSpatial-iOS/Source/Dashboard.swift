@@ -14,11 +14,6 @@ import TicTacToeEngine
 
 struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
-    @ObservedObject private var gameSession: GameSession
-
-    init(gameSession: GameSession) {
-        self.gameSession = gameSession
-    }
 
     var body: some View {
         ZStack {
@@ -42,8 +37,6 @@ struct Dashboard: View {
         .frame(height: 120)
         .background(backgroundColor)
         .font(.title3)
-        .environmentObject(gameSession)
-        .environmentObject(SharePlayGameSession.shared)
     }
 
     private var backgroundColor: Color {
@@ -60,7 +53,7 @@ struct Dashboard: View {
 }
 
 #Preview {
-    return Dashboard(gameSession: GameSession())
+    Dashboard().environmentObject(SharePlayGameSession())
 }
 
 private struct InnerPlayerMarker: View {

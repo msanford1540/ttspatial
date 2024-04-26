@@ -10,7 +10,7 @@ import Combine
 import GroupActivities
 import TicTacToeEngine
 
-public struct TicTacSpatialActivity: GroupActivity {
+struct TicTacSpatialActivity: GroupActivity {
     public var metadata: GroupActivityMetadata {
         var metadata = GroupActivityMetadata()
         metadata.title = NSLocalizedString("Tic-Tac-Spatial", comment: "Title of group activity")
@@ -21,17 +21,20 @@ public struct TicTacSpatialActivity: GroupActivity {
 
 @MainActor
 public class SharePlayGameSession: ObservableObject {
-    public static let shared: SharePlayGameSession = .init()
-
-    private var gameSession: GameSession?
+    public private(set) var gameSession: GameSession = .init()
     private var messenger: GroupSessionMessenger?
     @Published var groupSession: GroupSession<TicTacSpatialActivity>?
     private var subscribers: Set<AnyCancellable> = .empty
     private var tasks = Set<Task<Void, Never>>()
-    public private(set) var isActive: Bool = false
     var meMarker: PlayerMarker?
 
-    private init() {}
+    public func configureSessions() async {
+        for await session in TicTacSpatialActivity.sessions() {
+            self.configureSession(gameSession, session)
+        }
+    }
+
+    public init() {}
 
     public func startSharing() {
         Task {
@@ -43,16 +46,23 @@ public class SharePlayGameSession: ObservableObject {
         }
     }
 
-    public func sendMove(at location: GridLocation) {
+    private func sendMove(at location: GridLocation) {
         guard let meMarker else { return }
         let move = GameMove(location: location, mark: meMarker)
-        print("[debug] sending move: \(move)")
         Task {
             try? await messenger?.send(GameMessageType.move(move), to: .all)
         }
     }
 
-    public func configureSession(_ gameSession: GameSession, _ groupSession: GroupSession<TicTacSpatialActivity>) {
+    public func mark(at location: GridLocation) {
+        guard gameSession.isHumanTurn else { return }
+        gameSession.mark(at: location)
+        if isActive {
+            sendMove(at: location)
+        }
+    }
+
+    func configureSession(_ gameSession: GameSession, _ groupSession: GroupSession<TicTacSpatialActivity>) {
         self.gameSession = gameSession
         self.groupSession = groupSession
         let messenger = GroupSessionMessenger(session: groupSession)
@@ -65,7 +75,6 @@ public class SharePlayGameSession: ObservableObject {
                 if context.source == groupSession.localParticipant { return }
                 print("[debug]", "did receive message: \(message)")
                 gameSession.handleMessage(message)
-//                gameSession.mark(at: message.location)
             }
         }
         tasks.insert(task)
@@ -80,16 +89,23 @@ public class SharePlayGameSession: ObservableObject {
         groupSession.join()
     }
 
+    public var isActive: Bool {
+        switch groupSession?.state {
+        case .none, .invalidated, .waiting: false
+        case .joined: true
+        @unknown default: false
+        }
+    }
+
     private func setupPipelines(_ gameSession: GameSession, _ groupSession: GroupSession<TicTacSpatialActivity>, _ messenger: GroupSessionMessenger) {
         groupSession.$state
             .sink { [unowned self] state in
                 switch state {
                 case .joined:
-                    isActive = true
+                    break
                 case .waiting:
-                    isActive = true
+                    break
                 case .invalidated:
-                    isActive = false
                     meMarker = nil
                     self.groupSession = nil
                     gameSession.reset()

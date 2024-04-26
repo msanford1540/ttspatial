@@ -1,5 +1,5 @@
 //
-//  TicTacSpatialView.swift
+//  TicTacSpatialRealityKitView.swift
 //  TicTacSpatial
 //
 //  Created by Mike Sanford (1540) on 4/2/24.
@@ -10,13 +10,10 @@ import RealityKit
 import TicTacToeController
 import TicTacToeEngine
 
-struct TicTacSpatialView: View {
-    @ObservedObject private var gameSession: GameSession
+struct TicTacSpatialRealityKitView: View {
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
+    @EnvironmentObject private var gameSession: GameSession
     private let gameboard = GameboardController()
-
-    init(gameSession: GameSession) {
-        self.gameSession = gameSession
-    }
 
     var body: some View {
         RealityView { content, attachments in
@@ -38,22 +35,18 @@ struct TicTacSpatialView: View {
             ProgressView()
         } attachments: {
             Attachment(id: "controls") {
-                Dashboard(gameSession: gameSession)
+                Dashboard()
+                    .environmentObject(sharePlaySession)
             }
         }
         .gesture(TapGesture().targetedToAnyEntity()
             .onEnded { value in
-                guard gameSession.isHumanTurn, let location = value.entity.components[GridLocation.self] else { return }
-                gameSession.mark(at: location)
-                if SharePlayGameSession.shared.isActive {
-                    SharePlayGameSession.shared.sendMove(at: location)
-                }
+                guard let location = value.entity.components[GridLocation.self] else { return }
+                sharePlaySession.mark(at: location)
             }
         )
         .task {
-            for await session in TicTacSpatialActivity.sessions() {
-                SharePlayGameSession.shared.configureSession(gameSession, session)
-            }
+            await sharePlaySession.configureSessions()
         }
     }
 }
@@ -61,5 +54,8 @@ struct TicTacSpatialView: View {
 extension GridLocation: Component {}
 
 #Preview(windowStyle: .volumetric) {
-    TicTacSpatialView(gameSession: GameSession())
+    let sharePlaySession = SharePlayGameSession()
+    return TicTacSpatialRealityKitView()
+        .environmentObject(sharePlaySession)
+        .environmentObject(sharePlaySession.gameSession)
 }

@@ -1,6 +1,6 @@
 //
-//  ContentView.swift
-//  TicTacSpatialX
+//  TicTacSpatialSceneKitView.swift
+//  TicTacSpatial
 //
 //  Created by Mike Sanford (1540) on 4/15/24.
 //
@@ -10,8 +10,9 @@ import SceneKit
 import TicTacToeEngine
 import TicTacToeController
 
-struct ContentView: View {
-    @StateObject private var gameSession = GameSession()
+struct TicTacSpatialSceneKitView: View {
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
+    @EnvironmentObject private var gameSession: GameSession
     private let scene = TTTScene()
     private let renderDelegate = RenderDelegate()
 
@@ -27,15 +28,10 @@ struct ContentView: View {
                 .gesture(
                     SpatialTapGesture(count: 1)
                         .onEnded { event in
-                            guard gameSession.isHumanTurn else { return }
                             // hit test
                             let tap = renderDelegate.lastRenderer?.hitTest(event.location, options: nil).first
-                            if let location = location(for: tap?.node) {
-                                gameSession.mark(at: location)
-                                if SharePlayGameSession.shared.isActive {
-                                    SharePlayGameSession.shared.sendMove(at: location)
-                                }
-                            }
+                            guard let location = location(for: tap?.node) else { return }
+                            sharePlaySession.mark(at: location)
                         }
                 )
                 .onChange(of: gameSession.eventID) { _, _ in
@@ -49,12 +45,12 @@ struct ContentView: View {
                     scene.cameraNode.position = .init(0, 0, cameraDistance(with: geometry))
                 }
             }
-            Dashboard(gameSession: gameSession)
+            Dashboard()
         }
+        .environmentObject(sharePlaySession)
+        .environmentObject(gameSession)
         .task {
-            for await session in TicTacSpatialActivity.sessions() {
-                SharePlayGameSession.shared.configureSession(gameSession, session)
-            }
+            await sharePlaySession.configureSessions()
         }
     }
 
@@ -83,5 +79,8 @@ private class RenderDelegate: NSObject, SCNSceneRendererDelegate {
 }
 
 #Preview {
-    ContentView()
+    let session = SharePlayGameSession()
+    return TicTacSpatialSceneKitView()
+        .environmentObject(session)
+        .environmentObject(session.gameSession)
 }

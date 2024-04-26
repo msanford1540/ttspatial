@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
-import TicTacToeEngine
+import TicTacToeController
 
-@main
+@main @MainActor
 struct TicTacSpatialApp: App {
+    let sharePlaySession = SharePlayGameSession()
+
     var body: some Scene {
         WindowGroup {
-            TicTacSpatialView(gameSession: GameSession())
+            TicTacSpatialRealityKitView()
+                .environmentObject(sharePlaySession)
+                .environmentObject(sharePlaySession.gameSession)
         }
         .windowStyle(.volumetric)
         .defaultSize(width: 1, height: 1.3, depth: 0.1, in: .meters)

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F5036B312BBC7AF400847D6A /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */; };
-		F5036B332BBC7AF400847D6A /* TicTacSpatialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */; };
+		F5036B332BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B322BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift */; };
 		F5036B352BBC7AF600847D6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B342BBC7AF600847D6A /* Assets.xcassets */; };
 		F5036B382BBC7AF600847D6A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */; };
 		F5036B432BBC7AF600847D6A /* TicTacSpatialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5036B422BBC7AF600847D6A /* TicTacSpatialTests.swift */; };
@@ -39,7 +39,7 @@
 		F5FDC94B2BCD68E1001EC38B /* Entity+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94A2BCD68E1001EC38B /* Entity+Animations.swift */; };
 		F5FDC94D2BCD696D001EC38B /* Transform+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */; };
 		F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */; };
-		F5FDC9572BCDD8CE001EC38B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9562BCDD8CE001EC38B /* ContentView.swift */; };
+		F5FDC9572BCDD8CE001EC38B /* TicTacSpatialSceneKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9562BCDD8CE001EC38B /* TicTacSpatialSceneKitView.swift */; };
 		F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */; };
 		F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */; };
 		F5FDC9672BCDD8D0001EC38B /* TicTacSpatialXTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9662BCDD8D0001EC38B /* TicTacSpatialXTests.swift */; };
@@ -184,7 +184,7 @@
 /* Begin PBXFileReference section */
 		F5036B292BBC7AF400847D6A /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
-		F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialView.swift; sourceTree = "<group>"; };
+		F5036B322BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialRealityKitView.swift; sourceTree = "<group>"; };
 		F5036B342BBC7AF600847D6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5036B372BBC7AF600847D6A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5036B392BBC7AF600847D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 		F5FDC94C2BCD696D001EC38B /* Transform+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transform+Rotation.swift"; sourceTree = "<group>"; };
 		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
-		F5FDC9562BCDD8CE001EC38B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F5FDC9562BCDD8CE001EC38B /* TicTacSpatialSceneKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialSceneKitView.swift; sourceTree = "<group>"; };
 		F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5FDC95A2BCDD8CF001EC38B /* TicTacSpatial.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TicTacSpatial.entitlements; sourceTree = "<group>"; };
 		F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -415,7 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */,
-				F5036B322BBC7AF400847D6A /* TicTacSpatialView.swift */,
+				F5036B322BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift */,
 				F5FDC9482BCD6531001EC38B /* GameboardController.swift */,
 				F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */,
 				F5FDC9B52BCDEA1A001EC38B /* Utilities */,
@@ -475,7 +475,7 @@
 			isa = PBXGroup;
 			children = (
 				F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */,
-				F5FDC9562BCDD8CE001EC38B /* ContentView.swift */,
+				F5FDC9562BCDD8CE001EC38B /* TicTacSpatialSceneKitView.swift */,
 				F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */,
 				F5FDC9C22BCDFBFA001EC38B /* TTTScene.swift */,
 				F5FDC9B72BCDFB0C001EC38B /* TTTScene.scn */,
@@ -862,7 +862,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5FDC9492BCD6531001EC38B /* GameboardController.swift in Sources */,
-				F5036B332BBC7AF400847D6A /* TicTacSpatialView.swift in Sources */,
+				F5036B332BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift in Sources */,
 				F5FDC94D2BCD696D001EC38B /* Transform+Rotation.swift in Sources */,
 				F5FDC94B2BCD68E1001EC38B /* Entity+Animations.swift in Sources */,
 				F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */,
@@ -899,7 +899,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5FDC9572BCDD8CE001EC38B /* ContentView.swift in Sources */,
+				F5FDC9572BCDD8CE001EC38B /* TicTacSpatialSceneKitView.swift in Sources */,
 				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
 				F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */,
 				F5FDC9C32BCDFBFA001EC38B /* TTTScene.swift in Sources */,
