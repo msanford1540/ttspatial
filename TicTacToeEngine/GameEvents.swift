@@ -14,7 +14,7 @@ public enum PlayerMarker: Codable, CustomStringConvertible {
     case o
     // swiftlint:enable identifier_name
 
-    var opponent: PlayerMarker {
+    public var opponent: PlayerMarker {
         switch self {
         case .x: return .o
         case .o: return .x
@@ -30,6 +30,8 @@ public enum PlayerMarker: Codable, CustomStringConvertible {
 }
 
 public struct GridLocation: Hashable, Sendable, Codable, CustomStringConvertible {
+    static let gameboardCellCount = 9
+
     @frozen public enum VerticalPosition: Sendable, Codable, CaseIterable, CustomStringConvertible {
         case top, middle, bottom
 
@@ -108,16 +110,75 @@ public struct WinningInfo: Equatable, Sendable, Codable, CustomStringConvertible
     }
 }
 
+public enum GameMessageType: Codable, Sendable, CustomStringConvertible {
+    case snapshot(GameSnapshot)
+    case move(GameMove)
+
+    public var description: String {
+        switch self {
+        case .snapshot(let gameSnapshot): "(snapshot: \(gameSnapshot))"
+        case .move(let gameMove): "(move: \(gameMove)"
+        }
+    }
+}
+
+public struct GameMessage: Sendable, Codable {
+    let id: UUID
+    let type: GameMessageType
+}
+
+public struct GameSnapshot: Sendable, Codable, CustomStringConvertible {
+    public let markers: [GridLocation: PlayerMarker]
+    public let currentTurn: PlayerMarker?
+
+    public var isGameOver: Bool {
+        currentTurn == nil
+    }
+
+    public var description: String {
+        func text(_ vPos: GridLocation.VerticalPosition, _ hPos: GridLocation.HorizontalPosition) -> String {
+            let location = GridLocation(vPos, hPos)
+            return markers[location].map(\.description) ?? " "
+        }
+
+        let row1 = "\(text(.top, .left))|\(text(.top, .middle))|\(text(.top, .right))"
+        let row2 = "\(text(.middle, .left))|\(text(.middle, .middle))|\(text(.middle, .right))"
+        let row3 = "\(text(.bottom, .left))|\(text(.bottom, .middle))|\(text(.bottom, .right))"
+        let hLine = "-----"
+        let turn = currentTurn?.description ?? .empty
+        let status = isGameOver ? "game over" : "turn: \(turn)"
+        return [row1, hLine, row2, hLine, row3, status, ""].joined(separator: "\n")
+    }
+}
+
 public struct GameMove: Sendable, Codable {
     public let location: GridLocation
     public let mark: PlayerMarker
+
+    public init(location: GridLocation, mark: PlayerMarker) {
+        self.location = location
+        self.mark = mark
+    }
 }
 
-public enum GameEvent: Sendable, Codable {
+public enum GameEvent: Sendable, Codable, CustomStringConvertible {
     case move(GameMove)
     case undo(GameMove)
     case gameOver(WinningInfo?)
     case reset
+
+    public var description: String {
+        switch self {
+        case .move(let gameMove):
+            "move: \(gameMove)"
+        case .undo(let gameMove):
+            "undo: \(gameMove)"
+        case .gameOver:
+            "gameOver"
+        case .reset:
+            "reset"
+        }
+    }
 }
 
 public struct GameStateUpdate: Hashable, Sendable, Codable {

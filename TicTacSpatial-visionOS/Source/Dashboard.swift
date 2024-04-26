@@ -8,110 +8,47 @@
 import Foundation
 import RealityKit
 import SwiftUI
+import TicTacToeController
 import TicTacToeEngine
 
-private let dashboardWidth: CGFloat = 1200
-private let turnMarkerOffset: CGFloat = dashboardWidth / 2 - 66
-
 struct Dashboard: View {
-    @ObservedObject private var gameSession: GameSession
-    @State private var isCurrentTurnHidden: Bool
-    @State private var currentTurnOffset: CGFloat
-
-    init(gameSession: GameSession) {
-        self.gameSession = gameSession
-        _isCurrentTurnHidden = State(wrappedValue: gameSession.currentTurn == nil)
-        _currentTurnOffset = State(wrappedValue: gameSession.currentTurn?.currentTurnOffset ?? .zero)
-    }
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
 
     var body: some View {
         ZStack {
-            VStack {
-                Circle()
-                    .fill(Color.red)
-                    .frame(width: 36)
-                    .opacity(isCurrentTurnHidden ? 0 : 1)
-                    .offset(x: currentTurnOffset)
-                HStack {
-                    PlayerView(marker: .x, name: "me", isLeading: true)
-                    Spacer()
-                    PlayerView(marker: .o, name: "bot", isLeading: false)
-                }
+            PlayersDashboard(margin: 48, turnMarkerSize: 48) { marker in
+                InnerPlayerMarker(marker: marker)
+            } winCountView: { marker in
+                WinCountView(marker)
+            } nameView: { playerName in
+                Text(playerName)
+                    .frame(width: 120)
             }
             .padding()
-            Button("Start Over") {
-                gameSession.reset()
+            VStack {
+                SharePlayButton(padding: 16)
+                StartOverButton(padding: 16)
             }
             .font(.extraLargeTitle)
+            .padding(.top, 36)
         }
-        .frame(width: dashboardWidth)
+        .frame(width: 1200, height: 300)
         .font(.extraLargeTitle)
         .glassBackgroundEffect()
-        .environmentObject(gameSession)
-        .onChange(of: gameSession.currentTurn) { oldCurrentTurn, newCurrentTurn in
-            if oldCurrentTurn != nil, newCurrentTurn != nil {
-                withAnimation { updateCurrentTurnOffset(for: newCurrentTurn) }
-            } else {
-                updateCurrentTurnOffset(for: newCurrentTurn)
-                withAnimation { isCurrentTurnHidden = newCurrentTurn == nil }
-            }
-        }
-    }
-
-    private func updateCurrentTurnOffset(for mark: PlayerMarker?) {
-        guard let mark else { return }
-        currentTurnOffset = mark.currentTurnOffset
-    }
-}
-
-private extension PlayerMarker {
-    var currentTurnOffset: CGFloat {
-        switch self {
-        case .x: -turnMarkerOffset
-        case .o: turnMarkerOffset
-        }
+        .environmentObject(sharePlaySession.gameSession)
     }
 }
 
 #Preview {
-    return Dashboard(gameSession: GameSession())
-}
-
-private struct PlayerView: View {
-    @EnvironmentObject private var gameSession: GameSession
-    let marker: PlayerMarker
-    let name: String
-    var isLeading: Bool
-
-    var body: some View {
-        VStack(alignment: isLeading ? .leading : .trailing) {
-            HStack(spacing: 24) {
-                if isLeading {
-                    InnerPlayerMarker(marker: marker)
-                    Text("\(winCount)")
-                } else {
-                    Text("\(winCount)")
-                    InnerPlayerMarker(marker: marker)
-                }
-            }
-            Text(name)
-                .frame(width: 100)
-        }
-    }
-
-    private var winCount: Int {
-        switch marker {
-        case .x: gameSession.xWinCount
-        case .o: gameSession.oWinCount
-        }
-    }
+    Dashboard().environmentObject(SharePlayGameSession())
 }
 
 private struct InnerPlayerMarker: View {
     let marker: PlayerMarker
 
     var body: some View {
-        Model3D(named: modelName) { model in
+        Model3D(named: modelName(for: marker)) { model in
             model
                 .resizable()
                 .scaledToFit()
@@ -123,12 +60,4 @@ private struct InnerPlayerMarker: View {
         .frame(depth: 1)
         .frame(width: 100, height: 100)
     }
-
-    private var modelName: String {
-        switch marker {
-        case .x: "marker-x"
-        case .o: "marker-o"
-        }
-    }
-
 }

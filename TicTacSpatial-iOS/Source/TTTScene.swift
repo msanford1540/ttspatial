@@ -32,16 +32,7 @@ class TTTScene: SCNScene {
         addPlaces()
         setupCamera()
         setupAmbientLight()
-        let sky = MDLSkyCubeTexture(
-            name: "sky",
-            channelEncoding: .float32,
-            textureDimensions: vector_int2(128, 128),
-            turbidity: 0.5,
-            sunElevation: 1,
-            upperAtmosphereScattering: 0,
-            groundAlbedo: 0
-        )
-
+        let sky = UIImage(resource: .init(name: "sky.hdr", bundle: .main))
         background.contents = sky
         lightingEnvironment.contents = sky
     }
@@ -189,13 +180,14 @@ class TTTScene: SCNScene {
     private func setupCamera() {
         cameraNode.camera = SCNCamera()
         cameraNode.position = cameraPosition
+        cameraNode.scale = .init(0.1, 0.1, 0.1)
         rootNode.addChildNode(cameraNode)
     }
 
     private func setupAmbientLight() {
         let light = SCNLight()
         light.type = .ambient
-        light.intensity = 600
+        light.intensity = 100
         let ambientLightNode = SCNNode()
         ambientLightNode.light = light
         rootNode.addChildNode(ambientLightNode)

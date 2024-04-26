@@ -9,21 +9,37 @@ import Foundation
 
 public actor GameEngine {
     public let updateStream: AsyncStream<GameStateUpdate>
-    private var currentTurn: PlayerMarker? = .x
+    private(set) var currentTurn: PlayerMarker? = .x
     private var markers: [GridLocation: PlayerMarker] = .empty
     private var winningInfo: WinningInfo?
     private var isGameOver: Bool = false
     private let continuation: AsyncStream<GameStateUpdate>.Continuation?
 
-    init(startingPlayer: PlayerMarker) {
-        self.currentTurn = startingPlayer
+    private init(currentTurn: PlayerMarker?, markers: [GridLocation: PlayerMarker] = .empty) {
         var continuation: AsyncStream<GameStateUpdate>.Continuation?
         self.updateStream = AsyncStream {
             continuation = $0
-            $0.yield(.init(event: .reset, currentTurn: startingPlayer))
         }
         self.continuation = continuation
         assert(continuation != nil)
+        self.currentTurn = currentTurn
+        self.markers = markers
+    }
+
+    init(startingPlayer: PlayerMarker) {
+        self.init(currentTurn: startingPlayer)
+        continuation?.yield(.init(event: .reset, currentTurn: startingPlayer))
+    }
+
+    init(gameSnapshot: GameSnapshot) {
+        self.init(currentTurn: gameSnapshot.currentTurn, markers: gameSnapshot.markers)
+        Task {
+            await updateState()
+        }
+    }
+
+    public var snapshot: GameSnapshot {
+        .init(markers: markers, currentTurn: currentTurn)
     }
 
     var description: String {
@@ -90,6 +106,42 @@ public actor GameEngine {
 #endif
     }
 
+    private func updateState() {
+        if let currentTurn {
+            let winningLines = WinningLine.allCases.filter { $0.winner(markers) != nil }
+            if winningLines.isEmpty {
+                let opponent = currentTurn.opponent
+                let possibleWinningLines = candidateWinningLines.filter { isPossible($0, turn: opponent) }
+                isGameOver = possibleWinningLines.isEmpty
+                if isGameOver {
+                    sendUpdate(.gameOver(nil), nil)
+                }
+            } else {
+                let winningInfo = WinningInfo(player: currentTurn, lines: winningLines)
+                self.winningInfo = winningInfo
+                isGameOver = true
+                sendUpdate(.gameOver(winningInfo), nil)
+            }
+        } else {
+            isGameOver = true
+            let winningLines = WinningLine.allCases.filter { $0.winner(markers) != nil }
+            if winningLines.isEmpty {
+                sendUpdate(.gameOver(nil), nil)
+            } else {
+                guard let winningLocation = winningLines.first?.locations[0], let winner = marker(for: winningLocation) else {
+                    assertionFailure("unexpected state")
+                    return
+                }
+                let winningInfo = WinningInfo(player: winner, lines: winningLines)
+                self.winningInfo = winningInfo
+                sendUpdate(.gameOver(winningInfo), nil)
+            }
+        }
+#if DEBUG
+        print("\(description)")
+#endif
+    }
+
     private func sendUpdate(_ event: GameEvent, _ currentTurn: PlayerMarker?) {
         continuation?.yield(.init(event: event, currentTurn: currentTurn))
     }
@@ -108,52 +160,66 @@ public actor GameEngine {
     }
 
     private var candidateWinningLines: Set<CandidateWinningLine> {
-        WinningLine.allCases.reduce(into: .empty) { result, line in
-            let lineLocations = line.locations
-            let locations = [lineLocations.first, lineLocations.second, lineLocations.third]
-            let marks = locations.map { marker(for: $0) }
-            let xMarks = marks.filter { $0 == .x }.count
-            let oMarks = marks.filter { $0 == .o }.count
-            let markCount: CandidateWinningLine.MarkCount
-            if xMarks > 0 {
-                guard oMarks == 0 else { return }
-                markCount = .marks(.x, xMarks)
-            } else if oMarks > 0 {
-                markCount = .marks(.o, oMarks)
-            } else {
-                markCount = .empty
-            }
-            result.insert(.init(winningLine: line, markCount: markCount))
-        }
+        CandidateWinningLine.candidateWinningLines(for: markers)
     }
 }
 
-private struct CandidateWinningLine: Hashable, CustomStringConvertible {
+struct CandidateWinningLine: Hashable, CustomStringConvertible {
+    static let count: Int = 3
+
     enum MarkCount: Hashable, CustomStringConvertible {
         case empty
-        case marks(PlayerMarker, Int)
+        case marks(PlayerMarker, Int, [GridLocation])
 
         var description: String {
             switch self {
             case .empty: "empty"
-            case .marks(let playerMarker, let count): "\(playerMarker),\(count)"
+            case .marks(let playerMarker, let count, let unmarkedLocations): "\(playerMarker),\(count),\(unmarkedLocations)"
             }
         }
 
         var mark: PlayerMarker? {
             switch self {
             case .empty: nil
-            case .marks(let mark, _): mark
+            case .marks(let mark, _, _): mark
             }
         }
 
         var count: Int {
             switch self {
             case .empty: 0
-            case .marks(_, let count): count
+            case .marks(_, let count, _): count
+            }
+        }
+
+        var unmarkedLocations: [GridLocation] {
+            switch self {
+            case .empty: .empty
+            case .marks(_, _, let unmarkedLocations): unmarkedLocations
             }
         }
     }
+
+    static func candidateWinningLines(for markers: [GridLocation: PlayerMarker]) -> Set<CandidateWinningLine> {
+        WinningLine.allCases.reduce(into: .empty) { result, line in
+            let marks = line.locations.compactMap { markers[$0] }
+            let xMarks = marks.filter { $0 == .x }.count
+            let oMarks = marks.filter { $0 == .o }.count
+            let unmarkedLocations = line.locations.compactMap { markers[$0] == nil ? $0 : nil }
+
+            let markCount: CandidateWinningLine.MarkCount
+            if xMarks > 0 {
+                guard oMarks == 0 else { return }
+                markCount = .marks(.x, xMarks, unmarkedLocations)
+            } else if oMarks > 0 {
+                markCount = .marks(.o, oMarks, unmarkedLocations)
+            } else {
+                markCount = .empty
+            }
+            result.insert(.init(winningLine: line, markCount: markCount))
+        }
+    }
+
     let winningLine: WinningLine
     let markCount: MarkCount
 
@@ -162,7 +228,7 @@ private struct CandidateWinningLine: Hashable, CustomStringConvertible {
     }
 
     var unmarkedCount: Int {
-        WinningLine.count - markCount.count
+        Self.count - markCount.count
     }
 }
 
@@ -178,9 +244,7 @@ private extension WinningInfo {
 }
 
 private extension WinningLine {
-    static let count: Int = 3
-
-    struct LineLocations {
+    struct LineLocations: Sequence {
         let first: GridLocation
         let second: GridLocation
         let third: GridLocation
@@ -196,6 +260,10 @@ private extension WinningLine {
             if index == 1 { return second }
             if index == 2 { return third }
             fatalError("index out of bounds")
+        }
+
+        func makeIterator() -> Set<GridLocation>.Iterator {
+            Set([first, second, third]).makeIterator()
         }
     }
 

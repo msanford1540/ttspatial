@@ -52,6 +52,17 @@
                ReferencedContainer = "container:tictacspatial.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F555D5D62BD4488600B92AA4"
+               BuildableName = "TicTacToeControllerTests.xctest"
+               BlueprintName = "TicTacToeControllerTests"
+               ReferencedContainer = "container:tictacspatial.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
