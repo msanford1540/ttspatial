@@ -27,7 +27,6 @@ class EasyBot: GameBotProtocol {
         }
 
         let unmarkedLocations = GridLocation.allCases.filter { snapshot.markers[$0] == nil }
-        guard let index = (0..<unmarkedLocations.count).randomElement() else { return nil }
-        return Array(unmarkedLocations)[index]
+        return unmarkedLocations.randomElement()
     }
 }

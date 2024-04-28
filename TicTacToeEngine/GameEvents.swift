@@ -29,7 +29,7 @@ public enum PlayerMarker: Codable, CustomStringConvertible {
     }
 }
 
-public struct GridLocation: Hashable, Sendable, Codable, CustomStringConvertible {
+public struct GridLocation: Hashable, Sendable, Codable, CustomStringConvertible, CaseIterable {
     static let gameboardCellCount = 9
 
     @frozen public enum VerticalPosition: Sendable, Codable, CaseIterable, CustomStringConvertible {
@@ -70,7 +70,7 @@ public struct GridLocation: Hashable, Sendable, Codable, CustomStringConvertible
         x == .middle && y == .middle ? "\(x)" : "\(y)-\(x)"
     }
 
-    public static var allCases: Set<GridLocation> = {
+    public static let allCases: Set<GridLocation> = {
         VerticalPosition.allCases.reduce(into: .init()) { result, vPos in
             HorizontalPosition.allCases.forEach { hPos in
                 result.insert(.init(vPos, hPos))
@@ -85,7 +85,7 @@ public enum WinningLine: Hashable, Sendable, Codable, CustomStringConvertible {
     case vertical(GridLocation.HorizontalPosition)
     case diagonal(isBackslash: Bool) // forwardslash: "/", backslash: "\"
 
-    static var allCases: Set<WinningLine> = {
+    static let allCases: Set<WinningLine> = {
         let horizontalLines = GridLocation.VerticalPosition.allCases.map { Self.horizontal($0) }
         let verticalLines = GridLocation.HorizontalPosition.allCases.map { Self.vertical($0) }
         let diagonals = [Self.diagonal(isBackslash: true), .diagonal(isBackslash: false)]
