@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "7D9794E2-F729-496A-BA8C-254811ABE3D1",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:tictacspatial.xcodeproj",
+        "identifier" : "F5FDC9942BCDE366001EC38B",
+        "name" : "TicTacToeEngineTests"
+      }
+    }
+  ],
+  "version" : 1
+}

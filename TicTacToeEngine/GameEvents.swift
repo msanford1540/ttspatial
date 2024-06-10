@@ -29,79 +29,7 @@ public enum PlayerMarker: Codable, CustomStringConvertible {
     }
 }
 
-public struct GridLocation: Hashable, Sendable, Codable, CustomStringConvertible, CaseIterable {
-    static let gameboardCellCount = 9
-
-    @frozen public enum VerticalPosition: Sendable, Codable, CaseIterable, CustomStringConvertible {
-        case top, middle, bottom
-
-        public var description: String {
-            switch self {
-            case .top: return "top"
-            case .middle: return "middle"
-            case .bottom: return "bottom"
-            }
-        }
-    }
-
-    @frozen public enum HorizontalPosition: Sendable, Codable, CaseIterable, CustomStringConvertible {
-        case left, middle, right
-
-        public var description: String {
-            switch self {
-            case .left: return "left"
-            case .middle: return "middle"
-            case .right: return "right"
-            }
-        }
-    }
-
-    // swiftlint:disable identifier_name
-    public let x: HorizontalPosition
-    public let y: VerticalPosition
-
-    init(_ y: VerticalPosition, _ x: HorizontalPosition) {
-        self.x = x
-        self.y = y
-    }
-    // swiftlint:enable identifier_name
-
-    public var description: String {
-        x == .middle && y == .middle ? "\(x)" : "\(y)-\(x)"
-    }
-
-    public static let allCases: Set<GridLocation> = {
-        VerticalPosition.allCases.reduce(into: .init()) { result, vPos in
-            HorizontalPosition.allCases.forEach { hPos in
-                result.insert(.init(vPos, hPos))
-            }
-        }
-    }()
-}
-
-@frozen
-public enum WinningLine: Hashable, Sendable, Codable, CustomStringConvertible {
-    case horizontal(GridLocation.VerticalPosition)
-    case vertical(GridLocation.HorizontalPosition)
-    case diagonal(isBackslash: Bool) // forwardslash: "/", backslash: "\"
-
-    static let allCases: Set<WinningLine> = {
-        let horizontalLines = GridLocation.VerticalPosition.allCases.map { Self.horizontal($0) }
-        let verticalLines = GridLocation.HorizontalPosition.allCases.map { Self.vertical($0) }
-        let diagonals = [Self.diagonal(isBackslash: true), .diagonal(isBackslash: false)]
-        return Set(horizontalLines + verticalLines + diagonals)
-    }()
-
-    public var description: String {
-        switch self {
-        case .horizontal(let verticalPosition): return "horizontal-\(verticalPosition)"
-        case .vertical(let horizontalPosition): return "vertical-\(horizontalPosition)"
-        case .diagonal(let isBackslash): return "diagonal-\(isBackslash ? "backslash" : "forwardslash")"
-        }
-    }
-}
-
-public struct WinningInfo: Equatable, Sendable, Codable, CustomStringConvertible {
+public struct WinningInfo<WinningLine: WinningLineProtocol>: Equatable, Sendable, Codable, CustomStringConvertible {
     public let player: PlayerMarker
     public let lines: Set<WinningLine>
 
@@ -110,11 +38,13 @@ public struct WinningInfo: Equatable, Sendable, Codable, CustomStringConvertible
     }
 }
 
-public enum GameMessageType: Codable, Sendable, CustomStringConvertible {
-    case snapshot(GameSnapshot)
-    case move(GameMove)
+public enum GameMessageType<Snapshot: GameboardSnapshotProtocol>: Codable, Sendable, CustomStringConvertible {
+    case snapshot(Snapshot)
+    case move(GameMove<Snapshot.Location>)
+}
 
-    public var description: String {
+public extension GameMessageType {
+    var description: String {
         switch self {
         case .snapshot(let gameSnapshot): "(snapshot: \(gameSnapshot))"
         case .move(let gameMove): "(move: \(gameMove)"
@@ -122,49 +52,25 @@ public enum GameMessageType: Codable, Sendable, CustomStringConvertible {
     }
 }
 
-public struct GameMessage: Sendable, Codable {
+public struct GameMessage<Snapshot: GameboardSnapshotProtocol>: Sendable, Codable {
     let id: UUID
-    let type: GameMessageType
+    let type: GameMessageType<Snapshot>
 }
 
-public struct GameSnapshot: Sendable, Codable, CustomStringConvertible {
-    public let markers: [GridLocation: PlayerMarker]
-    public let currentTurn: PlayerMarker?
-
-    public var isGameOver: Bool {
-        currentTurn == nil
-    }
-
-    public var description: String {
-        func text(_ vPos: GridLocation.VerticalPosition, _ hPos: GridLocation.HorizontalPosition) -> String {
-            let location = GridLocation(vPos, hPos)
-            return markers[location].map(\.description) ?? " "
-        }
-
-        let row1 = "\(text(.top, .left))|\(text(.top, .middle))|\(text(.top, .right))"
-        let row2 = "\(text(.middle, .left))|\(text(.middle, .middle))|\(text(.middle, .right))"
-        let row3 = "\(text(.bottom, .left))|\(text(.bottom, .middle))|\(text(.bottom, .right))"
-        let hLine = "-----"
-        let turn = currentTurn?.description ?? .empty
-        let status = isGameOver ? "game over" : "turn: \(turn)"
-        return [row1, hLine, row2, hLine, row3, status, ""].joined(separator: "\n")
-    }
-}
-
-public struct GameMove: Sendable, Codable {
-    public let location: GridLocation
+public struct GameMove<GameboardLocation: GameboardLocationProtocol>: Sendable, Codable {
+    public let location: GameboardLocation
     public let mark: PlayerMarker
 
-    public init(location: GridLocation, mark: PlayerMarker) {
+    public init(location: GameboardLocation, mark: PlayerMarker) {
         self.location = location
         self.mark = mark
     }
 }
 
-public enum GameEvent: Sendable, Codable, CustomStringConvertible {
-    case move(GameMove)
-    case undo(GameMove)
-    case gameOver(WinningInfo?)
+public enum GameEvent<WinningLine: WinningLineProtocol, GameboardLocation: GameboardLocationProtocol>: Sendable, Codable, CustomStringConvertible {
+    case move(GameMove<GameboardLocation>)
+    case undo(GameboardLocation)
+    case gameOver(WinningInfo<WinningLine>?)
     case reset
 
     public var description: String {
@@ -181,50 +87,22 @@ public enum GameEvent: Sendable, Codable, CustomStringConvertible {
     }
 }
 
-public struct GameStateUpdate: Hashable, Sendable, Codable {
+public struct GameStateUpdate<WinningLine: WinningLineProtocol, GameboardLocation: GameboardLocationProtocol>: Hashable, Sendable, Codable {
     public let id: UUID
-    public let event: GameEvent
+    public let event: GameEvent<WinningLine, GameboardLocation>
     public let currentTurn: PlayerMarker?
 
-    init(event: GameEvent, currentTurn: PlayerMarker?) {
+    init(event: GameEvent<WinningLine, GameboardLocation>, currentTurn: PlayerMarker?) {
         self.id = UUID()
         self.event = event
         self.currentTurn = currentTurn
     }
 
-    public static func == (lhs: GameStateUpdate, rhs: GameStateUpdate) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-}
-
-public extension GridLocation {
-    var name: String {
-        x == .middle && y == .middle
-            ? x.name
-            : "\(y.name)_\(x.name)"
-    }
-}
-
-public extension GridLocation.HorizontalPosition {
-    var name: String {
-        switch self {
-        case .left: return "left"
-        case .middle: return "middle"
-        case .right: return "right"
-        }
-    }
-}
-
-public extension GridLocation.VerticalPosition {
-    var name: String {
-        switch self {
-        case .top: return "top"
-        case .middle: return "middle"
-        case .bottom: return "bottom"
-        }
     }
 }
