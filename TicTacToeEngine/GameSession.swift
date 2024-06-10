@@ -8,12 +8,27 @@
 import Foundation
 import Combine
 
+@frozen
+public enum PlayerType {
+    case bot(BotType)
+    case remote
+    case human
+}
+
 @MainActor
-public class GameSession: ObservableObject {
-    enum Player: CustomStringConvertible {
-        case bot(GameBotProtocol)
+public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
+    enum Player {
+        case bot(BaseBot<Gameboard.Snapshot>)
         case remote
         case human
+
+        init(playerType: PlayerType) {
+            self = switch playerType {
+            case .bot: .bot(EasyBot<Gameboard.Snapshot>())
+            case .remote: .remote
+            case .human: .human
+            }
+        }
 
         var isHuman: Bool {
             if case .human = self { true } else { false }
@@ -30,32 +45,33 @@ public class GameSession: ObservableObject {
 
     @Published public private(set) var xWinCount: Int = 0
     @Published public private(set) var oWinCount: Int = 0
-    @Published public private(set) var eventID: UUID = .init()
-    @Published public private(set) var currentTurn: PlayerMarker?
     @Published public private(set) var xPlayerName: String = .empty
     @Published public private(set) var oPlayerName: String = .empty
-    private var pendingGameEvent: GameEvent?
-    public private(set) var oppononetName: String = "Bot"
+    @Published public private(set) var processingEventID: UUID?
+    @Published public private(set) var currentTurn: PlayerMarker?
+    private var pendingGameEvent: GameEvent<Gameboard.WinningLine, Gameboard.Location>?
 
-    private var queue = Queue<GameStateUpdate>()
-    private var gameEngine: GameEngine
+    private var queue = Queue<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>()
+    private var gameEngine: GameEngine<Gameboard>
     private var startingPlayer: PlayerMarker = .x
-    @Published private var xPlayer: Player = .human
-    @Published private var oPlayer: Player = .bot(EasyBot())
+    @Published private var xPlayer: Player
+    @Published private var oPlayer: Player
 
-    public init() {
-        gameEngine = GameEngine(startingPlayer: startingPlayer)
-        startNewGame()
+    public init(xPlayerType: PlayerType, oPlayerType: PlayerType) {
+        xPlayer = Player(playerType: xPlayerType)
+        oPlayer = Player(playerType: oPlayerType)
+        currentTurn = startingPlayer
+        gameEngine = GameEngine(gameboard: Gameboard(), startingPlayer: startingPlayer)
         setupPipelines()
+        startNewGame()
     }
 
     private func setupPipelines() {
         $xPlayer
-            .map { [unowned self] player in playerName(for: player) }
+            .map(\.playerName)
             .assign(to: &$xPlayerName)
-
         $oPlayer
-            .map { [unowned self] player in playerName(for: player) }
+            .map(\.playerName)
             .assign(to: &$oPlayerName)
     }
 
@@ -73,18 +89,8 @@ public class GameSession: ObservableObject {
         }
     }
 
-    private func playerName(for player: Player) -> String {
-        switch player {
-        case .bot(let bot): bot.name
-        case .remote: "Friend"
-        case .human: "me"
-        }
-    }
-
-    public var snapshot: GameSnapshot {
-        get async {
-            await gameEngine.snapshot
-        }
+    public var snapshot: Gameboard.Snapshot {
+        gameEngine.snapshot
     }
 
     public var isHumanTurn: Bool {
@@ -93,13 +99,10 @@ public class GameSession: ObservableObject {
     }
 
     /// Only called from a human Player
-    public func mark(at location: GridLocation) {
-        Task {
-            guard let currentTurn = await gameEngine.currentTurn, player(for: currentTurn).isHuman else { return }
-            print("[debug]", "xPlayer: \(xPlayer), oPlayer: \(oPlayer)")
-            await gameEngine.mark(at: location)
-            await performBotMoveIfNeeded()
-        }
+    public func mark(at location: Gameboard.Location) async {
+        guard let currentTurn = gameEngine.currentTurn, player(for: currentTurn).isHuman else { return }
+        gameEngine.markCurrentPlayer(at: location)
+        await performBotMoveIfNeeded()
     }
 
     private func player(for mark: PlayerMarker) -> Player {
@@ -110,29 +113,27 @@ public class GameSession: ObservableObject {
     }
 
     private func performBotMoveIfNeeded() async {
-        let snapshot = await gameEngine.snapshot
+        let snapshot = gameEngine.snapshot
         guard let currentTurn = snapshot.currentTurn,
               case .bot(let bot) = player(for: currentTurn),
               let moveLocation = bot.move(for: snapshot) else { return }
         try? await Task.sleep(for: .seconds(1))
-        await gameEngine.mark(at: moveLocation)
+        gameEngine.markCurrentPlayer(at: moveLocation)
     }
 
-    public func handleMessage(_ message: GameMessageType) {
+    public func handleMessage(_ message: GameMessageType<Gameboard.Snapshot>) {
         switch message {
         case .snapshot(let gameSnapshot):
-            gameEngine = .init(gameSnapshot: gameSnapshot)
+            gameEngine = .init(snapshot: gameSnapshot)
             startNewGame()
         case .move(let gameMove):
-            Task {
-                await gameEngine.mark(at: gameMove.location)
-            }
+            gameEngine.markCurrentPlayer(at: gameMove.location)
         }
     }
 
     public func reset() {
         startingPlayer = startingPlayer.opponent
-        gameEngine = GameEngine(startingPlayer: startingPlayer)
+        gameEngine = .init(gameboard: Gameboard(), startingPlayer: startingPlayer)
         startNewGame()
     }
 
@@ -143,7 +144,7 @@ public class GameSession: ObservableObject {
         }
     }
 
-    public func dequeueEvent() -> GameEvent? {
+    public func dequeueEvent() -> GameEvent<Gameboard.WinningLine, Gameboard.Location>? {
         guard let pendingGameEvent else { return nil }
         self.pendingGameEvent = nil
         return pendingGameEvent
@@ -151,13 +152,16 @@ public class GameSession: ObservableObject {
 
     public func onCompletedEvent() {
         assert(pendingGameEvent == nil)
-        guard let nextUpdate = queue.dequeue() else { return }
-        updateGameState(with: nextUpdate)
+        if let nextUpdate = queue.dequeue() {
+            processGameState(with: nextUpdate)
+        } else {
+            processingEventID = nil
+        }
     }
 
-    private func onGameStateUpdate(_ update: GameStateUpdate) {
-        if pendingGameEvent == nil {
-            updateGameState(with: update)
+    private func onGameStateUpdate(_ update: GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>) {
+        if processingEventID == nil {
+            processGameState(with: update)
         } else {
             queue.enqueue(update)
         }
@@ -171,8 +175,8 @@ public class GameSession: ObservableObject {
         }
     }
 
-    private func updateGameState(with update: GameStateUpdate) {
-        eventID = update.id
+    private func processGameState(with update: GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>) {
+        processingEventID = update.id
         pendingGameEvent = update.event
         currentTurn = update.currentTurn
 
@@ -186,10 +190,20 @@ public class GameSession: ObservableObject {
 }
 
 private extension GameEvent {
-    var winningInfo: WinningInfo? {
+    var winningInfo: WinningInfo<WinningLine>? {
         switch self {
         case .move, .undo, .reset: nil
         case .gameOver(let winningInfo): winningInfo
+        }
+    }
+}
+
+private extension GameSession.Player {
+    var playerName: String {
+        switch self {
+        case .bot(let bot): bot.name
+        case .remote: "Friend"
+        case .human: "Me"
         }
     }
 }

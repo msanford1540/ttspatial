@@ -1,5 +1,5 @@
 //
-//  Collection+Convience.swift
+//  Collection+Convenience.swift
 //  TicTacSpatialCore
 //
 //  Created by Mike Sanford (1540) on 4/8/24.

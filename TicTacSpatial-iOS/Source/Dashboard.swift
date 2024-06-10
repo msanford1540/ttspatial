@@ -12,8 +12,18 @@ import GroupActivities
 import TicTacToeController
 import TicTacToeEngine
 
-struct Dashboard: View {
+private func dashboardBackgroundUIColor(for colorScheme: ColorScheme) -> UIColor {
+    switch colorScheme {
+    case .light: .init(white: 0.875, alpha: 1)
+    case .dark: .init(white: 0.125, alpha: 1)
+    @unknown default: .init(white: 0.875, alpha: 1)
+    }
+}
+
+struct Dashboard<Gameboard: GameboardProtocol>: View {
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var gameSession: GameSession<Gameboard>
+    @EnvironmentObject private var viewModel: DashboardViewModel
 
     var body: some View {
         ZStack {
@@ -28,8 +38,8 @@ struct Dashboard: View {
             .padding(.vertical, 8)
             VStack {
                 Spacer()
-                SharePlayButton()
-                StartOverButton()
+                SharePlayButton<Gameboard>()
+                StartOverButton<Gameboard>()
             }
             .font(.headline)
             .padding(.vertical, 8)
@@ -40,20 +50,13 @@ struct Dashboard: View {
     }
 
     private var backgroundColor: Color {
-        .init(uiColor: Self.backgroundUIColor(for: colorScheme))
+        .init(uiColor: dashboardBackgroundUIColor(for: colorScheme))
     }
 
-    fileprivate static func backgroundUIColor(for colorScheme: ColorScheme) -> UIColor {
-        switch colorScheme {
-        case .light: .init(white: 0.875, alpha: 1)
-        case .dark: .init(white: 0.125, alpha: 1)
-        @unknown default: .init(white: 0.875, alpha: 1)
-        }
-    }
 }
 
 #Preview {
-    Dashboard().environmentObject(SharePlayGameSession())
+    Dashboard<GridGameboard>().environmentObject(SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human))
 }
 
 private struct InnerPlayerMarker: View {
@@ -72,7 +75,7 @@ private struct InnerPlayerMarker: View {
         if marker == .x {
             rootNode.scale = .init(1.15, 1.15, 1)
         }
-        scene.background.contents = Dashboard.backgroundUIColor(for: colorScheme)
+        scene.background.contents = dashboardBackgroundUIColor(for: colorScheme)
         let light = SCNLight()
         light.type = .ambient
         light.intensity = 300
