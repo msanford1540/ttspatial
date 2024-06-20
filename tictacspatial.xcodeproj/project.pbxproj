@@ -15,18 +15,18 @@
 		F5036B512BBCC10900847D6A /* ttt.rkassets in Resources */ = {isa = PBXBuildFile; fileRef = F5036B502BBCC10900847D6A /* ttt.rkassets */; };
 		F50FB20C2C0A09E2007CDA1F /* Quanterion.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50FB20B2C0A09E2007CDA1F /* Quanterion.swift */; };
 		F50FB20E2C0A0E1D007CDA1F /* String+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50FB20D2C0A0E1D007CDA1F /* String+Convenience.swift */; };
-		F512E80C2BEDDD8700955FD2 /* RealityKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512E80B2BEDDD8700955FD2 /* RealityKitView.swift */; };
 		F512E80E2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512E80D2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift */; };
 		F512E8142BEE57F000955FD2 /* Scene.usda in Resources */ = {isa = PBXBuildFile; fileRef = F512E8122BEE57F000955FD2 /* Scene.usda */; };
 		F512E8152BEE57F000955FD2 /* Scene3D.usda in Resources */ = {isa = PBXBuildFile; fileRef = F512E8132BEE57F000955FD2 /* Scene3D.usda */; };
 		F512E81D2BF3AE7A00955FD2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512E81C2BF3AE7A00955FD2 /* Utilities.swift */; };
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
+		F5280DA62C23F372008F6BDE /* cloudy-sky.skybox in Resources */ = {isa = PBXBuildFile; fileRef = F5280DA52C23F372008F6BDE /* cloudy-sky.skybox */; };
 		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
 		F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */; };
-		F555D5E32BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; platformFilter = ios; };
-		F555D5E42BD4488600B92AA4 /* TicTacToeController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F555D5E32BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
+		F555D5E42BD4488600B92AA4 /* TicTacToeController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F555D5EF2BD448E700B92AA4 /* TicTacToeController.docc in Sources */ = {isa = PBXBuildFile; fileRef = F555D5EC2BD448E700B92AA4 /* TicTacToeController.docc */; };
 		F555D5F02BD448E700B92AA4 /* TicTacToeController.h in Headers */ = {isa = PBXBuildFile; fileRef = F555D5ED2BD448E700B92AA4 /* TicTacToeController.h */; };
 		F555D5F22BD4491200B92AA4 /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
@@ -39,17 +39,13 @@
 		F555D6072BE131DD00B92AA4 /* WinningLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D6062BE131DD00B92AA4 /* WinningLine.swift */; };
 		F555D6092BE1322A00B92AA4 /* GameboardLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D6082BE1322A00B92AA4 /* GameboardLocation.swift */; };
 		F555D60B2BE1351500B92AA4 /* Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D60A2BE1351500B92AA4 /* Gameboard.swift */; };
-		F55789762C02DBDC00794BEF /* cloudy-sky.hdr in Resources */ = {isa = PBXBuildFile; fileRef = F55789752C02DBDC00794BEF /* cloudy-sky.hdr */; };
 		F58960F42C0AC26A003B4940 /* GameboardController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F32C0AC26A003B4940 /* GameboardController2.swift */; };
 		F58960F52C0AC2A3003B4940 /* Logger+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50FB2092C0A06A1007CDA1F /* Logger+Convenience.swift */; };
 		F58960F72C0AC36C003B4940 /* RealityKit+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */; };
-		F58960F92C0ACAC5003B4940 /* RealityKitShim.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F82C0ACAC5003B4940 /* RealityKitShim.swift */; };
-		F58960FB2C0B66A4003B4940 /* SCNVector3+Convience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960FA2C0B66A4003B4940 /* SCNVector3+Convience.swift */; };
-		F58960FD2C0B66FB003B4940 /* RealityKitShim+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960FC2C0B66FB003B4940 /* RealityKitShim+iOS.swift */; };
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
-		F5FDC94B2BCD68E1001EC38B /* RealityKitShim+visionOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC94A2BCD68E1001EC38B /* RealityKitShim+visionOS.swift */; };
+		F5D0C54C2C235E3E0037DD32 /* SCNVector3+Convience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */; };
 		F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */; };
 		F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */; };
 		F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */; };
@@ -204,7 +200,6 @@
 		F50FB2092C0A06A1007CDA1F /* Logger+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Convenience.swift"; sourceTree = "<group>"; };
 		F50FB20B2C0A09E2007CDA1F /* Quanterion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quanterion.swift; sourceTree = "<group>"; };
 		F50FB20D2C0A0E1D007CDA1F /* String+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Convenience.swift"; sourceTree = "<group>"; };
-		F512E80B2BEDDD8700955FD2 /* RealityKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityKitView.swift; sourceTree = "<group>"; };
 		F512E80D2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialRealityKitView.swift; sourceTree = "<group>"; };
 		F512E8122BEE57F000955FD2 /* Scene.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Scene.usda; sourceTree = "<group>"; };
 		F512E8132BEE57F000955FD2 /* Scene3D.usda */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Scene3D.usda; sourceTree = "<group>"; };
@@ -216,6 +211,7 @@
 		F51E95CD2BC4258300FC33D3 /* Collection+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Convenience.swift"; sourceTree = "<group>"; };
 		F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvents.swift; sourceTree = "<group>"; };
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		F5280DA52C23F372008F6BDE /* cloudy-sky.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = "cloudy-sky.skybox"; sourceTree = "<group>"; };
 		F555D5C62BD2B17F00B92AA4 /* GameBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBot.swift; sourceTree = "<group>"; };
 		F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToeController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,16 +223,12 @@
 		F555D6062BE131DD00B92AA4 /* WinningLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinningLine.swift; sourceTree = "<group>"; };
 		F555D6082BE1322A00B92AA4 /* GameboardLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardLocation.swift; sourceTree = "<group>"; };
 		F555D60A2BE1351500B92AA4 /* Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
-		F55789752C02DBDC00794BEF /* cloudy-sky.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cloudy-sky.hdr"; sourceTree = "<group>"; };
 		F58960F32C0AC26A003B4940 /* GameboardController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController2.swift; sourceTree = "<group>"; };
 		F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealityKit+Helpers.swift"; sourceTree = "<group>"; };
-		F58960F82C0ACAC5003B4940 /* RealityKitShim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityKitShim.swift; sourceTree = "<group>"; };
-		F58960FA2C0B66A4003B4940 /* SCNVector3+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Convience.swift"; sourceTree = "<group>"; };
-		F58960FC2C0B66FB003B4940 /* RealityKitShim+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealityKitShim+iOS.swift"; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
-		F5FDC94A2BCD68E1001EC38B /* RealityKitShim+visionOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealityKitShim+visionOS.swift"; sourceTree = "<group>"; };
+		F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Convience.swift"; sourceTree = "<group>"; };
 		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
 		F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -401,7 +393,6 @@
 				F50FB20B2C0A09E2007CDA1F /* Quanterion.swift */,
 				F512E81C2BF3AE7A00955FD2 /* Utilities.swift */,
 				F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */,
-				F58960F82C0ACAC5003B4940 /* RealityKitShim.swift */,
 				F555D5EC2BD448E700B92AA4 /* TicTacToeController.docc */,
 				F555D5ED2BD448E700B92AA4 /* TicTacToeController.h */,
 			);
@@ -411,6 +402,7 @@
 		F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				F5280DA52C23F372008F6BDE /* cloudy-sky.skybox */,
 				F50FB2082C07E464007CDA1F /* Info.plist */,
 				F5FDC9B62BCDED5B001EC38B /* Source */,
 				F5FDC9BD2BCDFB7E001EC38B /* Resources */,
@@ -443,7 +435,6 @@
 				F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */,
 				F5036B322BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift */,
 				F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */,
-				F5FDC94A2BCD68E1001EC38B /* RealityKitShim+visionOS.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -497,10 +488,8 @@
 			children = (
 				F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */,
 				F512E80D2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift */,
-				F512E80B2BEDDD8700955FD2 /* RealityKitView.swift */,
 				F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */,
-				F58960FA2C0B66A4003B4940 /* SCNVector3+Convience.swift */,
-				F58960FC2C0B66FB003B4940 /* RealityKitShim+iOS.swift */,
+				F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -509,7 +498,6 @@
 			isa = PBXGroup;
 			children = (
 				F512E8122BEE57F000955FD2 /* Scene.usda */,
-				F55789752C02DBDC00794BEF /* cloudy-sky.hdr */,
 				F512E8132BEE57F000955FD2 /* Scene3D.usda */,
 				F5FDC9C42BCEA878001EC38B /* Pole.usdz */,
 				F5FDC9B92BCDFB7E001EC38B /* Block2.usdz */,
@@ -708,7 +696,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					F5036B282BBC7AF400847D6A = {
 						CreatedOnToolsVersion = 15.3;
@@ -808,9 +796,9 @@
 				F512E8142BEE57F000955FD2 /* Scene.usda in Resources */,
 				F512E8152BEE57F000955FD2 /* Scene3D.usda in Resources */,
 				F5FDC9C02BCDFB7E001EC38B /* marker-o.usdz in Resources */,
-				F55789762C02DBDC00794BEF /* cloudy-sky.hdr in Resources */,
 				F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */,
 				F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */,
+				F5280DA62C23F372008F6BDE /* cloudy-sky.skybox in Resources */,
 				F5FDC9C52BCEA878001EC38B /* Pole.usdz in Resources */,
 				F5FDC9BF2BCDFB7E001EC38B /* Line.usdz in Resources */,
 			);
@@ -884,7 +872,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5036B332BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift in Sources */,
-				F5FDC94B2BCD68E1001EC38B /* RealityKitShim+visionOS.swift in Sources */,
 				F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */,
 				F5036B312BBC7AF400847D6A /* TicTacSpatialApp.swift in Sources */,
 			);
@@ -903,7 +890,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F50FB20C2C0A09E2007CDA1F /* Quanterion.swift in Sources */,
-				F58960F92C0ACAC5003B4940 /* RealityKitShim.swift in Sources */,
 				F512E81D2BF3AE7A00955FD2 /* Utilities.swift in Sources */,
 				F555D5F72BD4494000B92AA4 /* TicTacSpatialActivity.swift in Sources */,
 				F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */,
@@ -924,11 +910,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F512E80C2BEDDD8700955FD2 /* RealityKitView.swift in Sources */,
+				F5D0C54C2C235E3E0037DD32 /* SCNVector3+Convience.swift in Sources */,
 				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
-				F58960FD2C0B66FB003B4940 /* RealityKitShim+iOS.swift in Sources */,
 				F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */,
-				F58960FB2C0B66A4003B4940 /* SCNVector3+Convience.swift in Sources */,
 				F512E80E2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1089,7 +1073,8 @@
 				SDKROOT = xros;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				XROS_DEPLOYMENT_TARGET = 1.1;
+				SWIFT_VERSION = 6.0;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1144,8 +1129,9 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = xros;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
-				XROS_DEPLOYMENT_TARGET = 1.1;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -1172,7 +1158,7 @@
 				PRODUCT_NAME = TicTacSpatial;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
@@ -1200,7 +1186,7 @@
 				PRODUCT_NAME = TicTacSpatial;
 				SUPPORTED_PLATFORMS = "xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
@@ -1208,7 +1194,6 @@
 		F5036B4A2BBC7AF600847D6A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1229,7 +1214,6 @@
 		F5036B4B2BBC7AF600847D6A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1252,7 +1236,7 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1266,7 +1250,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -1275,7 +1259,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -1287,7 +1271,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1299,7 +1283,7 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1313,7 +1297,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -1322,7 +1306,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -1334,7 +1318,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1345,7 +1329,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1370,7 +1353,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1394,7 +1376,6 @@
 		F5FDC9752BCDD8D0001EC38B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TicTacSpatial-iOS/TicTacSpatial.entitlements";
@@ -1419,10 +1400,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
 				PRODUCT_NAME = TicTacSpatial;
@@ -1430,7 +1411,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1438,7 +1419,6 @@
 		F5FDC9762BCDD8D0001EC38B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TicTacSpatial-iOS/TicTacSpatial.entitlements";
@@ -1463,10 +1443,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
 				PRODUCT_NAME = TicTacSpatial;
@@ -1474,7 +1454,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1482,7 +1462,6 @@
 		F5FDC9782BCDD8D0001EC38B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1507,7 +1486,6 @@
 		F5FDC9792BCDD8D0001EC38B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1534,7 +1512,7 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1548,7 +1526,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -1557,7 +1535,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -1569,11 +1547,11 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				XROS_DEPLOYMENT_TARGET = 1.2;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1582,7 +1560,7 @@
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1596,7 +1574,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
@@ -1605,7 +1583,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
@@ -1617,11 +1595,11 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				XROS_DEPLOYMENT_TARGET = 1.2;
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -1629,7 +1607,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1653,7 +1630,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;

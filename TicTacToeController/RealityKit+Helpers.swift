@@ -7,6 +7,9 @@
 
 import RealityKit
 
+private let defaultDuration: Duration = .seconds(1)
+private let minInputOpacity: Float = 0.02
+
 public extension Entity {
     static let empty: Entity = .init()
 
@@ -21,6 +24,27 @@ public extension Entity {
         } else {
             self.transform = transform
         }
+    }
+
+    @MainActor func animateOpacity(to opacity: Float, duration: Duration? = nil) async {
+        let animationDuration = duration ?? defaultDuration
+        let fromToAnimation = FromToByAnimation(
+            from: components[OpacityComponent.self]?.opacity,
+            to: opacity,
+            duration: .init(animationDuration),
+            bindTarget: .opacity
+        )
+
+        if let animation = try? AnimationResource.generate(with: fromToAnimation) {
+            playAnimation(animation)
+            try? await Task.sleep(for: animationDuration)
+        } else {
+            components.set(OpacityComponent(opacity: opacity))
+        }
+    }
+
+    @MainActor func animateOpacityToMinInput(duration: Duration? = nil) async {
+        await animateOpacity(to: minInputOpacity, duration: duration)
     }
 }
 

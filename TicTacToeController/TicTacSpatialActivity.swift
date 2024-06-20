@@ -175,7 +175,7 @@ public final class SharePlayGameSession<Gameboard: GameboardProtocol>: Observabl
     }
 }
 
-private final class RotationSender {
+private final class RotationSender: @unchecked Sendable {
     private let messenger: GroupSessionMessenger
     @Published var rotation: simd_quatf?
     private var subscriber: AnyCancellable?

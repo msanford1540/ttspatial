@@ -7,7 +7,7 @@
 
 import simd
 
-struct Quanterion: Codable, CustomStringConvertible {
+struct Quanterion: Codable, CustomStringConvertible, Sendable {
     let angle: Float
     let axisX: Float
     let axisY: Float

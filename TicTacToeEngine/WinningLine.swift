@@ -84,6 +84,6 @@ public enum CubeWinningLine: WinningLineProtocol {
     }
 }
 
-extension Bool: CaseIterable {
+extension Bool {
     public static let allCases = [true, false]
 }

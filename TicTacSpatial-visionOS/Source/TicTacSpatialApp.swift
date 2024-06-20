@@ -12,10 +12,6 @@ import RealityKit
 
 @main @MainActor
 struct TicTacSpatialApp: App {
-    init() {
-        setRealityKitShim(RealityKitShimVisionOS())
-    }
-
     let sharePlaySession = SharePlayGameSession<CubeGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
 
     var body: some SwiftUI.Scene {

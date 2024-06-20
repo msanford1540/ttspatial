@@ -41,21 +41,13 @@ import TicTacToeEngine
         lineTemplateEntity.isEnabled = false
 
         Gameboard.Location.allCases.forEach { location in
-#if os(visionOS)
-            guard let locationComponent = location as? Component else {
-                assertionFailure("expected location conform to Component")
-                return
-            }
-#endif
             scene.findEntity(named: location.entityName).map {
                 blankEntities[location] = $0
-#if os(visionOS)
                 $0.components.set([
                     OpacityComponent(opacity: 1),
                     HoverEffectComponent(),
-                    locationComponent
+                    LocationComponent(location)
                 ])
-#endif
             }
         }
     }
@@ -85,7 +77,7 @@ import TicTacToeEngine
         }
         let postion = blankEntity.position
         Task {
-            await blankEntity.animateToMinInputOpacity(duration: animationDuration / 2)
+            await blankEntity.animateOpacityToMinInput(duration: animationDuration / 2)
         }
         let templateEntity = templateEntity(for: mark)
         let markedEntity = templateEntity.clone(recursive: true)
@@ -140,7 +132,7 @@ import TicTacToeEngine
             guard entity.isEnabled else { return }
             didAnimate = true
             Task {
-                await entity.animateToMinInputOpacity(duration: animationDuration)
+                await entity.animateOpacityToMinInput(duration: animationDuration)
             }
         }
 
@@ -258,8 +250,13 @@ private extension Duration {
     static let drawLineDuration: Duration = .milliseconds(500)
 }
 
-extension GridLocation: Component {}
-extension CubeLocation: Component {}
+public struct LocationComponent<Location: GameboardLocationProtocol>: Component {
+    public let location: Location
+
+    public init(_ location: Location) {
+        self.location = location
+    }
+}
 
 private let allRowOffset: Float = 0.3
 private extension HorizontalPosition {

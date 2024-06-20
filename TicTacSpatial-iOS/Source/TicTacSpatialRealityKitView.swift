@@ -6,68 +6,94 @@
 //
 
 import SwiftUI
-import TicTacToeEngine
-import TicTacToeController
 import RealityKit
-import simd
-import ARKit
+import TicTacToeController
+import TicTacToeEngine
 
-@MainActor
 struct TicTacSpatialGridRealityKitView: View {
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<GridGameboard>
-    @EnvironmentObject private var gameSession: GameSession<GridGameboard>
+    typealias Gameboard = GridGameboard
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
+    @EnvironmentObject private var gameSession: GameSession<Gameboard>
     private let controller = GameboardController2D()
 
     var body: some View {
-        VStack(spacing: 0) {
-            RealityKitGridView(controller)
-            Dashboard<GridGameboard>()
-        }
-        .task {
-            await sharePlaySession.configureSessions()
-        }
-        .onChange(of: gameSession.processingEventID) {
+        RealityView { content in
+            guard let scene = try? await Entity(named: "Scene", in: .main) else { return }
+            content.add(scene)
+            content.camera = .virtual
+            controller.setup(scene: scene)
+        } update: { _ in
             Task {
                 guard let event = gameSession.dequeueEvent() else { return }
                 try await controller.updateUI(event)
                 gameSession.onCompletedEvent()
             }
+        } placeholder: {
+            ProgressView()
+        }
+        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<GridLocation>.self))
+            .onEnded { value in
+                guard let component = value.entity.components[LocationComponent<GridLocation>.self] else { return }
+                sharePlaySession.mark(at: component.location)
+            }
+        )
+        .task {
+            await sharePlaySession.configureSessions()
         }
     }
 }
 
-@MainActor
 struct TicTacSpatialCubeRealityKitView: View {
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<CubeGameboard>
-    @EnvironmentObject private var gameSession: GameSession<CubeGameboard>
+    typealias Gameboard = CubeGameboard
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
+    @EnvironmentObject private var gameSession: GameSession<Gameboard>
+    @State private var scene: Entity = .empty
+    @State private var root: Entity = .empty
+    @State private var rotation: simd_quatf = .init()
     private let controller = GameboardController3D()
 
     var body: some View {
-        VStack(spacing: 0) {
-            RealityKitCubeView(controller)
-            Dashboard<CubeGameboard>()
-        }
-        .task {
-            await sharePlaySession.configureSessions()
-        }
-        .onChange(of: gameSession.processingEventID) {
+        RealityView { content in
+            self.root = Entity()
+            guard let scene = try? await Entity(named: "Scene3D", in: .main) else { return }
+            scene.position = .init(x: 0, y: 0, z: 0.5)
+            root.addChild(scene)
+            content.add(root)
+            content.camera = .virtual
+            content.environment = .default
+            controller.setup(scene: scene)
+            self.scene = scene
+        } update: { _ in
+            scene.transform.rotation = rotation
             Task {
                 guard let event = gameSession.dequeueEvent() else { return }
                 try await controller.updateUI(event)
                 gameSession.onCompletedEvent()
             }
+        } placeholder: {
+            ProgressView()
         }
-        .onChange(of: sharePlaySession.rotation) { _, newValue in
-            guard let newValue else { return }
-            controller.scene.transform.rotation = newValue
-        }
+        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<CubeLocation>.self))
+            .onEnded { value in
+                guard let component = value.entity.components[LocationComponent<CubeLocation>.self] else { return }
+                sharePlaySession.mark(at: component.location)
+            }
+        )
         .gesture(
             DragGesture()
+                .targetedToEntity(root)
                 .onChanged { value in
                     let rotation = simd_quatf(translation: value.translation)
-                    controller.scene.transform.rotation = rotation
+                    self.rotation = rotation
                     sharePlaySession.sendRotationIfNeeded(rotation)
                 }
         )
+        .task {
+            await sharePlaySession.configureSessions()
+        }
+        .onChange(of: sharePlaySession.rotation) { _, newValue in
+            guard let newValue else { return }
+            rotation = newValue
+        }
     }
 }

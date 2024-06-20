@@ -14,10 +14,6 @@ import TicTacToeEngine
 // struct TicTacSpatialApp: App {
 //    let sharePlaySession = SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human)
 //
-//    init() {
-//        setRealityKitShim(RealityKitShimiOS())
-//    }
-//
 //    var body: some SwiftUI.Scene {
 //        WindowGroup {
 //            TicTacSpatialGridRealityKitView()
@@ -32,16 +28,15 @@ import TicTacToeEngine
 struct TicTacSpatialApp: App {
     let sharePlaySession = SharePlayGameSession<CubeGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
 
-    init() {
-        setRealityKitShim(RealityKitShimiOS())
-    }
-
     var body: some SwiftUI.Scene {
         WindowGroup {
-            TicTacSpatialCubeRealityKitView()
-                .environmentObject(sharePlaySession)
-                .environmentObject(sharePlaySession.gameSession)
-                .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
+            VStack {
+                TicTacSpatialCubeRealityKitView()
+                Dashboard<CubeGameboard>()
+            }
+            .environmentObject(sharePlaySession)
+            .environmentObject(sharePlaySession.gameSession)
+            .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
         }
     }
 }
