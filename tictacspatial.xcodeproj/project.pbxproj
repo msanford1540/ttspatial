@@ -21,7 +21,6 @@
 		F512E81D2BF3AE7A00955FD2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512E81C2BF3AE7A00955FD2 /* Utilities.swift */; };
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
-		F5280DA62C23F372008F6BDE /* cloudy-sky.skybox in Resources */ = {isa = PBXBuildFile; fileRef = F5280DA52C23F372008F6BDE /* cloudy-sky.skybox */; };
 		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
 		F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */; };
@@ -211,7 +210,6 @@
 		F51E95CD2BC4258300FC33D3 /* Collection+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Convenience.swift"; sourceTree = "<group>"; };
 		F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvents.swift; sourceTree = "<group>"; };
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
-		F5280DA52C23F372008F6BDE /* cloudy-sky.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = "cloudy-sky.skybox"; sourceTree = "<group>"; };
 		F555D5C62BD2B17F00B92AA4 /* GameBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBot.swift; sourceTree = "<group>"; };
 		F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToeController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -402,7 +400,6 @@
 		F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				F5280DA52C23F372008F6BDE /* cloudy-sky.skybox */,
 				F50FB2082C07E464007CDA1F /* Info.plist */,
 				F5FDC9B62BCDED5B001EC38B /* Source */,
 				F5FDC9BD2BCDFB7E001EC38B /* Resources */,
@@ -798,7 +795,6 @@
 				F5FDC9C02BCDFB7E001EC38B /* marker-o.usdz in Resources */,
 				F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */,
 				F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */,
-				F5280DA62C23F372008F6BDE /* cloudy-sky.skybox in Resources */,
 				F5FDC9C52BCEA878001EC38B /* Pole.usdz in Resources */,
 				F5FDC9BF2BCDFB7E001EC38B /* Line.usdz in Resources */,
 			);
