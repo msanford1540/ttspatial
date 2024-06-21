@@ -24,9 +24,19 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
 
         init(playerType: PlayerType) {
             self = switch playerType {
-            case .bot: .bot(EasyBot<Gameboard.Snapshot>())
-            case .remote: .remote
-            case .human: .human
+            case .bot(let botType):
+                switch botType {
+                case .easy:
+                    .bot(EasyBot<Gameboard.Snapshot>())
+                case .medium:
+                    .bot(MediumBot<Gameboard.Snapshot>())
+                case .hard:
+                    .bot(AdvancedBot<Gameboard.Snapshot>())
+                }
+            case .remote:
+                    .remote
+            case .human:
+                    .human
             }
         }
 

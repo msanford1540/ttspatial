@@ -12,7 +12,7 @@ import RealityKit
 
 @main @MainActor
 struct TicTacSpatialApp: App {
-    let sharePlaySession = SharePlayGameSession<CubeGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
+    let sharePlaySession = SharePlayGameSession<CubeGameboard>(xPlayerType: .human, oPlayerType: .bot(.medium))
 
     var body: some SwiftUI.Scene {
         WindowGroup {
@@ -22,7 +22,6 @@ struct TicTacSpatialApp: App {
                 .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
         }
         .windowStyle(.volumetric)
-//        .defaultSize(width: 1, height: 1.3, depth: 0.1, in: .meters)
         .defaultSize(width: 1.2, height: 1.3, depth: 1.2, in: .meters)
     }
 }

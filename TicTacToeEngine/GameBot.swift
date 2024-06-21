@@ -27,17 +27,60 @@ final class EasyBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
     override var name: String { "Easy" }
 
     override func move(for snapshot: Snapshot) -> Snapshot.Location? {
-        guard let currentTurn = snapshot.currentTurn else { return nil }
-        let candidateWinningLines: Set<CandidateWinningLine<Snapshot.WinningLine, Snapshot.Location>> = snapshot.candidateWinningLines
-        let winningLocations: [Snapshot.Location] = candidateWinningLines.reduce(into: [Snapshot.Location]()) { result, line in
-            guard case .marks(let mark, _, let unmarked) = line.markCount,
-                  currentTurn == mark, unmarked.count == 1 else { return }
-            result.append(unmarked[0])
+        snapshot.bestMove(thresholdFactor: .zero)
+    }
+}
+
+final class MediumBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
+    override var name: String { "Medium" }
+
+    override func move(for snapshot: Snapshot) -> Snapshot.Location? {
+        let isBestMove = (1...5).randomElement() == 1
+        return snapshot.bestMove(thresholdFactor: isBestMove ? 1 : 0.8)
+    }
+}
+
+final class AdvancedBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
+    override var name: String { "Advanced" }
+
+    override func move(for snapshot: Snapshot) -> Snapshot.Location? {
+        snapshot.bestMove(thresholdFactor: 1)
+    }
+}
+
+private extension GameboardSnapshotProtocol {
+    private var currentPlayerScores: [Location: Float] {
+        guard let currentTurn else { return .empty }
+        return candidateWinningLines.reduce(into: .empty) { result, line in
+            switch line.markCount {
+            case .empty(let locations):
+                locations.forEach {
+                    result[$0, default: .zero] += 1
+                }
+            case .marks(let player, let count, let unmarkedLocations):
+                unmarkedLocations.forEach {
+                    let isMe = currentTurn == player
+                    result[$0, default: .zero] += unmarkedLocations.count == 1 && isMe
+                        ? .infinity
+                        : pow(Float(4), Float(count)) + (isMe ? 1 : 0)
+                }
+            }
         }
-        if let winningLocation = winningLocations.first {
-            return winningLocation
+    }
+
+    func bestMove(thresholdFactor: Float) -> Location? {
+        let scores = currentPlayerScores
+        guard let highScore = scores.values.max() else {
+            assertionFailure("invalid score. should never happen")
+            return nil
         }
-        let unmarkedLocations = Snapshot.Location.allCases.filter { snapshot.marker(at: $0) == nil }
-        return unmarkedLocations.randomElement()
+        let usableScore: Float = highScore.isInfinite
+            ? .infinity
+            : highScore * max(0, min(1, thresholdFactor)) - .ulpOfOne
+        let candidateMoves = scores
+            .filter { $0.value >= usableScore }
+        let move = candidateMoves.randomElement().map { $0.key }
+        print("[debug]", "thresholdFactor: \(thresholdFactor), candidateMoves: \(candidateMoves), move: \(String(describing: move))")
+        return move
     }
 }

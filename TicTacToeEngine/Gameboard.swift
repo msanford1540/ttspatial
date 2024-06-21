@@ -37,7 +37,7 @@ extension GameboardInspectable {
             } else if oMarks > 0 {
                 markCount = .marks(.o, oMarks, unmarkedLocations)
             } else {
-                markCount = .empty
+                markCount = .empty(unmarkedLocations)
             }
             result.insert(.init(winningLine: line, markCount: markCount))
         }
@@ -274,7 +274,7 @@ public struct CubeGameboard: GameboardProtocol {
 
 public struct CandidateWinningLine<WinningLine: WinningLineProtocol, GameboardLocation: GameboardLocationProtocol>: Hashable {
     public enum MarkCount: Hashable, CustomStringConvertible {
-        case empty
+        case empty([GameboardLocation])
         case marks(PlayerMarker, Int, [GameboardLocation])
 
         public var description: String {
