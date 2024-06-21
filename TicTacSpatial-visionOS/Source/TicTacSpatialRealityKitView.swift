@@ -40,9 +40,9 @@ struct TicTacSpatialGridRealityKitView: View {
                     .environmentObject(sharePlaySession)
             }
         }
-        .gesture(TapGesture().targetedToEntity(where: .has(GridLocationComponent.self))
+        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<GridLocation>.self))
             .onEnded { value in
-                guard let component = value.entity.components[GridLocationComponent.self] else { return }
+                guard let component = value.entity.components[LocationComponent<GridLocation>.self] else { return }
                 sharePlaySession.mark(at: component.location)
             }
         )
@@ -89,9 +89,9 @@ struct TicTacSpatialCubeRealityKitView: View {
                     .environmentObject(sharePlaySession)
             }
         }
-        .gesture(TapGesture().targetedToEntity(where: .has(CubeLocationComponent.self))
+        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<CubeLocation>.self))
             .onEnded { value in
-                guard let component = value.entity.components[CubeLocationComponent.self] else { return }
+                guard let component = value.entity.components[LocationComponent<CubeLocation>.self] else { return }
                 sharePlaySession.mark(at: component.location)
             }
         )
