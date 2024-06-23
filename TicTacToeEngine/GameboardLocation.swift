@@ -29,6 +29,19 @@ public extension GameboardAxisProtocol {
     }
 }
 
+@frozen public enum VerticalFourPosition: GameboardAxisProtocol {
+    case top, middleTop, middleBottom, bottom
+
+    public var name: String {
+        switch self {
+        case .top: "top"
+        case .middleTop: "middleTop"
+        case .middleBottom: "middleBottom"
+        case .bottom: "bottom"
+        }
+    }
+}
+
 @frozen public enum HorizontalPosition: GameboardAxisProtocol {
     case left, middle, right
 
@@ -37,6 +50,32 @@ public extension GameboardAxisProtocol {
         case .left: "left"
         case .middle: "middle"
         case .right: "right"
+        }
+    }
+}
+
+@frozen public enum HorizontalFourPosition: GameboardAxisProtocol {
+    case left, middleLeft, middleRight, right
+
+    public var name: String {
+        switch self {
+        case .left: "left"
+        case .middleLeft: "middleLeft"
+        case .middleRight: "middleRight"
+        case .right: "right"
+        }
+    }
+}
+
+@frozen public enum DepthFourPosition: GameboardAxisProtocol {
+    case front, middleFront, middleBack, back
+
+    public var name: String {
+        switch self {
+        case .front: "front"
+        case .middleFront: "middleFront"
+        case .middleBack: "middleBack"
+        case .back: "back"
         }
     }
 }
@@ -112,6 +151,36 @@ public struct CubeLocation: GameboardLocationProtocol {
         VerticalPosition.allCases.reduce(into: .empty) { result, vPos in
             HorizontalPosition.allCases.forEach { hPos in
                 DepthPosition.allCases.forEach { zPos in
+                    result.insert(.init(vPos, hPos, zPos))
+                }
+            }
+        }
+    }()
+}
+
+public struct CubeFourLocation: GameboardLocationProtocol {
+    static let gameboardCellCount = 4 * 4 * 3
+
+    // swiftlint:disable identifier_name
+    public let x: HorizontalFourPosition
+    public let y: VerticalFourPosition
+    public let z: DepthFourPosition
+
+    init(_ y: VerticalFourPosition, _ x: HorizontalFourPosition, _ z: DepthFourPosition) {
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+    // swiftlint:enable identifier_name
+
+    public var name: String {
+        "\(z)-\(y)-\(x)"
+    }
+
+    public static let allCases: Set<CubeFourLocation> = {
+        VerticalFourPosition.allCases.reduce(into: .empty) { result, vPos in
+            HorizontalFourPosition.allCases.forEach { hPos in
+                DepthFourPosition.allCases.forEach { zPos in
                     result.insert(.init(vPos, hPos, zPos))
                 }
             }

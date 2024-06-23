@@ -36,7 +36,7 @@ final class MediumBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
 
     override func move(for snapshot: Snapshot) -> Snapshot.Location? {
         let isBestMove = (1...5).randomElement() == 1
-        return snapshot.bestMove(thresholdFactor: isBestMove ? 1 : 0.8)
+        return snapshot.bestMove(thresholdFactor: isBestMove ? 1 : 0.7)
     }
 }
 
@@ -59,10 +59,10 @@ private extension GameboardSnapshotProtocol {
                 }
             case .marks(let player, let count, let unmarkedLocations):
                 unmarkedLocations.forEach {
-                    let isMe = currentTurn == player
-                    result[$0, default: .zero] += unmarkedLocations.count == 1 && isMe
+                    let isCurrentPlayer = currentTurn == player
+                    result[$0, default: .zero] += unmarkedLocations.count == 1 && isCurrentPlayer
                         ? .infinity
-                        : pow(Float(4), Float(count)) + (isMe ? 1 : 0)
+                        : pow(Float(4), Float(count)) + (isCurrentPlayer ? 1 : 0)
                 }
             }
         }
@@ -74,13 +74,12 @@ private extension GameboardSnapshotProtocol {
             assertionFailure("invalid score. should never happen")
             return nil
         }
-        let usableScore: Float = highScore.isInfinite
+        let thresholdScore: Float = highScore.isInfinite
             ? .infinity
             : highScore * max(0, min(1, thresholdFactor)) - .ulpOfOne
-        let candidateMoves = scores
-            .filter { $0.value >= usableScore }
-        let move = candidateMoves.randomElement().map { $0.key }
-        print("[debug]", "thresholdFactor: \(thresholdFactor), candidateMoves: \(candidateMoves), move: \(String(describing: move))")
-        return move
+        return scores
+            .filter { $0.value >= thresholdScore }
+            .map { $0.key }
+            .randomElement()
     }
 }

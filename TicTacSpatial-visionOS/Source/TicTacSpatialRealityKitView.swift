@@ -53,24 +53,25 @@ struct TicTacSpatialGridRealityKitView: View {
 }
 
 struct TicTacSpatialCubeRealityKitView: View {
-    typealias Gameboard = CubeGameboard
+    typealias Gameboard = CubeFourGameboard
     @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
     @EnvironmentObject private var gameSession: GameSession<Gameboard>
     @State private var scene: Entity = .empty
     @State private var root: Entity = .empty
     @State private var rotation: simd_quatf = .init()
-    private let controller = GameboardController3D()
+    private let controller = GameboardController3D4()
 
     var body: some View {
         RealityView { content, attachments in
             self.root = Entity()
-            guard let scene = try? await Entity(named: "Scene3D", in: .main) else { return }
+            guard let scene = try? await Entity(named: "Scene3D4", in: .main) else { return }
+            scene.scale = .init(x: 0.6, y: 0.6, z: 0.6)
             root.addChild(scene)
             content.add(root)
             controller.setup(scene: scene)
 
             if let controlsAttachment = attachments.entity(for: "controls") {
-                controlsAttachment.position = [0, -0.55, 0.4]
+                controlsAttachment.position = [0, -0.5, 0.45]
                 root.addChild(controlsAttachment)
             }
             self.scene = scene
@@ -89,9 +90,9 @@ struct TicTacSpatialCubeRealityKitView: View {
                     .environmentObject(sharePlaySession)
             }
         }
-        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<CubeLocation>.self))
+        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<CubeFourLocation>.self))
             .onEnded { value in
-                guard let component = value.entity.components[LocationComponent<CubeLocation>.self] else { return }
+                guard let component = value.entity.components[LocationComponent<CubeFourLocation>.self] else { return }
                 sharePlaySession.mark(at: component.location)
             }
         )
