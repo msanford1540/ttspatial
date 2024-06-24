@@ -26,13 +26,13 @@ import TicTacToeEngine
 
 @main @MainActor
 struct TicTacSpatialApp: App {
-    let sharePlaySession = SharePlayGameSession<CubeGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
+    let sharePlaySession = SharePlayGameSession<CubeFourGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
 
     var body: some SwiftUI.Scene {
         WindowGroup {
             VStack {
-                TicTacSpatialCubeRealityKitView()
-                Dashboard<CubeGameboard>()
+                TicTacSpatialCubeFourRealityKitView()
+                Dashboard<CubeFourGameboard>()
             }
             .environmentObject(sharePlaySession)
             .environmentObject(sharePlaySession.gameSession)

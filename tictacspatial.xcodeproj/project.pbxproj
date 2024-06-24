@@ -46,6 +46,7 @@
 		F58CC6A22C27C9FB00A09B8D /* GridGameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A12C27C9F500A09B8D /* GridGameboard.swift */; };
 		F58CC6A52C27CA8900A09B8D /* GameboardController3D4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A42C27CA8500A09B8D /* GameboardController3D4.swift */; };
 		F58CC6A72C27CB8900A09B8D /* GameboardController2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A62C27CB8700A09B8D /* GameboardController2D.swift */; };
+		F58CC6A92C2909BD00A09B8D /* Scene3D4.usda in Resources */ = {isa = PBXBuildFile; fileRef = F58CC6A82C2909BD00A09B8D /* Scene3D4.usda */; };
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
@@ -233,6 +234,7 @@
 		F58CC6A12C27C9F500A09B8D /* GridGameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridGameboard.swift; sourceTree = "<group>"; };
 		F58CC6A42C27CA8500A09B8D /* GameboardController3D4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController3D4.swift; sourceTree = "<group>"; };
 		F58CC6A62C27CB8700A09B8D /* GameboardController2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController2D.swift; sourceTree = "<group>"; };
+		F58CC6A82C2909BD00A09B8D /* Scene3D4.usda */ = {isa = PBXFileReference; lastKnownFileType = text; path = Scene3D4.usda; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 			children = (
 				F512E8122BEE57F000955FD2 /* Scene.usda */,
 				F512E8132BEE57F000955FD2 /* Scene3D.usda */,
+				F58CC6A82C2909BD00A09B8D /* Scene3D4.usda */,
 				F5FDC9C42BCEA878001EC38B /* Pole.usdz */,
 				F5FDC9B92BCDFB7E001EC38B /* Block2.usdz */,
 				F5FDC9BA2BCDFB7E001EC38B /* Line.usdz */,
@@ -822,6 +825,7 @@
 				F5FDC9C12BCDFB7E001EC38B /* marker-x.usdz in Resources */,
 				F5FDC9BE2BCDFB7E001EC38B /* Block2.usdz in Resources */,
 				F512E8142BEE57F000955FD2 /* Scene.usda in Resources */,
+				F58CC6A92C2909BD00A09B8D /* Scene3D4.usda in Resources */,
 				F512E8152BEE57F000955FD2 /* Scene3D.usda in Resources */,
 				F5FDC9C02BCDFB7E001EC38B /* marker-o.usdz in Resources */,
 				F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */,
