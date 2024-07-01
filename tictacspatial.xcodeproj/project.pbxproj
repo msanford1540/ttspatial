@@ -44,9 +44,12 @@
 		F58CC69E2C27C99300A09B8D /* CubeFourGameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC69D2C27C98C00A09B8D /* CubeFourGameboard.swift */; };
 		F58CC6A02C27C9CE00A09B8D /* CubeThreeGameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC69F2C27C9CA00A09B8D /* CubeThreeGameboard.swift */; };
 		F58CC6A22C27C9FB00A09B8D /* GridGameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A12C27C9F500A09B8D /* GridGameboard.swift */; };
-		F58CC6A52C27CA8900A09B8D /* GameboardController3D4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A42C27CA8500A09B8D /* GameboardController3D4.swift */; };
-		F58CC6A72C27CB8900A09B8D /* GameboardController2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A62C27CB8700A09B8D /* GameboardController2D.swift */; };
+		F58CC6A52C27CA8900A09B8D /* CubeFourGameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A42C27CA8500A09B8D /* CubeFourGameboardController.swift */; };
+		F58CC6A72C27CB8900A09B8D /* GridGameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A62C27CB8700A09B8D /* GridGameboardController.swift */; };
 		F58CC6A92C2909BD00A09B8D /* Scene3D4.usda in Resources */ = {isa = PBXBuildFile; fileRef = F58CC6A82C2909BD00A09B8D /* Scene3D4.usda */; };
+		F59061EA2C2A7BBF00231FD9 /* CubeGameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061E92C2A7BB900231FD9 /* CubeGameboardController.swift */; };
+		F59061ED2C2A835200231FD9 /* MenuMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061EC2C2A834900231FD9 /* MenuMode.swift */; };
+		F59061EF2C2A83B500231FD9 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061EE2C2A83AF00231FD9 /* HomeMenu.swift */; };
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
@@ -232,9 +235,12 @@
 		F58CC69D2C27C98C00A09B8D /* CubeFourGameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeFourGameboard.swift; sourceTree = "<group>"; };
 		F58CC69F2C27C9CA00A09B8D /* CubeThreeGameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeThreeGameboard.swift; sourceTree = "<group>"; };
 		F58CC6A12C27C9F500A09B8D /* GridGameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridGameboard.swift; sourceTree = "<group>"; };
-		F58CC6A42C27CA8500A09B8D /* GameboardController3D4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController3D4.swift; sourceTree = "<group>"; };
-		F58CC6A62C27CB8700A09B8D /* GameboardController2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController2D.swift; sourceTree = "<group>"; };
+		F58CC6A42C27CA8500A09B8D /* CubeFourGameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeFourGameboardController.swift; sourceTree = "<group>"; };
+		F58CC6A62C27CB8700A09B8D /* GridGameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridGameboardController.swift; sourceTree = "<group>"; };
 		F58CC6A82C2909BD00A09B8D /* Scene3D4.usda */ = {isa = PBXFileReference; lastKnownFileType = text; path = Scene3D4.usda; sourceTree = "<group>"; };
+		F59061E92C2A7BB900231FD9 /* CubeGameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeGameboardController.swift; sourceTree = "<group>"; };
+		F59061EC2C2A834900231FD9 /* MenuMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuMode.swift; sourceTree = "<group>"; };
+		F59061EE2C2A83AF00231FD9 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
@@ -399,6 +405,7 @@
 			children = (
 				F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */,
 				F555D6002BD4CC6A00B92AA4 /* DashboardUIComponents.swift */,
+				F59061EB2C2A834300231FD9 /* Menus */,
 				F58CC6A32C27CA7B00A09B8D /* GameboardControllers */,
 				F50FB20B2C0A09E2007CDA1F /* Quanterion.swift */,
 				F512E81C2BF3AE7A00955FD2 /* Utilities.swift */,
@@ -424,10 +431,20 @@
 			isa = PBXGroup;
 			children = (
 				F58960F32C0AC26A003B4940 /* GameboardController.swift */,
-				F58CC6A62C27CB8700A09B8D /* GameboardController2D.swift */,
-				F58CC6A42C27CA8500A09B8D /* GameboardController3D4.swift */,
+				F58CC6A62C27CB8700A09B8D /* GridGameboardController.swift */,
+				F59061E92C2A7BB900231FD9 /* CubeGameboardController.swift */,
+				F58CC6A42C27CA8500A09B8D /* CubeFourGameboardController.swift */,
 			);
 			path = GameboardControllers;
+			sourceTree = "<group>";
+		};
+		F59061EB2C2A834300231FD9 /* Menus */ = {
+			isa = PBXGroup;
+			children = (
+				F59061EC2C2A834900231FD9 /* MenuMode.swift */,
+				F59061EE2C2A83AF00231FD9 /* HomeMenu.swift */,
+			);
+			path = Menus;
 			sourceTree = "<group>";
 		};
 		F5FDC9532BCDD8CE001EC38B /* TicTacSpatial-iOS */ = {
@@ -922,11 +939,14 @@
 			files = (
 				F50FB20C2C0A09E2007CDA1F /* Quanterion.swift in Sources */,
 				F512E81D2BF3AE7A00955FD2 /* Utilities.swift in Sources */,
-				F58CC6A72C27CB8900A09B8D /* GameboardController2D.swift in Sources */,
+				F58CC6A72C27CB8900A09B8D /* GridGameboardController.swift in Sources */,
 				F555D5F72BD4494000B92AA4 /* TicTacSpatialActivity.swift in Sources */,
+				F59061EA2C2A7BBF00231FD9 /* CubeGameboardController.swift in Sources */,
 				F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */,
-				F58CC6A52C27CA8900A09B8D /* GameboardController3D4.swift in Sources */,
+				F58CC6A52C27CA8900A09B8D /* CubeFourGameboardController.swift in Sources */,
+				F59061ED2C2A835200231FD9 /* MenuMode.swift in Sources */,
 				F58960F42C0AC26A003B4940 /* GameboardController.swift in Sources */,
+				F59061EF2C2A83B500231FD9 /* HomeMenu.swift in Sources */,
 				F58960F72C0AC36C003B4940 /* RealityKit+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

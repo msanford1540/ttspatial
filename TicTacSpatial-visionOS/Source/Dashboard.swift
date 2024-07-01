@@ -11,10 +11,9 @@ import SwiftUI
 import TicTacToeController
 import TicTacToeEngine
 
-struct Dashboard<Gameboard: GameboardProtocol>: View {
+struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    @EnvironmentObject private var viewModel: DashboardViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
 
     var body: some View {
         ZStack {
@@ -28,8 +27,8 @@ struct Dashboard<Gameboard: GameboardProtocol>: View {
             }
             .padding()
             VStack {
-                SharePlayButton<Gameboard>(padding: 16)
-                StartOverButton<Gameboard>(padding: 16)
+                SharePlayButton(padding: 16)
+                StartOverButton(padding: 16)
             }
             .font(.extraLargeTitle)
             .padding(.top, 36)
@@ -37,12 +36,7 @@ struct Dashboard<Gameboard: GameboardProtocol>: View {
         .frame(width: 1200, height: 300)
         .font(.extraLargeTitle)
         .glassBackgroundEffect()
-        .environmentObject(gameSession)
     }
-}
-
-#Preview {
-    Dashboard<GridGameboard>().environmentObject(SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human))
 }
 
 private struct InnerPlayerMarker: View {

@@ -13,6 +13,15 @@ private let minInputOpacity: Float = 0.02
 public extension Entity {
     static let empty: Entity = .init()
 
+    var opacity: Float {
+        get {
+            components[OpacityComponent.self]?.opacity ?? 1
+        }
+        set {
+            components[OpacityComponent.self] = OpacityComponent(opacity: newValue)
+        }
+    }
+    
     @MainActor func animateScale(to scale: SIMD3<Float>, duration: Duration) async {
         var transform = self.transform
         transform.scale = scale
@@ -27,6 +36,10 @@ public extension Entity {
     }
 
     @MainActor func animateOpacity(to opacity: Float, duration: Duration? = nil) async {
+        if let opacityComponent = components[OpacityComponent.self], opacityComponent.opacity == opacity {
+            return
+        }
+
         let animationDuration = duration ?? defaultDuration
         let fromToAnimation = FromToByAnimation(
             from: components[OpacityComponent.self]?.opacity,

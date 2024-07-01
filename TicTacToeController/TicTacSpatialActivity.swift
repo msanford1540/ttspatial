@@ -21,9 +21,113 @@ struct TicTacSpatialActivity: GroupActivity {
     }
 }
 
+public enum GameSessionValue {
+    case square3(GameSession<GridGameboard>)
+    case cube4(GameSession<CubeFourGameboard>)
+}
+
 @MainActor
-public final class SharePlayGameSession<Gameboard: GameboardProtocol>: ObservableObject {
-    public private(set) var gameSession: GameSession<Gameboard>
+public final class GameSessionViewModel: ObservableObject {
+    @Published public private(set) var gameSession: GameSessionValue?
+
+    @Published public private(set) var isGameSessionActive: Bool = false
+    @Published public private(set) var isGameOver: Bool = false
+    @Published public private(set) var currentTurn: PlayerMarker?
+    @Published public private(set) var xPlayerName: String = .empty
+    @Published public private(set) var oPlayerName: String = .empty
+    @Published public private(set) var xWinCount: Int = .zero
+    @Published public private(set) var oWinCount: Int = .zero
+    private var gameSubscribers: Set<AnyCancellable> = .empty
+
+    func playGame(dimensions: GameboardDimensions, xPlayerType: PlayerType, oPlayerType: PlayerType) {
+        switch dimensions {
+        case .square3:
+            let rawGameSession = GameSession<GridGameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
+            gameSession = .square3(rawGameSession)
+            setupPipelines(rawGameSession)
+        case .cube4:
+            let rawGameSession = GameSession<CubeFourGameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
+            gameSession = .cube4(rawGameSession)
+            setupPipelines(rawGameSession)
+        }
+        isGameSessionActive = true
+    }
+
+    public func dequeueEvent() -> GameEventValue? {
+        switch gameSession {
+        case nil:
+            nil
+        case .square3(let typedGameSession):
+            if let event = typedGameSession.dequeueEvent() {
+                .square3(event)
+            } else {
+                nil
+            }
+        case .cube4(let typedGameSession):
+            if let event = typedGameSession.dequeueEvent() {
+                .cube4(event)
+            } else {
+                nil
+            }
+        }
+    }
+
+    public func onCompletedEvent() {
+        switch gameSession {
+        case .square3(let typedGameSession):
+            typedGameSession.onCompletedEvent()
+        case .cube4(let typedGameSession):
+            typedGameSession.onCompletedEvent()
+        case nil:
+            break
+        }
+    }
+
+    private func setupPipelines<Gameboard: GameboardProtocol>(_ gameSession: GameSession<Gameboard>) {
+        gameSession.$currentTurn
+            .sink { [unowned self] in currentTurn = $0 }
+            .store(in: &gameSubscribers)
+
+        gameSession.$xPlayerName
+            .sink { [unowned self] in xPlayerName = $0 }
+            .store(in: &gameSubscribers)
+
+        gameSession.$oPlayerName
+            .sink { [unowned self] in oPlayerName = $0 }
+            .store(in: &gameSubscribers)
+
+        gameSession.$xWinCount
+            .sink { [unowned self] in xWinCount = $0 }
+            .store(in: &gameSubscribers)
+
+        gameSession.$oWinCount
+            .sink { [unowned self] in oWinCount = $0 }
+            .store(in: &gameSubscribers)
+
+        $currentTurn
+            .map { $0 == nil }
+            .assign(to: &$isGameOver)
+    }
+
+    func endGameSession() {
+        gameSession = nil
+        gameSubscribers = .empty
+        currentTurn = nil
+        xPlayerName = .empty
+        oPlayerName = .empty
+        xWinCount = .zero
+        oWinCount = .zero
+        isGameSessionActive = false
+    }
+
+    func startNewGame() {
+        gameSession?.reset()
+    }
+}
+
+@MainActor
+public final class SharePlayGameSession: ObservableObject {
+    private let gameSessionViewModel: GameSessionViewModel
     private var messenger: GroupSessionMessenger?
     private var realTimeMessenger: GroupSessionMessenger?
     @Published var groupSession: GroupSession<TicTacSpatialActivity>?
@@ -33,45 +137,62 @@ public final class SharePlayGameSession<Gameboard: GameboardProtocol>: Observabl
     var meMarker: PlayerMarker?
     private var sender: RotationSender?
     private let logger = Logger(category: "sharePlayGameSession")
+    private var groupActivity: GroupActivity?
 
-    public init(xPlayerType: PlayerType, oPlayerType: PlayerType) {
-        gameSession = .init(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
+    public init(gameSessionViewModel: GameSessionViewModel) {
+        self.gameSessionViewModel = gameSessionViewModel
+    }
+
+    public var gameSession: GameSessionValue? {
+        gameSessionViewModel.gameSession
+    }
+
+    private func onGameSessionValueDidChange() {
+        Task { @MainActor in
+            await configureSessions()
+        }
     }
 
     public func configureSessions() async {
         for await session in TicTacSpatialActivity.sessions() {
-            configureSession(gameSession, session)
+            configureSession(session)
         }
     }
 
-    init(gameSession: GameSession<Gameboard>) {
-        self.gameSession = gameSession
-    }
-
     public func startSharing() {
+        let groupActivity = TicTacSpatialActivity()
+        self.groupActivity = groupActivity
         Task {
             do {
-                _ = try await TicTacSpatialActivity().activate()
+                _ = try await groupActivity.activate()
             } catch {
                 logger.error("[\(Self.self, privacy: .public)] Failed to activate. error: \(error as NSError, privacy: .public)")
             }
         }
     }
 
-    private func sendMove(at location: Gameboard.Location) {
-        guard let meMarker, let messenger else { return }
-        let move = GameMove(location: location, mark: meMarker)
+    private func sendMove(at location: any GameboardLocationProtocol) {
+        guard let meMarker, let messenger, let gameSession else { return }
         Task {
             do {
-                try await messenger.send(GameMessageType<Gameboard.Snapshot>.move(move), to: .all)
+                switch gameSession {
+                case .square3:
+                    guard let gameboardLocation = location as? GridLocation else { return }
+                    let move = GameMove(location: gameboardLocation, mark: meMarker)
+                    try await messenger.send(GameMessageType<GridGameboardSnapshot>.move(move), to: .all)
+                case .cube4:
+                    guard let gameboardLocation = location as? CubeFourLocation else { return }
+                    let move = GameMove(location: gameboardLocation, mark: meMarker)
+                    try await messenger.send(GameMessageType<CubeFourGameboardSnapshot>.move(move), to: .all)
+                }
             } catch {
                 logger.error("[\(Self.self, privacy: .public)] Failed to send move. error: \(error as NSError, privacy: .public)")
             }
         }
     }
 
-    public func mark(at location: Gameboard.Location) {
-        guard gameSession.isHumanTurn else { return }
+    public func mark(at location: any GameboardLocationProtocol) {
+        guard let gameSession, gameSession.isHumanTurn else { return }
         Task {
             await gameSession.mark(at: location)
             if isActive {
@@ -85,8 +206,8 @@ public final class SharePlayGameSession<Gameboard: GameboardProtocol>: Observabl
         sender.rotation = rotation
     }
 
-    func configureSession(_ gameSession: GameSession<Gameboard>, _ groupSession: GroupSession<TicTacSpatialActivity>) {
-        self.gameSession = gameSession
+    func configureSession(_ groupSession: GroupSession<TicTacSpatialActivity>) {
+        guard let gameSession else { return }
         self.groupSession = groupSession
         let messenger = GroupSessionMessenger(session: groupSession, deliveryMode: .reliable)
         self.messenger = messenger
@@ -96,10 +217,19 @@ public final class SharePlayGameSession<Gameboard: GameboardProtocol>: Observabl
         setupPipelines(gameSession, groupSession, messenger)
 
         let turnTask = Task {
-            for await (message, context) in messenger.messages(of: GameMessageType<Gameboard.Snapshot>.self) {
-                if context.source == groupSession.localParticipant { return }
-                logger.debug("[\(Self.self, privacy: .public)] did receive game message. message: \(message, privacy: .public)")
-                gameSession.handleMessage(message)
+            switch gameSession {
+            case .square3(let typedGameSession):
+                for await (message, context) in messenger.messages(of: GameMessageType<GridGameboardSnapshot>.self) {
+                    if context.source == groupSession.localParticipant { return }
+                    logger.debug("[\(Self.self, privacy: .public)] did receive game message. message: \(message, privacy: .public)")
+                    typedGameSession.handleMessage(message)
+                }
+            case .cube4(let typedGameSession):
+                for await (message, context) in messenger.messages(of: GameMessageType<CubeFourGameboardSnapshot>.self) {
+                    if context.source == groupSession.localParticipant { return }
+                    logger.debug("[\(Self.self, privacy: .public)] did receive game message. message: \(message, privacy: .public)")
+                    typedGameSession.handleMessage(message)
+                }
             }
         }
 
@@ -124,9 +254,10 @@ public final class SharePlayGameSession<Gameboard: GameboardProtocol>: Observabl
         }
     }
 
-    private func setupPipelines(_ gameSession: GameSession<Gameboard>,
+    private func setupPipelines(_ gameSession: GameSessionValue,
                                 _ groupSession: GroupSession<TicTacSpatialActivity>,
                                 _ messenger: GroupSessionMessenger) {
+        subscribers = .empty
         groupSession.$state
             .sink { [unowned self] state in
                 switch state {
@@ -167,7 +298,14 @@ public final class SharePlayGameSession<Gameboard: GameboardProtocol>: Observabl
                 if meMarker == .x {
                     Task {
                         logger.debug("sending game snapshot")
-                        try? await messenger.send(GameMessageType.snapshot(gameSession.snapshot), to: .only(newParticipants))
+                        switch gameSession {
+                        case .square3(let typedGameSession):
+                            let message = GameMessageType.snapshot(typedGameSession.snapshot)
+                            try? await messenger.send(message, to: .only(newParticipants))
+                        case .cube4(let typedGameSession):
+                            let message = GameMessageType.snapshot(typedGameSession.snapshot)
+                            try? await messenger.send(message, to: .only(newParticipants))
+                        }
                     }
                 }
             }
@@ -199,6 +337,56 @@ private final class RotationSender: @unchecked Sendable {
             } catch {
                 logger.error("[\(Self.self, privacy: .public)] failed to send rotation. error: \(error as NSError, privacy: .public)")
             }
+        }
+    }
+}
+
+@MainActor
+private extension GameSessionValue {
+    var isHumanTurn: Bool {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.isHumanTurn
+        case .cube4(let gameSession):
+            gameSession.isHumanTurn
+        }
+    }
+
+    func setHumanPlayer(_ mark: PlayerMarker) {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.setHumanPlayer(mark)
+        case .cube4(let gameSession):
+            gameSession.setHumanPlayer(mark)
+        }
+    }
+
+    func setRemotePlayer(_ mark: PlayerMarker) {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.setRemotePlayer(mark)
+        case .cube4(let gameSession):
+            gameSession.setRemotePlayer(mark)
+        }
+    }
+
+    func reset() {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.reset()
+        case .cube4(let gameSession):
+            gameSession.reset()
+        }
+    }
+
+    func mark(at location: any GameboardLocationProtocol) async {
+        switch self {
+        case .square3(let gameSession):
+            guard let gameboardLocation = location as? GridLocation else { return }
+            await gameSession.mark(at: gameboardLocation)
+        case .cube4(let gameSession):
+            guard let gameboardLocation = location as? CubeFourLocation else { return }
+            await gameSession.mark(at: gameboardLocation)
         }
     }
 }

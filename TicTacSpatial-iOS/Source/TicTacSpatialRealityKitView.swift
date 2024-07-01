@@ -14,7 +14,7 @@ struct TicTacSpatialGridRealityKitView: View {
     typealias Gameboard = GridGameboard
     @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
     @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    private let controller = GameboardController2D()
+    private let controller = GridGameboardController()
 
     var body: some View {
         RealityView { content in
@@ -50,7 +50,7 @@ struct TicTacSpatialCubeFourRealityKitView: View {
     @State private var scene: Entity = .empty
     @State private var root: Entity = .empty
     @State private var rotation: simd_quatf = .init()
-    private let controller = GameboardController3D4()
+    private let controller = CubeFourGameboardController()
 
     var body: some View {
         RealityView { content in
@@ -106,7 +106,7 @@ struct TicTacSpatialCubeRealityKitView: View {
     @State private var scene: Entity = .empty
     @State private var root: Entity = .empty
     @State private var rotation: simd_quatf = .init()
-    private let controller = GameboardController3D()
+    private let controller = CubeGameboardController()
 
     var body: some View {
         RealityView { content in

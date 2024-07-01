@@ -7,7 +7,7 @@
 
 import TicTacToeEngine
 
-@MainActor public final class GameboardController2D: GameboardController<GridGameboard> {
+@MainActor public final class GridGameboardController: GameboardController<GridGameboard> {
     override func addWinningLine(_ line: GridWinningLine) {
         let rowOffset: Float = 0.30
         guard lineEntities[line] == nil else {

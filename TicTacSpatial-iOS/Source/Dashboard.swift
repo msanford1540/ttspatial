@@ -20,9 +20,9 @@ private func dashboardBackgroundUIColor(for colorScheme: ColorScheme) -> UIColor
     }
 }
 
-struct Dashboard<Gameboard: GameboardProtocol>: View {
+struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
+    @EnvironmentObject private var gameSession: GameSessionViewModel
     @EnvironmentObject private var viewModel: DashboardViewModel
 
     var body: some View {
@@ -38,8 +38,8 @@ struct Dashboard<Gameboard: GameboardProtocol>: View {
             .padding(.vertical, 8)
             VStack {
                 Spacer()
-                SharePlayButton<Gameboard>()
-                StartOverButton<Gameboard>()
+                SharePlayButton()
+                StartOverButton()
             }
             .font(.headline)
             .padding(.vertical, 8)
@@ -53,10 +53,6 @@ struct Dashboard<Gameboard: GameboardProtocol>: View {
         .init(uiColor: dashboardBackgroundUIColor(for: colorScheme))
     }
 
-}
-
-#Preview {
-    Dashboard<GridGameboard>().environmentObject(SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human))
 }
 
 private struct InnerPlayerMarker: View {

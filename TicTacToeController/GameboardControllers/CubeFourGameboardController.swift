@@ -7,7 +7,7 @@
 
 import TicTacToeEngine
 
-@MainActor public final class GameboardController3D4: GameboardController<CubeFourGameboard> {
+@MainActor public final class CubeFourGameboardController: GameboardController<CubeFourGameboard> {
     override func addWinningLine(_ line: CubeFourWinningLine) {
         guard lineEntities[line] == nil else {
             assertionFailure("expected entity")

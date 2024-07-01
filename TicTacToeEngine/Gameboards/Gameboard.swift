@@ -7,9 +7,19 @@
 
 import Foundation
 
+@frozen
+public enum GameboardDimensions: Hashable, Identifiable, Codable {
+    case square3
+    case cube4
+
+    public var id: Self { self }
+}
+
 public protocol GameboardInspectable: CustomStringConvertible {
     associatedtype Location: GameboardLocationProtocol
     associatedtype WinningLine: WinningLineProtocol
+
+    var dimensions: GameboardDimensions { get }
 
     func marker(at location: Location) -> PlayerMarker?
     static func locations(for winningLine: WinningLine) -> Set<Location>

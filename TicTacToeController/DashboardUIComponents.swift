@@ -18,27 +18,9 @@ public func modelName(for marker: PlayerMarker) -> String {
     }
 }
 
-@MainActor
-public final class DashboardViewModel: ObservableObject {
-    private var subscribers: Set<AnyCancellable> = .empty
-    @Published public private(set) var currentTurn: PlayerMarker?
-    @Published public private(set) var xPlayerName: String = .empty
-    @Published public private(set) var oPlayerName: String = .empty
-    @Published public private(set) var xWinCount: Int = .zero
-    @Published public private(set) var oWinCount: Int = .zero
-
-    public init(gameSession: GameSession<some GameboardProtocol>) {
-        gameSession.$currentTurn.assign(to: &$currentTurn)
-        gameSession.$xPlayerName.assign(to: &$xPlayerName)
-        gameSession.$oPlayerName.assign(to: &$oPlayerName)
-        gameSession.$xWinCount.assign(to: &$xWinCount)
-        gameSession.$oWinCount.assign(to: &$oWinCount)
-    }
-}
-
 public struct CurrentTurnMarker: View {
     @StateObject private var viewModel: CurrentTurnMarkerViewModel
-    @EnvironmentObject private var dashboardViewModel: DashboardViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
 
     public init(width: CGFloat, margin: CGFloat) {
         _viewModel = StateObject(wrappedValue: .init(width: width, margin: margin))
@@ -49,11 +31,11 @@ public struct CurrentTurnMarker: View {
             .fill(Color.red)
             .opacity(viewModel.isCurrentTurnHidden ? 0 : 1)
             .offset(x: viewModel.currentTurnOffset)
-            .onChange(of: dashboardViewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
+            .onChange(of: gameSessionViewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
                 viewModel.onCurrentTurnChange(oldCurrentTurn, newCurrentTurn)
             }
             .onAppear {
-                viewModel.update(with: dashboardViewModel.currentTurn)
+                viewModel.update(with: gameSessionViewModel.currentTurn)
             }
     }
 }
@@ -94,8 +76,8 @@ private final class CurrentTurnMarkerViewModel: ObservableObject {
     }
 }
 
-public struct StartOverButton<Gameboard: GameboardProtocol>: View {
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
+public struct StartOverButton: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     private let padding: CGFloat
 
     public init(padding: CGFloat = .zero) {
@@ -104,7 +86,7 @@ public struct StartOverButton<Gameboard: GameboardProtocol>: View {
 
     public var body: some View {
         Button {
-            gameSession.reset()
+            gameSessionViewModel.startNewGame()
         } label: {
             Text("Start Over")
                 .padding(padding)
@@ -112,8 +94,8 @@ public struct StartOverButton<Gameboard: GameboardProtocol>: View {
     }
 }
 
-public struct SharePlayButton<Gameboard: GameboardProtocol>: View {
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
+public struct SharePlayButton: View {
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
     @ObservedObject private var sharePlayObserver = GroupStateObserver()
     private let padding: CGFloat
 
@@ -147,7 +129,7 @@ public struct WinCountView: View {
 
 public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameContent: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: DashboardViewModel
+    @EnvironmentObject private var viewModel: GameSessionViewModel
     private let margin: CGFloat
     private let turnMarkerSize: CGFloat
     private let innerPlayerView: (PlayerMarker) -> PlayerContent
@@ -197,7 +179,7 @@ public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameConten
 
 private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: DashboardViewModel
+    @EnvironmentObject private var viewModel: GameSessionViewModel
     let marker: PlayerMarker
     let innerPlayerView: (PlayerMarker) -> PlayerContent
     let winCountView: (Int) -> WinContent
