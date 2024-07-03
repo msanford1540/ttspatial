@@ -8,11 +8,12 @@
 import SwiftUI
 import Combine
 import TicTacToeEngine
+import simd
 
 @MainActor
 public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     @Published public var gameboardDimensions: GameboardDimensions = .cube4
-    @Published public var selectedBotLevel: BotType = .easy
+    @Published public var selectedBotLevel: BotLevel = .easy
     @Published public var sharePlaySession: SharePlayGameSession
     @Published public var gameSessionViewModel: GameSessionViewModel
     public let square3Controller = GridGameboardController()

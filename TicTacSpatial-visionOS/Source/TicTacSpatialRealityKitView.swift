@@ -55,22 +55,13 @@ struct TicTacSpatialRealityView: View {
                 case .cube4:
                     (viewModel.square3Controller.scene, viewModel.cube4Controller.scene)
                 }
-                let (hiddenAttachment, visibleAttachment) = gameSessionViewModel.isGameSessionActive
-                    ? (homeMenu, dashboard)
-                    : (dashboard, homeMenu)
 
                 if didInit {
-                    if !hiddenAttachment.isOpacityAnimating {
-                        await hiddenAttachment.animateOpacity(to: 0, duration: .milliseconds(250))
-                        await visibleAttachment.animateOpacity(to: 1, duration: .milliseconds(250))
-                    }
                     if !hiddenScene.isOpacityAnimating {
                         await hiddenScene.animateOpacity(to: 0, duration: .milliseconds(250))
                         await visibleScene.animateOpacity(to: 1, duration: .milliseconds(250))
                     }
                 } else {
-                    hiddenAttachment.opacity = 0
-                    visibleAttachment.opacity = 1
                     hiddenScene.opacity = 0
                     visibleScene.opacity = 1
                     didInit = true
@@ -115,39 +106,5 @@ struct TicTacSpatialRealityView: View {
             guard let newValue else { return }
             viewModel.rotation = newValue
         }
-    }
-}
-
-public struct HomeMenu: View {
-    @EnvironmentObject private var viewModel: HomeMenuViewModel
-
-    public init() {}
-
-    public var body: some View {
-        VStack(spacing: 48) {
-            Picker("Gameboard", selection: $viewModel.gameboardDimensions) {
-                Text("Classic 3x3").tag(GameboardDimensions.square3)
-                Text("Cube 4x4x4").tag(GameboardDimensions.cube4)
-            }
-            .labelsHidden()
-            .pickerStyle(.segmented)
-            .font(.largeTitle)
-            .padding(.horizontal)
-
-            Picker("Bot Level", selection: $viewModel.selectedBotLevel) {
-                Text("Easy").tag(BotType.easy)
-                Text("Medium").tag(BotType.medium)
-                Text("Advanced").tag(BotType.hard)
-            }
-            .pickerStyle(.segmented)
-            .font(.largeTitle)
-            .padding(.horizontal)
-
-            Button("Play Game", action: viewModel.playGame)
-        }
-        .padding()
-        .frame(width: 1200, height: 300)
-        .font(.extraLargeTitle)
-        .glassBackgroundEffect()
     }
 }

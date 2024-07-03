@@ -12,18 +12,9 @@ import GroupActivities
 import TicTacToeController
 import TicTacToeEngine
 
-private func dashboardBackgroundUIColor(for colorScheme: ColorScheme) -> UIColor {
-    switch colorScheme {
-    case .light: .init(white: 0.875, alpha: 1)
-    case .dark: .init(white: 0.125, alpha: 1)
-    @unknown default: .init(white: 0.875, alpha: 1)
-    }
-}
-
 struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var gameSession: GameSessionViewModel
-    @EnvironmentObject private var viewModel: DashboardViewModel
 
     var body: some View {
         ZStack {
@@ -38,21 +29,19 @@ struct Dashboard: View {
             .padding(.vertical, 8)
             VStack {
                 Spacer()
+                HStack(spacing: 24) {
+                    StartOverButton()
+                    EndGameButton()
+                }
                 SharePlayButton()
-                StartOverButton()
             }
             .font(.headline)
             .padding(.vertical, 8)
         }
-        .frame(height: 120)
-        .background(backgroundColor)
+        .frame(height: 130)
+        .background(Color.panel(for: colorScheme))
         .font(.title3)
     }
-
-    private var backgroundColor: Color {
-        .init(uiColor: dashboardBackgroundUIColor(for: colorScheme))
-    }
-
 }
 
 private struct InnerPlayerMarker: View {
@@ -71,7 +60,7 @@ private struct InnerPlayerMarker: View {
         if marker == .x {
             rootNode.scale = .init(1.15, 1.15, 1)
         }
-        scene.background.contents = dashboardBackgroundUIColor(for: colorScheme)
+        scene.background.contents = UIColor.panel(for: colorScheme)
         let light = SCNLight()
         light.type = .ambient
         light.intensity = 300

@@ -10,7 +10,7 @@ import Combine
 
 @frozen
 public enum PlayerType {
-    case bot(BotType)
+    case bot(BotLevel)
     case remote
     case human
 }

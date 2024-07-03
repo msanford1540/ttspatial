@@ -10,146 +10,99 @@ import RealityKit
 import TicTacToeController
 import TicTacToeEngine
 
-struct TicTacSpatialGridRealityKitView: View {
-    typealias Gameboard = GridGameboard
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    private let controller = GridGameboardController()
-
-    var body: some View {
-        RealityView { content in
-            guard let scene = try? await Entity(named: "Scene", in: .main) else { return }
-            content.add(scene)
-            content.camera = .virtual
-            controller.setup(scene: scene)
-        } update: { _ in
-            Task {
-                guard let event = gameSession.dequeueEvent() else { return }
-                try await controller.updateUI(event)
-                gameSession.onCompletedEvent()
-            }
-        } placeholder: {
-            ProgressView()
-        }
-        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<GridLocation>.self))
-            .onEnded { value in
-                guard let component = value.entity.components[LocationComponent<GridLocation>.self] else { return }
-                sharePlaySession.mark(at: component.location)
-            }
-        )
-        .task {
-            await sharePlaySession.configureSessions()
-        }
-    }
-}
-
-struct TicTacSpatialCubeFourRealityKitView: View {
-    typealias Gameboard = CubeFourGameboard
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    @State private var scene: Entity = .empty
+struct TicTacSpatialRealityView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @State private var root: Entity = .empty
-    @State private var rotation: simd_quatf = .init()
-    private let controller = CubeFourGameboardController()
+    @State private var dashboard: Entity = .empty
+    @State private var homeMenu: Entity = .empty
+    @State private var didInit: Bool = false
 
     var body: some View {
         RealityView { content in
             self.root = Entity()
-            guard let scene = try? await Entity(named: "Scene3D4", in: .main) else { return }
-            scene.scale = .init(x: 0.6, y: 0.6, z: 0.6)
-            scene.position = .init(x: 0, y: 0, z: 0.5)
-            root.addChild(scene)
+            if let scene = try? await Entity(named: "Scene3D4", in: .main) {
+                scene.scale = .init(x: 0.7, y: 0.7, z: 0.7)
+                scene.opacity = 0
+                root.addChild(scene)
+                viewModel.cube4Controller.setup(scene: scene)
+            }
+            if let scene = try? await Entity(named: "Scene", in: .main) {
+                root.addChild(scene)
+                scene.opacity = 0
+                scene.position = .init(x: 0, y: 0, z: 0.33)
+                viewModel.square3Controller.setup(scene: scene)
+            }
             content.add(root)
-            content.camera = .virtual
-            content.environment = .default
-            controller.setup(scene: scene)
-            self.scene = scene
-        } update: { _  in
-            scene.transform.rotation = rotation
+        } update: { _ in
+            viewModel.updateSceneRotation()
             Task {
-                guard let event = gameSession.dequeueEvent() else { return }
-                try await controller.updateUI(event)
-                gameSession.onCompletedEvent()
+                let (hiddenScene, visibleScene) = switch viewModel.gameboardDimensions {
+                case .square3:
+                    (viewModel.cube4Controller.scene, viewModel.square3Controller.scene)
+                case .cube4:
+                    (viewModel.square3Controller.scene, viewModel.cube4Controller.scene)
+                }
+                let (hiddenAttachment, visibleAttachment) = gameSessionViewModel.isGameSessionActive
+                    ? (homeMenu, dashboard)
+                    : (dashboard, homeMenu)
+
+                if didInit {
+                    if !hiddenAttachment.isOpacityAnimating {
+                        await hiddenAttachment.animateOpacity(to: 0, duration: .milliseconds(250))
+                        await visibleAttachment.animateOpacity(to: 1, duration: .milliseconds(250))
+                    }
+                    if !hiddenScene.isOpacityAnimating {
+                        await hiddenScene.animateOpacity(to: 0, duration: .milliseconds(250))
+                        await visibleScene.animateOpacity(to: 1, duration: .milliseconds(250))
+                    }
+                } else {
+                    hiddenAttachment.opacity = 0
+                    visibleAttachment.opacity = 1
+                    hiddenScene.opacity = 0
+                    visibleScene.opacity = 1
+                    didInit = true
+                }
+
+                guard let event = gameSessionViewModel.dequeueEvent() else { return }
+                try await viewModel.updateUI(event)
+                gameSessionViewModel.onCompletedEvent()
             }
         } placeholder: {
             ProgressView()
         }
-        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<CubeFourLocation>.self))
+        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent.self))
             .onEnded { value in
-                guard let component = value.entity.components[LocationComponent<CubeFourLocation>.self] else { return }
-                sharePlaySession.mark(at: component.location)
+                guard let component = value.entity.components[LocationComponent.self] else { return }
+                viewModel.sharePlaySession.mark(at: component.location)
             }
         )
         .gesture(
             DragGesture()
                 .targetedToEntity(root)
                 .onChanged { value in
+                    guard viewModel.isCurrentSceneRotatable else { return }
                     let rotation = simd_quatf(translation: value.translation)
-                    self.rotation = rotation
-                    sharePlaySession.sendRotationIfNeeded(rotation)
+                    viewModel.rotation = rotation
+                    viewModel.sharePlaySession.sendRotationIfNeeded(rotation)
                 }
         )
         .task {
-            await sharePlaySession.configureSessions()
+            await viewModel.sharePlaySession.configureSessions()
         }
-        .onChange(of: sharePlaySession.rotation) { _, newValue in
+        .onChange(of: viewModel.sharePlaySession.rotation) { _, newValue in
             guard let newValue else { return }
-            rotation = newValue
+            viewModel.rotation = newValue
         }
+        .background(backgroundColor)
     }
-}
 
-struct TicTacSpatialCubeRealityKitView: View {
-    typealias Gameboard = CubeGameboard
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    @State private var scene: Entity = .empty
-    @State private var root: Entity = .empty
-    @State private var rotation: simd_quatf = .init()
-    private let controller = CubeGameboardController()
-
-    var body: some View {
-        RealityView { content in
-            self.root = Entity()
-            guard let scene = try? await Entity(named: "Scene3D", in: .main) else { return }
-            scene.position = .init(x: 0, y: 0, z: 0.5)
-            root.addChild(scene)
-            content.add(root)
-            content.camera = .virtual
-            content.environment = .default
-            controller.setup(scene: scene)
-            self.scene = scene
-        } update: { _ in
-            scene.transform.rotation = rotation
-            Task {
-                guard let event = gameSession.dequeueEvent() else { return }
-                try await controller.updateUI(event)
-                gameSession.onCompletedEvent()
-            }
-        } placeholder: {
-            ProgressView()
-        }
-        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<CubeLocation>.self))
-            .onEnded { value in
-                guard let component = value.entity.components[LocationComponent<CubeLocation>.self] else { return }
-                sharePlaySession.mark(at: component.location)
-            }
-        )
-        .gesture(
-            DragGesture()
-                .targetedToEntity(root)
-                .onChanged { value in
-                    let rotation = simd_quatf(translation: value.translation)
-                    self.rotation = rotation
-                    sharePlaySession.sendRotationIfNeeded(rotation)
-                }
-        )
-        .task {
-            await sharePlaySession.configureSessions()
-        }
-        .onChange(of: sharePlaySession.rotation) { _, newValue in
-            guard let newValue else { return }
-            rotation = newValue
+    private var backgroundColor: Color {
+        switch colorScheme {
+        case .light: .gray
+        case .dark: .black
+        @unknown default: .gray
         }
     }
 }

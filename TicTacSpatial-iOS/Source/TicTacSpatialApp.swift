@@ -10,36 +10,30 @@ import RealityKit
 import TicTacToeController
 import TicTacToeEngine
 
-// @main @MainActor
-// struct TicTacSpatialApp: App {
-//    let sharePlaySession = SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human)
-//
-//    var body: some SwiftUI.Scene {
-//        WindowGroup {
-//            TicTacSpatialGridRealityKitView()
-//                .environmentObject(sharePlaySession)
-//                .environmentObject(sharePlaySession.gameSession)
-//                .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
-//        }
-//    }
-// }
-
 @main @MainActor
 struct TicTacSpatialApp: App {
-    @StateObject private var viewModel = HomeMenuViewModel()
+    @Environment(\.colorScheme) private var colorScheme
+    @StateObject private var viewModel: HomeMenuViewModel
+    @ObservedObject private var gameSessionViewModel: GameSessionViewModel
+
+    init() {
+        let homeViewModel = HomeMenuViewModel()
+        _viewModel = StateObject(wrappedValue: homeViewModel)
+        gameSessionViewModel = homeViewModel.gameSessionViewModel
+    }
 
     var body: some SwiftUI.Scene {
         WindowGroup {
-            VStack {
-                GameboardView(dimensions: viewModel.gameboardDimensions)
-                    .environmentObject(viewModel)
-                Dashboard()
-                    .environmentObject(viewModel.gameSessionViewModel)
-                    .environmentObject(viewModel.)
+            VStack(spacing: .zero) {
+                TicTacSpatialRealityView()
+                if viewModel.gameSessionViewModel.isGameSessionActive {
+                    Dashboard()
+                } else {
+                    HomeMenu()
+                }
             }
-            .environmentObject(sharePlaySession)
-            .environmentObject(sharePlaySession.gameSession)
-            .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
+            .environmentObject(viewModel)
+            .environmentObject(viewModel.gameSessionViewModel)
         }
     }
 }

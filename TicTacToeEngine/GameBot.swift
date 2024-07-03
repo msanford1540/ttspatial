@@ -14,7 +14,7 @@ protocol GameBotProtocol {
 }
 
 @frozen
-public enum BotType {
+public enum BotLevel {
     case easy, medium, hard
 }
 

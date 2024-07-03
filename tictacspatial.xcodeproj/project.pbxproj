@@ -21,6 +21,9 @@
 		F512E81D2BF3AE7A00955FD2 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F512E81C2BF3AE7A00955FD2 /* Utilities.swift */; };
 		F51E959C2BC3289D00FC33D3 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = F51E959B2BC3289D00FC33D3 /* readme.md */; };
 		F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */; };
+		F53242C42C35C496003DB901 /* Color+Convience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53242C32C35C489003DB901 /* Color+Convience.swift */; };
+		F53242C62C35C558003DB901 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53242C52C35C553003DB901 /* HomeMenu.swift */; };
+		F53242C82C35C743003DB901 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53242C72C35C741003DB901 /* HomeMenu.swift */; };
 		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
 		F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */; };
@@ -219,6 +222,9 @@
 		F51E95CD2BC4258300FC33D3 /* Collection+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Convenience.swift"; sourceTree = "<group>"; };
 		F51E95CF2BC6C8BB00FC33D3 /* GameEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEvents.swift; sourceTree = "<group>"; };
 		F51E95D12BC8275200FC33D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		F53242C32C35C489003DB901 /* Color+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Convience.swift"; sourceTree = "<group>"; };
+		F53242C52C35C553003DB901 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
+		F53242C72C35C741003DB901 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
 		F555D5C62BD2B17F00B92AA4 /* GameBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBot.swift; sourceTree = "<group>"; };
 		F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToeController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -482,6 +488,7 @@
 				F5036B302BBC7AF400847D6A /* TicTacSpatialApp.swift */,
 				F5036B322BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift */,
 				F51E95C92BC35EDC00FC33D3 /* Dashboard.swift */,
+				F53242C72C35C741003DB901 /* HomeMenu.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -536,7 +543,9 @@
 				F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */,
 				F512E80D2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift */,
 				F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */,
+				F53242C52C35C553003DB901 /* HomeMenu.swift */,
 				F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */,
+				F53242C32C35C489003DB901 /* Color+Convience.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -922,6 +931,7 @@
 				F5036B332BBC7AF400847D6A /* TicTacSpatialRealityKitView.swift in Sources */,
 				F51E95CA2BC35EDC00FC33D3 /* Dashboard.swift in Sources */,
 				F5036B312BBC7AF400847D6A /* TicTacSpatialApp.swift in Sources */,
+				F53242C82C35C743003DB901 /* HomeMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,6 +976,8 @@
 				F5D0C54C2C235E3E0037DD32 /* SCNVector3+Convience.swift in Sources */,
 				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
 				F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */,
+				F53242C62C35C558003DB901 /* HomeMenu.swift in Sources */,
+				F53242C42C35C496003DB901 /* Color+Convience.swift in Sources */,
 				F512E80E2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
