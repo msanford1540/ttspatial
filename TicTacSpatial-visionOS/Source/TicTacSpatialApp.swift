@@ -22,6 +22,6 @@ struct TicTacSpatialApp: App {
                 .frame(depth: 1600)
         }
         .windowStyle(.volumetric)
-        .defaultSize(width: 1.33, height: 1.33, depth: 1.75, in: .meters)
+        .defaultSize(width: 1.33, height: 1.33, depth: 1.85, in: .meters)
     }
 }

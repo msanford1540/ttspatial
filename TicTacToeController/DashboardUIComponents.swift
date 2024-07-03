@@ -18,19 +18,24 @@ public func modelName(for marker: PlayerMarker) -> String {
     }
 }
 
-public struct CurrentTurnMarker: View {
-    @StateObject private var viewModel: CurrentTurnMarkerViewModel
+public struct CurrentTurnSection: View {
+    @StateObject private var viewModel = CurrentTurnSectionViewModel()
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    private let turnMarkerSize: CGFloat
+    private let margin: CGFloat
 
-    public init(width: CGFloat, margin: CGFloat) {
-        _viewModel = StateObject(wrappedValue: .init(width: width, margin: margin))
+    public init(turnMarkerSize: CGFloat, margin: CGFloat) {
+        self.turnMarkerSize = turnMarkerSize
+        self.margin = margin
     }
 
     public var body: some View {
         Circle()
             .fill(Color.red)
+            .frame(width: turnMarkerSize, height: turnMarkerSize)
             .opacity(viewModel.isCurrentTurnHidden ? 0 : 1)
-            .offset(x: viewModel.currentTurnOffset)
+            .padding(.horizontal, margin)
+            .frame(maxWidth: .infinity, alignment: viewModel.isLeading ? .leading : .trailing)
             .onChange(of: gameSessionViewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
                 viewModel.onCurrentTurnChange(oldCurrentTurn, newCurrentTurn)
             }
@@ -41,17 +46,9 @@ public struct CurrentTurnMarker: View {
 }
 
 @MainActor
-private final class CurrentTurnMarkerViewModel: ObservableObject {
+private final class CurrentTurnSectionViewModel: ObservableObject {
     @Published public private(set) var isCurrentTurnHidden: Bool = true
-    @Published public private(set) var currentTurnOffset: CGFloat = .zero
-    public var width: CGFloat = .zero
-    private let margin: CGFloat
-    private var subscribers: Set<AnyCancellable> = .empty
-
-    init(width: CGFloat = .zero, margin: CGFloat) {
-        self.width = width
-        self.margin = margin
-    }
+    @Published public private(set) var isLeading: Bool = true
 
     func update(with currentTurn: PlayerMarker?) {
         onCurrentTurnChange(nil, currentTurn)
@@ -68,20 +65,25 @@ private final class CurrentTurnMarkerViewModel: ObservableObject {
 
     private func updateCurrentTurnOffset(for mark: PlayerMarker?) {
         guard let mark else { return }
-        let offset = width / 2 - margin
-        currentTurnOffset = switch mark {
-        case .x: -offset
-        case .o: offset
+        isLeading = switch mark {
+        case .x: true
+        case .o: false
         }
     }
 }
 
 public struct StartOverButton: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    private let padding: CGFloat
+    private let vPadding: CGFloat
+    private let hPadding: CGFloat
 
     public init(padding: CGFloat = .zero) {
-        self.padding = padding
+        self.init(vPadding: padding, hPadding: padding)
+    }
+
+    public init(vPadding: CGFloat = .zero, hPadding: CGFloat = .zero) {
+        self.vPadding = vPadding
+        self.hPadding = hPadding
     }
 
     public var body: some View {
@@ -89,7 +91,8 @@ public struct StartOverButton: View {
             gameSessionViewModel.startNewGame()
         } label: {
             Text("Start Over")
-                .padding(padding)
+                .padding(.vertical, vPadding)
+                .padding(.horizontal, hPadding)
         }
     }
 }
@@ -97,10 +100,16 @@ public struct StartOverButton: View {
 public struct EndGameButton: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
-    private let padding: CGFloat
+    private let vPadding: CGFloat
+    private let hPadding: CGFloat
 
     public init(padding: CGFloat = .zero) {
-        self.padding = padding
+        self.init(vPadding: padding, hPadding: padding)
+    }
+
+    public init(vPadding: CGFloat = .zero, hPadding: CGFloat = .zero) {
+        self.vPadding = vPadding
+        self.hPadding = hPadding
     }
 
     public var body: some View {
@@ -109,7 +118,8 @@ public struct EndGameButton: View {
             homeMenuViewModel.resetGameboard()
         } label: {
             Text("End Game")
-                .padding(padding)
+                .padding(.vertical, vPadding)
+                .padding(.horizontal, hPadding)
         }
     }
 }
@@ -117,10 +127,16 @@ public struct EndGameButton: View {
 public struct SharePlayButton: View {
     @EnvironmentObject private var sharePlaySession: SharePlayGameSession
     @ObservedObject private var sharePlayObserver = GroupStateObserver()
-    private let padding: CGFloat
+    private let vPadding: CGFloat
+    private let hPadding: CGFloat
 
     public init(padding: CGFloat = .zero) {
-        self.padding = padding
+        self.init(vPadding: padding, hPadding: padding)
+    }
+
+    public init(vPadding: CGFloat = .zero, hPadding: CGFloat = .zero) {
+        self.vPadding = vPadding
+        self.hPadding = hPadding
     }
 
     public var body: some View {
@@ -128,7 +144,8 @@ public struct SharePlayButton: View {
             sharePlaySession.startSharing()
         } label: {
             Label("Start Activity", systemImage: "shareplay")
-                .padding(padding)
+                .padding(.vertical, vPadding)
+                .padding(.horizontal, hPadding)
         }
         .buttonStyle(.borderedProminent)
         .disabled(!sharePlayObserver.isEligibleForGroupSession)
@@ -171,26 +188,23 @@ public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameConten
     }
 
     public var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                CurrentTurnMarker(width: geometry.size.width, margin: margin)
-                    .frame(width: turnMarkerSize)
-                HStack {
-                    PlayerView(marker: .x) { marker in
-                        innerPlayerView(marker)
-                    } winCountView: { count in
-                        winCountView(count)
-                    } nameView: { playerName in
-                        nameView(playerName)
-                    }
-                    Spacer()
-                    PlayerView(marker: .o) { marker in
-                        innerPlayerView(marker)
-                    } winCountView: { marker in
-                        winCountView(marker)
-                    } nameView: { playerName in
-                        nameView(playerName)
-                    }
+        VStack {
+            CurrentTurnSection(turnMarkerSize: turnMarkerSize, margin: margin)
+            HStack {
+                PlayerView(marker: .x) { marker in
+                    innerPlayerView(marker)
+                } winCountView: { count in
+                    winCountView(count)
+                } nameView: { playerName in
+                    nameView(playerName)
+                }
+                Spacer()
+                PlayerView(marker: .o) { marker in
+                    innerPlayerView(marker)
+                } winCountView: { marker in
+                    winCountView(marker)
+                } nameView: { playerName in
+                    nameView(playerName)
                 }
             }
         }

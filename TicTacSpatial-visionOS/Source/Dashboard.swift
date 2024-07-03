@@ -17,7 +17,7 @@ struct Dashboard: View {
 
     var body: some View {
         ZStack {
-            PlayersDashboard(margin: 48, turnMarkerSize: 48) { marker in
+            PlayersDashboard(margin: 24, turnMarkerSize: 48) { marker in
                 InnerPlayerMarker(marker: marker)
             } winCountView: { marker in
                 WinCountView(marker)
@@ -27,14 +27,14 @@ struct Dashboard: View {
             }
             .padding()
             VStack(spacing: 24) {
-                HStack {
-                    StartOverButton(padding: 16)
-                    EndGameButton(padding: 16)
+                HStack(spacing: 24) {
+                    StartOverButton(vPadding: 6, hPadding: 16)
+                    EndGameButton(vPadding: 6, hPadding: 16)
                 }
-                SharePlayButton(padding: 16)
+                SharePlayButton(vPadding: 6, hPadding: 16)
             }
             .font(.extraLargeTitle)
-            .padding(.top, 36)
+            .padding(.top, 44)
         }
         .frame(width: 1200, height: 300)
         .font(.extraLargeTitle)

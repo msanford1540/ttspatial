@@ -56,12 +56,23 @@ struct TicTacSpatialRealityView: View {
                     (viewModel.square3Controller.scene, viewModel.cube4Controller.scene)
                 }
 
+                let (hiddenPanel, visiblePanel) = gameSessionViewModel.isGameSessionActive
+                    ? (homeMenu, dashboard)
+                    : (dashboard, homeMenu)
+
                 if didInit {
+                    if !hiddenPanel.isOpacityAnimating {
+                        await hiddenPanel.animateOpacity(to: 0, duration: .milliseconds(250))
+                        await visiblePanel.animateOpacity(to: 1, duration: .milliseconds(250))
+                    }
+
                     if !hiddenScene.isOpacityAnimating {
                         await hiddenScene.animateOpacity(to: 0, duration: .milliseconds(250))
                         await visibleScene.animateOpacity(to: 1, duration: .milliseconds(250))
                     }
                 } else {
+                    hiddenPanel.opacity = 0
+                    visiblePanel.opacity = 1
                     hiddenScene.opacity = 0
                     visibleScene.opacity = 1
                     didInit = true

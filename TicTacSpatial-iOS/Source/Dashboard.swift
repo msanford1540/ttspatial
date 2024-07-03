@@ -18,7 +18,7 @@ struct Dashboard: View {
 
     var body: some View {
         ZStack {
-            PlayersDashboard(margin: 20, turnMarkerSize: 18) { marker in
+            PlayersDashboard(margin: 12, turnMarkerSize: 18) { marker in
                 InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
             } winCountView: { count in
                 WinCountView(count)

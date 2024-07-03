@@ -58,7 +58,6 @@ import TicTacToeEngine
     }
 
     public func updateUI(_ event: GameEvent<Gameboard.WinningLine, Gameboard.Location>) async throws {
-        print("[debug]", "count2: \(blankEntities.count)")
         switch event {
         case .move(let gameMove):
             try await onMove(gameMove)
