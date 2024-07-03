@@ -94,6 +94,26 @@ public struct StartOverButton: View {
     }
 }
 
+public struct EndGameButton: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+    private let padding: CGFloat
+
+    public init(padding: CGFloat = .zero) {
+        self.padding = padding
+    }
+
+    public var body: some View {
+        Button {
+            gameSessionViewModel.endGameSession()
+            homeMenuViewModel.resetGameboard()
+        } label: {
+            Text("End Game")
+                .padding(padding)
+        }
+    }
+}
+
 public struct SharePlayButton: View {
     @EnvironmentObject private var sharePlaySession: SharePlayGameSession
     @ObservedObject private var sharePlayObserver = GroupStateObserver()

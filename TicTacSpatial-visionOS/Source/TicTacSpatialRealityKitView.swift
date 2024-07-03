@@ -11,117 +11,79 @@ import Combine
 import TicTacToeController
 import TicTacToeEngine
 
-//struct TicTacSpatialGridRealityKitView: View {
-//    @EnvironmentObject private var viewModel: HomeMenuViewModel
-//    private let controller = GridGameboardController()
-//
-//    var body: some View {
-//        RealityView { content, attachments in
-//            guard let scene = try? await Entity(named: "Scene", in: .main) else { return }
-//            content.add(scene)
-//            controller.setup(scene: scene)
-//
-//            if let controlsAttachment = attachments.entity(for: "controls") {
-//                controlsAttachment.position = [0, -0.55, 0.1]
-//                scene.addChild(controlsAttachment)
-//            }
-//        } update: { _, _ in
-//            Task {
-//                guard let gameSession = viewModel.gameSessionViewModel.gameSession,
-//                      case .square3(let typedGameSession) = gameSession,
-//                      let event = typedGameSession.dequeueEvent() else {
-//                    return
-//                }
-//                try await controller.updateUI(event)
-//                typedGameSession.onCompletedEvent()
-//            }
-//        } placeholder: {
-//            ProgressView()
-//        } attachments: {
-//            Attachment(id: "controls") {
-//                Dashboard()
-//                    .environmentObject(viewModel.gameSessionViewModel)
-//            }
-//        }
-//        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent<GridLocation>.self))
-//            .onEnded { value in
-//                guard let component = value.entity.components[LocationComponent<GridLocation>.self] else { return }
-//                viewModel.sharePlaySession.mark(at: component.location)
-//            }
-//        )
-//        .task {
-//            await viewModel.sharePlaySession.configureSessions()
-//        }
-//    }
-//}
-
 struct TicTacSpatialRealityView: View {
     @EnvironmentObject private var viewModel: HomeMenuViewModel
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    @State private var scene: Entity = .empty
     @State private var root: Entity = .empty
     @State private var dashboard: Entity = .empty
     @State private var homeMenu: Entity = .empty
-    @State private var rotation: simd_quatf = .init()
-    private let cube4Controller = CubeFourGameboardController()
-    private let square3Controller = GridGameboardController()
-    @State private var square3Scene: Entity = .empty
-    @State private var cube4Scene: Entity = .empty
+    @State private var didInit: Bool = false
 
     var body: some View {
         RealityView { content, attachments in
             self.root = Entity()
             if let scene = try? await Entity(named: "Scene3D4", in: .main) {
                 scene.scale = .init(x: 0.7, y: 0.7, z: 0.7)
-                scene.position = .init(x: 0, y: 0, z: -0.4)
+                scene.opacity = 0
                 root.addChild(scene)
-                cube4Scene = scene
-                cube4Controller.setup(scene: scene)
+                viewModel.cube4Controller.setup(scene: scene)
             }
             if let scene = try? await Entity(named: "Scene", in: .main) {
                 root.addChild(scene)
-                square3Scene = scene
-                square3Controller.setup(scene: scene)
+                scene.opacity = 0
+                scene.position = .init(x: 0, y: 0, z: 0.33)
+                viewModel.square3Controller.setup(scene: scene)
             }
             content.add(root)
 
-            if let controlsAttachment = attachments.entity(for: "controls") {
-                controlsAttachment.position = [0, -0.5, 0.45]
-                dashboard = controlsAttachment
-                root.addChild(controlsAttachment)
+            if let dashboardEntity = attachments.entity(for: "dashboard") {
+                dashboardEntity.position = [0, -0.55, 0.55]
+                dashboard = dashboardEntity
+                root.addChild(dashboardEntity)
             }
-            if let menuAttachement = attachments.entity(for: "home") {
-                menuAttachement.position = [0, -0.5, 0.1]
-                homeMenu = menuAttachement
-                root.addChild(menuAttachement)
+            if let homeMenuEntity = attachments.entity(for: "home") {
+                homeMenuEntity.position = [0, -0.55, 0.55]
+                homeMenu = homeMenuEntity
+                root.addChild(homeMenuEntity)
             }
-            self.scene = scene
-        } update: { _, _  in
-            scene.transform.rotation = rotation
+        } update: { _, _ in
+            viewModel.updateSceneRotation()
             Task {
-                await dashboard.animateOpacity(to: gameSessionViewModel.isGameSessionActive ? 1 : 0, duration: .milliseconds(250))
-                await homeMenu.animateOpacity(to: gameSessionViewModel.isGameSessionActive ? 0 : 1, duration: .milliseconds(250))
-                switch viewModel.gameboardDimensions {
+                let (hiddenScene, visibleScene) = switch viewModel.gameboardDimensions {
                 case .square3:
-                    square3Scene.opacity = 1
-                    cube4Scene.opacity = 0
+                    (viewModel.cube4Controller.scene, viewModel.square3Controller.scene)
                 case .cube4:
-                    square3Scene.opacity = 0
-                    cube4Scene.opacity = 1
+                    (viewModel.square3Controller.scene, viewModel.cube4Controller.scene)
                 }
+                let (hiddenAttachment, visibleAttachment) = gameSessionViewModel.isGameSessionActive
+                    ? (homeMenu, dashboard)
+                    : (dashboard, homeMenu)
+
+                if didInit {
+                    if !hiddenAttachment.isOpacityAnimating {
+                        await hiddenAttachment.animateOpacity(to: 0, duration: .milliseconds(250))
+                        await visibleAttachment.animateOpacity(to: 1, duration: .milliseconds(250))
+                    }
+                    if !hiddenScene.isOpacityAnimating {
+                        await hiddenScene.animateOpacity(to: 0, duration: .milliseconds(250))
+                        await visibleScene.animateOpacity(to: 1, duration: .milliseconds(250))
+                    }
+                } else {
+                    hiddenAttachment.opacity = 0
+                    visibleAttachment.opacity = 1
+                    hiddenScene.opacity = 0
+                    visibleScene.opacity = 1
+                    didInit = true
+                }
+
                 guard let event = gameSessionViewModel.dequeueEvent() else { return }
-                switch event {
-                case .square3(let typedEvent):
-                    try await square3Controller.updateUI(typedEvent)
-                case .cube4(let typedEvent):
-                    try await cube4Controller.updateUI(typedEvent)
-                }
+                try await viewModel.updateUI(event)
                 gameSessionViewModel.onCompletedEvent()
             }
         } placeholder: {
             ProgressView()
         } attachments: {
-            Attachment(id: "controls") {
+            Attachment(id: "dashboard") {
                 Dashboard()
                     .environmentObject(gameSessionViewModel)
             }
@@ -140,8 +102,9 @@ struct TicTacSpatialRealityView: View {
             DragGesture()
                 .targetedToEntity(root)
                 .onChanged { value in
+                    guard viewModel.isCurrentSceneRotatable else { return }
                     let rotation = simd_quatf(translation: value.translation)
-                    self.rotation = rotation
+                    viewModel.rotation = rotation
                     viewModel.sharePlaySession.sendRotationIfNeeded(rotation)
                 }
         )
@@ -150,7 +113,7 @@ struct TicTacSpatialRealityView: View {
         }
         .onChange(of: viewModel.sharePlaySession.rotation) { _, newValue in
             guard let newValue else { return }
-            rotation = newValue
+            viewModel.rotation = newValue
         }
     }
 }
@@ -161,7 +124,7 @@ public struct HomeMenu: View {
     public init() {}
 
     public var body: some View {
-        VStack {
+        VStack(spacing: 48) {
             Picker("Gameboard", selection: $viewModel.gameboardDimensions) {
                 Text("Classic 3x3").tag(GameboardDimensions.square3)
                 Text("Cube 4x4x4").tag(GameboardDimensions.cube4)
@@ -169,7 +132,15 @@ public struct HomeMenu: View {
             .labelsHidden()
             .pickerStyle(.segmented)
             .font(.largeTitle)
-            .padding(.bottom, 48)
+            .padding(.horizontal)
+
+            Picker("Bot Level", selection: $viewModel.selectedBotLevel) {
+                Text("Easy").tag(BotType.easy)
+                Text("Medium").tag(BotType.medium)
+                Text("Advanced").tag(BotType.hard)
+            }
+            .pickerStyle(.segmented)
+            .font(.largeTitle)
             .padding(.horizontal)
 
             Button("Play Game", action: viewModel.playGame)

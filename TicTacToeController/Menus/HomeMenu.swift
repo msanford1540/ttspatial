@@ -12,23 +12,92 @@ import TicTacToeEngine
 @MainActor
 public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     @Published public var gameboardDimensions: GameboardDimensions = .cube4
-    @Published public var selectedBot: BotType = .easy
+    @Published public var selectedBotLevel: BotType = .easy
     @Published public var sharePlaySession: SharePlayGameSession
     @Published public var gameSessionViewModel: GameSessionViewModel
+    public let square3Controller = GridGameboardController()
+    public let cube4Controller = CubeFourGameboardController()
     private var subscribers: Set<AnyCancellable> = .empty
+    private var animateRotation: Bool = false
 
     public init() {
         let gameSessionViewModel = GameSessionViewModel()
         self.gameSessionViewModel = gameSessionViewModel
         self.sharePlaySession = SharePlayGameSession(gameSessionViewModel: gameSessionViewModel)
-        setupPipelines()
     }
 
-    private func setupPipelines() {
+    public func updateSceneRotation() {
+        switch gameboardDimensions {
+        case .square3:
+            square3Controller.scene.transform.rotation = square3Controller.rotation
+        case .cube4:
+            if animateRotation {
+                animateRotation = false
+                Task {
+                    await cube4Controller.scene.animateRotation()
+                    cube4Controller.scene.transform.rotation = .init()
+                }
+            } else {
+                cube4Controller.scene.transform.rotation = cube4Controller.rotation
+            }
+        }
+    }
+
+    public var rotation: simd_quatf {
+        get {
+            switch gameboardDimensions {
+            case .square3:
+                square3Controller.rotation
+            case .cube4:
+                cube4Controller.rotation
+            }
+        }
+        set {
+            switch gameboardDimensions {
+            case .square3:
+                square3Controller.rotation = newValue
+            case .cube4:
+                cube4Controller.rotation = newValue
+            }
+            objectWillChange.send()
+        }
     }
 
     public func playGame() {
-        gameSessionViewModel.playGame(dimensions: gameboardDimensions, xPlayerType: .human, oPlayerType: .bot(selectedBot))
+        gameSessionViewModel.playGame(dimensions: gameboardDimensions, xPlayerType: .human, oPlayerType: .bot(selectedBotLevel))
+    }
+
+    public func resetGameboard() {
+        Task {
+            switch gameboardDimensions {
+            case .square3:
+                square3Controller.rotation = .init()
+                try await square3Controller.onReset()
+            case .cube4:
+//                animateRotation = true
+                cube4Controller.rotation = .init()
+                try await cube4Controller.onReset()
+            }
+            objectWillChange.send()
+        }
+    }
+
+    public func updateUI(_ event: GameEventValue) async throws {
+        switch event {
+        case .square3(let square3Event):
+            try await square3Controller.updateUI(square3Event)
+        case .cube4(let cube4Event):
+            try await cube4Controller.updateUI(cube4Event)
+        }
+    }
+
+    public var isCurrentSceneRotatable: Bool {
+        switch gameboardDimensions {
+        case .square3:
+            false
+        case .cube4:
+            true
+        }
     }
 
     public func endGameSession() {

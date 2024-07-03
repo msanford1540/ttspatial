@@ -17,6 +17,7 @@ import TicTacToeEngine
     fileprivate(set) var oTemplateEntity: Entity = .empty
     fileprivate(set) var lineTemplateEntity: Entity = .empty
 
+    var rotation: simd_quatf = .init()
     var xEntities: [Gameboard.Location: Entity] = .empty
     var oEntities: [Gameboard.Location: Entity] = .empty
     var lineEntities: [Gameboard.WinningLine: Entity] = .empty
@@ -57,9 +58,9 @@ import TicTacToeEngine
     }
 
     public func updateUI(_ event: GameEvent<Gameboard.WinningLine, Gameboard.Location>) async throws {
+        print("[debug]", "count2: \(blankEntities.count)")
         switch event {
         case .move(let gameMove):
-            print("[debug]", "count2: \(blankEntities.count)")
             try await onMove(gameMove)
         case .undo:
             break
