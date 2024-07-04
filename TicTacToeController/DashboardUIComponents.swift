@@ -72,27 +72,47 @@ private final class CurrentTurnSectionViewModel: ObservableObject {
     }
 }
 
-public struct StartOverButton: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    private let vPadding: CGFloat
-    private let hPadding: CGFloat
+public struct DashboardButton<Content: View>: View {
+    private let content: () -> Content
+    private let action: () -> Void
 
-    public init(padding: CGFloat = .zero) {
-        self.init(vPadding: padding, hPadding: padding)
+    public init(action: @escaping () -> Void, @ViewBuilder label: @escaping () -> Content) {
+        self.content = label
+        self.action = action
     }
 
-    public init(vPadding: CGFloat = .zero, hPadding: CGFloat = .zero) {
-        self.vPadding = vPadding
-        self.hPadding = hPadding
+    public init(_ title: String, action: @escaping () -> Void) where Content == Text {
+        self.init(action: action) {
+            Text(title)
+        }
+    }
+
+    public init(_ title: String, systemImage: String, action: @escaping () -> Void) where Content == Label<Text, Image> {
+        self.init(action: action) {
+            Label(title, systemImage: systemImage)
+        }
     }
 
     public var body: some View {
-        Button {
+        Button(action: action) {
+            content()
+            #if os(visionOS)
+                .padding(.vertical, 6)
+                .padding(.horizontal, 16)
+            #endif
+        }
+        .buttonStyle(.bordered)
+    }
+}
+
+public struct StartOverButton: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+
+    public init() {}
+
+    public var body: some View {
+        DashboardButton("Start Over") {
             gameSessionViewModel.startNewGame()
-        } label: {
-            Text("Start Over")
-                .padding(.vertical, vPadding)
-                .padding(.horizontal, hPadding)
         }
     }
 }
@@ -100,26 +120,13 @@ public struct StartOverButton: View {
 public struct EndGameButton: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
-    private let vPadding: CGFloat
-    private let hPadding: CGFloat
 
-    public init(padding: CGFloat = .zero) {
-        self.init(vPadding: padding, hPadding: padding)
-    }
-
-    public init(vPadding: CGFloat = .zero, hPadding: CGFloat = .zero) {
-        self.vPadding = vPadding
-        self.hPadding = hPadding
-    }
+    public init() {}
 
     public var body: some View {
-        Button {
+        DashboardButton("End Game") {
             gameSessionViewModel.endGameSession()
             homeMenuViewModel.resetGameboard()
-        } label: {
-            Text("End Game")
-                .padding(.vertical, vPadding)
-                .padding(.horizontal, hPadding)
         }
     }
 }
@@ -127,27 +134,13 @@ public struct EndGameButton: View {
 public struct SharePlayButton: View {
     @EnvironmentObject private var sharePlaySession: SharePlayGameSession
     @ObservedObject private var sharePlayObserver = GroupStateObserver()
-    private let vPadding: CGFloat
-    private let hPadding: CGFloat
 
-    public init(padding: CGFloat = .zero) {
-        self.init(vPadding: padding, hPadding: padding)
-    }
-
-    public init(vPadding: CGFloat = .zero, hPadding: CGFloat = .zero) {
-        self.vPadding = vPadding
-        self.hPadding = hPadding
-    }
+    public init() {}
 
     public var body: some View {
-        Button {
+        DashboardButton("Start Activity", systemImage: "shareplay") {
             sharePlaySession.startSharing()
-        } label: {
-            Label("Start Activity", systemImage: "shareplay")
-                .padding(.vertical, vPadding)
-                .padding(.horizontal, hPadding)
         }
-        .buttonStyle(.borderedProminent)
         .disabled(!sharePlayObserver.isEligibleForGroupSession)
     }
 }

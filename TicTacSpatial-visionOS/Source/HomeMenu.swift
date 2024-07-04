@@ -34,7 +34,7 @@ public struct HomeMenu: View {
             .font(.largeTitle)
             .padding(.horizontal)
 
-            Button("Play Game", action: viewModel.playGame)
+            DashboardButton("Play Game", action: viewModel.playGame)
         }
         .padding()
         .frame(width: 1200, height: 300)

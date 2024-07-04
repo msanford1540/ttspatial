@@ -26,12 +26,12 @@ struct Dashboard: View {
                     .frame(width: 120)
             }
             .padding()
-            VStack(spacing: 24) {
+            VStack(spacing: 32) {
                 HStack(spacing: 24) {
-                    StartOverButton(vPadding: 6, hPadding: 16)
-                    EndGameButton(vPadding: 6, hPadding: 16)
+                    StartOverButton()
+                    EndGameButton()
                 }
-                SharePlayButton(vPadding: 6, hPadding: 16)
+                SharePlayButton()
             }
             .font(.extraLargeTitle)
             .padding(.top, 44)
