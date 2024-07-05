@@ -60,7 +60,7 @@ private struct InnerPlayerMarker: View {
         if marker == .x {
             rootNode.scale = .init(1.15, 1.15, 1)
         }
-        scene.background.contents = UIColor.panel(for: colorScheme)
+        scene.background.contents = DarwinColor.panel(for: colorScheme)
         let light = SCNLight()
         light.type = .ambient
         light.intensity = 300

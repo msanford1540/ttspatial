@@ -5,11 +5,17 @@
 //  Created by Mike Sanford (1540) on 7/3/24.
 //
 
-import UIKit
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+typealias DarwinColor = UIColor
+#elseif canImport(AppKit)
+import AppKit
+typealias DarwinColor = NSColor
+#endif
 
-extension UIColor {
-    static func panel(for colorScheme: ColorScheme) -> UIColor {
+extension DarwinColor {
+    static func panel(for colorScheme: ColorScheme) -> DarwinColor {
         switch colorScheme {
         case .light: .init(white: 0.875, alpha: 1)
         case .dark: .init(white: 0.125, alpha: 1)
@@ -20,6 +26,10 @@ extension UIColor {
 
 extension Color {
     static func panel(for colorScheme: ColorScheme) -> Color {
+#if canImport(UIKit)
         .init(uiColor: .panel(for: colorScheme))
+#elseif canImport(AppKit)
+        .init(nsColor: .panel(for: colorScheme))
+#endif
     }
 }

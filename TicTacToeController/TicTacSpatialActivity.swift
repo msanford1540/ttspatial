@@ -26,6 +26,13 @@ public enum GameSessionValue {
     case cube4(GameSession<CubeFourGameboard>)
 }
 
+@frozen
+public enum GameOverState {
+    case won
+    case lost
+    case tie
+}
+
 @MainActor
 public final class GameSessionViewModel: ObservableObject {
     @Published public private(set) var gameSession: GameSessionValue?
@@ -37,6 +44,7 @@ public final class GameSessionViewModel: ObservableObject {
     @Published public private(set) var oPlayerName: String = .empty
     @Published public private(set) var xWinCount: Int = .zero
     @Published public private(set) var oWinCount: Int = .zero
+    @Published public private(set) var gameOverState: GameOverState?
     private var gameSubscribers: Set<AnyCancellable> = .empty
 
     func playGame(dimensions: GameboardDimensions, xPlayerType: PlayerType, oPlayerType: PlayerType) {
@@ -105,11 +113,23 @@ public final class GameSessionViewModel: ObservableObject {
             .store(in: &gameSubscribers)
 
         $currentTurn
-            .map { $0 == nil }
-            .assign(to: &$isGameOver)
+            .sink { [unowned self] in
+                let isGameOver = $0 == nil
+                self.isGameOver = isGameOver
+                gameOverState = if isGameOver, let humanPlayer = gameSession.humanPlayer {
+                    if let winningPlayer = gameSession.winningPlayer {
+                        winningPlayer == humanPlayer ? .won : .lost
+                    } else {
+                        .tie
+                    }
+                } else {
+                    nil
+                }
+            }
+            .store(in: &gameSubscribers)
     }
 
-    func endGameSession() {
+    public func endGameSession() {
         gameSession = nil
         gameSubscribers = .empty
         currentTurn = nil
@@ -120,7 +140,7 @@ public final class GameSessionViewModel: ObservableObject {
         isGameSessionActive = false
     }
 
-    func startNewGame() {
+    public func startNewGame() {
         gameSession?.reset()
     }
 }

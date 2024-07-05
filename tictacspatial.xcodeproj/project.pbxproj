@@ -27,8 +27,8 @@
 		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
 		F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */; };
-		F555D5E32BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
-		F555D5E42BD4488600B92AA4 /* TicTacToeController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F555D5E32BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; platformFilters = (ios, maccatalyst, macos, ); };
+		F555D5E42BD4488600B92AA4 /* TicTacToeController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; platformFilters = (ios, maccatalyst, macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F555D5EF2BD448E700B92AA4 /* TicTacToeController.docc in Sources */ = {isa = PBXBuildFile; fileRef = F555D5EC2BD448E700B92AA4 /* TicTacToeController.docc */; };
 		F555D5F02BD448E700B92AA4 /* TicTacToeController.h in Headers */ = {isa = PBXBuildFile; fileRef = F555D5ED2BD448E700B92AA4 /* TicTacToeController.h */; };
 		F555D5F22BD4491200B92AA4 /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
@@ -53,8 +53,8 @@
 		F59061EA2C2A7BBF00231FD9 /* CubeGameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061E92C2A7BB900231FD9 /* CubeGameboardController.swift */; };
 		F59061ED2C2A835200231FD9 /* MenuMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061EC2C2A834900231FD9 /* MenuMode.swift */; };
 		F59061EF2C2A83B500231FD9 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061EE2C2A83AF00231FD9 /* HomeMenu.swift */; };
-		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
-		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; platformFilters = (ios, maccatalyst, macos, ); };
+		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; platformFilters = (ios, maccatalyst, macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
 		F5D0C54C2C235E3E0037DD32 /* SCNVector3+Convience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */; };
 		F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */; };
@@ -1041,6 +1041,11 @@
 		};
 		F555D5E22BD4488600B92AA4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilters = (
+				ios,
+				maccatalyst,
+				macos,
+			);
 			target = F555D5CD2BD4488600B92AA4 /* TicTacToeController */;
 			targetProxy = F555D5E12BD4488600B92AA4 /* PBXContainerItemProxy */;
 		};
@@ -1056,6 +1061,11 @@
 		};
 		F59776492BCF08240090DF5F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilters = (
+				ios,
+				maccatalyst,
+				macos,
+			);
 			target = F5FDC98B2BCDE366001EC38B /* TicTacToeEngine */;
 			targetProxy = F59776482BCF08240090DF5F /* PBXContainerItemProxy */;
 		};
@@ -1475,8 +1485,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
 				PRODUCT_NAME = TicTacSpatial;
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
@@ -1518,8 +1529,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.tictacspatial;
 				PRODUCT_NAME = TicTacSpatial;
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;

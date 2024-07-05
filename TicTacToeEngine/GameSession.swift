@@ -76,6 +76,20 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         startNewGame()
     }
 
+    public var winningPlayer: PlayerMarker? {
+        gameEngine.winningInfo?.player
+    }
+
+    public var humanPlayer: PlayerMarker? {
+        if xPlayer.isHuman {
+            .x
+        } else if oPlayer.isHuman {
+            .o
+        } else {
+            nil
+        }
+    }
+
     private func setupPipelines() {
         $xPlayer
             .map(\.playerName)

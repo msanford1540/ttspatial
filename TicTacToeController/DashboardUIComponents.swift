@@ -73,22 +73,24 @@ private final class CurrentTurnSectionViewModel: ObservableObject {
 }
 
 public struct DashboardButton<Content: View>: View {
+    private let hPadding: CGFloat?
     private let content: () -> Content
     private let action: () -> Void
 
-    public init(action: @escaping () -> Void, @ViewBuilder label: @escaping () -> Content) {
+    public init(hPadding: CGFloat?, action: @escaping () -> Void, @ViewBuilder label: @escaping () -> Content) {
+        self.hPadding = hPadding
         self.content = label
         self.action = action
     }
 
-    public init(_ title: String, action: @escaping () -> Void) where Content == Text {
-        self.init(action: action) {
+    public init(_ title: String, hPadding: CGFloat? = nil, action: @escaping () -> Void) where Content == Text {
+        self.init(hPadding: hPadding, action: action) {
             Text(title)
         }
     }
 
-    public init(_ title: String, systemImage: String, action: @escaping () -> Void) where Content == Label<Text, Image> {
-        self.init(action: action) {
+    public init(_ title: String, systemImage: String, hPadding: CGFloat? = nil, action: @escaping () -> Void) where Content == Label<Text, Image> {
+        self.init(hPadding: hPadding, action: action) {
             Label(title, systemImage: systemImage)
         }
     }
@@ -98,7 +100,7 @@ public struct DashboardButton<Content: View>: View {
             content()
             #if os(visionOS)
                 .padding(.vertical, 6)
-                .padding(.horizontal, 16)
+                .padding(.horizontal, hPadding ?? 16)
             #endif
         }
         .buttonStyle(.bordered)
