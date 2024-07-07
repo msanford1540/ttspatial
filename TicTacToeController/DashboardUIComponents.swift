@@ -30,45 +30,53 @@ public struct CurrentTurnSection: View {
     }
 
     public var body: some View {
+        HStack {
+            CurrentTurnMarker(size: turnMarkerSize)
+                .opacity(viewModel.isXTurn ? 1 : 0)
+            Spacer()
+            CurrentTurnMarker(size: turnMarkerSize)
+                .opacity(viewModel.isOTurn ? 1 : 0)
+        }
+        .padding(.horizontal, margin)
+        .onChange(of: gameSessionViewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
+            viewModel.onCurrentTurnChange(oldCurrentTurn, newCurrentTurn)
+        }
+        .onAppear {
+            viewModel.update(with: gameSessionViewModel.currentTurn)
+        }
+    }
+}
+
+private struct CurrentTurnMarker: View {
+    private let turnMarkerSize: CGFloat
+
+    init(size: CGFloat) {
+        self.turnMarkerSize = size
+    }
+
+    var body: some View {
         Circle()
             .fill(Color.red)
             .frame(width: turnMarkerSize, height: turnMarkerSize)
-            .opacity(viewModel.isCurrentTurnHidden ? 0 : 1)
-            .padding(.horizontal, margin)
-            .frame(maxWidth: .infinity, alignment: viewModel.isLeading ? .leading : .trailing)
-            .onChange(of: gameSessionViewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
-                viewModel.onCurrentTurnChange(oldCurrentTurn, newCurrentTurn)
-            }
-            .onAppear {
-                viewModel.update(with: gameSessionViewModel.currentTurn)
-            }
     }
 }
 
 @MainActor
 private final class CurrentTurnSectionViewModel: ObservableObject {
-    @Published public private(set) var isCurrentTurnHidden: Bool = true
-    @Published public private(set) var isLeading: Bool = true
+    @Published public private(set) var isXTurn: Bool = false
+    @Published public private(set) var isOTurn: Bool = false
 
     func update(with currentTurn: PlayerMarker?) {
         onCurrentTurnChange(nil, currentTurn)
     }
 
     func onCurrentTurnChange(_ oldCurrentTurn: PlayerMarker?, _ newCurrentTurn: PlayerMarker?) {
-        if oldCurrentTurn != nil, newCurrentTurn != nil {
-            withAnimation { updateCurrentTurnOffset(for: newCurrentTurn) }
-        } else {
-            updateCurrentTurnOffset(for: newCurrentTurn)
-            withAnimation { isCurrentTurnHidden = newCurrentTurn == nil }
-        }
+        withAnimation { updateCurrentTurnOffset(for: newCurrentTurn) }
     }
 
     private func updateCurrentTurnOffset(for mark: PlayerMarker?) {
-        guard let mark else { return }
-        isLeading = switch mark {
-        case .x: true
-        case .o: false
-        }
+        isXTurn = mark == .x
+        isOTurn = mark == .o
     }
 }
 
@@ -226,6 +234,7 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
                 }
             }
             nameView(playerName)
+                .frame(minHeight: 56)
         }
     }
 

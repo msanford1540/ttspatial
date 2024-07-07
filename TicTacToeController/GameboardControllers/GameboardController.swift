@@ -16,6 +16,8 @@ import TicTacToeEngine
     fileprivate(set) var xTemplateEntity: Entity = .empty
     fileprivate(set) var oTemplateEntity: Entity = .empty
     fileprivate(set) var lineTemplateEntity: Entity = .empty
+    private var mostRecentMove: GameMove<Gameboard.Location>?
+    private var isHintInProgress = false
 
     var rotation: simd_quatf = .init()
     var xEntities: [Gameboard.Location: Entity] = .empty
@@ -42,7 +44,6 @@ import TicTacToeEngine
         lineTemplateEntity.isEnabled = false
 
         Gameboard.Location.allCases.forEach { location in
-            print("[debug]", "location: \(location.entityName)")
             if let entity = scene.findEntity(named: location.entityName) {
                 blankEntities[location] = entity
                 entity.components.set([
@@ -54,15 +55,40 @@ import TicTacToeEngine
                 print("[debug]", "bad location: \(location.entityName)")
             }
         }
-        print("[debug]", "count: \(blankEntities.count)")
+    }
+
+    public func showReplay(with move: GameMoveValue) async {
+        let entities = switch move.mark {
+        case .x: xEntities
+        case .o: oEntities
+        }
+        let entity: Entity?
+        switch move.location {
+        case .square3(let gridLocation):
+            if let location = gridLocation as? Gameboard.Location {
+                entity = entities[location]
+            } else {
+                entity = nil
+            }
+        case .cube4(let cubeLocation):
+            if let location = cubeLocation as? Gameboard.Location {
+                entity = entities[location]
+            } else {
+                entity = nil
+            }
+        }
+        guard let entity else { return }
+        await entity.animateScale(to: .init(x: 2, y: 2, z: 2), duration: .milliseconds(500))
+//        try? await Task.sleep(for: .seconds(1))
+        await entity.animateScale(to: .init(x: 1, y: 1, z: 1), duration: .milliseconds(500))
     }
 
     public func updateUI(_ event: GameEvent<Gameboard.WinningLine, Gameboard.Location>) async throws {
         switch event {
         case .move(let gameMove):
             try await onMove(gameMove)
-        case .undo:
-            break
+        case .undo(let gameMove):
+            try await onUndo(gameMove)
         case .gameOver(let winningInfo):
             try await onGameOver(winningInfo)
         case .reset:
@@ -70,6 +96,45 @@ import TicTacToeEngine
         @unknown default:
             assertionFailure("unknown game event type")
         }
+    }
+
+    public func showHint(at location: Gameboard.Location) async {
+        guard let blankEntity = blankEntities[location], !isHintInProgress else { return }
+        isHintInProgress = true
+        var material = SimpleMaterial()
+        material.color.tint = .green
+        let modelEntity = blankEntity.findEntity(named: "mesh_0") as? ModelEntity
+        let blankMaterials = modelEntity?.model?.materials ?? .empty
+        let hintMaterials = [material]
+
+        await modelEntity?.animateOpacity(to: 0, duration: .milliseconds(250))
+        modelEntity?.model?.materials = hintMaterials
+        await modelEntity?.animateOpacity(to: 0.7, duration: .milliseconds(500))
+        await modelEntity?.animateOpacity(to: 0, duration: .milliseconds(500))
+        modelEntity?.model?.materials = blankMaterials
+        await modelEntity?.animateOpacity(to: 1, duration: .milliseconds(250))
+        isHintInProgress = false
+    }
+
+    func onUndo(_ gameMove: GameMove<Gameboard.Location>) async throws {
+        let location = gameMove.location
+        let mark = gameMove.mark
+        let animationDuration: Duration = .markDuration
+        let markEntity = switch mark {
+        case .x:
+            xEntities[location]
+        case .o:
+            oEntities[location]
+        }
+        guard let markEntity, let blankEntity = blankEntities[location] else { return }
+        await markEntity.animateOpacity(to: .zero, duration: animationDuration / 2)
+        switch mark {
+        case .x:
+            xEntities[location] = nil
+        case .o:
+            oEntities[location] = nil
+        }
+        await blankEntity.animateOpacity(to: 1, duration: animationDuration)
     }
 
     func onMove(_ gameMove: GameMove<Gameboard.Location>) async throws {

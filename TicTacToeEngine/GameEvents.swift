@@ -84,7 +84,7 @@ public enum GameEventValue: Sendable, Codable, CustomStringConvertible {
 
 public enum GameEvent<WinningLine: WinningLineProtocol, GameboardLocation: GameboardLocationProtocol>: Sendable, Codable, CustomStringConvertible {
     case move(GameMove<GameboardLocation>)
-    case undo(GameboardLocation)
+    case undo(GameMove<GameboardLocation>)
     case gameOver(WinningInfo<WinningLine>?)
     case reset
 

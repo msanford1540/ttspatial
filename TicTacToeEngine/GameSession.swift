@@ -59,6 +59,8 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     @Published public private(set) var oPlayerName: String = .empty
     @Published public private(set) var processingEventID: UUID?
     @Published public private(set) var currentTurn: PlayerMarker?
+    @Published public private(set) var canUndo: Bool = false
+    @Published public private(set) var canReplay: Bool = false
     private var pendingGameEvent: GameEvent<Gameboard.WinningLine, Gameboard.Location>?
 
     private var queue = Queue<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>()
@@ -87,6 +89,26 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
             .o
         } else {
             nil
+        }
+    }
+
+    public var currentPlayerHint: Gameboard.Location? {
+        gameEngine.currentPlayerHint
+    }
+
+    public var mostRecentMove: GameMove<Gameboard.Location>? {
+        gameEngine.mostRecentMove
+    }
+
+    public var mostRecentMoveLocation: Gameboard.Location? {
+        gameEngine.mostRecentMove?.location
+    }
+
+    public func undoLastHumanMove() {
+        guard let humanPlayer else { return }
+        gameEngine.undoLastMove()
+        if let mostRecentMove, mostRecentMove.mark == humanPlayer {
+            gameEngine.undoLastMove()
         }
     }
 
@@ -158,6 +180,8 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     public func reset() {
         startingPlayer = startingPlayer.opponent
         gameEngine = .init(gameboard: Gameboard(), startingPlayer: startingPlayer)
+        canUndo = false
+        canReplay = false
         startNewGame()
     }
 
@@ -203,6 +227,8 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         processingEventID = update.id
         pendingGameEvent = update.event
         currentTurn = update.currentTurn
+        canUndo = gameEngine.canUndo && isHumanTurn
+        canReplay = gameEngine.canUndo
 
         if let winningPlayer = update.event.winningInfo?.player {
             switch winningPlayer {

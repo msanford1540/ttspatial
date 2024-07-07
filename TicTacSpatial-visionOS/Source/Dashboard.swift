@@ -58,12 +58,20 @@ struct Dashboard: View {
                         VStack(spacing: 32) {
                             HStack(spacing: 24) {
                                 Group {
-                                    DashboardButton("Hint", hPadding: 48) {
+                                    DashboardButton("Hint", hPadding: 40) {
+                                        guard let hint = gameSessionViewModel.currentPlayerHint else { return }
+                                        homeMenuViewModel.showHint(at: hint)
                                     }
-                                    DashboardButton("Undo", hPadding: 48) {
+                                    DashboardButton("Undo", hPadding: 40) {
+                                        gameSessionViewModel.undoLastHumanMove()
                                     }
+                                    .disabled(!gameSessionViewModel.canUndo)
+
                                     DashboardButton("Replay", hPadding: 40) {
+                                        let move = gameSessionViewModel.mostRecentMove
+                                        homeMenuViewModel.showReplay(with: move)
                                     }
+                                    .disabled(!gameSessionViewModel.canReplay)
                                 }
                                 .frame(width: 220)
                             }

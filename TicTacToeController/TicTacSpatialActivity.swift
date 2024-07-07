@@ -26,6 +26,16 @@ public enum GameSessionValue {
     case cube4(GameSession<CubeFourGameboard>)
 }
 
+public enum GameLocationValue {
+    case square3(GridLocation)
+    case cube4(CubeFourLocation)
+}
+
+public struct GameMoveValue {
+    public let mark: PlayerMarker
+    public let location: GameLocationValue
+}
+
 @frozen
 public enum GameOverState {
     case won
@@ -45,6 +55,8 @@ public final class GameSessionViewModel: ObservableObject {
     @Published public private(set) var xWinCount: Int = .zero
     @Published public private(set) var oWinCount: Int = .zero
     @Published public private(set) var gameOverState: GameOverState?
+    @Published public private(set) var canUndo: Bool = false
+    @Published public private(set) var canReplay: Bool = false
     private var gameSubscribers: Set<AnyCancellable> = .empty
 
     func playGame(dimensions: GameboardDimensions, xPlayerType: PlayerType, oPlayerType: PlayerType) {
@@ -59,6 +71,41 @@ public final class GameSessionViewModel: ObservableObject {
             setupPipelines(rawGameSession)
         }
         isGameSessionActive = true
+    }
+
+    public func undoLastHumanMove() {
+        switch gameSession {
+        case .square3(let gameSession):
+            gameSession.undoLastHumanMove()
+        case .cube4(let gameSession):
+            gameSession.undoLastHumanMove()
+        case nil:
+            break
+        }
+    }
+
+    public var mostRecentMove: GameMoveValue? {
+        switch gameSession {
+        case .square3(let gameSession):
+            guard let move = gameSession.mostRecentMove else { return nil }
+            return .init(mark: move.mark, location: .square3(move.location))
+        case .cube4(let gameSession):
+            guard let move = gameSession.mostRecentMove else { return nil }
+            return .init(mark: move.mark, location: .cube4(move.location))
+        case nil:
+            return nil
+        }
+    }
+
+    public var currentPlayerHint: (any GameboardLocationProtocol)? {
+        switch gameSession {
+        case .square3(let gameSession):
+            gameSession.currentPlayerHint
+        case .cube4(let gameSession):
+            gameSession.currentPlayerHint
+        case nil:
+            nil
+        }
     }
 
     public func dequeueEvent() -> GameEventValue? {
@@ -110,6 +157,14 @@ public final class GameSessionViewModel: ObservableObject {
 
         gameSession.$oWinCount
             .sink { [unowned self] in oWinCount = $0 }
+            .store(in: &gameSubscribers)
+
+        gameSession.$canUndo
+            .sink { [unowned self] in canUndo = $0 }
+            .store(in: &gameSubscribers)
+
+        gameSession.$canReplay
+            .sink { [unowned self] in canReplay = $0 }
             .store(in: &gameSubscribers)
 
         $currentTurn

@@ -29,6 +29,7 @@ public protocol GameboardProtocol: GameboardInspectable {
     associatedtype Snapshot: GameboardSnapshotProtocol where Snapshot.Location == Location, Snapshot.WinningLine == WinningLine
     init()
     mutating func markPlayer(_ mark: PlayerMarker, at location: Location)
+    mutating func markEmpty(at location: Location)
     func snapshot(with currentTurn: PlayerMarker?) -> Snapshot
 }
 

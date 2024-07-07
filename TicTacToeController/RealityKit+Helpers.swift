@@ -37,7 +37,8 @@ public extension Entity {
     }
 
     var isOpacityAnimating: Bool {
-        Self.manager.isOpacityAnimationPlaying(for: self)
+        Self.manager.drain()
+        return Self.manager.isOpacityAnimationPlaying(for: self)
     }
 
     @MainActor func animateOpacity(to opacity: Float, duration: Duration? = nil) async {
@@ -49,17 +50,18 @@ public extension Entity {
         }
 
         let animationDuration = duration ?? defaultDuration
+        let timeInterval: TimeInterval = .init(animationDuration)
         let fromToAnimation = FromToByAnimation(
             from: components[OpacityComponent.self]?.opacity,
             to: opacity,
-            duration: .init(animationDuration),
+            duration: timeInterval,
             bindTarget: .opacity
         )
 
         if let animation = try? AnimationResource.generate(with: fromToAnimation) {
             let controller = playAnimation(animation)
             Self.manager.addOpacityAnimation(controller)
-            try? await Task.sleep(for: animationDuration)
+            try? await Task.sleep(for: animationDuration + .milliseconds(50))
         } else {
             components.set(OpacityComponent(opacity: opacity))
         }
@@ -132,7 +134,7 @@ private final class AnimationManager {
         rotationAnimations.append(.init(animationController))
     }
 
-    private func drain() {
+    func drain() {
         opacityAnimations = opacityAnimations.filter { $0.value != nil }
     }
 }

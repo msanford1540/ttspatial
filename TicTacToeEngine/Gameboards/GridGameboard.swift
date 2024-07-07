@@ -15,12 +15,16 @@ public struct GridGameboard: GameboardProtocol {
 
     public init() {}
 
-    public func marker(at location: GridLocation) -> PlayerMarker? {
+    public func marker(at location: Location) -> PlayerMarker? {
         markers[location]
     }
 
-    public mutating func markPlayer(_ mark: PlayerMarker, at location: GridLocation) {
+    public mutating func markPlayer(_ mark: PlayerMarker, at location: Location) {
         markers[location] = mark
+    }
+
+    public mutating func markEmpty(at location: Location) {
+        markers[location] = nil
     }
 
     public func snapshot(with currentTurn: PlayerMarker?) -> Snapshot {

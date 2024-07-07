@@ -23,6 +23,10 @@ public struct CubeGameboard: GameboardProtocol {
         markers[location] = mark
     }
 
+    public mutating func markEmpty(at location: Location) {
+        markers[location] = nil
+    }
+
     public func snapshot(with currentTurn: PlayerMarker?) -> Snapshot {
         Snapshot(markers: markers, currentTurn: currentTurn)
     }

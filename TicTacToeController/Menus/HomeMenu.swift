@@ -68,6 +68,31 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         gameSessionViewModel.playGame(dimensions: gameboardDimensions, xPlayerType: .human, oPlayerType: .bot(selectedBotLevel))
     }
 
+    public func showHint(at location: any GameboardLocationProtocol) {
+        Task {
+            switch gameboardDimensions {
+            case .square3:
+                guard let gridLocation = location as? GridLocation else { return }
+                await square3Controller.showHint(at: gridLocation)
+            case .cube4:
+                guard let cube4Location = location as? CubeFourLocation else { return }
+                await cube4Controller.showHint(at: cube4Location)
+            }
+        }
+    }
+
+    public func showReplay(with gameMove: GameMoveValue?) {
+        guard let gameMove else { return }
+        Task {
+            switch gameboardDimensions {
+            case .square3:
+                await square3Controller.showReplay(with: gameMove)
+            case .cube4:
+                await cube4Controller.showReplay(with: gameMove)
+            }
+        }
+    }
+
     public func resetGameboard() {
         Task {
             switch gameboardDimensions {
