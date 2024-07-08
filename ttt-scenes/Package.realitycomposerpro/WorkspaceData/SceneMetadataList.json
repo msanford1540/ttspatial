@@ -1,0 +1,64 @@
+{
+  "5C4BC717-E6E9-481C-89AF-256E0C36F91C" : {
+    "objectMetadataList" : [
+      [
+        "5C4BC717-E6E9-481C-89AF-256E0C36F91C",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "5C4BC717-E6E9-481C-89AF-256E0C36F91C",
+        "Root",
+        "places"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "5C4BC717-E6E9-481C-89AF-256E0C36F91C",
+        "Root",
+        "grid"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "5C4BC717-E6E9-481C-89AF-256E0C36F91C",
+        "Root",
+        "grid",
+        "Group"
+      ],
+      {
+        "disallowsFraming" : false,
+        "isExpanded" : false,
+        "isLocked" : false
+      }
+    ]
+  },
+  "EFA59631-ADD0-4AA5-845D-CB891DEFEB6D" : {
+    "objectMetadataList" : [
+      [
+        "EFA59631-ADD0-4AA5-845D-CB891DEFEB6D",
+        "Root"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      },
+      [
+        "EFA59631-ADD0-4AA5-845D-CB891DEFEB6D",
+        "Root",
+        "places"
+      ],
+      {
+        "isExpanded" : true,
+        "isLocked" : false
+      }
+    ]
+  }
+}

@@ -73,6 +73,19 @@ public final class GameSessionViewModel: ObservableObject {
         isGameSessionActive = true
     }
 
+    public var gameStatusText: String {
+        return switch gameOverState {
+        case .won:
+            "You Won!!!"
+        case .lost:
+            "You lost"
+        case .tie:
+            "Tie Game"
+        case nil:
+            .empty
+        }
+    }
+
     public func undoLastHumanMove() {
         switch gameSession {
         case .square3(let gameSession):

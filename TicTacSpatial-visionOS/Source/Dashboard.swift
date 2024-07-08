@@ -40,7 +40,7 @@ struct Dashboard: View {
                 Group {
                     if gameSessionViewModel.isGameOver {
                         VStack(spacing: 32) {
-                            Text(gameStatusText)
+                            Text(gameSessionViewModel.gameStatusText)
                             Text("Do you want to play again?")
                             HStack(spacing: 24) {
                                 DashboardButton("Stop Playing") {
@@ -96,18 +96,6 @@ struct Dashboard: View {
             .animation(.easeInOut, value: gameSessionViewModel.isGameOver)
         }
         .frame(height: 500)
-    }
-
-    private var gameStatusText: String {
-        guard let gameOverState = gameSessionViewModel.gameOverState else { return .empty }
-        return switch gameOverState {
-        case .won:
-            "You Won!!!"
-        case .lost:
-            "You lost"
-        case .tie:
-            "Tie Game"
-        }
     }
 }
 private struct BridgeView: View {

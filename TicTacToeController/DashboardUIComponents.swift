@@ -109,6 +109,8 @@ public struct DashboardButton<Content: View>: View {
             #if os(visionOS)
                 .padding(.vertical, 6)
                 .padding(.horizontal, hPadding ?? 16)
+            #else
+                .padding(.horizontal, hPadding)
             #endif
         }
         .buttonStyle(.bordered)

@@ -61,7 +61,7 @@ public extension Entity {
         if let animation = try? AnimationResource.generate(with: fromToAnimation) {
             let controller = playAnimation(animation)
             Self.manager.addOpacityAnimation(controller)
-            try? await Task.sleep(for: animationDuration + .milliseconds(50))
+            try? await Task.sleep(for: animationDuration + .milliseconds(100))
         } else {
             components.set(OpacityComponent(opacity: opacity))
         }

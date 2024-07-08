@@ -14,34 +14,119 @@ import TicTacToeEngine
 
 struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var gameSession: GameSessionViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
 
     var body: some View {
-        ZStack {
-            PlayersDashboard(margin: 12, turnMarkerSize: 18) { marker in
-                InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
-            } winCountView: { count in
-                WinCountView(count)
-            } nameView: { playerName in
-                Text(playerName)
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 8)
-            VStack {
-                Spacer()
-                HStack(spacing: 24) {
-                    StartOverButton()
-                    EndGameButton()
+        VStack {
+            Spacer()
+            ZStack {
+                VStack {
+                    Spacer()
+                    PlayersDashboard(margin: 12, turnMarkerSize: 18) { marker in
+                        InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
+                    } winCountView: { count in
+                        WinCountView(count)
+                    } nameView: { playerName in
+                        Text(playerName)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
                 }
-                SharePlayButton()
+                .frame(height: 130)
+                VStack {
+                    Spacer()
+                    SharePlayButton()
+                }
+                .padding(.bottom)
+                .frame(height: 130)
+
+                Group {
+                    if gameSessionViewModel.isGameOver {
+                        VStack {
+                            Text(gameSessionViewModel.gameStatusText)
+                            Text("Do you want to play again?")
+                            HStack {
+                                DashboardButton("Stop Playing") {
+                                    gameSessionViewModel.endGameSession()
+                                    homeMenuViewModel.resetGameboard()
+                                }
+                                DashboardButton("Play Again", hPadding: 48) {
+                                    gameSessionViewModel.startNewGame()
+                                }
+                            }
+                            Spacer()
+                        }
+                        .padding(.top)
+                    } else {
+                        VStack {
+                            HStack {
+                                Group {
+                                    DashboardButton("Hint", hPadding: 16) {
+                                        guard let hint = gameSessionViewModel.currentPlayerHint else { return }
+                                        homeMenuViewModel.showHint(at: hint)
+                                    }
+                                    DashboardButton("Undo", hPadding: 16) {
+                                        gameSessionViewModel.undoLastHumanMove()
+                                    }
+                                    .disabled(!gameSessionViewModel.canUndo)
+
+                                    DashboardButton("Replay", hPadding: 16) {
+                                        let move = gameSessionViewModel.mostRecentMove
+                                        homeMenuViewModel.showReplay(with: move)
+                                    }
+                                    .disabled(!gameSessionViewModel.canReplay)
+                                }
+                                .frame(minWidth: 80)
+                            }
+                            .font(.subheadline)
+
+                            EndGameButton()
+                                .font(.title2)
+                                .padding(.top, 8)
+                            Spacer()
+                        }
+                        .padding(.top, 8)
+                    }
+                }
+                .frame(height: 130)
+                .transition(.asymmetric(
+                    insertion: .opacity.animation(.easeInOut(duration: 0.5)),
+                    removal: .identity
+                ))
             }
-            .font(.headline)
-            .padding(.vertical, 8)
+            .font(.title3)
+            .animation(.easeInOut, value: gameSessionViewModel.isGameOver)
         }
         .frame(height: 130)
-        .background(Color.panel(for: colorScheme))
-        .font(.title3)
     }
+
+//    var body2: some View {
+//        ZStack {
+//            PlayersDashboard(margin: 12, turnMarkerSize: 18) { marker in
+//                InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
+//            } winCountView: { count in
+//                WinCountView(count)
+//            } nameView: { playerName in
+//                Text(playerName)
+//            }
+//            .padding(.horizontal)
+//            .padding(.vertical, 8)
+//            VStack {
+//                Spacer()
+//                HStack(spacing: 24) {
+//                    StartOverButton()
+//                    EndGameButton()
+//                }
+//                SharePlayButton()
+//            }
+//            .font(.headline)
+//            .padding(.vertical, 8)
+//        }
+//        .frame(height: 130)
+//        .background(Color.panel(for: colorScheme))
+//        .font(.title3)
+//    }
 }
 
 private struct InnerPlayerMarker: View {

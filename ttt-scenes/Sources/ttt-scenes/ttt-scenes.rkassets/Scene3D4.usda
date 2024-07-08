@@ -1,0 +1,3139 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "Reality Composer Pro Version 1.0 (409.100.15)"
+    }
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["grid", "places", "line_horizontal", "line_vertical", "line_diagonal", "marker_o", "marker_x"]
+    float3 xformOp:scale = (1, 1, 1)
+    float3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def Xform "grid" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (1.5707964, 0, 0)
+        }
+    )
+    {
+        quatf xformOp:orient = (0.70710677, 0.70710677, 0, 0)
+        float3 xformOp:translate = (0, 0, 0.225)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Xform "Group" (
+            active = true
+            customData = {
+                float3 rotationEulerHint = (0, 1.5707963, 0)
+            }
+        )
+        {
+            quatf xformOp:orient = (0.7071067, 0, 0.70710677, 0)
+            float3 xformOp:scale = (0.9999998, 0.9999998, 0.9999998)
+            float3 xformOp:translate = (-0.18125045, 4.76864e-8, 0.30082026)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def "Pole_3" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0, 6.871077e-9, 0.18)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_3/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_2" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.3, 0, 0.18)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_2/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_4" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.61, 1.850978e-9, 0.18000004)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_4/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_5" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (-0.0000020563602, 0.45, 0.18000002)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_5/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_6" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.29999796, 0.45, 0.18)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_6/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_7" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.6099979, 0.45, 0.18000004)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_7/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_8" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (-0.0000020563602, -0.45, 0.18000002)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_8/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_9" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.29999796, -0.45, 0.18)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_9/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_10" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.6099979, -0.45, 0.18000004)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_10/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_11" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (-0.0000020563602, -0.9, 0.18000002)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_11/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_12" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.29999796, -0.9, 0.18)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_12/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_13" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.6099979, -0.9, 0.18000004)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group/Pole_13/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+        }
+
+        def Xform "Group_1" (
+            active = true
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.305626, 4.76864e-8, 0.12499382)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def "Pole" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0, 6.627467e-8, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_1" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.30002704, -2.373038e-9, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_1/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_2" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.6061536, 4.7456883e-8, -0.15000081)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_2/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_3" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (2.9802326e-8, 0.45, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "mesh_0"
+                {
+                }
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_3/material_0/shader.outputs:surface>
+                }
+            }
+
+            def "Pole_4" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.30002704, 0.45, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_4/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_5" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.6061536, 0.45, -0.15000081)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_5/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_6" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (2.9802326e-8, -0.45, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "mesh_0"
+                {
+                }
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_6/material_0/shader.outputs:surface>
+                }
+            }
+
+            def "Pole_7" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.30002704, -0.45, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_7/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_8" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.6061536, -0.45, -0.15000081)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_8/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_9" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (2.9802326e-8, -0.9, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "mesh_0"
+                {
+                }
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_9/material_0/shader.outputs:surface>
+                }
+            }
+
+            def "Pole_10" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.30002704, -0.9, -0.15)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_10/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+
+            def "Pole_11" (
+                active = true
+                references = @Pole.usdz@
+            )
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1.333)
+                float3 xformOp:translate = (0.6061536, -0.9, -0.15000081)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                over "material_0"
+                {
+                    token outputs:surface.connect = </Root/grid/Group_1/Pole_11/material_0/shader.outputs:surface>
+                }
+
+                over "mesh_0"
+                {
+                }
+            }
+        }
+
+        def RealityKitComponent "GroundingShadow"
+        {
+            bool enableIBLShadow = 1
+            bool enableMeshShadow = 1
+            uniform token info:id = "RealityKit.GroundingShadow"
+        }
+    }
+
+    def "marker_o" (
+        active = true
+        references = @marker-o.usdz@</root>
+    )
+    {
+        float3 xformOp:scale = (1, 1, 1)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "marker_x" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, 0, 0.78539807)
+        }
+        references = @marker-x.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.92387956, 0, 0, 0.38268334)
+        float3 xformOp:scale = (1.14, 1.14, 1)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Xform "places" (
+        active = true
+    )
+    {
+        reorder nameChildren = ["middleFront_top_left", "middleFront_middleTop_left", "middleFront_middleBottom_left", "middleFront_bottom_left", "middleFront_top_middleRight", "middleFront_middleTop_middleRight", "middleFront_middleBottom_middleRight", "middleFront_bottom_middleRight", "middleFront_top_middleLeft", "middleFront_middleTop_middleLeft", "middleFront_middleBottom_middleLeft", "middleFront_bottom_middleLeft", "middleFront_top_right", "middleFront_middleTop_right", "middleFront_middleBottom_right", "middleFront_bottom_right", "front_top_left", "front_middleTop_left", "front_middleBottom_left", "front_bottom_left", "front_top_middleRight", "front_middleTop_middleRight", "front_middleBottom_middleRight", "front_bottom_middleRight", "front_top_middleLeft", "front_middleTop_middleLeft", "front_middleBottom_middleLeft", "front_bottom_middleLeft", "front_top_right", "front_middleTop_right", "front_middleBottom_right", "front_bottom_right", "back_top_left", "back_middleTop_left", "back_middleBottom_left", "back_bottom_left", "back_top_middleRight", "back_middleTop_middleRight", "back_middleBottom_middleRight", "back_bottom_middleRight", "back_top_middleLeft", "back_middleTop_middleLeft", "back_middleBottom_middleLeft", "back_bottom_middleLeft", "back_top_right", "back_middleTop_right", "back_middleBottom_right", "back_bottom_right", "middleBack_top_left", "middleBack_middleTop_left", "middleBack_middleBottom_left", "middleBack_bottom_left", "middleBack_top_middleRight", "middleBack_middleTop_middleRight", "middleBack_middleBottom_middleRight", "middleBack_bottom_middleRight", "middleBack_top_middleLeft", "middleBack_middleTop_middleLeft", "middleBack_middleBottom_middleLeft", "middleBack_bottom_middleLeft", "middleBack_top_right", "middleBack_middleTop_right", "middleBack_middleBottom_right", "middleBack_bottom_right"]
+        float3 xformOp:translate = (0, 0, 0.225)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def "front_top_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, 0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_top_left/material_0/shader.outputs:surface>
+            }
+        }
+
+        def "front_middleTop_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, 0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleTop_left/material_0/shader.outputs:surface>
+            }
+        }
+
+        def "front_middleBottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, -0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleBottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_bottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            reorder nameChildren = ["middle_top_middleRight", "mesh_0", "material_0", "Collider", "InputTarget"]
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, -0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_bottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_top_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_top_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "mesh_0"
+            {
+            }
+        }
+
+        def "front_middleTop_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleTop_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_middleBottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleBottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_bottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_bottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_top_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_top_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_middleTop_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleTop_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_middleBottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleBottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_bottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_bottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_top_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_top_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_middleTop_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleTop_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_middleBottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.15, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_middleBottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "front_bottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.45, 0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/front_bottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_bottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_bottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_middleBottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleBottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_middleTop_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleTop_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_top_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_top_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_bottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_bottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_middleBottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleBottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_middleTop_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleTop_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_top_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_top_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_bottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_bottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_middleBottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleBottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_middleTop_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleTop_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_top_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_top_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "mesh_0"
+            {
+            }
+        }
+
+        def "middleBack_bottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            reorder nameChildren = ["middle_top_middleRight", "mesh_0", "material_0", "Collider", "InputTarget"]
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, -0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_bottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_middleBottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, -0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleBottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleBack_top_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, 0.45, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_top_left/material_0/shader.outputs:surface>
+            }
+        }
+
+        def "middleBack_middleTop_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, 0.15, -0.45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleBack_middleTop_left/material_0/shader.outputs:surface>
+            }
+        }
+
+        def "back_top_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, 0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_top_left/material_0/shader.outputs:surface>
+            }
+        }
+
+        def "back_middleTop_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, 0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleTop_left/material_0/shader.outputs:surface>
+            }
+        }
+
+        def "back_middleBottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, -0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleBottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_bottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            reorder nameChildren = ["middle_top_middleRight", "mesh_0", "material_0", "Collider", "InputTarget"]
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, -0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_bottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_top_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_top_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "mesh_0"
+            {
+            }
+        }
+
+        def "back_middleTop_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleTop_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_middleBottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleBottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_bottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_bottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_top_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_top_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_middleTop_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleTop_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_middleBottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleBottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_bottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_bottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_top_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_top_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_middleTop_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleTop_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_middleBottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.15, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_middleBottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "back_bottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.45, -0.9)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/back_bottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_bottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_bottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleBottom_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, -0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_middleBottom_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleTop_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_middleTop_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_top_right" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.45, 0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_top_right/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_bottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_bottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleBottom_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, -0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_middleBottom_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleTop_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_middleTop_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_top_middleLeft" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.15, 0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_top_middleLeft/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_bottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_bottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleBottom_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, -0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_middleBottom_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleTop_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_middleTop_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_top_middleRight" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (0.15, 0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_top_middleRight/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "mesh_0"
+            {
+            }
+        }
+
+        def "middleFront_bottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            reorder nameChildren = ["middle_top_middleRight", "mesh_0", "material_0", "Collider", "InputTarget"]
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45, -0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_bottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleBottom_left" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45, -0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_middleBottom_left/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_middleTop_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45, 0.15, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+        }
+
+        def "middleFront_top_left" (
+            active = true
+            prepend apiSchemas = ["MaterialBindingAPI"]
+            references = @Block2.usdz@
+        )
+        {
+            rel material:binding = None (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45, 0.45, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
+            }
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/middleFront_top_left/material_0/shader.outputs:surface>
+            }
+        }
+    }
+
+    def "line_horizontal" (
+        active = true
+        customData = {
+            float3 rotationEulerHint = (0, 1.5707963, 0)
+        }
+        references = @Line.usdz@
+    )
+    {
+        quatf xformOp:orient = (0.7071068, 0, 0.7071067, 0)
+        float3 xformOp:scale = (1, 1, 1.5)
+        float3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def RealityKitComponent "GroundingShadow"
+        {
+            bool enableIBLShadow = 1
+            bool enableMeshShadow = 1
+            uniform token info:id = "RealityKit.GroundingShadow"
+        }
+    }
+
+    def RealityKitComponent "GroundingShadow"
+    {
+        bool enableIBLShadow = 1
+        bool enableMeshShadow = 1
+        uniform token info:id = "RealityKit.GroundingShadow"
+    }
+}
+

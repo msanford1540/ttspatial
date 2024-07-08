@@ -101,11 +101,11 @@ import TicTacToeEngine
     public func showHint(at location: Gameboard.Location) async {
         guard let blankEntity = blankEntities[location], !isHintInProgress else { return }
         isHintInProgress = true
-        var material = SimpleMaterial()
-        material.color.tint = .green
+        var hintMaterial = SimpleMaterial()
+        hintMaterial.color.tint = .green
         let modelEntity = blankEntity.findEntity(named: "mesh_0") as? ModelEntity
         let blankMaterials = modelEntity?.model?.materials ?? .empty
-        let hintMaterials = [material]
+        let hintMaterials = [hintMaterial]
 
         await modelEntity?.animateOpacity(to: 0, duration: .milliseconds(250))
         modelEntity?.model?.materials = hintMaterials
