@@ -11,6 +11,7 @@ import TicTacToeController
 
 public struct HomeMenu: View {
     @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @State private var level: Float = 0
 
     public init() {}
 
@@ -32,6 +33,7 @@ public struct HomeMenu: View {
             }
             .pickerStyle(.segmented)
             .font(.largeTitle)
+            .border(Color.green)
             .padding(.horizontal)
 
             DashboardButton("Play Game", action: viewModel.playGame)

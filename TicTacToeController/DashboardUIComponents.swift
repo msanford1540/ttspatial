@@ -236,7 +236,7 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
                 }
             }
             nameView(playerName)
-                .frame(minHeight: 56)
+                .frame(minHeight: 32, maxHeight: 64)
         }
     }
 

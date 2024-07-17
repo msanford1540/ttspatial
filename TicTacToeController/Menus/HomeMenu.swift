@@ -14,17 +14,33 @@ import simd
 public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     @Published public var gameboardDimensions: GameboardDimensions = .cube4
     @Published public var selectedBotLevel: BotLevel = .easy
+    @Published public var sliderLevel: Float = 0
     @Published public var sharePlaySession: SharePlayGameSession
     @Published public var gameSessionViewModel: GameSessionViewModel
+    @Published public var botLevelName: String = .empty
     public let square3Controller = GridGameboardController()
     public let cube4Controller = CubeFourGameboardController()
     private var subscribers: Set<AnyCancellable> = .empty
-    private var animateRotation: Bool = false
 
     public init() {
         let gameSessionViewModel = GameSessionViewModel()
         self.gameSessionViewModel = gameSessionViewModel
         self.sharePlaySession = SharePlayGameSession(gameSessionViewModel: gameSessionViewModel)
+        setupPipelines()
+    }
+
+    private func setupPipelines() {
+        $sliderLevel
+            .map { level in
+                if level < 0.5 {
+                    "Easy"
+                } else if level < 1.5 {
+                    "Medium"
+                } else {
+                    "Hard"
+                }
+            }
+            .assign(to: &$botLevelName)
     }
 
     public func updateSceneRotation() {
@@ -32,15 +48,7 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         case .square3:
             square3Controller.scene.transform.rotation = square3Controller.rotation
         case .cube4:
-            if animateRotation {
-                animateRotation = false
-                Task {
-                    await cube4Controller.scene.animateRotation()
-                    cube4Controller.scene.transform.rotation = .init()
-                }
-            } else {
-                cube4Controller.scene.transform.rotation = cube4Controller.rotation
-            }
+            cube4Controller.scene.transform.rotation = cube4Controller.rotation
         }
     }
 
@@ -100,7 +108,6 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
                 square3Controller.rotation = .init()
                 try await square3Controller.onReset()
             case .cube4:
-//                animateRotation = true
                 cube4Controller.rotation = .init()
                 try await cube4Controller.onReset()
             }

@@ -188,7 +188,7 @@ private struct InnerPlayerMarker: View {
     let marker: PlayerMarker
 
     var body: some View {
-        Model3D(named: modelName(for: marker)) { model in
+        Model3D(named: modelName(for: marker), bundle: .ttt) { model in
             model
                 .resizable()
                 .scaledToFit()

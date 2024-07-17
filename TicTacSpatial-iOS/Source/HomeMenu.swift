@@ -12,6 +12,7 @@ import TicTacToeController
 public struct HomeMenu: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @State private var level: Float = 0
 
     public init() {}
 
@@ -38,7 +39,5 @@ public struct HomeMenu: View {
             DashboardButton("Play Game", action: viewModel.playGame)
         }
         .padding()
-        .frame(height: 130)
-        .background(Color.panel(for: colorScheme))
     }
 }

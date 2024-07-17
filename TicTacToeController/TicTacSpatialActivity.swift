@@ -236,7 +236,7 @@ public final class SharePlayGameSession: ObservableObject {
     }
 
     private func onGameSessionValueDidChange() {
-        Task { @MainActor in
+        Task {
             await configureSessions()
         }
     }
@@ -291,6 +291,7 @@ public final class SharePlayGameSession: ObservableObject {
 
     public func sendRotationIfNeeded(_ rotation: simd_quatf) {
         guard isActive, let sender else { return }
+        print("[debug]", "sendRotation: \(rotation)")
         sender.rotation = rotation
     }
 
@@ -299,7 +300,7 @@ public final class SharePlayGameSession: ObservableObject {
         self.groupSession = groupSession
         let messenger = GroupSessionMessenger(session: groupSession, deliveryMode: .reliable)
         self.messenger = messenger
-        let realTimeMessenger = GroupSessionMessenger(session: groupSession, deliveryMode: .reliable)
+        let realTimeMessenger = GroupSessionMessenger(session: groupSession, deliveryMode: .unreliable)
         self.realTimeMessenger = realTimeMessenger
         self.sender = RotationSender(messenger: realTimeMessenger)
         setupPipelines(gameSession, groupSession, messenger)
@@ -323,8 +324,9 @@ public final class SharePlayGameSession: ObservableObject {
 
         let rotateTask = Task {
             for await (update, context) in realTimeMessenger.messages(of: Quanterion.self) {
-                if context.source == groupSession.localParticipant { return }
                 logger.debug("[\(Self.self, privacy: .public)] did receive rotation. message: \(update, privacy: .public)")
+                if context.source == groupSession.localParticipant { return }
+                logger.debug("[\(Self.self, privacy: .public)] did receive REMOTE rotation. message: \(update, privacy: .public)")
                 rotation = update.rotation
             }
         }
@@ -349,14 +351,12 @@ public final class SharePlayGameSession: ObservableObject {
         groupSession.$state
             .sink { [unowned self] state in
                 switch state {
-                case .joined:
-                    break
-                case .waiting:
+                case .joined, .waiting:
                     break
                 case .invalidated:
                     meMarker = nil
                     self.groupSession = nil
-                    gameSession.reset()
+                    gameSession.reset(startingPlayer: .x)
                 @unknown default:
                     assertionFailure("unknown group session state")
                 }
@@ -366,35 +366,34 @@ public final class SharePlayGameSession: ObservableObject {
         groupSession.$activeParticipants
             .sink { [unowned self] activeParticipants in
                 let newParticipants = activeParticipants.subtracting(groupSession.activeParticipants)
-                logger.debug("activeParticipants: \(activeParticipants), newParticipants: \(newParticipants)")
-                if activeParticipants.count == 1 {
-                    meMarker = .x
-                    gameSession.setHumanPlayer(.x)
-                } else if meMarker == nil && activeParticipants.count == 2 {
-                    meMarker = .o
-                    gameSession.setHumanPlayer(.o)
-                }
-                if activeParticipants.count >= 2 {
-                    if let meMarker {
-                        gameSession.setRemotePlayer(meMarker.opponent)
-                    } else {
-                        gameSession.setRemotePlayer(.x)
+                logger.debug("SharePlay, activeParticipants: \(activeParticipants), newParticipants: \(newParticipants), meMarker: \(String(describing: self.meMarker))")
+                if activeParticipants.count == 2, meMarker == nil {
+                    let sortedParticipants = activeParticipants.sorted { $0.id < $1.id }
+                    let myID = groupSession.localParticipant.id
+                    if sortedParticipants[0].id == myID {
+                        logger.debug("SharePlay. Player X")
+                        meMarker = .x
+                        gameSession.setHumanPlayer(.x)
                         gameSession.setRemotePlayer(.o)
-                    }
-                }
-                logger.debug("meMarker: \(String(pretty: self.meMarker))")
-                if meMarker == .x {
-                    Task {
-                        logger.debug("sending game snapshot")
-                        switch gameSession {
-                        case .square3(let typedGameSession):
-                            let message = GameMessageType.snapshot(typedGameSession.snapshot)
-                            try? await messenger.send(message, to: .only(newParticipants))
-                        case .cube4(let typedGameSession):
-                            let message = GameMessageType.snapshot(typedGameSession.snapshot)
-                            try? await messenger.send(message, to: .only(newParticipants))
+                        gameSession.reset(startingPlayer: .x)
+
+                        Task {
+                            logger.debug("sending game snapshot")
+                            try? await messenger.sendSnapshot(of: gameSession, to: .only(newParticipants))
                         }
+                    } else if sortedParticipants[1].id == myID {
+                        logger.debug("SharePlay. Player O")
+                        meMarker = .o
+                        gameSession.setHumanPlayer(.o)
+                        gameSession.setRemotePlayer(.x)
+                        gameSession.startNewRemoteGameIfNeeded()
+                    } else {
+                        assertionFailure("invalid participant id. this should never happen")
                     }
+                } else if activeParticipants.count > 2 {
+                    gameSession.setRemotePlayer(.x)
+                    gameSession.setRemotePlayer(.o)
+                    gameSession.reset(startingPlayer: .x)
                 }
             }
             .store(in: &subscribers)
@@ -421,10 +420,23 @@ private final class RotationSender: @unchecked Sendable {
         Task {
             let quanterion = Quanterion(rotation: rotation)
             do {
+                print("[debug]", "send(rotation: \(rotation))")
                 try await messenger.send(quanterion, to: .all)
             } catch {
                 logger.error("[\(Self.self, privacy: .public)] failed to send rotation. error: \(error as NSError, privacy: .public)")
             }
+        }
+    }
+}
+
+@MainActor
+public extension GameSessionValue {
+    var isHumanVersusBot: Bool {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.isHumanVersusBot
+        case .cube4(let gameSession):
+            gameSession.isHumanVersusBot
         }
     }
 }
@@ -458,12 +470,21 @@ private extension GameSessionValue {
         }
     }
 
-    func reset() {
+    func startNewRemoteGameIfNeeded() {
         switch self {
         case .square3(let gameSession):
-            gameSession.reset()
+            gameSession.startNewRemoteGameIfNeeded()
         case .cube4(let gameSession):
-            gameSession.reset()
+            gameSession.startNewRemoteGameIfNeeded()
+        }
+    }
+
+    func reset(startingPlayer: PlayerMarker? = nil) {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.reset(startingPlayer: startingPlayer)
+        case .cube4(let gameSession):
+            gameSession.reset(startingPlayer: startingPlayer)
         }
     }
 
@@ -475,6 +496,19 @@ private extension GameSessionValue {
         case .cube4(let gameSession):
             guard let gameboardLocation = location as? CubeFourLocation else { return }
             await gameSession.mark(at: gameboardLocation)
+        }
+    }
+}
+
+private extension GroupSessionMessenger {
+    final func sendSnapshot(of gameSession: GameSessionValue, to participants: Participants) async throws {
+        switch gameSession {
+        case .square3(let typedGameSession):
+            let message = await GameMessageType.snapshot(typedGameSession.snapshot)
+            try await send(message, to: participants)
+        case .cube4(let typedGameSession):
+            let message = await GameMessageType.snapshot(typedGameSession.snapshot)
+            try await send(message, to: participants)
         }
     }
 }

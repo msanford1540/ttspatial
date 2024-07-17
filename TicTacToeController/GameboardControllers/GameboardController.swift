@@ -16,6 +16,7 @@ import TicTacToeEngine
     fileprivate(set) var xTemplateEntity: Entity = .empty
     fileprivate(set) var oTemplateEntity: Entity = .empty
     fileprivate(set) var lineTemplateEntity: Entity = .empty
+    fileprivate(set) var hintEntity: Entity = .empty
     private var mostRecentMove: GameMove<Gameboard.Location>?
     private var isHintInProgress = false
 
@@ -42,6 +43,13 @@ import TicTacToeEngine
         oTemplateEntity.isEnabled = false
         lineTemplateEntity = lineEntity
         lineTemplateEntity.isEnabled = false
+        hintEntity = scene.findEntity(named: "hint") ?? .empty
+
+        var hintMaterial = SimpleMaterial()
+        hintMaterial.color.tint = .green
+        let modelEntity = hintEntity.findEntity(named: "mesh_0") as? ModelEntity
+        modelEntity?.model?.materials = [hintMaterial]
+        hintEntity.opacity = .zero
 
         Gameboard.Location.allCases.forEach { location in
             if let entity = scene.findEntity(named: location.entityName) {
@@ -103,16 +111,13 @@ import TicTacToeEngine
         isHintInProgress = true
         var hintMaterial = SimpleMaterial()
         hintMaterial.color.tint = .green
-        let modelEntity = blankEntity.findEntity(named: "mesh_0") as? ModelEntity
-        let blankMaterials = modelEntity?.model?.materials ?? .empty
-        let hintMaterials = [hintMaterial]
+        let modelEntity = hintEntity.findEntity(named: "mesh_0") as? ModelEntity
+        modelEntity?.model?.materials = [hintMaterial]
+        hintEntity.position = blankEntity.position
 
-        await modelEntity?.animateOpacity(to: 0, duration: .milliseconds(250))
-        modelEntity?.model?.materials = hintMaterials
-        await modelEntity?.animateOpacity(to: 0.7, duration: .milliseconds(500))
-        await modelEntity?.animateOpacity(to: 0, duration: .milliseconds(500))
-        modelEntity?.model?.materials = blankMaterials
-        await modelEntity?.animateOpacity(to: 1, duration: .milliseconds(250))
+        await hintEntity.animateOpacity(to: 0.8, duration: .milliseconds(500))
+        await hintEntity.animateOpacity(to: 1, duration: .milliseconds(500))
+        await hintEntity.animateOpacity(to: 0, duration: .milliseconds(500))
         isHintInProgress = false
     }
 

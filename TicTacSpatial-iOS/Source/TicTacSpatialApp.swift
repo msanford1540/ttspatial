@@ -24,16 +24,38 @@ struct TicTacSpatialApp: App {
 
     var body: some SwiftUI.Scene {
         WindowGroup {
-            VStack(spacing: .zero) {
-                TicTacSpatialRealityView()
-                if viewModel.gameSessionViewModel.isGameSessionActive {
-                    Dashboard()
-                } else {
-                    HomeMenu()
+            ZStack(alignment: .bottom) {
+                VStack(spacing: .zero) {
+                    TicTacSpatialRealityView()
+                    Spacer()
+                        .frame(height: 130)
                 }
+                Group {
+                    if viewModel.gameSessionViewModel.isGameSessionActive {
+                        Dashboard()
+                            .frame(height: preferrredHeight)
+                    } else {
+                        HomeMenu()
+                            .frame(height: 130)
+                    }
+                }
+                .background(Color.panel(for: colorScheme))
+                .transition(.asymmetric(
+                    insertion: .opacity.animation(.easeInOut(duration: 0.5)),
+                    removal: .identity
+                ))
             }
             .environmentObject(viewModel)
             .environmentObject(viewModel.gameSessionViewModel)
+            .environmentObject(viewModel.sharePlaySession)
         }
+    }
+
+    private var preferrredHeight: CGFloat {
+#if os(macOS)
+        gameSessionViewModel.isGameOver ? 220 : 130
+#else
+        gameSessionViewModel.isGameOver ? 250 : 160
+#endif
     }
 }

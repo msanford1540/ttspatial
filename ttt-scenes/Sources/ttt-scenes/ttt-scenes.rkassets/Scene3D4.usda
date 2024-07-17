@@ -560,7 +560,7 @@ def Xform "Root"
         active = true
     )
     {
-        reorder nameChildren = ["middleFront_top_left", "middleFront_middleTop_left", "middleFront_middleBottom_left", "middleFront_bottom_left", "middleFront_top_middleRight", "middleFront_middleTop_middleRight", "middleFront_middleBottom_middleRight", "middleFront_bottom_middleRight", "middleFront_top_middleLeft", "middleFront_middleTop_middleLeft", "middleFront_middleBottom_middleLeft", "middleFront_bottom_middleLeft", "middleFront_top_right", "middleFront_middleTop_right", "middleFront_middleBottom_right", "middleFront_bottom_right", "front_top_left", "front_middleTop_left", "front_middleBottom_left", "front_bottom_left", "front_top_middleRight", "front_middleTop_middleRight", "front_middleBottom_middleRight", "front_bottom_middleRight", "front_top_middleLeft", "front_middleTop_middleLeft", "front_middleBottom_middleLeft", "front_bottom_middleLeft", "front_top_right", "front_middleTop_right", "front_middleBottom_right", "front_bottom_right", "back_top_left", "back_middleTop_left", "back_middleBottom_left", "back_bottom_left", "back_top_middleRight", "back_middleTop_middleRight", "back_middleBottom_middleRight", "back_bottom_middleRight", "back_top_middleLeft", "back_middleTop_middleLeft", "back_middleBottom_middleLeft", "back_bottom_middleLeft", "back_top_right", "back_middleTop_right", "back_middleBottom_right", "back_bottom_right", "middleBack_top_left", "middleBack_middleTop_left", "middleBack_middleBottom_left", "middleBack_bottom_left", "middleBack_top_middleRight", "middleBack_middleTop_middleRight", "middleBack_middleBottom_middleRight", "middleBack_bottom_middleRight", "middleBack_top_middleLeft", "middleBack_middleTop_middleLeft", "middleBack_middleBottom_middleLeft", "middleBack_bottom_middleLeft", "middleBack_top_right", "middleBack_middleTop_right", "middleBack_middleBottom_right", "middleBack_bottom_right"]
+        reorder nameChildren = ["hint", "middleFront_top_left", "middleFront_middleTop_left", "middleFront_middleBottom_left", "middleFront_bottom_left", "middleFront_top_middleRight", "middleFront_middleTop_middleRight", "middleFront_middleBottom_middleRight", "middleFront_bottom_middleRight", "middleFront_top_middleLeft", "middleFront_middleTop_middleLeft", "middleFront_middleBottom_middleLeft", "middleFront_bottom_middleLeft", "middleFront_top_right", "middleFront_middleTop_right", "middleFront_middleBottom_right", "middleFront_bottom_right", "front_top_left", "front_middleTop_left", "front_middleBottom_left", "front_bottom_left", "front_top_middleRight", "front_middleTop_middleRight", "front_middleBottom_middleRight", "front_bottom_middleRight", "front_top_middleLeft", "front_middleTop_middleLeft", "front_middleBottom_middleLeft", "front_bottom_middleLeft", "front_top_right", "front_middleTop_right", "front_middleBottom_right", "front_bottom_right", "back_top_left", "back_middleTop_left", "back_middleBottom_left", "back_bottom_left", "back_top_middleRight", "back_middleTop_middleRight", "back_middleBottom_middleRight", "back_bottom_middleRight", "back_top_middleLeft", "back_middleTop_middleLeft", "back_middleBottom_middleLeft", "back_bottom_middleLeft", "back_top_right", "back_middleTop_right", "back_middleBottom_right", "back_bottom_right", "middleBack_top_left", "middleBack_middleTop_left", "middleBack_middleBottom_left", "middleBack_bottom_left", "middleBack_top_middleRight", "middleBack_middleTop_middleRight", "middleBack_middleBottom_middleRight", "middleBack_bottom_middleRight", "middleBack_top_middleLeft", "middleBack_middleTop_middleLeft", "middleBack_middleBottom_middleLeft", "middleBack_bottom_middleLeft", "middleBack_top_right", "middleBack_middleTop_right", "middleBack_middleBottom_right", "middleBack_bottom_right"]
         float3 xformOp:translate = (0, 0, 0.225)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
@@ -3104,6 +3104,46 @@ def Xform "Root"
             over "material_0"
             {
                 token outputs:surface.connect = </Root/places/middleFront_top_left/material_0/shader.outputs:surface>
+            }
+        }
+
+        def "hint" (
+            active = true
+            references = @Block2.usdz@
+        )
+        {
+            reorder nameChildren = ["middle_top_middleRight", "mesh_0", "material_0", "Collider", "InputTarget"]
+            quatf xformOp:orient = (1, 0, 0, 0)
+            float3 xformOp:scale = (1, 1, 1)
+            float3 xformOp:translate = (-0.45000002, -0.45, 0.7998351)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "material_0"
+            {
+                token outputs:surface.connect = </Root/places/hint/material_0/shader.outputs:surface>
+            }
+
+            def RealityKitComponent "Collider"
+            {
+                uint group = 1
+                uniform token info:id = "RealityKit.Collider"
+                uint mask = 4294967295
+                token type = "Default"
+
+                def RealityKitStruct "Shape"
+                {
+                    float3 extent = (0.254, 0.254, 0.0762)
+                    token shapeType = "Box"
+
+                    def RealityKitStruct "pose"
+                    {
+                    }
+                }
+            }
+
+            def RealityKitComponent "InputTarget"
+            {
+                uniform token info:id = "RealityKit.InputTarget"
             }
         }
     }

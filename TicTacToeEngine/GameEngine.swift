@@ -48,12 +48,16 @@ final class GameEngine<Gameboard: GameboardProtocol> {
         moves.last
     }
 
-    var canUndo: Bool {
+    var hasActiveGameMadeMove: Bool {
         moves.isNotEmpty && !isGameOver
     }
 
+    func canUndo(for player: PlayerMarker) -> Bool {
+        hasActiveGameMadeMove && moves.contains { $0.mark == player }
+    }
+
     func undoLastMove() {
-        guard canUndo else { return }
+        guard hasActiveGameMadeMove else { return }
         let lastMove = moves.removeLast()
         gameboard.markEmpty(at: lastMove.location)
         currentTurn = lastMove.mark
@@ -102,14 +106,3 @@ final class GameEngine<Gameboard: GameboardProtocol> {
         return boardUnmarkedCount == Gameboard.WinningLine.locationCount - 1 && line.markCount.mark == turn
     }
 }
-
-//    private func text(_ location: GridLocation, _ marker: PlayerMarker) -> String? {
-//        let locations = self.locations
-//        if locations[1] == location { return marker.description }
-//        guard locations[0] == location || locations[2] == location else { return nil }
-//        switch self {
-//        case .horizontal: return "-"
-//        case .vertical: return "|"
-//        case .diagonal(let isBackslash): return isBackslash ? "\\" : "/"
-//        }
-//    }
