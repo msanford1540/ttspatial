@@ -9,7 +9,7 @@ import Foundation
 
 final class GameEngine<Gameboard: GameboardProtocol> {
     public let updateStream: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>
-    let continuation: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>.Continuation?
+    private let continuation: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>.Continuation?
     private(set) var currentTurn: PlayerMarker? = .x
     private(set) var winningInfo: WinningInfo<Gameboard.WinningLine>?
     private(set) var isGameOver: Bool = false

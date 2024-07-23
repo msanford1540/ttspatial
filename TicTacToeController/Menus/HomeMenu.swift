@@ -27,6 +27,7 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         self.gameSessionViewModel = gameSessionViewModel
         self.sharePlaySession = SharePlayGameSession(gameSessionViewModel: gameSessionViewModel)
         setupPipelines()
+        observeSharePlayEvents()
     }
 
     private func setupPipelines() {
@@ -41,6 +42,49 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
                 }
             }
             .assign(to: &$botLevelName)
+    }
+
+    private func observeSharePlayEvents() {
+        Task {
+            for await event in sharePlaySession.playAgainEventStream {
+                switch event {
+                case .startNewGameSession(let dimensions):
+                    startNewRemoteGameSession(with: dimensions)
+                case .playAgain:
+                    startNewGame()
+                case .opponentDeniedPlayAgain:
+                    stopPlaying()
+                }
+            }
+        }
+    }
+
+    private func startNewRemoteGameSession(with dimensions: GameboardDimensions) {
+        gameSessionViewModel.playGame(dimensions: gameboardDimensions, xPlayerType: .remote, oPlayerType: .human)
+    }
+
+    private func startNewGame() {
+        gameSessionViewModel.startNewGame()
+    }
+
+    private func stopPlaying() {
+        gameSessionViewModel.endGameSession()
+        resetGameboard()
+    }
+
+    public func onStopPlaying() {
+        if gameSessionViewModel.gameSession?.isRemoteGame == true {
+            sharePlaySession.onDenyPlayAgain()
+        }
+        stopPlaying()
+    }
+
+    public func onPlayAgain() {
+        if gameSessionViewModel.gameSession?.isRemoteGame == true {
+            sharePlaySession.onAcceptPlayAgain()
+        } else {
+            startNewGame()
+        }
     }
 
     public func updateSceneRotation() {
@@ -118,8 +162,14 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     public func updateUI(_ event: GameEventValue) async throws {
         switch event {
         case .square3(let square3Event):
+            if gameboardDimensions != .square3 {
+                gameboardDimensions = .square3
+            }
             try await square3Controller.updateUI(square3Event)
         case .cube4(let cube4Event):
+            if gameboardDimensions != .cube4 {
+                gameboardDimensions = .cube4
+            }
             try await cube4Controller.updateUI(cube4Event)
         }
     }

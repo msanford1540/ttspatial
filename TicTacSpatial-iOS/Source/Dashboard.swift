@@ -17,6 +17,7 @@ struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+    @EnvironmentObject private var sharePlayGameSession: SharePlayGameSession
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -40,15 +41,26 @@ struct Dashboard: View {
                 if gameSessionViewModel.isGameOver {
                     VStack {
                         Text(gameSessionViewModel.gameStatusText)
-                        Text("Do you want to play again?")
-                        HStack {
-                            DashboardButton("Stop Playing") {
-                                gameSessionViewModel.endGameSession()
-                                homeMenuViewModel.resetGameboard()
-                            }
-                            DashboardButton("Play Again", hPadding: playAgainHPadding) {
-                                gameSessionViewModel.startNewGame()
-                            }
+                        switch sharePlayGameSession.playAgainState {
+                        case .waitingForResponses:
+                            Text("Do you want to play again?") // with buttons
+                            Text("Your opponent is ready to play again.")
+                                .opacity(0)
+                                .font(.system(size: 10))
+                            PlayAgainButtons()
+                        case .waitingForOpponentResponse:
+                            Text("Waiting for your opponent to play again.") // without buttons
+                        case .waitingForMyResponse:
+                            Text("Do you want to play again?") // with buttons
+                            Text("Your opponent is ready to play again.")
+                                .font(.system(size: 10))
+                            PlayAgainButtons()
+                        case .opponentAccepted:
+                            Text("Your opponent is ready to play again!")
+                        case .opponentDenied:
+                            Text("Your opponent is not playing again.")
+                        case .none:
+                            EmptyView()
                         }
                         Spacer()
                     }
@@ -92,7 +104,9 @@ struct Dashboard: View {
         }
         .font(.title3)
         .animation(.easeInOut, value: gameSessionViewModel.isGameOver)
+        .background(Color.panel(for: colorScheme))
     }
+
     private var playAgainHPadding: CGFloat {
 #if os(macOS)
         48
@@ -106,6 +120,26 @@ struct Dashboard: View {
         16
 #else
         8
+#endif
+    }
+}
+
+private struct PlayAgainButtons: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+
+    var body: some View {
+        HStack {
+            DashboardButton("Stop Playing", action: homeMenuViewModel.onStopPlaying)
+            DashboardButton("Play Again", hPadding: playAgainHPadding, action: homeMenuViewModel.onPlayAgain)
+        }
+    }
+
+    private var playAgainHPadding: CGFloat {
+#if os(macOS)
+        48
+#else
+        16
 #endif
     }
 }
@@ -174,3 +208,16 @@ private struct InnerSceneKitPlayerMarker: View {
             .frame(width: 42, height: 42)
     }
 }
+
+/*
+ 1) do you want to play again? - waitingForResponses
+ 2) (opponent wants to play again) - acceptedByOpponent
+ 3) opponent does not want to play again - deniedByOpponent
+ 4) waiting for opponent to respond - waitingForOpponent
+
+ Me     | Opp    |
+ waitingForResponses | wait   | wait   | do you want to play again?
+ acceptedByOpponent  | wait   | accept | do you want to play again? Opponent wants to play again.
+ deniedByOpponent    | wait   | deny   | opponent does not want to play again
+ waitingForOpponent  | accept | wait   | waiting for opponent to respond
+ */

@@ -152,6 +152,8 @@ public final class GameSessionViewModel: ObservableObject {
     }
 
     private func setupPipelines<Gameboard: GameboardProtocol>(_ gameSession: GameSession<Gameboard>) {
+        gameSubscribers = .empty
+
         gameSession.$currentTurn
             .sink { [unowned self] in currentTurn = $0 }
             .store(in: &gameSubscribers)
@@ -180,13 +182,15 @@ public final class GameSessionViewModel: ObservableObject {
             .sink { [unowned self] in canReplay = $0 }
             .store(in: &gameSubscribers)
 
-        $currentTurn
-            .sink { [unowned self] in
-                let isGameOver = $0 == nil
-                self.isGameOver = isGameOver
-                gameOverState = if isGameOver, let humanPlayer = gameSession.humanPlayer {
+        gameSession.$isGameOver
+            .sink { [unowned self] in isGameOver = $0 }
+            .store(in: &gameSubscribers)
+
+        $isGameOver
+            .sink { [unowned self] isGameOver in
+                gameOverState = if isGameOver, let myself = gameSession.humanPlayer {
                     if let winningPlayer = gameSession.winningPlayer {
-                        winningPlayer == humanPlayer ? .won : .lost
+                        winningPlayer == myself ? .won : .lost
                     } else {
                         .tie
                     }
@@ -213,8 +217,56 @@ public final class GameSessionViewModel: ObservableObject {
     }
 }
 
+@frozen
+public enum PlayAgainState {
+    case waitingForResponses // me: waiting, opponent: waiting
+    case waitingForOpponentResponse // me: responded-yes, opponent: waiting
+    case waitingForMyResponse // me: waiting, opponenet: responded-yes
+    case opponentDenied
+    case opponentAccepted
+}
+
+@frozen
+public enum PlayGameEvent {
+    case playAgain
+    case opponentDeniedPlayAgain
+    case startNewGameSession(GameboardDimensions)
+}
+
+@frozen
+public enum SharePlayMessage: Codable, Sendable, CustomStringConvertible {
+    case playAgain(PlayAgainResponse)
+    case gameSquare3Message(GameMessageType<GridGameboardSnapshot>)
+    case gameCube4Message(GameMessageType<CubeFourGameboardSnapshot>)
+
+    public var description: String {
+        switch self {
+        case .playAgain(let response): response.description
+        case .gameSquare3Message(let message): message.description
+        case .gameCube4Message(let message): message.description
+        }
+    }
+}
+
+public struct PlayAgainResponse: Sendable, Codable, CustomStringConvertible {
+    public let playerMarker: PlayerMarker
+    public let playAgain: Bool
+
+    public init(playerMarker: PlayerMarker, playAgain: Bool) {
+        self.playerMarker = playerMarker
+        self.playAgain = playAgain
+    }
+
+    public var description: String {
+        "player: \(playerMarker), playAgain: \(playAgain)"
+    }
+}
+
 @MainActor
 public final class SharePlayGameSession: ObservableObject {
+    public let playAgainEventStream: AsyncStream<PlayGameEvent>
+    private let playAgainEventContinuation: AsyncStream<PlayGameEvent>.Continuation?
+
     private let gameSessionViewModel: GameSessionViewModel
     private var messenger: GroupSessionMessenger?
     private var realTimeMessenger: GroupSessionMessenger?
@@ -222,13 +274,17 @@ public final class SharePlayGameSession: ObservableObject {
     private var subscribers: Set<AnyCancellable> = .empty
     private var tasks = Set<Task<Void, Never>>()
     @Published public private(set) var rotation: simd_quatf?
-    var meMarker: PlayerMarker?
+    public private(set) var meMarker: PlayerMarker?
     private var sender: RotationSender?
     private let logger = Logger(category: "sharePlayGameSession")
     private var groupActivity: GroupActivity?
+    @Published public private(set) var playAgainState: PlayAgainState?
 
     public init(gameSessionViewModel: GameSessionViewModel) {
         self.gameSessionViewModel = gameSessionViewModel
+        var continuation: AsyncStream<PlayGameEvent>.Continuation?
+        self.playAgainEventStream = AsyncStream { continuation = $0 }
+        self.playAgainEventContinuation = continuation
     }
 
     public var gameSession: GameSessionValue? {
@@ -239,6 +295,51 @@ public final class SharePlayGameSession: ObservableObject {
         Task {
             await configureSessions()
         }
+    }
+
+    public func onDenyPlayAgain() {
+        sendPlayAgainResponse(false)
+    }
+
+    public func onAcceptPlayAgain() {
+        switch playAgainState {
+        case .waitingForResponses:
+            playAgainState = .waitingForOpponentResponse
+        case .waitingForMyResponse:
+            onPlayRemoteGameAgain()
+        case .waitingForOpponentResponse, .opponentDenied, .opponentAccepted, .none:
+            return
+        }
+        sendPlayAgainResponse(true)
+    }
+
+    private func sendMessage(_ message: SharePlayMessage, to participants: Participants = .all) {
+        Task {
+            do {
+                try await messenger?.send(message, to: participants)
+            } catch {
+                logger.error("[\(Self.self, privacy: .public)] Failed to send message. error: \(error as NSError, privacy: .public)")
+            }
+        }
+    }
+
+    private func sendSnapshot(of gameSession: GameSessionValue, to participants: Participants) {
+        logger.debug("[debug] sending game snapshot")
+        let message: SharePlayMessage = switch gameSession {
+        case .square3(let gameSession): .gameSquare3Message(.snapshot(gameSession.snapshot))
+        case .cube4(let gameSession): .gameCube4Message(.snapshot(gameSession.snapshot))
+        }
+        sendMessage(message)
+    }
+
+    private func sendPlayAgainResponse(_ playAgain: Bool) {
+        guard let meMarker else { return }
+        sendMessage(.playAgain(.init(playerMarker: meMarker, playAgain: playAgain)))
+    }
+
+    private func onPlayRemoteGameAgain() {
+        playAgainState = nil
+        playAgainEventContinuation?.yield(.playAgain)
     }
 
     public func configureSessions() async {
@@ -260,23 +361,19 @@ public final class SharePlayGameSession: ObservableObject {
     }
 
     private func sendMove(at location: any GameboardLocationProtocol) {
-        guard let meMarker, let messenger, let gameSession else { return }
-        Task {
-            do {
-                switch gameSession {
-                case .square3:
-                    guard let gameboardLocation = location as? GridLocation else { return }
-                    let move = GameMove(location: gameboardLocation, mark: meMarker)
-                    try await messenger.send(GameMessageType<GridGameboardSnapshot>.move(move), to: .all)
-                case .cube4:
-                    guard let gameboardLocation = location as? CubeFourLocation else { return }
-                    let move = GameMove(location: gameboardLocation, mark: meMarker)
-                    try await messenger.send(GameMessageType<CubeFourGameboardSnapshot>.move(move), to: .all)
-                }
-            } catch {
-                logger.error("[\(Self.self, privacy: .public)] Failed to send move. error: \(error as NSError, privacy: .public)")
-            }
+        guard let meMarker, let gameSession else { return }
+        let message: SharePlayMessage
+        switch gameSession {
+        case .square3:
+            guard let gameboardLocation = location as? GridLocation else { return }
+            let move = GameMove(location: gameboardLocation, mark: meMarker)
+            message = .gameSquare3Message(.move(move))
+        case .cube4:
+            guard let gameboardLocation = location as? CubeFourLocation else { return }
+            let move = GameMove(location: gameboardLocation, mark: meMarker)
+            message = .gameCube4Message(.move(move))
         }
+        sendMessage(message)
     }
 
     public func mark(at location: any GameboardLocationProtocol) {
@@ -306,18 +403,57 @@ public final class SharePlayGameSession: ObservableObject {
         setupPipelines(gameSession, groupSession, messenger)
 
         let turnTask = Task {
-            switch gameSession {
-            case .square3(let typedGameSession):
-                for await (message, context) in messenger.messages(of: GameMessageType<GridGameboardSnapshot>.self) {
-                    if context.source == groupSession.localParticipant { return }
-                    logger.debug("[\(Self.self, privacy: .public)] did receive game message. message: \(message, privacy: .public)")
-                    typedGameSession.handleMessage(message)
-                }
-            case .cube4(let typedGameSession):
-                for await (message, context) in messenger.messages(of: GameMessageType<CubeFourGameboardSnapshot>.self) {
-                    if context.source == groupSession.localParticipant { return }
-                    logger.debug("[\(Self.self, privacy: .public)] did receive game message. message: \(message, privacy: .public)")
-                    typedGameSession.handleMessage(message)
+            for await (message, context) in messenger.messages(of: SharePlayMessage.self) {
+                if context.source == groupSession.localParticipant { return }
+                switch message {
+                case .playAgain(let response):
+                    onPlayAgainResponse(response)
+                case .gameSquare3Message(let gameMessage):
+                    switch gameMessage {
+                    case .move(let move):
+                        if case .square3(let gameSession) = self.gameSession {
+                            gameSession.handleMessage(gameMessage)
+                        } else {
+                            print("[debug]", "gameSession: \(String(describing: self.gameSession)), move: \(move)")
+                            assertionFailure("game session/game message mismatch")
+                            return
+                        }
+                    case .snapshot(let snapshot):
+                        print("[debug]", "received game snapshot (square3)")
+                        if case .square3(let gameSession) = gameSession {
+                            gameSession.handleMessage(gameMessage)
+                        } else {
+                            print("[debug]", "switching to square3 game")
+                            gameSessionViewModel.playGame(dimensions: .square3, xPlayerType: gameSession.xPlayerType, oPlayerType: gameSession.oPlayerType)
+                            if let gameSession = gameSessionViewModel.gameSession {
+                                setupPipelines(gameSession, groupSession, messenger)
+                            }
+                            gameSessionViewModel.gameSession?.setSnapshot(snapshot)
+                        }
+                    }
+                case .gameCube4Message(let gameMessage):
+                    switch gameMessage {
+                    case .move(let move):
+                        if case .cube4(let gameSession) = self.gameSession {
+                            gameSession.handleMessage(gameMessage)
+                        } else {
+                            print("[debug]", "gameSession: \(String(describing: self.gameSession)), move: \(move)")
+                            assertionFailure("game session/game message mismatch")
+                            return
+                        }
+                    case .snapshot(let snapshot):
+                        print("[debug]", "received game snapshot (cube4)")
+                        if case .cube4(let gameSession) = self.gameSession {
+                            gameSession.handleMessage(gameMessage)
+                        } else {
+                            print("[debug]", "switching to cube4 game")
+                            gameSessionViewModel.playGame(dimensions: .cube4, xPlayerType: gameSession.xPlayerType, oPlayerType: gameSession.oPlayerType)
+                            if let gameSession = gameSessionViewModel.gameSession {
+                                setupPipelines(gameSession, groupSession, messenger)
+                            }
+                            gameSessionViewModel.gameSession?.setSnapshot(snapshot)
+                        }
+                    }
                 }
             }
         }
@@ -336,6 +472,41 @@ public final class SharePlayGameSession: ObservableObject {
         groupSession.join()
     }
 
+    private func onPlayAgainResponse(_ response: PlayAgainResponse) {
+        func endGame() {
+            playAgainState = .opponentDenied
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.playAgainState = nil
+                self?.playAgainEventContinuation?.yield(.opponentDeniedPlayAgain)
+            }
+        }
+
+        func startNewGame() {
+            playAgainState = .opponentAccepted
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.onPlayRemoteGameAgain()
+            }
+        }
+
+        switch playAgainState {
+        case .waitingForResponses:
+            if response.playAgain {
+                playAgainState = .waitingForMyResponse
+            } else {
+                endGame()
+            }
+        case .waitingForOpponentResponse:
+            if response.playAgain {
+                playAgainState = nil
+                playAgainEventContinuation?.yield(.playAgain)
+            } else {
+                endGame()
+            }
+        case .waitingForMyResponse, .opponentDenied, .opponentAccepted, .none:
+            break
+        }
+    }
+
     public var isActive: Bool {
         switch groupSession?.state {
         case .none, .invalidated, .waiting: false
@@ -347,6 +518,7 @@ public final class SharePlayGameSession: ObservableObject {
     private func setupPipelines(_ gameSession: GameSessionValue,
                                 _ groupSession: GroupSession<TicTacSpatialActivity>,
                                 _ messenger: GroupSessionMessenger) {
+        print("[debug]", "setupPipelines(), gameSession: \(gameSession)")
         subscribers = .empty
         groupSession.$state
             .sink { [unowned self] state in
@@ -366,35 +538,38 @@ public final class SharePlayGameSession: ObservableObject {
         groupSession.$activeParticipants
             .sink { [unowned self] activeParticipants in
                 let newParticipants = activeParticipants.subtracting(groupSession.activeParticipants)
-                logger.debug("SharePlay, activeParticipants: \(activeParticipants), newParticipants: \(newParticipants), meMarker: \(String(describing: self.meMarker))")
-                if activeParticipants.count == 2, meMarker == nil {
-                    let sortedParticipants = activeParticipants.sorted { $0.id < $1.id }
-                    let myID = groupSession.localParticipant.id
-                    if sortedParticipants[0].id == myID {
-                        logger.debug("SharePlay. Player X")
-                        meMarker = .x
-                        gameSession.setHumanPlayer(.x)
-                        gameSession.setRemotePlayer(.o)
-                        gameSession.reset(startingPlayer: .x)
-
-                        Task {
-                            logger.debug("sending game snapshot")
-                            try? await messenger.sendSnapshot(of: gameSession, to: .only(newParticipants))
-                        }
-                    } else if sortedParticipants[1].id == myID {
-                        logger.debug("SharePlay. Player O")
+                // swiftlint:disable:next line_length
+                logger.debug("[debug] SharePlay, activeParticipants: \(activeParticipants), newParticipants: \(newParticipants), meMarker: \(String(describing: self.meMarker))")
+                if activeParticipants.count == 1, meMarker == nil {
+                    meMarker = .x
+                    logger.debug("[debug] SharePlay. Player X")
+                    meMarker = .x
+                    gameSession.setHumanPlayer(.x)
+                    gameSession.setRemotePlayer(.o)
+                } else if activeParticipants.count == 2 {
+                    if meMarker == nil {
+                        logger.debug("[debug] SharePlay. Player O")
                         meMarker = .o
                         gameSession.setHumanPlayer(.o)
                         gameSession.setRemotePlayer(.x)
                         gameSession.startNewRemoteGameIfNeeded()
-                    } else {
-                        assertionFailure("invalid participant id. this should never happen")
+                    } else if meMarker == .x {
+                        gameSession.reset(startingPlayer: .x)
+                        sendSnapshot(of: gameSession, to: .only(newParticipants))
                     }
                 } else if activeParticipants.count > 2 {
                     gameSession.setRemotePlayer(.x)
                     gameSession.setRemotePlayer(.o)
                     gameSession.reset(startingPlayer: .x)
                 }
+            }
+            .store(in: &subscribers)
+
+        gameSession.isGameOverPublisher
+            .removeDuplicates()
+            .sink { [unowned self] isGameOver in
+                print("[debug]", "isGameOver: \(isGameOver), gameSession: \(gameSession)")
+                playAgainState = isGameOver ? .waitingForResponses : nil
             }
             .store(in: &subscribers)
     }
@@ -431,12 +606,61 @@ private final class RotationSender: @unchecked Sendable {
 
 @MainActor
 public extension GameSessionValue {
+    var xPlayerType: PlayerType {
+        switch self {
+        case .square3(let gameSession): gameSession.xPlayerType
+        case .cube4(let gameSession): gameSession.xPlayerType
+        }
+    }
+
+    var oPlayerType: PlayerType {
+        switch self {
+        case .square3(let gameSession): gameSession.oPlayerType
+        case .cube4(let gameSession): gameSession.oPlayerType
+        }
+    }
+
+    func setSnapshot<Snapshot: GameboardSnapshotProtocol>(_ snapshot: Snapshot) {
+        switch self {
+        case .square3(let gameSession):
+            guard let gameSnapshot = snapshot as? GridGameboardSnapshot else {
+                assertionFailure("gameboard/snapshot type mismatch")
+                return
+            }
+            gameSession.setSnapshot(gameSnapshot)
+        case .cube4(let gameSession):
+            guard let gameSnapshot = snapshot as? CubeFourGameboardSnapshot else {
+                assertionFailure("gameboard/snapshot type mismatch")
+                return
+            }
+            gameSession.setSnapshot(gameSnapshot)
+        }
+    }
+
     var isHumanVersusBot: Bool {
         switch self {
         case .square3(let gameSession):
             gameSession.isHumanVersusBot
         case .cube4(let gameSession):
             gameSession.isHumanVersusBot
+        }
+    }
+
+    var isRemoteGame: Bool {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.isRemoteGame
+        case .cube4(let gameSession):
+            gameSession.isRemoteGame
+        }
+    }
+
+    var isGameOverPublisher: Published<Bool>.Publisher {
+        switch self {
+        case .square3(let gameSession):
+            gameSession.$isGameOver
+        case .cube4(let gameSession):
+            gameSession.$isGameOver
         }
     }
 }
@@ -496,19 +720,6 @@ private extension GameSessionValue {
         case .cube4(let gameSession):
             guard let gameboardLocation = location as? CubeFourLocation else { return }
             await gameSession.mark(at: gameboardLocation)
-        }
-    }
-}
-
-private extension GroupSessionMessenger {
-    final func sendSnapshot(of gameSession: GameSessionValue, to participants: Participants) async throws {
-        switch gameSession {
-        case .square3(let typedGameSession):
-            let message = await GameMessageType.snapshot(typedGameSession.snapshot)
-            try await send(message, to: participants)
-        case .cube4(let typedGameSession):
-            let message = await GameMessageType.snapshot(typedGameSession.snapshot)
-            try await send(message, to: participants)
         }
     }
 }

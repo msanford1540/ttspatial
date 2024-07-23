@@ -173,6 +173,8 @@ import TicTacToeEngine
     }
 
     func onReset() async throws {
+        print("[debug]", "onReset() - \(Self.self)")
+
         var didAnimate = false
         let animationDuration: Duration = .removeDuration
         let entities = Array(xEntities.values) + Array(oEntities.values) + Array(lineEntities.values)

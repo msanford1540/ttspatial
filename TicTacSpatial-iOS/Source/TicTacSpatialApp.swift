@@ -30,25 +30,31 @@ struct TicTacSpatialApp: App {
                     Spacer()
                         .frame(height: 130)
                 }
-                Group {
-                    if viewModel.gameSessionViewModel.isGameSessionActive {
-                        Dashboard()
-                            .frame(height: preferrredHeight)
-                    } else {
-                        HomeMenu()
-                            .frame(height: 130)
-                    }
-                }
-                .background(Color.panel(for: colorScheme))
-                .transition(.asymmetric(
-                    insertion: .opacity.animation(.easeInOut(duration: 0.5)),
-                    removal: .identity
-                ))
+                ControlView()
             }
             .environmentObject(viewModel)
             .environmentObject(viewModel.gameSessionViewModel)
             .environmentObject(viewModel.sharePlaySession)
         }
+    }
+}
+
+private struct ControlView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+
+    var body: some View {
+        Group {
+            if viewModel.gameSessionViewModel.isGameSessionActive {
+                Dashboard()
+                    .frame(height: preferrredHeight)
+            } else {
+                HomeMenu()
+                    .frame(height: 130)
+            }
+        }
+        .background(Color.panel(for: colorScheme))
     }
 
     private var preferrredHeight: CGFloat {

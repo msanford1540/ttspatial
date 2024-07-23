@@ -11,6 +11,7 @@ protocol GameBotProtocol {
     associatedtype Snapshot: GameboardSnapshotProtocol
     var name: String { get }
     func move(for snapshot: Snapshot) -> Snapshot.Location?
+    var level: BotLevel { get }
 }
 
 @frozen
@@ -21,6 +22,7 @@ public enum BotLevel {
 class BaseBot<Snapshot: GameboardSnapshotProtocol>: GameBotProtocol {
     var name: String { .empty }
     func move(for snapshot: Snapshot) -> Snapshot.Location? { nil }
+    var level: BotLevel { .easy }
 }
 
 final class EasyBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
@@ -29,6 +31,8 @@ final class EasyBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
     override func move(for snapshot: Snapshot) -> Snapshot.Location? {
         snapshot.bestMove(thresholdFactor: .zero)
     }
+
+    override var level: BotLevel { .easy }
 }
 
 final class MediumBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
@@ -38,6 +42,9 @@ final class MediumBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
         let isBestMove = (1...5).randomElement() == 1
         return snapshot.bestMove(thresholdFactor: isBestMove ? 1 : 0.7)
     }
+
+    override var level: BotLevel { .medium }
+
 }
 
 final class AdvancedBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
@@ -46,6 +53,8 @@ final class AdvancedBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> 
     override func move(for snapshot: Snapshot) -> Snapshot.Location? {
         snapshot.bestMove(thresholdFactor: 1)
     }
+
+    override var level: BotLevel { .hard }
 }
 
 private extension GameboardSnapshotProtocol {

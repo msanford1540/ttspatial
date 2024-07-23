@@ -40,6 +40,14 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
             }
         }
 
+        var playerType: PlayerType {
+            switch self {
+            case .bot(let bot): .bot(bot.level)
+            case .remote: .remote
+            case .human: .human
+            }
+        }
+
         var isHuman: Bool {
             if case .human = self { true } else { false }
         }
@@ -67,6 +75,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     @Published public private(set) var oPlayerName: String = .empty
     @Published public private(set) var processingEventID: UUID?
     @Published public private(set) var currentTurn: PlayerMarker?
+    @Published public private(set) var isGameOver: Bool = false
     @Published public private(set) var canUndo: Bool = false
     @Published public private(set) var canReplay: Bool = false
     private var isWaitingToStartNewRemoteGame: Bool = false
@@ -85,6 +94,14 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         gameEngine = GameEngine(gameboard: Gameboard(), startingPlayer: startingPlayer)
         setupPipelines()
         startNewGame()
+    }
+
+    public var xPlayerType: PlayerType {
+        xPlayer.playerType
+    }
+
+    public var oPlayerType: PlayerType {
+        oPlayer.playerType
     }
 
     public var winningPlayer: PlayerMarker? {
@@ -128,6 +145,9 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         $oPlayer
             .map(\.playerName)
             .assign(to: &$oPlayerName)
+        $currentTurn
+            .map { $0 == nil }
+            .assign(to: &$isGameOver)
     }
 
     public func setHumanPlayer(_ mark: PlayerMarker) {
@@ -188,6 +208,11 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         case .move(let gameMove):
             gameEngine.markCurrentPlayer(at: gameMove.location)
         }
+    }
+
+    public func setSnapshot(_ snapshot: Gameboard.Snapshot) {
+        gameEngine = .init(snapshot: snapshot)
+        startNewGame()
     }
 
     public func startNewRemoteGameIfNeeded() {

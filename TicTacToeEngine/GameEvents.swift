@@ -38,6 +38,7 @@ public struct WinningInfo<WinningLine: WinningLineProtocol>: Equatable, Sendable
     }
 }
 
+@frozen
 public enum GameMessageType<Snapshot: GameboardSnapshotProtocol>: Codable, Sendable, CustomStringConvertible {
     case snapshot(Snapshot)
     case move(GameMove<Snapshot.Location>)
@@ -47,8 +48,22 @@ public extension GameMessageType {
     var description: String {
         switch self {
         case .snapshot(let gameSnapshot): "(snapshot: \(gameSnapshot))"
-        case .move(let gameMove): "(move: \(gameMove)"
+        case .move(let gameMove): "(move: \(gameMove))"
         }
+    }
+}
+
+public struct Handshake: Sendable, Codable, CustomStringConvertible {
+    let participantID: UUID
+    let timestamp: Date
+
+    public init(participantID: UUID) {
+        self.participantID = participantID
+        self.timestamp = .now
+    }
+
+    public var description: String {
+        "participantID: \(participantID)), timestamp: \(timestamp)"
     }
 }
 
