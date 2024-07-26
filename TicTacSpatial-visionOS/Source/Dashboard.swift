@@ -14,6 +14,7 @@ import TicTacToeEngine
 struct Dashboard: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+    @EnvironmentObject private var sharePlayGameSession: SharePlayGameSession
 
     var body: some View {
         VStack {
@@ -37,59 +38,9 @@ struct Dashboard: View {
                 }
                 .padding()
 
-                Group {
-                    if gameSessionViewModel.isGameOver {
-                        VStack(spacing: 32) {
-                            Text(gameSessionViewModel.gameStatusText)
-                            Text("Do you want to play again?")
-                            HStack(spacing: 24) {
-                                DashboardButton("Stop Playing") {
-                                    gameSessionViewModel.endGameSession()
-                                    homeMenuViewModel.resetGameboard()
-                                }
-                                DashboardButton("Play Again", hPadding: 48) {
-                                    gameSessionViewModel.startNewGame()
-                                }
-                            }
-                            Spacer()
-                        }
-                        .padding(.top, 32)
-                    } else {
-                        VStack(spacing: 32) {
-                            HStack(spacing: 24) {
-                                Group {
-                                    DashboardButton("Hint", hPadding: 40) {
-                                        guard let hint = gameSessionViewModel.currentPlayerHint else { return }
-                                        homeMenuViewModel.showHint(at: hint)
-                                    }
-                                    DashboardButton("Undo", hPadding: 40) {
-                                        gameSessionViewModel.undoLastHumanMove()
-                                    }
-                                    .disabled(!gameSessionViewModel.canUndo)
-
-                                    DashboardButton("Replay", hPadding: 40) {
-                                        let move = gameSessionViewModel.mostRecentMove
-                                        homeMenuViewModel.showReplay(with: move)
-                                    }
-                                    .disabled(!gameSessionViewModel.canReplay)
-                                }
-                                .frame(width: 220)
-                            }
-                            .font(.largeTitle)
-                            HStack(spacing: 24) {
-                                EndGameButton()
-                            }
-                            .font(.extraLargeTitle)
-                        }
-                        .padding(.bottom, 100)
-                    }
-                }
-                .transition(.asymmetric(
-                    insertion: .opacity.animation(.easeInOut(duration: 0.5)),
-                    removal: .identity
-                ))
+                DashboardMainContent()
             }
-            .frame(width: 1200, height: gameSessionViewModel.isGameOver ? 500 : 300)
+            .frame(width: 1200, height: gameSessionViewModel.isGameOver ? 400 : 300)
             .font(.extraLargeTitle)
             .glassBackgroundEffect()
             .offset(y: -100)
@@ -98,6 +49,7 @@ struct Dashboard: View {
         .frame(height: 500)
     }
 }
+
 private struct BridgeView: View {
     var body: some View {
         VStack {

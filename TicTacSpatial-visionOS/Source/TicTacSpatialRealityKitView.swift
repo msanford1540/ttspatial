@@ -89,10 +89,12 @@ struct TicTacSpatialRealityView: View {
             Attachment(id: "dashboard") {
                 Dashboard()
                     .environmentObject(gameSessionViewModel)
+                    .environmentObject(viewModel.sharePlaySession)
             }
             Attachment(id: "home") {
                 HomeMenu()
                     .environmentObject(viewModel)
+                    .environmentObject(viewModel.sharePlaySession)
             }
         }
         .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent.self))

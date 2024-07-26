@@ -14,7 +14,6 @@ import simd
 public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     @Published public var gameboardDimensions: GameboardDimensions = .cube4
     @Published public var selectedBotLevel: BotLevel = .easy
-    @Published public var sliderLevel: Float = 0
     @Published public var sharePlaySession: SharePlayGameSession
     @Published public var gameSessionViewModel: GameSessionViewModel
     @Published public var botLevelName: String = .empty
@@ -26,27 +25,12 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         let gameSessionViewModel = GameSessionViewModel()
         self.gameSessionViewModel = gameSessionViewModel
         self.sharePlaySession = SharePlayGameSession(gameSessionViewModel: gameSessionViewModel)
-        setupPipelines()
         observeSharePlayEvents()
-    }
-
-    private func setupPipelines() {
-        $sliderLevel
-            .map { level in
-                if level < 0.5 {
-                    "Easy"
-                } else if level < 1.5 {
-                    "Medium"
-                } else {
-                    "Hard"
-                }
-            }
-            .assign(to: &$botLevelName)
     }
 
     private func observeSharePlayEvents() {
         Task {
-            for await event in sharePlaySession.playAgainEventStream {
+            for await event in sharePlaySession.eventStream {
                 switch event {
                 case .startNewGameSession(let dimensions):
                     startNewRemoteGameSession(with: dimensions)
@@ -54,13 +38,19 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
                     startNewGame()
                 case .opponentDeniedPlayAgain:
                     stopPlaying()
+                case .stopGame:
+                    stopPlaying()
                 }
             }
         }
     }
 
-    private func startNewRemoteGameSession(with dimensions: GameboardDimensions) {
-        gameSessionViewModel.playGame(dimensions: gameboardDimensions, xPlayerType: .remote, oPlayerType: .human)
+    private func startNewRemoteGameSession(with dimensions: GameboardDimensions?) {
+        gameSessionViewModel.playGame(
+            dimensions: dimensions ?? gameboardDimensions,
+            xPlayerType: .remote,
+            oPlayerType: .human
+        )
     }
 
     private func startNewGame() {
@@ -117,7 +107,9 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     }
 
     public func playGame() {
-        gameSessionViewModel.playGame(dimensions: gameboardDimensions, xPlayerType: .human, oPlayerType: .bot(selectedBotLevel))
+        gameSessionViewModel.playGame(
+            dimensions: gameboardDimensions, xPlayerType: .human, oPlayerType: .bot(selectedBotLevel)
+        )
     }
 
     public func showHint(at location: any GameboardLocationProtocol) {

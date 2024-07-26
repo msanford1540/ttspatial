@@ -36,6 +36,9 @@ struct TicTacSpatialApp: App {
             .environmentObject(viewModel.gameSessionViewModel)
             .environmentObject(viewModel.sharePlaySession)
         }
+#if os(macOS)
+        .defaultSize(.init(width: 520, height: 600))
+#endif
     }
 }
 
@@ -45,21 +48,44 @@ private struct ControlView: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
 
     var body: some View {
-        Group {
+        ZStack {
             if viewModel.gameSessionViewModel.isGameSessionActive {
                 Dashboard()
-                    .frame(height: preferrredHeight)
             } else {
                 HomeMenu()
-                    .frame(height: 130)
+            }
+            VStack {
+                Spacer()
+                SharePlayButton()
+                    .font(.title3)
+#if os(macOS)
+                    .padding(.bottom)
+#endif
             }
         }
         .background(Color.panel(for: colorScheme))
+        .frame(height: preferredHeight)
     }
 
-    private var preferrredHeight: CGFloat {
+    private var preferredHeight: CGFloat {
+        if viewModel.gameSessionViewModel.isGameSessionActive {
+            preferrredDashboardHeight
+        } else {
+            preferredHomeMenuHeight
+        }
+    }
+
+    private var preferredHomeMenuHeight: CGFloat {
 #if os(macOS)
-        gameSessionViewModel.isGameOver ? 220 : 130
+        160
+#else
+        190
+#endif
+    }
+
+    private var preferrredDashboardHeight: CGFloat {
+#if os(macOS)
+        gameSessionViewModel.isGameOver ? 160 : 130
 #else
         gameSessionViewModel.isGameOver ? 250 : 160
 #endif

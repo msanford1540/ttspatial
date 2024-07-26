@@ -11,12 +11,11 @@ import TicTacToeController
 
 public struct HomeMenu: View {
     @EnvironmentObject private var viewModel: HomeMenuViewModel
-    @State private var level: Float = 0
 
     public init() {}
 
     public var body: some View {
-        VStack(spacing: 48) {
+        VStack(spacing: 24) {
             Picker("Gameboard", selection: $viewModel.gameboardDimensions) {
                 Text("Classic 3x3").tag(GameboardDimensions.square3)
                 Text("Cube 4x4x4").tag(GameboardDimensions.cube4)
@@ -33,13 +32,13 @@ public struct HomeMenu: View {
             }
             .pickerStyle(.segmented)
             .font(.largeTitle)
-            .border(Color.green)
             .padding(.horizontal)
 
             DashboardButton("Play Game", action: viewModel.playGame)
+            SharePlayButton()
         }
         .padding()
-        .frame(width: 1200, height: 300)
+        .frame(width: 1200, height: 360)
         .font(.extraLargeTitle)
         .glassBackgroundEffect()
     }

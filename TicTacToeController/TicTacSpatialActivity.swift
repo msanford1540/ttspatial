@@ -230,7 +230,8 @@ public enum PlayAgainState {
 public enum PlayGameEvent {
     case playAgain
     case opponentDeniedPlayAgain
-    case startNewGameSession(GameboardDimensions)
+    case startNewGameSession(GameboardDimensions?)
+    case stopGame
 }
 
 @frozen
@@ -238,12 +239,14 @@ public enum SharePlayMessage: Codable, Sendable, CustomStringConvertible {
     case playAgain(PlayAgainResponse)
     case gameSquare3Message(GameMessageType<GridGameboardSnapshot>)
     case gameCube4Message(GameMessageType<CubeFourGameboardSnapshot>)
+    case stopGame
 
     public var description: String {
         switch self {
         case .playAgain(let response): response.description
         case .gameSquare3Message(let message): message.description
         case .gameCube4Message(let message): message.description
+        case .stopGame: "stopGame"
         }
     }
 }
@@ -264,8 +267,8 @@ public struct PlayAgainResponse: Sendable, Codable, CustomStringConvertible {
 
 @MainActor
 public final class SharePlayGameSession: ObservableObject {
-    public let playAgainEventStream: AsyncStream<PlayGameEvent>
-    private let playAgainEventContinuation: AsyncStream<PlayGameEvent>.Continuation?
+    public let eventStream: AsyncStream<PlayGameEvent>
+    private let eventContinuation: AsyncStream<PlayGameEvent>.Continuation?
 
     private let gameSessionViewModel: GameSessionViewModel
     private var messenger: GroupSessionMessenger?
@@ -279,12 +282,13 @@ public final class SharePlayGameSession: ObservableObject {
     private let logger = Logger(category: "sharePlayGameSession")
     private var groupActivity: GroupActivity?
     @Published public private(set) var playAgainState: PlayAgainState?
+    @Published public private(set) var opponentLeft: Bool = false
 
     public init(gameSessionViewModel: GameSessionViewModel) {
         self.gameSessionViewModel = gameSessionViewModel
         var continuation: AsyncStream<PlayGameEvent>.Continuation?
-        self.playAgainEventStream = AsyncStream { continuation = $0 }
-        self.playAgainEventContinuation = continuation
+        self.eventStream = AsyncStream { continuation = $0 }
+        self.eventContinuation = continuation
     }
 
     public var gameSession: GameSessionValue? {
@@ -294,6 +298,23 @@ public final class SharePlayGameSession: ObservableObject {
     private func onGameSessionValueDidChange() {
         Task {
             await configureSessions()
+        }
+    }
+
+    public func startNewGameSession() {
+        eventContinuation?.yield(.startNewGameSession(nil))
+    }
+
+    public func stopGame() {
+        sendMessage(.stopGame)
+        eventContinuation?.yield(.stopGame)
+    }
+
+    public func onStopGameMessage() {
+        opponentLeft = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.opponentLeft = false
+            self?.eventContinuation?.yield(.stopGame)
         }
     }
 
@@ -316,6 +337,7 @@ public final class SharePlayGameSession: ObservableObject {
     private func sendMessage(_ message: SharePlayMessage, to participants: Participants = .all) {
         Task {
             do {
+                print("[debug]", "sending SharePlay message: \(message)")
                 try await messenger?.send(message, to: participants)
             } catch {
                 logger.error("[\(Self.self, privacy: .public)] Failed to send message. error: \(error as NSError, privacy: .public)")
@@ -339,7 +361,7 @@ public final class SharePlayGameSession: ObservableObject {
 
     private func onPlayRemoteGameAgain() {
         playAgainState = nil
-        playAgainEventContinuation?.yield(.playAgain)
+        eventContinuation?.yield(.playAgain)
     }
 
     public func configureSessions() async {
@@ -406,6 +428,8 @@ public final class SharePlayGameSession: ObservableObject {
             for await (message, context) in messenger.messages(of: SharePlayMessage.self) {
                 if context.source == groupSession.localParticipant { return }
                 switch message {
+                case .stopGame:
+                    onStopGameMessage()
                 case .playAgain(let response):
                     onPlayAgainResponse(response)
                 case .gameSquare3Message(let gameMessage):
@@ -477,7 +501,7 @@ public final class SharePlayGameSession: ObservableObject {
             playAgainState = .opponentDenied
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                 self?.playAgainState = nil
-                self?.playAgainEventContinuation?.yield(.opponentDeniedPlayAgain)
+                self?.eventContinuation?.yield(.opponentDeniedPlayAgain)
             }
         }
 
@@ -498,7 +522,7 @@ public final class SharePlayGameSession: ObservableObject {
         case .waitingForOpponentResponse:
             if response.playAgain {
                 playAgainState = nil
-                playAgainEventContinuation?.yield(.playAgain)
+                eventContinuation?.yield(.playAgain)
             } else {
                 endGame()
             }

@@ -32,115 +32,11 @@ struct Dashboard: View {
             .padding(.horizontal)
             .padding(.vertical, 8)
 
-            SharePlayButton()
-#if os(macOS)
-                .padding(.bottom)
-#endif
-
-            Group {
-                if gameSessionViewModel.isGameOver {
-                    VStack {
-                        Text(gameSessionViewModel.gameStatusText)
-                        switch sharePlayGameSession.playAgainState {
-                        case .waitingForResponses:
-                            Text("Do you want to play again?") // with buttons
-                            Text("Your opponent is ready to play again.")
-                                .opacity(0)
-                                .font(.system(size: 10))
-                            PlayAgainButtons()
-                        case .waitingForOpponentResponse:
-                            Text("Waiting for your opponent to play again.") // without buttons
-                        case .waitingForMyResponse:
-                            Text("Do you want to play again?") // with buttons
-                            Text("Your opponent is ready to play again.")
-                                .font(.system(size: 10))
-                            PlayAgainButtons()
-                        case .opponentAccepted:
-                            Text("Your opponent is ready to play again!")
-                        case .opponentDenied:
-                            Text("Your opponent is not playing again.")
-                        case .none:
-                            EmptyView()
-                        }
-                        Spacer()
-                    }
-                    .padding(.top)
-                } else {
-                    VStack {
-                        HStack {
-                            Group {
-                                if gameSessionViewModel.gameSession?.isHumanVersusBot == true {
-                                    DashboardButton("Hint", hPadding: gameButtonHPadding) {
-                                        guard let hint = gameSessionViewModel.currentPlayerHint else { return }
-                                        homeMenuViewModel.showHint(at: hint)
-                                    }
-                                    DashboardButton("Undo", hPadding: gameButtonHPadding) {
-                                        gameSessionViewModel.undoLastHumanMove()
-                                    }
-                                    .disabled(!gameSessionViewModel.canUndo)
-                                }
-                                DashboardButton("Replay", hPadding: gameButtonHPadding) {
-                                    let move = gameSessionViewModel.mostRecentMove
-                                    homeMenuViewModel.showReplay(with: move)
-                                }
-                                .disabled(!gameSessionViewModel.canReplay)
-                            }
-                            .frame(minWidth: 80)
-                        }
-                        .font(.subheadline)
-
-                        EndGameButton()
-                            .font(.title2)
-                            .padding(.top, 8)
-                        Spacer()
-                    }
-                    .padding(.top, 8)
-                }
-            }
-            .transition(.asymmetric(
-                insertion: .opacity.animation(.easeInOut(duration: 0.5)),
-                removal: .identity
-            ))
+            DashboardMainContent()
         }
         .font(.title3)
         .animation(.easeInOut, value: gameSessionViewModel.isGameOver)
         .background(Color.panel(for: colorScheme))
-    }
-
-    private var playAgainHPadding: CGFloat {
-#if os(macOS)
-        48
-#else
-        16
-#endif
-    }
-
-    private var gameButtonHPadding: CGFloat {
-#if os(macOS)
-        16
-#else
-        8
-#endif
-    }
-}
-
-private struct PlayAgainButtons: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
-
-    var body: some View {
-        HStack {
-            DashboardButton("Stop Playing", action: homeMenuViewModel.onStopPlaying)
-            DashboardButton("Play Again", hPadding: playAgainHPadding, action: homeMenuViewModel.onPlayAgain)
-        }
-    }
-
-    private var playAgainHPadding: CGFloat {
-#if os(macOS)
-        48
-#else
-        16
-#endif
     }
 }
 
