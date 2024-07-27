@@ -24,6 +24,11 @@
 		F546552D2C3BA5A200B6E2E5 /* ttt-scenes in Frameworks */ = {isa = PBXBuildFile; productRef = F546552C2C3BA5A200B6E2E5 /* ttt-scenes */; };
 		F54655312C3BB0F800B6E2E5 /* marker-o.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9BB2BCDFB7E001EC38B /* marker-o.usdz */; };
 		F54655322C3BB0F800B6E2E5 /* marker-x.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9BC2BCDFB7E001EC38B /* marker-x.usdz */; };
+		F54BFA442C54A9930016AF86 /* GameSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA432C54A9910016AF86 /* GameSessionViewModel.swift */; };
+		F54BFA462C54AA120016AF86 /* GameSessionValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA452C54AA100016AF86 /* GameSessionValue.swift */; };
+		F54BFA482C54AA8E0016AF86 /* SharePlayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA472C54AA8D0016AF86 /* SharePlayMessage.swift */; };
+		F54BFA4A2C54ACF80016AF86 /* SharePlayGameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA492C54ACF60016AF86 /* SharePlayGameSession.swift */; };
+		F54BFA4C2C54AD600016AF86 /* RotationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA4B2C54AD5E0016AF86 /* RotationSender.swift */; };
 		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
 		F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */; };
@@ -52,6 +57,8 @@
 		F59061EA2C2A7BBF00231FD9 /* CubeGameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061E92C2A7BB900231FD9 /* CubeGameboardController.swift */; };
 		F59061ED2C2A835200231FD9 /* MenuMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061EC2C2A834900231FD9 /* MenuMode.swift */; };
 		F59061EF2C2A83B500231FD9 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061EE2C2A83AF00231FD9 /* HomeMenu.swift */; };
+		F592C9F32C540AD900CA3C12 /* DashboardUIComponents+PlayAgain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F592C9F22C540ACB00CA3C12 /* DashboardUIComponents+PlayAgain.swift */; };
+		F592C9F52C540B3500CA3C12 /* DashboardUIComponents+InGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F592C9F42C540B2900CA3C12 /* DashboardUIComponents+InGame.swift */; };
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; platformFilters = (ios, maccatalyst, macos, ); };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; platformFilters = (ios, maccatalyst, macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
@@ -217,6 +224,11 @@
 		F53242C52C35C553003DB901 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
 		F53242C72C35C741003DB901 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
 		F53242CE2C3B9F49003DB901 /* ttt_scenes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ttt_scenes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F54BFA432C54A9910016AF86 /* GameSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionViewModel.swift; sourceTree = "<group>"; };
+		F54BFA452C54AA100016AF86 /* GameSessionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionValue.swift; sourceTree = "<group>"; };
+		F54BFA472C54AA8D0016AF86 /* SharePlayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayMessage.swift; sourceTree = "<group>"; };
+		F54BFA492C54ACF60016AF86 /* SharePlayGameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayGameSession.swift; sourceTree = "<group>"; };
+		F54BFA4B2C54AD5E0016AF86 /* RotationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationSender.swift; sourceTree = "<group>"; };
 		F555D5C62BD2B17F00B92AA4 /* GameBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBot.swift; sourceTree = "<group>"; };
 		F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToeController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +250,8 @@
 		F59061E92C2A7BB900231FD9 /* CubeGameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeGameboardController.swift; sourceTree = "<group>"; };
 		F59061EC2C2A834900231FD9 /* MenuMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuMode.swift; sourceTree = "<group>"; };
 		F59061EE2C2A83AF00231FD9 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
+		F592C9F22C540ACB00CA3C12 /* DashboardUIComponents+PlayAgain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardUIComponents+PlayAgain.swift"; sourceTree = "<group>"; };
+		F592C9F42C540B2900CA3C12 /* DashboardUIComponents+InGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardUIComponents+InGame.swift"; sourceTree = "<group>"; };
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
@@ -406,7 +420,14 @@
 			isa = PBXGroup;
 			children = (
 				F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */,
+				F54BFA492C54ACF60016AF86 /* SharePlayGameSession.swift */,
+				F54BFA4B2C54AD5E0016AF86 /* RotationSender.swift */,
+				F54BFA472C54AA8D0016AF86 /* SharePlayMessage.swift */,
+				F54BFA452C54AA100016AF86 /* GameSessionValue.swift */,
+				F54BFA432C54A9910016AF86 /* GameSessionViewModel.swift */,
 				F555D6002BD4CC6A00B92AA4 /* DashboardUIComponents.swift */,
+				F592C9F22C540ACB00CA3C12 /* DashboardUIComponents+PlayAgain.swift */,
+				F592C9F42C540B2900CA3C12 /* DashboardUIComponents+InGame.swift */,
 				F59061EB2C2A834300231FD9 /* Menus */,
 				F58CC6A32C27CA7B00A09B8D /* GameboardControllers */,
 				F50FB20B2C0A09E2007CDA1F /* Quanterion.swift */,
@@ -978,16 +999,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				F50FB20C2C0A09E2007CDA1F /* Quanterion.swift in Sources */,
+				F54BFA4A2C54ACF80016AF86 /* SharePlayGameSession.swift in Sources */,
+				F592C9F32C540AD900CA3C12 /* DashboardUIComponents+PlayAgain.swift in Sources */,
+				F54BFA462C54AA120016AF86 /* GameSessionValue.swift in Sources */,
 				F512E81D2BF3AE7A00955FD2 /* Utilities.swift in Sources */,
 				F58CC6A72C27CB8900A09B8D /* GridGameboardController.swift in Sources */,
 				F555D5F72BD4494000B92AA4 /* TicTacSpatialActivity.swift in Sources */,
 				F59061EA2C2A7BBF00231FD9 /* CubeGameboardController.swift in Sources */,
 				F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */,
+				F54BFA442C54A9930016AF86 /* GameSessionViewModel.swift in Sources */,
+				F54BFA4C2C54AD600016AF86 /* RotationSender.swift in Sources */,
 				F58CC6A52C27CA8900A09B8D /* CubeFourGameboardController.swift in Sources */,
 				F59061ED2C2A835200231FD9 /* MenuMode.swift in Sources */,
+				F592C9F52C540B3500CA3C12 /* DashboardUIComponents+InGame.swift in Sources */,
 				F58960F42C0AC26A003B4940 /* GameboardController.swift in Sources */,
 				F59061EF2C2A83B500231FD9 /* HomeMenu.swift in Sources */,
 				F58960F72C0AC36C003B4940 /* RealityKit+Helpers.swift in Sources */,
+				F54BFA482C54AA8E0016AF86 /* SharePlayMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
