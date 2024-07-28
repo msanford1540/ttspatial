@@ -33,7 +33,8 @@ public extension simd_quatf {
         let axisX = Float(translation.height / hypot)
         let axisY = Float(translation.width / hypot)
         let rotationAxis = SIMD3<Float>(x: axisX, y: axisY, z: .zero)
-        self.init(angle: Float(rotation.radians), axis: rotationAxis)
+        let sensitivityFactor: Float = 0.333
+        self.init(angle: Float(rotation.radians) * sensitivityFactor, axis: rotationAxis)
     }
 }
 

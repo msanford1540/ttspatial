@@ -7,117 +7,118 @@
 
 import SwiftUI
 import RealityKit
+import Combine
 import TicTacToeController
 import TicTacToeEngine
+import TTTScenes
 
-struct TicTacSpatialGridRealityKitView: View {
-    typealias Gameboard = GridGameboard
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    private let controller = GameboardController2D()
-
-    var body: some View {
-        RealityView { content, attachments in
-            guard let scene = try? await Entity(named: "Scene", in: .main) else { return }
-            content.add(scene)
-            controller.setup(scene: scene)
-
-            if let controlsAttachment = attachments.entity(for: "controls") {
-                controlsAttachment.position = [0, -0.55, 0.1]
-                scene.addChild(controlsAttachment)
-            }
-        } update: { _, _  in
-            Task {
-                guard let event = gameSession.dequeueEvent() else { return }
-                try await controller.updateUI(event)
-                gameSession.onCompletedEvent()
-            }
-        } placeholder: {
-            ProgressView()
-        } attachments: {
-            Attachment(id: "controls") {
-                Dashboard<Gameboard>()
-                    .environmentObject(sharePlaySession)
-            }
-        }
-        .gesture(TapGesture().targetedToEntity(where: .has(GridLocation.self))
-            .onEnded { value in
-                guard let location = value.entity.components[GridLocation.self] else { return }
-                sharePlaySession.mark(at: location)
-            }
-        )
-        .task {
-            await sharePlaySession.configureSessions()
-        }
-    }
-}
-
-struct TicTacSpatialCubeRealityKitView: View {
-    typealias Gameboard = CubeGameboard
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    @State private var scene: Entity = .empty
+struct TicTacSpatialRealityView: View {
+    @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @State private var root: Entity = .empty
-    @State private var rotation: simd_quatf = .init()
-    private let controller = GameboardController3D()
+    @State private var dashboard: Entity = .empty
+    @State private var homeMenu: Entity = .empty
+    @State private var didInit: Bool = false
 
     var body: some View {
         RealityView { content, attachments in
             self.root = Entity()
-            guard let scene = try? await Entity(named: "Scene3D", in: .main) else { return }
-            root.addChild(scene)
-            content.add(root)
-            controller.setup(scene: scene)
-
-            if let controlsAttachment = attachments.entity(for: "controls") {
-                controlsAttachment.position = [0, -0.55, 0.4]
-                root.addChild(controlsAttachment)
+            if let scene = try? await Entity(named: "Scene3D4", in: .tttScenes) {
+                scene.scale = .init(x: 0.7, y: 0.7, z: 0.7)
+                scene.opacity = 0
+                root.addChild(scene)
+                viewModel.cube4Controller.setup(scene: scene)
             }
-            self.scene = scene
-        } update: { _, _  in
-            scene.transform.rotation = rotation
+            if let scene = try? await Entity(named: "Scene", in: .tttScenes) {
+                root.addChild(scene)
+                scene.opacity = 0
+                scene.position = .init(x: 0, y: 0, z: 0.33)
+                viewModel.square3Controller.setup(scene: scene)
+            }
+            content.add(root)
+
+            if let dashboardEntity = attachments.entity(for: "dashboard") {
+                dashboardEntity.position = [0, -0.55, 0.55]
+                dashboard = dashboardEntity
+                root.addChild(dashboardEntity)
+            }
+            if let homeMenuEntity = attachments.entity(for: "home") {
+                homeMenuEntity.position = [0, -0.55, 0.55]
+                homeMenu = homeMenuEntity
+                root.addChild(homeMenuEntity)
+            }
+        } update: { _, _ in
+            viewModel.updateSceneRotation()
             Task {
-                guard let event = gameSession.dequeueEvent() else { return }
-                try await controller.updateUI(event)
-                gameSession.onCompletedEvent()
+                let (hiddenScene, visibleScene) = switch viewModel.gameboardDimensions {
+                case .square3:
+                    (viewModel.cube4Controller.scene, viewModel.square3Controller.scene)
+                case .cube4:
+                    (viewModel.square3Controller.scene, viewModel.cube4Controller.scene)
+                }
+
+                let (hiddenPanel, visiblePanel) = gameSessionViewModel.isGameSessionActive
+                    ? (homeMenu, dashboard)
+                    : (dashboard, homeMenu)
+
+                if didInit {
+                    if !hiddenPanel.isOpacityAnimating {
+                        await hiddenPanel.animateOpacity(to: 0, duration: .milliseconds(250))
+                        await visiblePanel.animateOpacity(to: 1, duration: .milliseconds(250))
+                    }
+
+                    if !hiddenScene.isOpacityAnimating {
+                        await hiddenScene.animateOpacity(to: 0, duration: .milliseconds(250))
+                        await visibleScene.animateOpacity(to: 1, duration: .milliseconds(250))
+                    }
+                } else {
+                    hiddenPanel.opacity = 0
+                    visiblePanel.opacity = 1
+                    hiddenScene.opacity = 0
+                    visibleScene.opacity = 1
+                    didInit = true
+                }
+
+                guard let event = gameSessionViewModel.dequeueEvent() else { return }
+                try await viewModel.updateUI(event)
+                gameSessionViewModel.onCompletedEvent()
             }
         } placeholder: {
             ProgressView()
         } attachments: {
-            Attachment(id: "controls") {
-                Dashboard<Gameboard>()
-                    .environmentObject(sharePlaySession)
+            Attachment(id: "dashboard") {
+                Dashboard()
+                    .environmentObject(gameSessionViewModel)
+                    .environmentObject(viewModel.sharePlaySession)
+            }
+            Attachment(id: "home") {
+                HomeMenu()
+                    .environmentObject(viewModel)
+                    .environmentObject(viewModel.sharePlaySession)
             }
         }
-        .gesture(TapGesture().targetedToEntity(where: .has(CubeLocation.self))
+        .gesture(TapGesture().targetedToEntity(where: .has(LocationComponent.self))
             .onEnded { value in
-                guard let location = value.entity.components[CubeLocation.self] else { return }
-                sharePlaySession.mark(at: location)
+                guard let component = value.entity.components[LocationComponent.self] else { return }
+                viewModel.sharePlaySession.mark(at: component.location)
             }
         )
         .gesture(
             DragGesture()
                 .targetedToEntity(root)
                 .onChanged { value in
+                    guard viewModel.isCurrentSceneRotatable else { return }
                     let rotation = simd_quatf(translation: value.translation)
-                    self.rotation = rotation
-                    sharePlaySession.sendRotationIfNeeded(rotation)
+                    viewModel.rotation = rotation
+                    viewModel.sharePlaySession.sendRotationIfNeeded(rotation)
                 }
         )
         .task {
-            await sharePlaySession.configureSessions()
+            await viewModel.sharePlaySession.configureSessions()
         }
-        .onChange(of: sharePlaySession.rotation) { _, newValue in
+        .onChange(of: viewModel.sharePlaySession.rotation) { _, newValue in
             guard let newValue else { return }
-            rotation = newValue
+            viewModel.rotation = newValue
         }
     }
-}
-
-#Preview(windowStyle: .volumetric) {
-    let sharePlaySession = SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
-    return TicTacSpatialGridRealityKitView()
-        .environmentObject(sharePlaySession)
-        .environmentObject(sharePlaySession.gameSession)
-        .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
 }

@@ -12,21 +12,16 @@ import RealityKit
 
 @main @MainActor
 struct TicTacSpatialApp: App {
-    init() {
-        setRealityKitShim(RealityKitShimVisionOS())
-    }
-
-    let sharePlaySession = SharePlayGameSession<CubeGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
+    @StateObject private var viewModel = HomeMenuViewModel()
 
     var body: some SwiftUI.Scene {
         WindowGroup {
-            TicTacSpatialCubeRealityKitView()
-                .environmentObject(sharePlaySession)
-                .environmentObject(sharePlaySession.gameSession)
-                .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
+            TicTacSpatialRealityView()
+                .environmentObject(viewModel)
+                .environmentObject(viewModel.gameSessionViewModel)
+                .frame(depth: 1600)
         }
         .windowStyle(.volumetric)
-//        .defaultSize(width: 1, height: 1.3, depth: 0.1, in: .meters)
-        .defaultSize(width: 1.2, height: 1.3, depth: 1.2, in: .meters)
+        .defaultSize(width: 1.33, height: 1.4, depth: 1.85, in: .meters)
     }
 }

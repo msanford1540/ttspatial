@@ -18,117 +18,149 @@ public func modelName(for marker: PlayerMarker) -> String {
     }
 }
 
-@MainActor
-public final class DashboardViewModel: ObservableObject {
-    private var subscribers: Set<AnyCancellable> = .empty
-    @Published public private(set) var currentTurn: PlayerMarker?
-    @Published public private(set) var xPlayerName: String = .empty
-    @Published public private(set) var oPlayerName: String = .empty
-    @Published public private(set) var xWinCount: Int = .zero
-    @Published public private(set) var oWinCount: Int = .zero
+public struct CurrentTurnSection: View {
+    @StateObject private var viewModel = CurrentTurnSectionViewModel()
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    private let turnMarkerSize: CGFloat
+    private let margin: CGFloat
 
-    public init(gameSession: GameSession<some GameboardProtocol>) {
-        gameSession.$currentTurn.assign(to: &$currentTurn)
-        gameSession.$xPlayerName.assign(to: &$xPlayerName)
-        gameSession.$oPlayerName.assign(to: &$oPlayerName)
-        gameSession.$xWinCount.assign(to: &$xWinCount)
-        gameSession.$oWinCount.assign(to: &$oWinCount)
-    }
-}
-
-public struct CurrentTurnMarker: View {
-    @StateObject private var viewModel: CurrentTurnMarkerViewModel
-    @EnvironmentObject private var dashboardViewModel: DashboardViewModel
-
-    public init(width: CGFloat, margin: CGFloat) {
-        _viewModel = StateObject(wrappedValue: .init(width: width, margin: margin))
+    public init(turnMarkerSize: CGFloat, margin: CGFloat) {
+        self.turnMarkerSize = turnMarkerSize
+        self.margin = margin
     }
 
     public var body: some View {
+        HStack {
+            CurrentTurnMarker(size: turnMarkerSize)
+                .opacity(viewModel.isXTurn ? 1 : 0)
+            Spacer()
+            CurrentTurnMarker(size: turnMarkerSize)
+                .opacity(viewModel.isOTurn ? 1 : 0)
+        }
+        .padding(.horizontal, margin)
+        .onChange(of: gameSessionViewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
+            viewModel.onCurrentTurnChange(oldCurrentTurn, newCurrentTurn)
+        }
+        .onAppear {
+            viewModel.update(with: gameSessionViewModel.currentTurn)
+        }
+    }
+}
+
+private struct CurrentTurnMarker: View {
+    private let turnMarkerSize: CGFloat
+
+    init(size: CGFloat) {
+        self.turnMarkerSize = size
+    }
+
+    var body: some View {
         Circle()
             .fill(Color.red)
-            .opacity(viewModel.isCurrentTurnHidden ? 0 : 1)
-            .offset(x: viewModel.currentTurnOffset)
-            .onChange(of: dashboardViewModel.currentTurn) { oldCurrentTurn, newCurrentTurn in
-                viewModel.onCurrentTurnChange(oldCurrentTurn, newCurrentTurn)
-            }
-            .onAppear {
-                viewModel.update(with: dashboardViewModel.currentTurn)
-            }
+            .frame(width: turnMarkerSize, height: turnMarkerSize)
     }
 }
 
 @MainActor
-private final class CurrentTurnMarkerViewModel: ObservableObject {
-    @Published public private(set) var isCurrentTurnHidden: Bool = true
-    @Published public private(set) var currentTurnOffset: CGFloat = .zero
-    public var width: CGFloat = .zero
-    private let margin: CGFloat
-    private var subscribers: Set<AnyCancellable> = .empty
-
-    init(width: CGFloat = .zero, margin: CGFloat) {
-        self.width = width
-        self.margin = margin
-    }
+private final class CurrentTurnSectionViewModel: ObservableObject {
+    @Published public private(set) var isXTurn: Bool = false
+    @Published public private(set) var isOTurn: Bool = false
 
     func update(with currentTurn: PlayerMarker?) {
         onCurrentTurnChange(nil, currentTurn)
     }
 
     func onCurrentTurnChange(_ oldCurrentTurn: PlayerMarker?, _ newCurrentTurn: PlayerMarker?) {
-        if oldCurrentTurn != nil, newCurrentTurn != nil {
-            withAnimation { updateCurrentTurnOffset(for: newCurrentTurn) }
-        } else {
-            updateCurrentTurnOffset(for: newCurrentTurn)
-            withAnimation { isCurrentTurnHidden = newCurrentTurn == nil }
-        }
+        withAnimation { updateCurrentTurnOffset(for: newCurrentTurn) }
     }
 
     private func updateCurrentTurnOffset(for mark: PlayerMarker?) {
-        guard let mark else { return }
-        let offset = width / 2 - margin
-        currentTurnOffset = switch mark {
-        case .x: -offset
-        case .o: offset
-        }
+        isXTurn = mark == .x
+        isOTurn = mark == .o
     }
 }
 
-public struct StartOverButton<Gameboard: GameboardProtocol>: View {
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    private let padding: CGFloat
+public struct DashboardButton<Content: View>: View {
+    private let hPadding: CGFloat?
+    private let content: () -> Content
+    private let action: () -> Void
 
-    public init(padding: CGFloat = .zero) {
-        self.padding = padding
+    public init(hPadding: CGFloat?, action: @escaping () -> Void, @ViewBuilder label: @escaping () -> Content) {
+        self.hPadding = hPadding
+        self.content = label
+        self.action = action
+    }
+
+    public init(_ title: String, hPadding: CGFloat? = nil, action: @escaping () -> Void) where Content == Text {
+        self.init(hPadding: hPadding, action: action) {
+            Text(title)
+        }
+    }
+
+    public init(_ title: String, systemImage: String, hPadding: CGFloat? = nil, action: @escaping () -> Void) where Content == Label<Text, Image> {
+        self.init(hPadding: hPadding, action: action) {
+            Label(title, systemImage: systemImage)
+        }
     }
 
     public var body: some View {
-        Button {
-            gameSession.reset()
-        } label: {
-            Text("Start Over")
-                .padding(padding)
+        Button(action: action) {
+            content()
+            #if os(visionOS)
+                .padding(.vertical, 6)
+                .padding(.horizontal, hPadding ?? 16)
+            #else
+                .padding(.horizontal, hPadding)
+            #endif
+        }
+        .buttonStyle(.bordered)
+    }
+}
+
+public struct StartOverButton: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+
+    public init() {}
+
+    public var body: some View {
+        DashboardButton("Start Over") {
+            gameSessionViewModel.startNewGame()
         }
     }
 }
 
-public struct SharePlayButton<Gameboard: GameboardProtocol>: View {
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession<Gameboard>
+public struct EndGameButton: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
+
+    public init() {}
+
+    public var body: some View {
+        DashboardButton("End Game") {
+            gameSessionViewModel.endGameSession()
+            homeMenuViewModel.resetGameboard()
+            if sharePlaySession.isActive {
+                sharePlaySession.stopGame()
+            }
+        }
+    }
+}
+
+public struct SharePlayButton: View {
+    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @ObservedObject private var sharePlayObserver = GroupStateObserver()
-    private let padding: CGFloat
 
-    public init(padding: CGFloat = .zero) {
-        self.padding = padding
-    }
+    public init() {}
 
     public var body: some View {
-        Button {
+        DashboardButton("Start Activity", systemImage: "shareplay") {
+            if !gameSessionViewModel.isGameSessionActive {
+                sharePlaySession.startNewGameSession()
+            }
             sharePlaySession.startSharing()
-        } label: {
-            Label("Start Activity", systemImage: "shareplay")
-                .padding(padding)
         }
-        .buttonStyle(.borderedProminent)
         .disabled(!sharePlayObserver.isEligibleForGroupSession)
     }
 }
@@ -147,7 +179,7 @@ public struct WinCountView: View {
 
 public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameContent: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: DashboardViewModel
+    @EnvironmentObject private var viewModel: GameSessionViewModel
     private let margin: CGFloat
     private let turnMarkerSize: CGFloat
     private let innerPlayerView: (PlayerMarker) -> PlayerContent
@@ -169,26 +201,23 @@ public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameConten
     }
 
     public var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                CurrentTurnMarker(width: geometry.size.width, margin: margin)
-                    .frame(width: turnMarkerSize)
-                HStack {
-                    PlayerView(marker: .x) { marker in
-                        innerPlayerView(marker)
-                    } winCountView: { count in
-                        winCountView(count)
-                    } nameView: { playerName in
-                        nameView(playerName)
-                    }
-                    Spacer()
-                    PlayerView(marker: .o) { marker in
-                        innerPlayerView(marker)
-                    } winCountView: { marker in
-                        winCountView(marker)
-                    } nameView: { playerName in
-                        nameView(playerName)
-                    }
+        VStack {
+            CurrentTurnSection(turnMarkerSize: turnMarkerSize, margin: margin)
+            HStack {
+                PlayerView(marker: .x) { marker in
+                    innerPlayerView(marker)
+                } winCountView: { count in
+                    winCountView(count)
+                } nameView: { playerName in
+                    nameView(playerName)
+                }
+                Spacer()
+                PlayerView(marker: .o) { marker in
+                    innerPlayerView(marker)
+                } winCountView: { marker in
+                    winCountView(marker)
+                } nameView: { playerName in
+                    nameView(playerName)
                 }
             }
         }
@@ -197,7 +226,7 @@ public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameConten
 
 private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: DashboardViewModel
+    @EnvironmentObject private var viewModel: GameSessionViewModel
     let marker: PlayerMarker
     let innerPlayerView: (PlayerMarker) -> PlayerContent
     let winCountView: (Int) -> WinContent
@@ -215,6 +244,7 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
                 }
             }
             nameView(playerName)
+                .frame(minHeight: 32, maxHeight: 64)
         }
     }
 
@@ -234,5 +264,51 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
         case .x: viewModel.xPlayerName
         case .o: viewModel.oPlayerName
         }
+    }
+}
+
+public struct DashboardMainContent: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+
+    public init() {}
+
+    public var body: some View {
+        Group {
+            if gameSessionViewModel.isGameOver {
+                PlayAgainContent(spacing: playAgainSpacing)
+                    .padding(.top)
+            } else {
+                InGameDashboardContent(spacing: dashboardContentSpacing)
+                    .padding(.top, topPadding)
+            }
+        }
+        .transition(.asymmetric(
+            insertion: .opacity.animation(.easeInOut(duration: 0.5)),
+            removal: .identity
+        ))
+    }
+
+    private var playAgainSpacing: CGFloat? {
+#if os(visionOS)
+        12
+#else
+        nil
+#endif
+    }
+
+    private var dashboardContentSpacing: CGFloat? {
+#if os(visionOS)
+        22
+#else
+        nil
+#endif
+    }
+
+    private var topPadding: CGFloat? {
+#if os(visionOS)
+        18
+#else
+        8
+#endif
     }
 }

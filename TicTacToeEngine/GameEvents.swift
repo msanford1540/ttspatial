@@ -38,6 +38,7 @@ public struct WinningInfo<WinningLine: WinningLineProtocol>: Equatable, Sendable
     }
 }
 
+@frozen
 public enum GameMessageType<Snapshot: GameboardSnapshotProtocol>: Codable, Sendable, CustomStringConvertible {
     case snapshot(Snapshot)
     case move(GameMove<Snapshot.Location>)
@@ -47,8 +48,22 @@ public extension GameMessageType {
     var description: String {
         switch self {
         case .snapshot(let gameSnapshot): "(snapshot: \(gameSnapshot))"
-        case .move(let gameMove): "(move: \(gameMove)"
+        case .move(let gameMove): "(move: \(gameMove))"
         }
+    }
+}
+
+public struct Handshake: Sendable, Codable, CustomStringConvertible {
+    let participantID: UUID
+    let timestamp: Date
+
+    public init(participantID: UUID) {
+        self.participantID = participantID
+        self.timestamp = .now
+    }
+
+    public var description: String {
+        "participantID: \(participantID)), timestamp: \(timestamp)"
     }
 }
 
@@ -67,9 +82,24 @@ public struct GameMove<GameboardLocation: GameboardLocationProtocol>: Sendable, 
     }
 }
 
+@frozen
+public enum GameEventValue: Sendable, Codable, CustomStringConvertible {
+    case square3(GameEvent<GridWinningLine, GridLocation>)
+    case cube4(GameEvent<CubeFourWinningLine, CubeFourLocation>)
+
+    public var description: String {
+        switch self {
+        case .square3(let gameEvent):
+            gameEvent.description
+        case .cube4(let gameEvent):
+            gameEvent.description
+        }
+    }
+}
+
 public enum GameEvent<WinningLine: WinningLineProtocol, GameboardLocation: GameboardLocationProtocol>: Sendable, Codable, CustomStringConvertible {
     case move(GameMove<GameboardLocation>)
-    case undo(GameboardLocation)
+    case undo(GameMove<GameboardLocation>)
     case gameOver(WinningInfo<WinningLine>?)
     case reset
 

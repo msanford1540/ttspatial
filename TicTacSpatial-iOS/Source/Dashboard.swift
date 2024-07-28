@@ -8,89 +8,63 @@
 import Foundation
 import SwiftUI
 import SceneKit
+import RealityKit
 import GroupActivities
 import TicTacToeController
 import TicTacToeEngine
 
-private func dashboardBackgroundUIColor(for colorScheme: ColorScheme) -> UIColor {
-    switch colorScheme {
-    case .light: .init(white: 0.875, alpha: 1)
-    case .dark: .init(white: 0.125, alpha: 1)
-    @unknown default: .init(white: 0.875, alpha: 1)
-    }
-}
-
-struct Dashboard<Gameboard: GameboardProtocol>: View {
+struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    @EnvironmentObject private var viewModel: DashboardViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+    @EnvironmentObject private var sharePlayGameSession: SharePlayGameSession
 
     var body: some View {
-        ZStack {
-            PlayersDashboard(margin: 20, turnMarkerSize: 18) { marker in
-                InnerPlayerMarker(marker: marker, colorScheme: colorScheme)
+        ZStack(alignment: .bottom) {
+            PlayersDashboard(margin: 12, turnMarkerSize: 18) { marker in
+                InnerPlayerMarker(marker: marker)
             } winCountView: { count in
                 WinCountView(count)
             } nameView: { playerName in
                 Text(playerName)
             }
+            .frame(height: 100)
             .padding(.horizontal)
             .padding(.vertical, 8)
-            VStack {
-                Spacer()
-                SharePlayButton<Gameboard>()
-                StartOverButton<Gameboard>()
-            }
-            .font(.headline)
-            .padding(.vertical, 8)
+
+            DashboardMainContent()
         }
-        .frame(height: 120)
-        .background(backgroundColor)
         .font(.title3)
+        .animation(.easeInOut, value: gameSessionViewModel.isGameOver)
+        .background(Color.panel(for: colorScheme))
     }
-
-    private var backgroundColor: Color {
-        .init(uiColor: dashboardBackgroundUIColor(for: colorScheme))
-    }
-
-}
-
-#Preview {
-    Dashboard<GridGameboard>().environmentObject(SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human))
 }
 
 private struct InnerPlayerMarker: View {
-    let marker: PlayerMarker
-    let scene: SCNScene
-    let cameraNode = SCNNode()
+    @Environment(\.colorScheme) private var colorScheme
+    let imageName: String
 
-    init(marker: PlayerMarker, colorScheme: ColorScheme) {
-        self.marker = marker
-        guard let scene = SCNScene(named: "\(modelName(for: marker)).usdz") else {
-            fatalError()
+    init(marker: PlayerMarker) {
+        imageName = switch marker {
+        case .x: "x-marker"
+        case .o: "o-marker"
         }
-        self.scene = scene
-        let rootNode = scene.rootNode
-        rootNode.eulerAngles = .init(degrees: 0, 0, 45)
-        if marker == .x {
-            rootNode.scale = .init(1.15, 1.15, 1)
-        }
-        scene.background.contents = dashboardBackgroundUIColor(for: colorScheme)
-        let light = SCNLight()
-        light.type = .ambient
-        light.intensity = 300
-        let ambientLightNode = SCNNode()
-        ambientLightNode.light = light
-        cameraNode.camera = SCNCamera()
-        cameraNode.position = .init(0, 0, 0.2)
-        cameraNode.scale = .init(0.01, 0.01, 0.01)
-        cameraNode.eulerAngles = .init(degrees: 0, 0, 0)
-        cameraNode.addChildNode(cameraNode)
-        rootNode.addChildNode(ambientLightNode)
     }
 
     var body: some View {
-        SceneView(scene: scene, pointOfView: cameraNode)
+        Image(imageName)
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
             .frame(width: 42, height: 42)
+            .foregroundColor(color)
+    }
+
+    private var color: Color {
+        switch colorScheme {
+        case .light: .init(white: 0.2)
+        case .dark: .init(white: 0.8)
+        @unknown default: .init(white: 0.2)
+        }
     }
 }

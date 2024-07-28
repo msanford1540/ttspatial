@@ -9,10 +9,11 @@ import Foundation
 
 final class GameEngine<Gameboard: GameboardProtocol> {
     public let updateStream: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>
-    let continuation: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>.Continuation?
+    private let continuation: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>.Continuation?
     private(set) var currentTurn: PlayerMarker? = .x
     private(set) var winningInfo: WinningInfo<Gameboard.WinningLine>?
     private(set) var isGameOver: Bool = false
+    private(set) var moves: [GameMove<Gameboard.Location>] = .empty
     private(set) var gameboard: Gameboard
 
     private init(gameboard: Gameboard, currentTurn: PlayerMarker?) {
@@ -37,6 +38,32 @@ final class GameEngine<Gameboard: GameboardProtocol> {
         gameboard.snapshot(with: currentTurn)
     }
 
+    var currentPlayerHint: Gameboard.Location? {
+        guard let currentTurn else { return nil }
+        let bot = AdvancedBot<Gameboard.Snapshot>()
+        return bot.move(for: gameboard.snapshot(with: currentTurn))
+    }
+
+    var mostRecentMove: GameMove<Gameboard.Location>? {
+        moves.last
+    }
+
+    var hasActiveGameMadeMove: Bool {
+        moves.isNotEmpty && !isGameOver
+    }
+
+    func canUndo(for player: PlayerMarker) -> Bool {
+        hasActiveGameMadeMove && moves.contains { $0.mark == player }
+    }
+
+    func undoLastMove() {
+        guard hasActiveGameMadeMove else { return }
+        let lastMove = moves.removeLast()
+        gameboard.markEmpty(at: lastMove.location)
+        currentTurn = lastMove.mark
+        sendUpdate(.undo(lastMove), currentTurn)
+    }
+
     func markCurrentPlayer(at location: Gameboard.Location) {
         guard gameboard.marker(at: location) == nil, !isGameOver, let currentTurn else {
             return
@@ -44,6 +71,8 @@ final class GameEngine<Gameboard: GameboardProtocol> {
 
         let mark = currentTurn
         gameboard.markPlayer(mark, at: location)
+        let move = GameMove(location: location, mark: mark)
+        moves.append(move)
 
         let winningLines = Gameboard.WinningLine.allCases.filter { gameboard.winner(for: $0) != nil }
         if winningLines.isEmpty {
@@ -62,7 +91,7 @@ final class GameEngine<Gameboard: GameboardProtocol> {
             let winningInfo = WinningInfo(player: mark, lines: Set(winningLines))
             self.winningInfo = winningInfo
             isGameOver = true
-            sendUpdate(.move(.init(location: location, mark: mark)), currentTurn)
+            sendUpdate(.move(move), currentTurn)
             sendUpdate(.gameOver(winningInfo), nil)
         }
     }
@@ -77,14 +106,3 @@ final class GameEngine<Gameboard: GameboardProtocol> {
         return boardUnmarkedCount == Gameboard.WinningLine.locationCount - 1 && line.markCount.mark == turn
     }
 }
-
-//    private func text(_ location: GridLocation, _ marker: PlayerMarker) -> String? {
-//        let locations = self.locations
-//        if locations[1] == location { return marker.description }
-//        guard locations[0] == location || locations[2] == location else { return nil }
-//        switch self {
-//        case .horizontal: return "-"
-//        case .vertical: return "|"
-//        case .diagonal(let isBackslash): return isBackslash ? "\\" : "/"
-//        }
-//    }

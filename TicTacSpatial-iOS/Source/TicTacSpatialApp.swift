@@ -10,38 +10,84 @@ import RealityKit
 import TicTacToeController
 import TicTacToeEngine
 
-// @main @MainActor
-// struct TicTacSpatialApp: App {
-//    let sharePlaySession = SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human)
-//
-//    init() {
-//        setRealityKitShim(RealityKitShimiOS())
-//    }
-//
-//    var body: some SwiftUI.Scene {
-//        WindowGroup {
-//            TicTacSpatialGridRealityKitView()
-//                .environmentObject(sharePlaySession)
-//                .environmentObject(sharePlaySession.gameSession)
-//                .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
-//        }
-//    }
-// }
-
 @main @MainActor
 struct TicTacSpatialApp: App {
-    let sharePlaySession = SharePlayGameSession<CubeGameboard>(xPlayerType: .human, oPlayerType: .bot(.easy))
+    @Environment(\.colorScheme) private var colorScheme
+    @StateObject private var viewModel: HomeMenuViewModel
+    @ObservedObject private var gameSessionViewModel: GameSessionViewModel
 
     init() {
-        setRealityKitShim(RealityKitShimiOS())
+        let homeViewModel = HomeMenuViewModel()
+        _viewModel = StateObject(wrappedValue: homeViewModel)
+        gameSessionViewModel = homeViewModel.gameSessionViewModel
     }
 
     var body: some SwiftUI.Scene {
         WindowGroup {
-            TicTacSpatialCubeRealityKitView()
-                .environmentObject(sharePlaySession)
-                .environmentObject(sharePlaySession.gameSession)
-                .environmentObject(DashboardViewModel(gameSession: sharePlaySession.gameSession))
+            ZStack(alignment: .bottom) {
+                VStack(spacing: .zero) {
+                    TicTacSpatialRealityView()
+                    Spacer()
+                        .frame(height: 130)
+                }
+                ControlView()
+            }
+            .environmentObject(viewModel)
+            .environmentObject(viewModel.gameSessionViewModel)
+            .environmentObject(viewModel.sharePlaySession)
         }
+#if os(macOS)
+        .defaultSize(.init(width: 520, height: 600))
+#endif
+    }
+}
+
+private struct ControlView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+
+    var body: some View {
+        ZStack {
+            if viewModel.gameSessionViewModel.isGameSessionActive {
+                Dashboard()
+            } else {
+                HomeMenu()
+            }
+            VStack {
+                Spacer()
+                SharePlayButton()
+                    .font(.title3)
+#if os(macOS)
+                    .padding(.bottom)
+#endif
+            }
+        }
+        .background(Color.panel(for: colorScheme))
+        .frame(height: preferredHeight)
+    }
+
+    private var preferredHeight: CGFloat {
+        if viewModel.gameSessionViewModel.isGameSessionActive {
+            preferrredDashboardHeight
+        } else {
+            preferredHomeMenuHeight
+        }
+    }
+
+    private var preferredHomeMenuHeight: CGFloat {
+#if os(macOS)
+        160
+#else
+        190
+#endif
+    }
+
+    private var preferrredDashboardHeight: CGFloat {
+#if os(macOS)
+        gameSessionViewModel.isGameOver ? 160 : 130
+#else
+        gameSessionViewModel.isGameOver ? 250 : 160
+#endif
     }
 }

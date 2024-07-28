@@ -10,7 +10,7 @@ import Combine
 
 @frozen
 public enum PlayerType {
-    case bot(BotType)
+    case bot(BotLevel)
     case remote
     case human
 }
@@ -24,7 +24,25 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
 
         init(playerType: PlayerType) {
             self = switch playerType {
-            case .bot: .bot(EasyBot<Gameboard.Snapshot>())
+            case .bot(let botType):
+                switch botType {
+                case .easy:
+                    .bot(EasyBot<Gameboard.Snapshot>())
+                case .medium:
+                    .bot(MediumBot<Gameboard.Snapshot>())
+                case .hard:
+                    .bot(AdvancedBot<Gameboard.Snapshot>())
+                }
+            case .remote:
+                    .remote
+            case .human:
+                    .human
+            }
+        }
+
+        var playerType: PlayerType {
+            switch self {
+            case .bot(let bot): .bot(bot.level)
             case .remote: .remote
             case .human: .human
             }
@@ -32,6 +50,14 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
 
         var isHuman: Bool {
             if case .human = self { true } else { false }
+        }
+
+        var isBot: Bool {
+            if case .bot = self { true } else { false }
+        }
+
+        var isRemote: Bool {
+            if case .remote = self { true } else { false }
         }
 
         var description: String {
@@ -49,6 +75,10 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     @Published public private(set) var oPlayerName: String = .empty
     @Published public private(set) var processingEventID: UUID?
     @Published public private(set) var currentTurn: PlayerMarker?
+    @Published public private(set) var isGameOver: Bool = false
+    @Published public private(set) var canUndo: Bool = false
+    @Published public private(set) var canReplay: Bool = false
+    private var isWaitingToStartNewRemoteGame: Bool = false
     private var pendingGameEvent: GameEvent<Gameboard.WinningLine, Gameboard.Location>?
 
     private var queue = Queue<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>()
@@ -66,6 +96,48 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         startNewGame()
     }
 
+    public var xPlayerType: PlayerType {
+        xPlayer.playerType
+    }
+
+    public var oPlayerType: PlayerType {
+        oPlayer.playerType
+    }
+
+    public var winningPlayer: PlayerMarker? {
+        gameEngine.winningInfo?.player
+    }
+
+    public var humanPlayer: PlayerMarker? {
+        if xPlayer.isHuman {
+            .x
+        } else if oPlayer.isHuman {
+            .o
+        } else {
+            nil
+        }
+    }
+
+    public var currentPlayerHint: Gameboard.Location? {
+        gameEngine.currentPlayerHint
+    }
+
+    public var mostRecentMove: GameMove<Gameboard.Location>? {
+        gameEngine.mostRecentMove
+    }
+
+    public var mostRecentMoveLocation: Gameboard.Location? {
+        gameEngine.mostRecentMove?.location
+    }
+
+    public func undoLastHumanMove() {
+        guard let humanPlayer else { return }
+        gameEngine.undoLastMove()
+        if let mostRecentMove, mostRecentMove.mark == humanPlayer {
+            gameEngine.undoLastMove()
+        }
+    }
+
     private func setupPipelines() {
         $xPlayer
             .map(\.playerName)
@@ -73,6 +145,9 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         $oPlayer
             .map(\.playerName)
             .assign(to: &$oPlayerName)
+        $currentTurn
+            .map { $0 == nil }
+            .assign(to: &$isGameOver)
     }
 
     public func setHumanPlayer(_ mark: PlayerMarker) {
@@ -125,20 +200,38 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         switch message {
         case .snapshot(let gameSnapshot):
             gameEngine = .init(snapshot: gameSnapshot)
-            startNewGame()
+            if isRemoteGame {
+                startNewGame()
+            } else {
+                isWaitingToStartNewRemoteGame = true
+            }
         case .move(let gameMove):
             gameEngine.markCurrentPlayer(at: gameMove.location)
         }
     }
 
-    public func reset() {
-        startingPlayer = startingPlayer.opponent
-        gameEngine = .init(gameboard: Gameboard(), startingPlayer: startingPlayer)
+    public func setSnapshot(_ snapshot: Gameboard.Snapshot) {
+        gameEngine = .init(snapshot: snapshot)
+        startNewGame()
+    }
+
+    public func startNewRemoteGameIfNeeded() {
+        guard isWaitingToStartNewRemoteGame else { return }
+        isWaitingToStartNewRemoteGame = false
+        startNewGame()
+    }
+
+    public func reset(startingPlayer: PlayerMarker? = nil) {
+        self.startingPlayer = startingPlayer ?? self.startingPlayer.opponent
+        gameEngine = .init(gameboard: Gameboard(), startingPlayer: self.startingPlayer)
+        canUndo = false
+        canReplay = false
         startNewGame()
     }
 
     private func startNewGame() {
         observeGameEngineUpdates()
+
         Task {
             await performBotMoveIfNeeded()
         }
@@ -179,6 +272,8 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         processingEventID = update.id
         pendingGameEvent = update.event
         currentTurn = update.currentTurn
+        canUndo = currentTurn.map { isHumanTurn && gameEngine.canUndo(for: $0) } ?? false
+        canReplay = gameEngine.hasActiveGameMadeMove
 
         if let winningPlayer = update.event.winningInfo?.player {
             switch winningPlayer {
@@ -186,6 +281,14 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
             case .o: oWinCount += 1
             }
         }
+    }
+
+    public var isHumanVersusBot: Bool {
+        (xPlayer.isHuman && oPlayer.isBot) || (xPlayer.isBot && oPlayer.isHuman)
+    }
+
+    public var isRemoteGame: Bool {
+        xPlayer.isRemote || oPlayer.isRemote
     }
 }
 

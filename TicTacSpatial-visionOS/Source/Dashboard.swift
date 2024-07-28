@@ -11,14 +11,61 @@ import SwiftUI
 import TicTacToeController
 import TicTacToeEngine
 
-struct Dashboard<Gameboard: GameboardProtocol>: View {
-    @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var gameSession: GameSession<Gameboard>
-    @EnvironmentObject private var viewModel: DashboardViewModel
+struct Dashboard: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+    @EnvironmentObject private var sharePlayGameSession: SharePlayGameSession
+
+    var body: some View {
+        VStack {
+            Spacer()
+            ZStack {
+                VStack {
+                    Spacer()
+                    PlayersDashboard(margin: 24, turnMarkerSize: 48) { marker in
+                        InnerPlayerMarker(marker: marker)
+                    } winCountView: { marker in
+                        WinCountView(marker)
+                    } nameView: { playerName in
+                        Text(playerName)
+                            .frame(width: 120)
+                    }
+                }
+                .padding()
+                VStack {
+                    Spacer()
+                    SharePlayButton()
+                }
+                .padding()
+
+                DashboardMainContent()
+            }
+            .frame(width: 1200, height: gameSessionViewModel.isGameOver ? 400 : 300)
+            .font(.extraLargeTitle)
+            .glassBackgroundEffect()
+            .offset(y: -100)
+            .animation(.easeInOut, value: gameSessionViewModel.isGameOver)
+        }
+        .frame(height: 500)
+    }
+}
+
+private struct BridgeView: View {
+    var body: some View {
+        VStack {
+            Dashboard()
+        }
+        .frame(height: 500)
+    }
+}
+
+private struct PlayAgainDashboard: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
 
     var body: some View {
         ZStack {
-            PlayersDashboard(margin: 48, turnMarkerSize: 48) { marker in
+            PlayersDashboard(margin: 24, turnMarkerSize: 48) { marker in
                 InnerPlayerMarker(marker: marker)
             } winCountView: { marker in
                 WinCountView(marker)
@@ -28,28 +75,72 @@ struct Dashboard<Gameboard: GameboardProtocol>: View {
             }
             .padding()
             VStack {
-                SharePlayButton<Gameboard>(padding: 16)
-                StartOverButton<Gameboard>(padding: 16)
+                Text(gameStatusText)
+                Text("Play Again?")
+                HStack(spacing: 24) {
+                    DashboardButton("Stop") {
+                        gameSessionViewModel.endGameSession()
+                        homeMenuViewModel.resetGameboard()
+                    }
+                    DashboardButton("Play") {
+                        gameSessionViewModel.startNewGame()
+                    }
+                }
+                SharePlayButton()
             }
             .font(.extraLargeTitle)
-            .padding(.top, 36)
         }
-        .frame(width: 1200, height: 300)
+        .frame(width: 1200, height: 500)
         .font(.extraLargeTitle)
-        .glassBackgroundEffect()
-        .environmentObject(gameSession)
+    }
+
+    private var gameStatusText: String {
+        guard let gameOverState = gameSessionViewModel.gameOverState else { return .empty }
+        return switch gameOverState {
+        case .won:
+            "You Won!!!"
+        case .lost:
+            "You lost"
+        case .tie:
+            "Tie Game"
+        }
     }
 }
 
-#Preview {
-    Dashboard<GridGameboard>().environmentObject(SharePlayGameSession<GridGameboard>(xPlayerType: .human, oPlayerType: .human))
+private struct InGameDashboard: View {
+    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+
+    var body: some View {
+        ZStack {
+            PlayersDashboard(margin: 24, turnMarkerSize: 48) { marker in
+                InnerPlayerMarker(marker: marker)
+            } winCountView: { marker in
+                WinCountView(marker)
+            } nameView: { playerName in
+                Text(playerName)
+                    .frame(width: 120)
+            }
+            .padding()
+            VStack(spacing: 32) {
+                HStack(spacing: 24) {
+                    StartOverButton()
+                    EndGameButton()
+                }
+                SharePlayButton()
+            }
+            .font(.extraLargeTitle)
+            .padding(.top, 44)
+        }
+        .frame(width: 1200, height: 300)
+        .font(.extraLargeTitle)
+    }
 }
 
 private struct InnerPlayerMarker: View {
     let marker: PlayerMarker
 
     var body: some View {
-        Model3D(named: modelName(for: marker)) { model in
+        Model3D(named: modelName(for: marker), bundle: .tttScenes) { model in
             model
                 .resizable()
                 .scaledToFit()
