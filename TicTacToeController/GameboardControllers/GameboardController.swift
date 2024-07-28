@@ -283,8 +283,8 @@ enum WinningLineType {
     var scale: Float {
         switch self {
         case .straight: 1.15
-        case .diagonal: 1.35
-        case .crossDiagonal: 1.65
+        case .diagonal: 1.65
+        case .crossDiagonal: 1.95
         }
     }
 }

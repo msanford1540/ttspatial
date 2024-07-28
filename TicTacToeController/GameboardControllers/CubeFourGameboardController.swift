@@ -29,16 +29,16 @@ import TicTacToeEngine
             position.x = xPos.rowOffset
             position.y = yPos.rowOffset
         case .zDiagonal(let zPos, let isBackslash):
-            rotation = .init(x: isBackslash ? 45 : 135, y: 90)
+            rotation = .init(x: isBackslash ? 33 : 147, y: 90)
             position.z += zPos.rowOffset
         case .yDiagonal(let yPos, let isBackslash):
-            rotation = .init(y: isBackslash ? 45 : 135)
+            rotation = .init(y: isBackslash ? 33 : 147)
             position.y = yPos.rowOffset
         case .xDiagonal(let xPos, let isBackslash):
-            rotation = .init(x: isBackslash ? 135 : 45)
+            rotation = .init(x: isBackslash ? 147 : 33)
             position.x = xPos.rowOffset
         case .crossDiagonal(let isFront, let isBackslash):
-            rotation = .init(x: isBackslash ? 45 : 140, y: isFront ? 140 : 45, z: -5)
+            rotation = .init(x: isBackslash ? 33 : 147, y: isFront ? 147 : 33, z: -5)
             position.z = .zero
         }
         let newLine = lineTemplateEntity.clone(recursive: true)
@@ -49,7 +49,8 @@ import TicTacToeEngine
         lineEntities[line] = newLine
         places.parent?.addChild(newLine)
         Task {
-            await newLine.animateScale(to: .init(x: 1, y: 1, z: line.type.scale), duration: .drawLineDuration)
+            let scale = line.type.scale * 1.333
+            await newLine.animateScale(to: .init(x: scale, y: scale, z: scale), duration: .drawLineDuration)
         }
     }
 }
@@ -81,10 +82,10 @@ private extension VerticalFourPosition {
 private extension DepthFourPosition {
     var rowOffset: Float {
         switch self {
-        case .front: allRowOffset * 1.5
-        case .middleFront: allRowOffset * 0.5
-        case .middleBack: -allRowOffset * 0.5
-        case .back: -allRowOffset * 1.5
+        case .front: allRowOffset * 2.25
+        case .middleFront: allRowOffset * 0.75
+        case .middleBack: -allRowOffset * 0.75
+        case .back: -allRowOffset * 2.25
         }
     }
 }

@@ -26,7 +26,7 @@ struct TicTacSpatialRealityView: View {
             self.root = Entity()
             if let scene = try? await Entity(named: "Scene3D4", in: .ttt) {
                 scene.scale = .init(x: 0.7, y: 0.7, z: 0.7)
-                scene.opacity = 0
+                scene.opacity = .zero
                 root.addChild(scene)
                 viewModel.cube4Controller.setup(scene: scene)
             }
