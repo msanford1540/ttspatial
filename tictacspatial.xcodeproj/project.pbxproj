@@ -46,6 +46,7 @@
 		F55906222C56A69700907BF6 /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; };
 		F559062F2C56A89600907BF6 /* TTTScenes in Frameworks */ = {isa = PBXBuildFile; productRef = F559062E2C56A89600907BF6 /* TTTScenes */; };
 		F55906352C56B34600907BF6 /* TTTScenes in Frameworks */ = {isa = PBXBuildFile; productRef = F55906342C56B34600907BF6 /* TTTScenes */; };
+		F55906372C56B52000907BF6 /* DashboardPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55906362C56B51800907BF6 /* DashboardPicker.swift */; };
 		F58960F42C0AC26A003B4940 /* GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F32C0AC26A003B4940 /* GameboardController.swift */; };
 		F58960F52C0AC2A3003B4940 /* Logger+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50FB2092C0A06A1007CDA1F /* Logger+Convenience.swift */; };
 		F58960F72C0AC36C003B4940 /* RealityKit+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */; };
@@ -62,7 +63,6 @@
 		F59776462BCF08240090DF5F /* TicTacToeEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; platformFilters = (ios, maccatalyst, macos, ); };
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; platformFilters = (ios, maccatalyst, macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
-		F5D0C54C2C235E3E0037DD32 /* SCNVector3+Convience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */; };
 		F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */; };
 		F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */; };
 		F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */; };
@@ -247,6 +247,7 @@
 		F555D60A2BE1351500B92AA4 /* Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
 		F559062C2C56A87C00907BF6 /* TTTScenes */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TTTScenes; path = /Users/msanford1540/Developer/tictacspatial/TTTScenes; sourceTree = "<absolute>"; };
 		F559062D2C56A88000907BF6 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = TTTScenes/Package.swift; sourceTree = "<group>"; };
+		F55906362C56B51800907BF6 /* DashboardPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPicker.swift; sourceTree = "<group>"; };
 		F58960F32C0AC26A003B4940 /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealityKit+Helpers.swift"; sourceTree = "<group>"; };
 		F58CC69D2C27C98C00A09B8D /* CubeFourGameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeFourGameboard.swift; sourceTree = "<group>"; };
@@ -262,7 +263,6 @@
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
-		F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Convience.swift"; sourceTree = "<group>"; };
 		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
 		F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -459,6 +459,7 @@
 		F555D5EE2BD448E700B92AA4 /* TicTacToeController */ = {
 			isa = PBXGroup;
 			children = (
+				F55906362C56B51800907BF6 /* DashboardPicker.swift */,
 				F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */,
 				F54BFA492C54ACF60016AF86 /* SharePlayGameSession.swift */,
 				F54BFA4B2C54AD5E0016AF86 /* RotationSender.swift */,
@@ -604,7 +605,6 @@
 				F512E80D2BEDDF3000955FD2 /* TicTacSpatialRealityKitView.swift */,
 				F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */,
 				F53242C52C35C553003DB901 /* HomeMenu.swift */,
-				F5D0C54B2C235E3E0037DD32 /* SCNVector3+Convience.swift */,
 				F53242C32C35C489003DB901 /* Color+Convience.swift */,
 			);
 			path = Source;
@@ -1009,6 +1009,7 @@
 				F59061EA2C2A7BBF00231FD9 /* CubeGameboardController.swift in Sources */,
 				F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */,
 				F54BFA442C54A9930016AF86 /* GameSessionViewModel.swift in Sources */,
+				F55906372C56B52000907BF6 /* DashboardPicker.swift in Sources */,
 				F54BFA4C2C54AD600016AF86 /* RotationSender.swift in Sources */,
 				F58CC6A52C27CA8900A09B8D /* CubeFourGameboardController.swift in Sources */,
 				F59061ED2C2A835200231FD9 /* MenuMode.swift in Sources */,
@@ -1032,7 +1033,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5D0C54C2C235E3E0037DD32 /* SCNVector3+Convience.swift in Sources */,
 				F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */,
 				F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */,
 				F53242C62C35C558003DB901 /* HomeMenu.swift in Sources */,

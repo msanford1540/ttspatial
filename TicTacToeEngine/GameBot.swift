@@ -15,8 +15,10 @@ protocol GameBotProtocol {
 }
 
 @frozen
-public enum BotLevel {
+public enum BotLevel: Identifiable {
     case easy, medium, hard
+
+    public var id: Self { self }
 }
 
 class BaseBot<Snapshot: GameboardSnapshotProtocol>: GameBotProtocol {

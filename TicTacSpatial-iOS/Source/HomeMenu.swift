@@ -17,29 +17,22 @@ public struct HomeMenu: View {
 
     public var body: some View {
         VStack {
-            Picker("Gameboard", selection: $viewModel.gameboardDimensions) {
-                Text("Classic 3x3").tag(GameboardDimensions.square3)
-                Text("Cube 4x4x4").tag(GameboardDimensions.cube4)
+            HStack {
+                Spacer()
+                DashboardPicker(
+                    "Gameboard", items: [GameboardDimensions.square3, .cube4], selection: $viewModel.gameboardDimensions
+                )
+                DashboardPicker(
+                    "Bot Level", items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel
+                )
+                Spacer()
             }
-            .labelsHidden()
-            .pickerStyle(.segmented)
-            .font(.largeTitle)
-            .padding(.horizontal)
-
-            Picker("Bot Level", selection: $viewModel.selectedBotLevel) {
-                Text("Easy").tag(BotLevel.easy)
-                Text("Medium").tag(BotLevel.medium)
-                Text("Hard").tag(BotLevel.hard)
-            }
-            .pickerStyle(.segmented)
-            .font(.largeTitle)
-            .padding(.horizontal)
 
             DashboardButton("Play Game", action: viewModel.playGame)
                 .font(.title2)
             Spacer()
         }
-        .padding([.horizontal, .top])
+        .padding(.top, 12)
 #if os(macOS)
         .padding(.bottom)
 #endif
