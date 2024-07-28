@@ -9,7 +9,7 @@ import SwiftUI
 import RealityKit
 import TicTacToeController
 import TicTacToeEngine
-import ttt_scenes
+import TTTScenes
 
 struct TicTacSpatialRealityView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -24,13 +24,13 @@ struct TicTacSpatialRealityView: View {
     var body: some View {
         RealityView { content in
             self.root = Entity()
-            if let scene = try? await Entity(named: "Scene3D4", in: .ttt) {
+            if let scene = try? await Entity(named: "Scene3D4", in: .tttScenes) {
                 scene.scale = .init(x: 0.7, y: 0.7, z: 0.7)
                 scene.opacity = .zero
                 root.addChild(scene)
                 viewModel.cube4Controller.setup(scene: scene)
             }
-            if let scene = try? await Entity(named: "Scene", in: .ttt) {
+            if let scene = try? await Entity(named: "Scene", in: .tttScenes) {
                 root.addChild(scene)
                 scene.opacity = 0
                 scene.position = .init(x: 0, y: 0, z: 0.33)
