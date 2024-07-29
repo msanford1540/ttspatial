@@ -103,16 +103,17 @@ struct TicTacSpatialRealityView: View {
                 viewModel.sharePlaySession.mark(at: component.location)
             }
         )
-        .gesture(
-            DragGesture()
-                .targetedToEntity(root)
-                .onChanged { value in
-                    guard viewModel.isCurrentSceneRotatable else { return }
-                    let rotation = simd_quatf(translation: value.translation)
-                    viewModel.rotation = rotation
-                    viewModel.sharePlaySession.sendRotationIfNeeded(rotation)
-                }
-        )
+        .addRotateGestures(to: root)
+//        .gesture(
+//            DragGesture()
+//                .targetedToEntity(root)
+//                .onChanged { value in
+//                    guard viewModel.isCurrentSceneRotatable else { return }
+//                    let rotation = simd_quatf(translation: value.translation)
+//                    viewModel.rotation = rotation
+//                    viewModel.sharePlaySession.sendRotationIfNeeded(rotation)
+//                }
+//        )
         .task {
             await viewModel.sharePlaySession.configureSessions()
         }

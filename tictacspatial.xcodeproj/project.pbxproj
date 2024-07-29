@@ -28,6 +28,7 @@
 		F54BFA482C54AA8E0016AF86 /* SharePlayMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA472C54AA8D0016AF86 /* SharePlayMessage.swift */; };
 		F54BFA4A2C54ACF80016AF86 /* SharePlayGameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA492C54ACF60016AF86 /* SharePlayGameSession.swift */; };
 		F54BFA4C2C54AD600016AF86 /* RotationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA4B2C54AD5E0016AF86 /* RotationSender.swift */; };
+		F550D1732C58378100F468E0 /* RealityRotateViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550D1722C58378000F468E0 /* RealityRotateViewModifier.swift */; };
 		F555D5C72BD2B17F00B92AA4 /* GameBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5C62BD2B17F00B92AA4 /* GameBot.swift */; };
 		F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */; };
 		F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F555D5DE2BD4488600B92AA4 /* TicTacToeControllerTests.swift */; };
@@ -234,6 +235,7 @@
 		F54BFA6D2C56A57D0016AF86 /* TicTacToeEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TicTacToeEngine.h; sourceTree = "<group>"; };
 		F54BFA6E2C56A57D0016AF86 /* TicTacToeEngine.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = TicTacToeEngine.docc; sourceTree = "<group>"; };
 		F54BFA6F2C56A57D0016AF86 /* WinningLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinningLine.swift; sourceTree = "<group>"; };
+		F550D1722C58378000F468E0 /* RealityRotateViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealityRotateViewModifier.swift; sourceTree = "<group>"; };
 		F555D5C62BD2B17F00B92AA4 /* GameBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBot.swift; sourceTree = "<group>"; };
 		F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TicTacToeController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -472,6 +474,7 @@
 				F50FB20B2C0A09E2007CDA1F /* Quanterion.swift */,
 				F512E81C2BF3AE7A00955FD2 /* Utilities.swift */,
 				F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */,
+				F550D1722C58378000F468E0 /* RealityRotateViewModifier.swift */,
 				F555D5EC2BD448E700B92AA4 /* TicTacToeController.docc */,
 				F555D5ED2BD448E700B92AA4 /* TicTacToeController.h */,
 			);
@@ -1008,6 +1011,7 @@
 				F55906372C56B52000907BF6 /* DashboardPicker.swift in Sources */,
 				F54BFA4C2C54AD600016AF86 /* RotationSender.swift in Sources */,
 				F58CC6A52C27CA8900A09B8D /* CubeFourGameboardController.swift in Sources */,
+				F550D1732C58378100F468E0 /* RealityRotateViewModifier.swift in Sources */,
 				F59061ED2C2A835200231FD9 /* MenuMode.swift in Sources */,
 				F592C9F52C540B3500CA3C12 /* DashboardUIComponents+InGame.swift in Sources */,
 				F58960F42C0AC26A003B4940 /* GameboardController.swift in Sources */,
