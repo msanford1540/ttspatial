@@ -245,8 +245,6 @@
 		F555D6062BE131DD00B92AA4 /* WinningLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinningLine.swift; sourceTree = "<group>"; };
 		F555D6082BE1322A00B92AA4 /* GameboardLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardLocation.swift; sourceTree = "<group>"; };
 		F555D60A2BE1351500B92AA4 /* Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
-		F559062C2C56A87C00907BF6 /* TTTScenes */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = TTTScenes; path = /Users/msanford1540/Developer/tictacspatial/TTTScenes; sourceTree = "<absolute>"; };
-		F559062D2C56A88000907BF6 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = TTTScenes/Package.swift; sourceTree = "<group>"; };
 		F55906362C56B51800907BF6 /* DashboardPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPicker.swift; sourceTree = "<group>"; };
 		F58960F32C0AC26A003B4940 /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealityKit+Helpers.swift"; sourceTree = "<group>"; };
@@ -592,8 +590,6 @@
 			isa = PBXGroup;
 			children = (
 				F54BFA702C56A57D0016AF86 /* TicTacToeEngine */,
-				F559062C2C56A87C00907BF6 /* TTTScenes */,
-				F559062D2C56A88000907BF6 /* Package.swift */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
