@@ -48,7 +48,6 @@ struct TicTacSpatialRealityView: View {
                 root.addChild(homeMenuEntity)
             }
         } update: { _, _ in
-            viewModel.updateSceneRotation()
             Task {
                 let (hiddenScene, visibleScene) = switch viewModel.gameboardDimensions {
                 case .square3:
@@ -103,17 +102,7 @@ struct TicTacSpatialRealityView: View {
                 viewModel.sharePlaySession.mark(at: component.location)
             }
         )
-        .addRotateGestures(to: root)
-//        .gesture(
-//            DragGesture()
-//                .targetedToEntity(root)
-//                .onChanged { value in
-//                    guard viewModel.isCurrentSceneRotatable else { return }
-//                    let rotation = simd_quatf(translation: value.translation)
-//                    viewModel.rotation = rotation
-//                    viewModel.sharePlaySession.sendRotationIfNeeded(rotation)
-//                }
-//        )
+        .addRotateGestures(to: viewModel.cube4Controller.scene)
         .task {
             await viewModel.sharePlaySession.configureSessions()
         }

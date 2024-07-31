@@ -11,7 +11,7 @@ import RealityKit
 public struct RealityRotateViewModifier: ViewModifier {
     @State private var baseRotation: simd_quatf?
     let targetEntity: Entity
-    
+
     public func body(content: Content) -> some View {
         content
             .gesture(
@@ -19,7 +19,7 @@ public struct RealityRotateViewModifier: ViewModifier {
                     .targetedToEntity(targetEntity)
                     .onChanged { value in
                         if baseRotation == nil {
-                            baseRotation = value.entity.transform.rotation
+                            baseRotation = targetEntity.transform.rotation
                         }
                         guard let baseRotation else { return }
                         let rotation = value.rotation
@@ -35,23 +35,23 @@ public struct RealityRotateViewModifier: ViewModifier {
                             )
                         )
                         let newOrientation = flippedRotation * baseRotation
-                        value.entity.transform.rotation = newOrientation
+                        targetEntity.transform.rotation = newOrientation
                     }
-                    .onEnded { value in
+                    .onEnded { _ in
                         baseRotation = nil
                     }
                     .simultaneously(with: DragGesture() // one-handed custom rotation gesture
                         .targetedToEntity(targetEntity)
                         .onChanged { value in
                             if baseRotation == nil {
-                                baseRotation = value.entity.transform.rotation
+                                baseRotation = targetEntity.transform.rotation
                             }
                             guard let baseRotation else { return }
                             // from https://developer.apple.com/documentation/visionos/world
                             let location3D = value.convert(value.location3D, from: .local, to: .scene)
                             let startLocation3D = value.convert(value.startLocation3D, from: .local, to: .scene)
                             let delta = location3D - startLocation3D
-                            
+
                             // inspired by https://stackoverflow.com/a/76823868
                             // similar to above, we want to adjust the coordinate system
                             let transformAngles = Transform(
@@ -59,9 +59,9 @@ public struct RealityRotateViewModifier: ViewModifier {
                                 yaw: atan(delta.x) * .pi
                             )
                             let newOrientation = transformAngles.rotation * baseRotation
-                            value.entity.transform.rotation = newOrientation
+                            targetEntity.transform.rotation = newOrientation
                         }
-                        .onEnded { value in
+                        .onEnded { _ in
                             baseRotation = nil
                         }
                     )
