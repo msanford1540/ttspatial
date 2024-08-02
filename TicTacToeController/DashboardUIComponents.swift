@@ -312,13 +312,3 @@ public struct DashboardMainContent: View {
 #endif
     }
 }
-
-@MainActor private var printCounter = 0
-
-extension View {
-    func print(_ text: String) -> some View {
-        printCounter += 1
-        Swift.print("\(printCounter)) \(text)")
-        return self
-    }
-}

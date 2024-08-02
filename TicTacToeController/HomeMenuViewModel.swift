@@ -43,6 +43,12 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
                 onRealityViewUpdate()
             }
             .store(in: &subscribers)
+
+        $gameboardDimensions
+            .sink { [unowned self] gameboardDimensions in
+                onRealityViewUpdate(gameboardDimensions: gameboardDimensions)
+            }
+            .store(in: &subscribers)
     }
 
     private func observeSharePlayEvents() {
@@ -221,9 +227,10 @@ public extension HomeMenuViewModel {
         return root
     }
 
-    func onRealityViewUpdate() {
+    func onRealityViewUpdate(gameboardDimensions: GameboardDimensions? = nil) {
         Task {
-            let (hiddenScene, visibleScene) = switch gameboardDimensions {
+            let selectedGameboardDimensions = gameboardDimensions ?? self.gameboardDimensions
+            let (hiddenScene, visibleScene) = switch selectedGameboardDimensions {
             case .grid3:
                 (cube4Controller.scene, grid3Controller.scene)
             case .cube4:

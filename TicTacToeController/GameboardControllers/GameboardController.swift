@@ -8,6 +8,7 @@
 import Foundation
 import RealityKit
 import SwiftUI
+import OSLog
 import TicTacToeEngine
 
 @MainActor public class GameboardController<Gameboard: GameboardProtocol> {
@@ -25,6 +26,7 @@ import TicTacToeEngine
     var oEntities: [Gameboard.Location: Entity] = .empty
     var lineEntities: [Gameboard.WinningLine: Entity] = .empty
     var blankEntities: [Gameboard.Location: Entity] = .empty
+    private let logger = Logger(category: "GameboardController")
 
     public init() {}
 
@@ -60,7 +62,7 @@ import TicTacToeEngine
                     LocationComponent(location)
                 ])
             } else {
-                print("[debug]", "bad location: \(location.entityName)")
+                logger.error("invalid location: \(location.entityName, privacy: .public)")
             }
         }
     }

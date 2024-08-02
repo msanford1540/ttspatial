@@ -72,13 +72,17 @@ public struct GameMessage<Snapshot: GameboardSnapshotProtocol>: Sendable, Codabl
     let type: GameMessageType<Snapshot>
 }
 
-public struct GameMove<GameboardLocation: GameboardLocationProtocol>: Sendable, Codable {
+public struct GameMove<GameboardLocation: GameboardLocationProtocol>: Sendable, Codable, CustomStringConvertible {
     public let location: GameboardLocation
     public let mark: PlayerMarker
 
     public init(location: GameboardLocation, mark: PlayerMarker) {
         self.location = location
         self.mark = mark
+    }
+
+    public var description: String {
+        "player: \(mark), location: \(location)"
     }
 }
 
