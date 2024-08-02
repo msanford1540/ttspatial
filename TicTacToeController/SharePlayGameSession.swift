@@ -120,7 +120,7 @@ public final class SharePlayGameSession: ObservableObject {
 
     public func sendRotationIfNeeded(_ rotation: simd_quatf) {
         // only send rotation if the user is the player that has the current turn
-        guard isActive, let sender, let meMarker, gameSessionViewModel.currentTurn == meMarker else { return }
+        guard isActive, let sender, gameSession?.isHumanTurn == true else { return }
         sender.rotation = rotation
     }
 
