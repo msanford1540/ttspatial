@@ -80,6 +80,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     @Published public private(set) var canReplay: Bool = false
     private var isWaitingToStartNewRemoteGame: Bool = false
     private var pendingGameEvent: GameEvent<Gameboard.WinningLine, Gameboard.Location>?
+    private var mostRecentHintLocation: Gameboard.Location?
 
     private var queue = Queue<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>()
     private var gameEngine: GameEngine<Gameboard>
@@ -119,7 +120,14 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     }
 
     public var currentPlayerHint: Gameboard.Location? {
-        gameEngine.currentPlayerHint
+        if let mostRecentHintLocation {
+            return mostRecentHintLocation
+        }
+        if let location = gameEngine.currentPlayerHint {
+            mostRecentHintLocation = location
+            return location
+        }
+        return nil
     }
 
     public var mostRecentMove: GameMove<Gameboard.Location>? {
@@ -226,6 +234,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         gameEngine = .init(gameboard: Gameboard(), startingPlayer: self.startingPlayer)
         canUndo = false
         canReplay = false
+        mostRecentHintLocation = nil
         startNewGame()
     }
 
@@ -274,6 +283,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         currentTurn = update.currentTurn
         canUndo = currentTurn.map { isHumanTurn && gameEngine.canUndo(for: $0) } ?? false
         canReplay = gameEngine.hasActiveGameMadeMove
+        mostRecentHintLocation = nil
 
         if let winningPlayer = update.event.winningInfo?.player {
             switch winningPlayer {

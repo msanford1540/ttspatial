@@ -84,12 +84,12 @@ public struct GameMove<GameboardLocation: GameboardLocationProtocol>: Sendable, 
 
 @frozen
 public enum GameEventValue: Sendable, Codable, CustomStringConvertible {
-    case square3(GameEvent<GridWinningLine, GridLocation>)
-    case cube4(GameEvent<CubeFourWinningLine, CubeFourLocation>)
+    case grid3(GameEvent<Grid3WinningLine, Grid3Location>)
+    case cube4(GameEvent<Cube4WinningLine, Cube4Location>)
 
     public var description: String {
         switch self {
-        case .square3(let gameEvent):
+        case .grid3(let gameEvent):
             gameEvent.description
         case .cube4(let gameEvent):
             gameEvent.description

@@ -19,6 +19,7 @@ struct TicTacSpatialApp: App {
             TicTacSpatialRealityView()
                 .environmentObject(viewModel)
                 .environmentObject(viewModel.gameSessionViewModel)
+                .environmentObject(viewModel.sharePlaySession)
                 .frame(depth: 1600)
         }
         .windowStyle(.volumetric)

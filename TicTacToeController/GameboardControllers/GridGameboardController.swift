@@ -1,5 +1,5 @@
 //
-//  GameboardController2D.swift
+//  Grid3GameboardController.swift
 //  tictacspatial
 //
 //  Created by Mike Sanford (1540) on 6/22/24.
@@ -7,8 +7,8 @@
 
 import TicTacToeEngine
 
-@MainActor public final class GridGameboardController: GameboardController<GridGameboard> {
-    override func addWinningLine(_ line: GridWinningLine) {
+@MainActor public final class Grid3GameboardController: GameboardController<Grid3Gameboard> {
+    override func addWinningLine(_ line: Grid3WinningLine) {
         let rowOffset: Float = 0.30
         guard lineEntities[line] == nil else {
             assertionFailure("expected entity")

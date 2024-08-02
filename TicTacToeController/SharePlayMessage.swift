@@ -11,14 +11,14 @@ import TicTacToeEngine
 @frozen
 public enum SharePlayMessage: Codable, Sendable, CustomStringConvertible {
     case playAgain(PlayAgainResponse)
-    case gameSquare3Message(GameMessageType<GridGameboardSnapshot>)
-    case gameCube4Message(GameMessageType<CubeFourGameboardSnapshot>)
+    case gameGrid3Message(GameMessageType<Grid3GameboardSnapshot>)
+    case gameCube4Message(GameMessageType<Cube4GameboardSnapshot>)
     case stopGame
 
     public var description: String {
         switch self {
         case .playAgain(let response): response.description
-        case .gameSquare3Message(let message): message.description
+        case .gameGrid3Message(let message): message.description
         case .gameCube4Message(let message): message.description
         case .stopGame: "stopGame"
         }

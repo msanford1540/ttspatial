@@ -10,6 +10,7 @@ import RealityKit
 import SwiftUI
 import TicTacToeController
 import TicTacToeEngine
+import TTTScenes
 
 struct Dashboard: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel

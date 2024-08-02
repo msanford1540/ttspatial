@@ -284,7 +284,7 @@ public struct DashboardMainContent: View {
         }
         .transition(.asymmetric(
             insertion: .opacity.animation(.easeInOut(duration: 0.5)),
-            removal: .identity
+            removal: .opacity.animation(.easeInOut(duration: 0.05))
         ))
     }
 
@@ -310,5 +310,15 @@ public struct DashboardMainContent: View {
 #else
         8
 #endif
+    }
+}
+
+@MainActor private var printCounter = 0
+
+extension View {
+    func print(_ text: String) -> some View {
+        printCounter += 1
+        Swift.print("\(printCounter)) \(text)")
+        return self
     }
 }

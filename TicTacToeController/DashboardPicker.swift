@@ -44,7 +44,7 @@ public struct DashboardPicker<Item: DashboardPickerItem>: View {
                     .frame(maxHeight: labelMaxHeight)
                     .tag(source)
                     .padding(3)
-                    .background(selection == source ? selectedColor : .white.opacity(0.02))
+                    .background(selection == source ? selectedColor : .clearHittable)
                     .cornerRadius(labelCornerRadius)
                     .foregroundColor(textColor)
                 }
@@ -135,7 +135,7 @@ public struct DashboardPicker<Item: DashboardPickerItem>: View {
 extension GameboardDimensions: DashboardPickerItem {
     public var name: String {
         switch self {
-        case .square3:
+        case .grid3:
             "3x3"
         case .cube4:
             "4x4x4"
@@ -144,7 +144,7 @@ extension GameboardDimensions: DashboardPickerItem {
 
     public var imageName: String {
         switch self {
-        case .square3:
+        case .grid3:
             "grid"
         case .cube4:
             "square.grid.4x3.fill"
@@ -173,5 +173,11 @@ extension BotLevel: DashboardPickerItem {
         case .hard:
             "3.circle"
         }
+    }
+}
+
+private extension Color {
+    static var clearHittable: Color {
+        .init(white: 1, opacity: 0.01)
     }
 }

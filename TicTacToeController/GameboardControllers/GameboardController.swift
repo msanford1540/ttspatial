@@ -72,7 +72,7 @@ import TicTacToeEngine
         }
         let entity: Entity?
         switch move.location {
-        case .square3(let gridLocation):
+        case .grid3(let gridLocation):
             if let location = gridLocation as? Gameboard.Location {
                 entity = entities[location]
             } else {
@@ -87,7 +87,6 @@ import TicTacToeEngine
         }
         guard let entity else { return }
         await entity.animateScale(to: .init(x: 2, y: 2, z: 2), duration: .milliseconds(500))
-//        try? await Task.sleep(for: .seconds(1))
         await entity.animateScale(to: .init(x: 1, y: 1, z: 1), duration: .milliseconds(500))
     }
 
@@ -173,8 +172,6 @@ import TicTacToeEngine
     }
 
     func onReset() async throws {
-        print("[debug]", "onReset() - \(Self.self)")
-
         var didAnimate = false
         let animationDuration: Duration = .removeDuration
         let entities = Array(xEntities.values) + Array(oEntities.values) + Array(lineEntities.values)
@@ -245,7 +242,7 @@ public struct LocationComponent: Component {
 }
 
 private let allRowOffset: Float = 0.3
-extension HorizontalPosition {
+extension Horizontal3Position {
     var rowOffset: Float {
         switch self {
         case .left: -allRowOffset
@@ -255,7 +252,7 @@ extension HorizontalPosition {
     }
 }
 
-extension VerticalPosition {
+extension Vertical3Position {
     var rowOffset: Float {
         switch self {
         case .top: allRowOffset
@@ -276,15 +273,23 @@ extension DepthPosition {
 }
 
 enum WinningLineType {
-    case straight
-    case diagonal
+    case straight(hasDepth: Bool)
+    case diagonal(hasDepth: Bool)
     case crossDiagonal
 
     var scale: Float {
         switch self {
-        case .straight: 1.15
-        case .diagonal: 1.65
+        case .straight(let hasDepth): hasDepth ? 2.0 : 1.5
+        case .diagonal(let hasDepth): hasDepth ? 2.3 : 1.85
         case .crossDiagonal: 1.95
+        }
+    }
+
+    var hasDepth: Bool {
+        switch self {
+        case .straight(let hasDepth): hasDepth
+        case .diagonal(let hasDepth): hasDepth
+        case .crossDiagonal: true
         }
     }
 }

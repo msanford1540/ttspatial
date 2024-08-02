@@ -9,41 +9,41 @@ import Combine
 import TicTacToeEngine
 
 public enum GameSessionValue {
-    case square3(GameSession<GridGameboard>)
-    case cube4(GameSession<CubeFourGameboard>)
+    case grid3(GameSession<Grid3Gameboard>)
+    case cube4(GameSession<Cube4Gameboard>)
 }
 
 public enum GameLocationValue {
-    case square3(GridLocation)
-    case cube4(CubeFourLocation)
+    case grid3(Grid3Location)
+    case cube4(Cube4Location)
 }
 
 @MainActor
 public extension GameSessionValue {
     var xPlayerType: PlayerType {
         switch self {
-        case .square3(let gameSession): gameSession.xPlayerType
+        case .grid3(let gameSession): gameSession.xPlayerType
         case .cube4(let gameSession): gameSession.xPlayerType
         }
     }
 
     var oPlayerType: PlayerType {
         switch self {
-        case .square3(let gameSession): gameSession.oPlayerType
+        case .grid3(let gameSession): gameSession.oPlayerType
         case .cube4(let gameSession): gameSession.oPlayerType
         }
     }
 
     func setSnapshot<Snapshot: GameboardSnapshotProtocol>(_ snapshot: Snapshot) {
         switch self {
-        case .square3(let gameSession):
-            guard let gameSnapshot = snapshot as? GridGameboardSnapshot else {
+        case .grid3(let gameSession):
+            guard let gameSnapshot = snapshot as? Grid3GameboardSnapshot else {
                 assertionFailure("gameboard/snapshot type mismatch")
                 return
             }
             gameSession.setSnapshot(gameSnapshot)
         case .cube4(let gameSession):
-            guard let gameSnapshot = snapshot as? CubeFourGameboardSnapshot else {
+            guard let gameSnapshot = snapshot as? Cube4GameboardSnapshot else {
                 assertionFailure("gameboard/snapshot type mismatch")
                 return
             }
@@ -53,7 +53,7 @@ public extension GameSessionValue {
 
     var isHumanVersusBot: Bool {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.isHumanVersusBot
         case .cube4(let gameSession):
             gameSession.isHumanVersusBot
@@ -62,7 +62,7 @@ public extension GameSessionValue {
 
     var isRemoteGame: Bool {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.isRemoteGame
         case .cube4(let gameSession):
             gameSession.isRemoteGame
@@ -71,7 +71,7 @@ public extension GameSessionValue {
 
     var isGameOverPublisher: Published<Bool>.Publisher {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.$isGameOver
         case .cube4(let gameSession):
             gameSession.$isGameOver
@@ -83,7 +83,7 @@ public extension GameSessionValue {
 extension GameSessionValue {
     var isHumanTurn: Bool {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.isHumanTurn
         case .cube4(let gameSession):
             gameSession.isHumanTurn
@@ -92,7 +92,7 @@ extension GameSessionValue {
 
     func setHumanPlayer(_ mark: PlayerMarker) {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.setHumanPlayer(mark)
         case .cube4(let gameSession):
             gameSession.setHumanPlayer(mark)
@@ -101,7 +101,7 @@ extension GameSessionValue {
 
     func setRemotePlayer(_ mark: PlayerMarker) {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.setRemotePlayer(mark)
         case .cube4(let gameSession):
             gameSession.setRemotePlayer(mark)
@@ -110,7 +110,7 @@ extension GameSessionValue {
 
     func startNewRemoteGameIfNeeded() {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.startNewRemoteGameIfNeeded()
         case .cube4(let gameSession):
             gameSession.startNewRemoteGameIfNeeded()
@@ -119,7 +119,7 @@ extension GameSessionValue {
 
     func reset(startingPlayer: PlayerMarker? = nil) {
         switch self {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.reset(startingPlayer: startingPlayer)
         case .cube4(let gameSession):
             gameSession.reset(startingPlayer: startingPlayer)
@@ -128,11 +128,11 @@ extension GameSessionValue {
 
     func mark(at location: any GameboardLocationProtocol) async {
         switch self {
-        case .square3(let gameSession):
-            guard let gameboardLocation = location as? GridLocation else { return }
+        case .grid3(let gameSession):
+            guard let gameboardLocation = location as? Grid3Location else { return }
             await gameSession.mark(at: gameboardLocation)
         case .cube4(let gameSession):
-            guard let gameboardLocation = location as? CubeFourLocation else { return }
+            guard let gameboardLocation = location as? Cube4Location else { return }
             await gameSession.mark(at: gameboardLocation)
         }
     }

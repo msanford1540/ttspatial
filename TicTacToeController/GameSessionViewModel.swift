@@ -38,12 +38,12 @@ public final class GameSessionViewModel: ObservableObject {
 
     func playGame(dimensions: GameboardDimensions, xPlayerType: PlayerType, oPlayerType: PlayerType) {
         switch dimensions {
-        case .square3:
-            let rawGameSession = GameSession<GridGameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
-            gameSession = .square3(rawGameSession)
+        case .grid3:
+            let rawGameSession = GameSession<Grid3Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
+            gameSession = .grid3(rawGameSession)
             setupPipelines(rawGameSession)
         case .cube4:
-            let rawGameSession = GameSession<CubeFourGameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
+            let rawGameSession = GameSession<Cube4Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
             gameSession = .cube4(rawGameSession)
             setupPipelines(rawGameSession)
         }
@@ -65,7 +65,7 @@ public final class GameSessionViewModel: ObservableObject {
 
     public func undoLastHumanMove() {
         switch gameSession {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.undoLastHumanMove()
         case .cube4(let gameSession):
             gameSession.undoLastHumanMove()
@@ -76,9 +76,9 @@ public final class GameSessionViewModel: ObservableObject {
 
     public var mostRecentMove: GameMoveValue? {
         switch gameSession {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             guard let move = gameSession.mostRecentMove else { return nil }
-            return .init(mark: move.mark, location: .square3(move.location))
+            return .init(mark: move.mark, location: .grid3(move.location))
         case .cube4(let gameSession):
             guard let move = gameSession.mostRecentMove else { return nil }
             return .init(mark: move.mark, location: .cube4(move.location))
@@ -89,7 +89,7 @@ public final class GameSessionViewModel: ObservableObject {
 
     public var currentPlayerHint: (any GameboardLocationProtocol)? {
         switch gameSession {
-        case .square3(let gameSession):
+        case .grid3(let gameSession):
             gameSession.currentPlayerHint
         case .cube4(let gameSession):
             gameSession.currentPlayerHint
@@ -102,14 +102,14 @@ public final class GameSessionViewModel: ObservableObject {
         switch gameSession {
         case nil:
             nil
-        case .square3(let typedGameSession):
-            if let event = typedGameSession.dequeueEvent() {
-                .square3(event)
+        case .grid3(let gameSession):
+            if let event = gameSession.dequeueEvent() {
+                .grid3(event)
             } else {
                 nil
             }
-        case .cube4(let typedGameSession):
-            if let event = typedGameSession.dequeueEvent() {
+        case .cube4(let gameSession):
+            if let event = gameSession.dequeueEvent() {
                 .cube4(event)
             } else {
                 nil
@@ -119,10 +119,10 @@ public final class GameSessionViewModel: ObservableObject {
 
     public func onCompletedEvent() {
         switch gameSession {
-        case .square3(let typedGameSession):
-            typedGameSession.onCompletedEvent()
-        case .cube4(let typedGameSession):
-            typedGameSession.onCompletedEvent()
+        case .grid3(let gameSession):
+            gameSession.onCompletedEvent()
+        case .cube4(let gameSession):
+            gameSession.onCompletedEvent()
         case nil:
             break
         }

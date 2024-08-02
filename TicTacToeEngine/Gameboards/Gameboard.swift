@@ -9,7 +9,7 @@ import Foundation
 
 @frozen
 public enum GameboardDimensions: Hashable, Identifiable, Codable {
-    case square3
+    case grid3
     case cube4
 
     public var id: Self { self }
