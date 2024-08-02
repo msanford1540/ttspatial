@@ -30,7 +30,7 @@ final class RotationSender: @unchecked Sendable {
         Task {
             let quanterion = Quanterion(rotation: rotation)
             do {
-                print("[debug]", "send(rotation: \(rotation))")
+                logger.debug("send(rotation: \(rotation.debugDescription))")
                 try await messenger.send(quanterion, to: .all)
             } catch {
                 logger.error("[\(Self.self, privacy: .public)] failed to send rotation. error: \(error as NSError, privacy: .public)")

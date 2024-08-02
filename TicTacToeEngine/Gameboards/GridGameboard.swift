@@ -5,12 +5,12 @@
 //  Created by Mike Sanford (1540) on 6/22/24.
 //
 
-public struct GridGameboard: GameboardProtocol {
-    public typealias Location = GridLocation
-    public typealias WinningLine = GridWinningLine
-    public typealias Snapshot = GridGameboardSnapshot
+public struct Grid3Gameboard: GameboardProtocol {
+    public typealias Location = Grid3Location
+    public typealias WinningLine = Grid3WinningLine
+    public typealias Snapshot = Grid3GameboardSnapshot
 
-    public let dimensions: GameboardDimensions = .square3
+    public let dimensions: GameboardDimensions = .grid3
     fileprivate var markers: [Location: PlayerMarker] = .empty
 
     public init() {}
@@ -32,7 +32,7 @@ public struct GridGameboard: GameboardProtocol {
     }
 
     public var description: String {
-        func text(_ vPos: VerticalPosition, _ hPos: HorizontalPosition) -> String {
+        func text(_ vPos: Vertical3Position, _ hPos: Horizontal3Position) -> String {
             let location = Location(vPos, hPos)
             return markers[location].map(\.description) ?? " "
         }
@@ -44,17 +44,17 @@ public struct GridGameboard: GameboardProtocol {
         return [row1, hLine, row2, hLine, row3, ""].joined(separator: "\n")
     }
 
-    public static func locations(for winningLine: WinningLine) -> Set<GridLocation> {
+    public static func locations(for winningLine: WinningLine) -> Set<Grid3Location> {
         switch winningLine {
         case .horizontal(let yPos):
-            HorizontalPosition.allCases.reduce(into: .empty) { $0.insert(.init(yPos, $1)) }
+            Horizontal3Position.allCases.reduce(into: .empty) { $0.insert(.init(yPos, $1)) }
         case .vertical(let xPos):
-            VerticalPosition.allCases.reduce(into: .empty) { $0.insert(.init($1, xPos)) }
+            Vertical3Position.allCases.reduce(into: .empty) { $0.insert(.init($1, xPos)) }
         case .diagonal(let isBackslash):
             Set(
                 zip(
-                    VerticalPosition.allCases,
-                    isBackslash ? HorizontalPosition.allCases : HorizontalPosition.allCases.reversed()
+                    Vertical3Position.allCases,
+                    isBackslash ? Horizontal3Position.allCases : Horizontal3Position.allCases.reversed()
                 )
                 .map { (yPos, xPos) in Location(yPos, xPos) }
             )
@@ -62,15 +62,15 @@ public struct GridGameboard: GameboardProtocol {
     }
 }
 
-public struct GridGameboardSnapshot: GameboardSnapshotProtocol {
-    public typealias Location = GridLocation
-    public typealias WinningLine = GridWinningLine
+public struct Grid3GameboardSnapshot: GameboardSnapshotProtocol {
+    public typealias Location = Grid3Location
+    public typealias WinningLine = Grid3WinningLine
 
-    public var dimensions: GameboardDimensions { .square3 }
-    fileprivate let markers: [GridLocation: PlayerMarker]
+    public var dimensions: GameboardDimensions { .grid3 }
+    fileprivate let markers: [Grid3Location: PlayerMarker]
     public let currentTurn: PlayerMarker?
 
-    init(markers: [GridLocation: PlayerMarker], currentTurn: PlayerMarker?) {
+    init(markers: [Grid3Location: PlayerMarker], currentTurn: PlayerMarker?) {
         self.markers = markers
         self.currentTurn = currentTurn
     }
@@ -83,7 +83,7 @@ public struct GridGameboardSnapshot: GameboardSnapshotProtocol {
         .empty
     }
 
-    public static func locations(for winningLine: WinningLine) -> Set<GridLocation> {
-        GridGameboard.locations(for: winningLine)
+    public static func locations(for winningLine: WinningLine) -> Set<Grid3Location> {
+        Grid3Gameboard.locations(for: winningLine)
     }
 }

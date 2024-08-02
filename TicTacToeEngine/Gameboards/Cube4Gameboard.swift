@@ -1,14 +1,14 @@
 //
-//  CubeThreeGameboard.swift
+//  CubeFourGameboard.swift
 //  tictacspatial
 //
 //  Created by Mike Sanford (1540) on 6/22/24.
 //
 
-public struct CubeGameboard: GameboardProtocol {
-    public typealias Location = CubeLocation
-    public typealias WinningLine = CubeWinningLine
-    public typealias Snapshot = CubeGameboardSnapshot
+public struct Cube4Gameboard: GameboardProtocol {
+    public typealias Location = Cube4Location
+    public typealias WinningLine = Cube4WinningLine
+    public typealias Snapshot = Cube4GameboardSnapshot
 
     public let dimensions: GameboardDimensions = .cube4
     fileprivate var markers: [Location: PlayerMarker] = .empty
@@ -32,15 +32,15 @@ public struct CubeGameboard: GameboardProtocol {
     }
 
     public var description: String {
-        func text(_ vPos: VerticalPosition, _ hPos: HorizontalPosition, _ zPos: DepthPosition) -> String {
+        func text(_ vPos: Vertical4Position, _ hPos: Horizontal4Position, _ zPos: Depth4Position) -> String {
             let location = Location(vPos, hPos, zPos)
             return markers[location].map(\.description) ?? " "
         }
 
         let hLine = "-----"
-        let rows = VerticalPosition.allCases.map { vPos in
-            DepthPosition.allCases.reduce(into: String.empty) { result, zPos in
-                let boardRow = HorizontalPosition.allCases.map { hPos in
+        let rows = Vertical4Position.allCases.map { vPos in
+            Depth4Position.allCases.reduce(into: String.empty) { result, zPos in
+                let boardRow = Horizontal4Position.allCases.map { hPos in
                     "\(text(vPos, hPos, zPos))|\(text(vPos, hPos, zPos))|\(text(vPos, hPos, zPos))"
                 }
                 result += boardRow.joined(separator: "   ")
@@ -53,42 +53,42 @@ public struct CubeGameboard: GameboardProtocol {
     public static func locations(for winningLine: WinningLine) -> Set<Location> {
         switch winningLine {
         case .horizontal(let yPos, let zPos):
-            HorizontalPosition.allCases.reduce(into: .empty) { $0.insert(.init(yPos, $1, zPos)) }
+            Horizontal4Position.allCases.reduce(into: .empty) { $0.insert(.init(yPos, $1, zPos)) }
         case .vertical(let xPos, let zPos):
-            VerticalPosition.allCases.reduce(into: .empty) { $0.insert(.init($1, xPos, zPos)) }
+            Vertical4Position.allCases.reduce(into: .empty) { $0.insert(.init($1, xPos, zPos)) }
         case .depth(let xPos, let yPos):
-            DepthPosition.allCases.reduce(into: .empty) { $0.insert(.init(yPos, xPos, $1)) }
+            Depth4Position.allCases.reduce(into: .empty) { $0.insert(.init(yPos, xPos, $1)) }
         case .zDiagonal(let zPos, let isBackslash):
             Set(
                 zip(
-                    VerticalPosition.allCases,
-                    isBackslash ? HorizontalPosition.allCases : HorizontalPosition.allCases.reversed()
+                    Vertical4Position.allCases,
+                    isBackslash ? Horizontal4Position.allCases : Horizontal4Position.allCases.reversed()
                 )
                 .map { (yPos, xPos) in Location(yPos, xPos, zPos) }
             )
         case .yDiagonal(let yPos, let isBackslash):
             Set(
                 zip(
-                    DepthPosition.allCases,
-                    isBackslash ? HorizontalPosition.allCases.reversed() : HorizontalPosition.allCases
+                    Depth4Position.allCases,
+                    isBackslash ? Horizontal4Position.allCases.reversed() : Horizontal4Position.allCases
                 )
                 .map { (zPos, xPos) in Location(yPos, xPos, zPos) }
             )
         case .xDiagonal(let xPos, let isBackslash):
             Set(
                 zip(
-                    DepthPosition.allCases,
-                    isBackslash ? VerticalPosition.allCases : VerticalPosition.allCases.reversed()
+                    Depth4Position.allCases,
+                    isBackslash ? Vertical4Position.allCases : Vertical4Position.allCases.reversed()
                 )
                 .map { (zPos, yPos) in Location(yPos, xPos, zPos) }
             )
         case .crossDiagonal(let isFront, let isBackslash):
             Set(
                 zip(
-                    HorizontalPosition.allCases,
+                    Horizontal4Position.allCases,
                     zip(
-                        isBackslash ? VerticalPosition.allCases : VerticalPosition.allCases.reversed(),
-                        isFront ? DepthPosition.allCases : DepthPosition.allCases.reversed()
+                        isBackslash ? Vertical4Position.allCases : Vertical4Position.allCases.reversed(),
+                        isFront ? Depth4Position.allCases : Depth4Position.allCases.reversed()
                     )
                 )
                 .map { (xPos, yzPos) in Location(yzPos.0, xPos, yzPos.1) }
@@ -97,9 +97,9 @@ public struct CubeGameboard: GameboardProtocol {
     }
 }
 
-public struct CubeGameboardSnapshot: GameboardSnapshotProtocol {
-    public typealias Location = CubeLocation
-    public typealias WinningLine = CubeWinningLine
+public struct Cube4GameboardSnapshot: GameboardSnapshotProtocol {
+    public typealias Location = Cube4Location
+    public typealias WinningLine = Cube4WinningLine
 
     public var dimensions: GameboardDimensions { .cube4 }
     fileprivate let markers: [Location: PlayerMarker]
@@ -119,6 +119,6 @@ public struct CubeGameboardSnapshot: GameboardSnapshotProtocol {
     }
 
     public static func locations(for winningLine: WinningLine) -> Set<Location> {
-        CubeGameboard.locations(for: winningLine)
+        Cube4Gameboard.locations(for: winningLine)
     }
 }

@@ -20,7 +20,7 @@ public struct HomeMenu: View {
             HStack {
                 Spacer()
                 DashboardPicker(
-                    "Gameboard", items: [GameboardDimensions.square3, .cube4], selection: $viewModel.gameboardDimensions
+                    "Gameboard", items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
                 )
                 DashboardPicker(
                     "Bot Level", items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel

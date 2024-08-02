@@ -8,11 +8,18 @@
 import Foundation
 
 @frozen
-public enum GameboardDimensions: Hashable, Identifiable, Codable {
-    case square3
+public enum GameboardDimensions: Hashable, Identifiable, Codable, CustomStringConvertible {
+    case grid3
     case cube4
 
     public var id: Self { self }
+
+    public var description: String {
+        switch self {
+        case .grid3: "grid3"
+        case .cube4: "cube4"
+        }
+    }
 }
 
 public protocol GameboardInspectable: CustomStringConvertible {

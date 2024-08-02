@@ -26,6 +26,7 @@ public enum PlayGameEvent {
     case opponentDeniedPlayAgain
     case startNewGameSession(GameboardDimensions?)
     case stopGame
+    case rotationUpdate(simd_quatf)
 }
 
 @MainActor
@@ -33,7 +34,6 @@ public final class SharePlayGameSession: ObservableObject {
     @Published public private(set) var playAgainState: PlayAgainState?
     @Published public private(set) var opponentLeft: Bool = false
     @Published var groupSession: GroupSession<TicTacSpatialActivity>?
-    @Published public private(set) var rotation: simd_quatf?
     public private(set) var meMarker: PlayerMarker?
     public let eventStream: AsyncStream<PlayGameEvent>
     private let eventContinuation: AsyncStream<PlayGameEvent>.Continuation?
@@ -155,7 +155,7 @@ private extension SharePlayGameSession {
     func sendMessage(_ message: SharePlayMessage, to participants: Participants = .all) {
         Task {
             do {
-                print("[debug]", "sending SharePlay message: \(message)")
+                logger.debug("sending SharePlay message: \(message)")
                 try await messenger?.send(message, to: participants)
             } catch {
                 logger.error("[\(Self.self, privacy: .public)] Failed to send message. error: \(error as NSError, privacy: .public)")
@@ -164,9 +164,9 @@ private extension SharePlayGameSession {
     }
 
     func sendSnapshot(of gameSession: GameSessionValue, to participants: Participants) {
-        logger.debug("[debug] sending game snapshot")
+        logger.debug("sending game snapshot")
         let message: SharePlayMessage = switch gameSession {
-        case .square3(let gameSession): .gameSquare3Message(.snapshot(gameSession.snapshot))
+        case .grid3(let gameSession): .gameGrid3Message(.snapshot(gameSession.snapshot))
         case .cube4(let gameSession): .gameCube4Message(.snapshot(gameSession.snapshot))
         }
         sendMessage(message)
@@ -186,12 +186,12 @@ private extension SharePlayGameSession {
         guard let meMarker, let gameSession else { return }
         let message: SharePlayMessage
         switch gameSession {
-        case .square3:
-            guard let gameboardLocation = location as? GridLocation else { return }
+        case .grid3:
+            guard let gameboardLocation = location as? Grid3Location else { return }
             let move = GameMove(location: gameboardLocation, mark: meMarker)
-            message = .gameSquare3Message(.move(move))
+            message = .gameGrid3Message(.move(move))
         case .cube4:
-            guard let gameboardLocation = location as? CubeFourLocation else { return }
+            guard let gameboardLocation = location as? Cube4Location else { return }
             let move = GameMove(location: gameboardLocation, mark: meMarker)
             message = .gameCube4Message(.move(move))
         }
@@ -206,10 +206,10 @@ private extension SharePlayGameSession {
         let turnTask = turnTask(groupSession: groupSession, turnMessenger: turnMessenger)
         let rotateTask = Task {
             for await (update, context) in rotationMessenger.messages(of: Quanterion.self) {
-                logger.debug("[\(Self.self, privacy: .public)] did receive rotation. message: \(update, privacy: .public)")
+                logger.debug("[\(Self.self)] did receive rotation. message: \(update)")
                 if context.source == groupSession.localParticipant { return }
-                logger.debug("[\(Self.self, privacy: .public)] did receive REMOTE rotation. message: \(update, privacy: .public)")
-                rotation = update.rotation
+                logger.debug("[\(Self.self)] did receive REMOTE rotation. message: \(update)")
+                eventContinuation?.yield(.rotationUpdate(update.rotation))
             }
         }
         return Set([turnTask, rotateTask])
@@ -228,22 +228,22 @@ private extension SharePlayGameSession {
                     onStopGameMessage()
                 case .playAgain(let response):
                     onPlayAgainResponse(response)
-                case .gameSquare3Message(let gameMessage):
+                case .gameGrid3Message(let gameMessage):
                     switch gameMessage {
                     case .move(let move):
-                        if case .square3(let gameSession) = self.gameSession {
+                        if case .grid3(let gameSession) = self.gameSession {
                             gameSession.handleMessage(gameMessage)
                         } else {
-                            print("[debug]", "gameSession: \(String(describing: self.gameSession)), move: \(move)")
+                            logger.error("gameSession: \(String(describing: self.gameSession)), move: \(move)")
                             assertionFailure("game session/game message mismatch")
                             return
                         }
                     case .snapshot(let snapshot):
-                        print("[debug]", "received game snapshot (square3)")
-                        if case .square3(let gameSession) = gameSession {
+                        logger.debug("received game snapshot (grid3)")
+                        if case .grid3(let gameSession) = gameSession {
                             gameSession.handleMessage(gameMessage)
                         } else {
-                            setSnapshot(snapshot, dimensions: .square3, groupSession: groupSession, turnMessenger: turnMessenger)
+                            setSnapshot(snapshot, dimensions: .grid3, groupSession: groupSession, turnMessenger: turnMessenger)
                         }
                     }
                 case .gameCube4Message(let gameMessage):
@@ -252,12 +252,12 @@ private extension SharePlayGameSession {
                         if case .cube4(let gameSession) = self.gameSession {
                             gameSession.handleMessage(gameMessage)
                         } else {
-                            print("[debug]", "gameSession: \(String(describing: self.gameSession)), move: \(move)")
+                            logger.debug("gameSession: \(String(describing: self.gameSession)), move: \(move)")
                             assertionFailure("game session/game message mismatch")
                             return
                         }
                     case .snapshot(let snapshot):
-                        print("[debug]", "received game snapshot (cube4)")
+                        logger.debug("received game snapshot (cube4)")
                         if case .cube4(let gameSession) = self.gameSession {
                             gameSession.handleMessage(gameMessage)
                         } else {
@@ -275,7 +275,7 @@ private extension SharePlayGameSession {
         groupSession: GroupSession<TicTacSpatialActivity>,
         turnMessenger: GroupSessionMessenger
     ) {
-        print("[debug]", "switching to \(dimensions) game")
+        logger.notice("switching to \(dimensions, privacy: .public) game")
         gameSessionViewModel.playGame(
             dimensions: dimensions,
             xPlayerType: gameSession?.xPlayerType ?? .remote,

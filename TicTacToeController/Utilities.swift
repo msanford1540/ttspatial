@@ -24,20 +24,6 @@ public extension TimeInterval {
     }
 }
 
-public extension simd_quatf {
-    init(translation: CGSize) {
-        // Calculate rotation angle
-        let hypot = hypot(translation.width, translation.height)
-        let rotation = Angle(degrees: hypot)
-        // Calculate rotation axis
-        let axisX = Float(translation.height / hypot)
-        let axisY = Float(translation.width / hypot)
-        let rotationAxis = SIMD3<Float>(x: axisX, y: axisY, z: .zero)
-        let sensitivityFactor: Float = 0.333
-        self.init(angle: Float(rotation.radians) * sensitivityFactor, axis: rotationAxis)
-    }
-}
-
 public func deg2rad<FloatType: BinaryFloatingPoint>(_ degrees: FloatType) -> FloatType {
     degrees * FloatType.pi / 180
 }

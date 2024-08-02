@@ -18,7 +18,7 @@ public struct HomeMenu: View {
         VStack(spacing: 24) {
             HStack(spacing: 48) {
                 DashboardPicker(
-                    "Gameboard", items: [GameboardDimensions.square3, .cube4], selection: $viewModel.gameboardDimensions
+                    "Gameboard", items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
                 )
 
                 DashboardPicker(
