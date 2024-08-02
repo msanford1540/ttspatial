@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "TTTScenes",
     platforms: [
-        .visionOS(.v2),
+        .visionOS(.v1),
         .macOS(.v15),
         .iOS(.v18)
     ],
