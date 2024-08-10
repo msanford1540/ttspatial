@@ -31,15 +31,15 @@ public struct DashboardPicker<Item: DashboardPickerItem>: View {
                 Button {
                     selection = source
                 } label: {
-                    VStack(spacing: 0) {
+                    VStack(spacing: 4) {
                         Image(systemName: source.imageName)
                             .resizable()
                             .scaledToFit()
                             .frame(width: labelWidth, height: labelImageHeight)
-                        Spacer()
                         Text(source.name)
                             .minimumScaleFactor(0.5)
                             .lineLimit(1)
+                            .font(.title)
                     }
                     .frame(maxHeight: labelMaxHeight)
                     .tag(source)
@@ -71,7 +71,7 @@ public struct DashboardPicker<Item: DashboardPickerItem>: View {
 #if os(visionOS)
         48
 #else
-        24
+        30
 #endif
     }
 
@@ -136,18 +136,18 @@ extension GameboardDimensions: DashboardPickerItem {
     public var name: String {
         switch self {
         case .grid3:
-            "3x3"
+            "2D"
         case .cube4:
-            "4x4x4"
+            "3D"
         }
     }
 
     public var imageName: String {
         switch self {
         case .grid3:
-            "grid"
+            "square.fill"
         case .cube4:
-            "square.grid.4x3.fill"
+            "square.stack.3d.down.forward.fill"
         }
     }
 }

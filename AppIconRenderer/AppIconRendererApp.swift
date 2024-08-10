@@ -7,11 +7,30 @@
 
 import SwiftUI
 
-@main
+let path = "/Users/msanford1540/Developer/tictacspatial/TicTacSpatial-iOS/Assets.xcassets/AppIcon.appiconset"
+
+@main @MainActor
 struct AppIconRendererApp: App {
+    let render = AppIconRenderer(path: path)
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HStack {
+                Image(nsImage: render.macOSExampleImage)
+                    .resizable()
+                    .scaledToFit()
+                    .border(.black)
+                Image(nsImage: render.iOSExampleImage)
+                    .resizable()
+                    .scaledToFit()
+                    .border(.black)
+            }
+            .frame(height: 512)
+            .padding()
+            .onAppear {
+                render.writeFiles()
+            }
         }
+        .windowIdealSize(.fitToContent)
     }
 }
