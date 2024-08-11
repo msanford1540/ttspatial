@@ -12,20 +12,23 @@ let path = "/Users/msanford1540/Developer/tictacspatial/TicTacSpatial-iOS/Assets
 @main @MainActor
 struct AppIconRendererApp: App {
     let render = AppIconRenderer(path: path)
-    
+
     var body: some Scene {
         WindowGroup {
-            HStack {
-                Image(nsImage: render.macOSExampleImage)
-                    .resizable()
-                    .scaledToFit()
-                    .border(.black)
-                Image(nsImage: render.iOSExampleImage)
-                    .resizable()
-                    .scaledToFit()
-                    .border(.black)
+            GeometryReader { geometry in
+                HStack {
+                    let length = min(geometry.size.width, geometry.size.height)
+                    Image(nsImage: render.macOSExampleImage(length: length))
+                        .resizable()
+                        .scaledToFit()
+                        .border(.black)
+                    Image(nsImage: render.iOSExampleImage(length: length))
+                        .resizable()
+                        .scaledToFit()
+                        .border(.black)
+                }
             }
-            .frame(height: 512)
+            .frame(maxHeight: 384)
             .padding()
             .onAppear {
                 render.writeFiles()
