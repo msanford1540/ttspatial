@@ -18,17 +18,29 @@ struct AppIconRendererApp: App {
             GeometryReader { geometry in
                 HStack {
                     let length = min(geometry.size.width, geometry.size.height)
-                    Image(nsImage: render.macOSExampleImage(length: length))
-                        .resizable()
-                        .scaledToFit()
-                        .border(.black)
-                    Image(nsImage: render.iOSExampleImage(length: length))
-                        .resizable()
-                        .scaledToFit()
-                        .border(.black)
+                    VStack {
+                        Image(nsImage: render.macOSExampleImage(length: length, languageDirection: .leftToRight))
+                            .resizable()
+                            .scaledToFit()
+                            .border(.black)
+                        Image(nsImage: render.macOSExampleImage(length: length, languageDirection: .rightToLeft))
+                            .resizable()
+                            .scaledToFit()
+                            .border(.black)
+                    }
+                    VStack {
+                        Image(nsImage: render.iOSExampleImage(length: length, languageDirection: .leftToRight))
+                            .resizable()
+                            .scaledToFit()
+                            .border(.black)
+                        Image(nsImage: render.iOSExampleImage(length: length, languageDirection: .rightToLeft))
+                            .resizable()
+                            .scaledToFit()
+                            .border(.black)
+                    }
                 }
             }
-            .frame(maxHeight: 384)
+            .frame(maxHeight: 1024)
             .padding()
             .onAppear {
                 render.writeFiles()

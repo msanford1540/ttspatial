@@ -83,9 +83,10 @@ enum Platform: String, Hashable {
 struct GenerativeImageDescriptor: Hashable {
     let length: Int
     let platform: Platform
+    let languageDirection: LanguageDirection?
 
     func filename(with baseName: String) -> String {
-        "\(baseName)-\(platform)-\(length).png"
+        "\(baseName)-\(platform)-\(languageDirection == .rightToLeft ? "rtl-" : "")\(length).png"
     }
 }
 
@@ -93,13 +94,14 @@ extension CodingUserInfoKey {
     static let appIconNameKey = CodingUserInfoKey(rawValue: "appIconName")!
 }
 
+enum LanguageDirection: String, Hashable {
+    case leftToRight = "left-to-right"
+    case rightToLeft = "right-to-left"
+}
+
 struct IconDescriptor: Equatable, Encodable {
     enum Idiom: String, Hashable {
         case ios, mac, universal
-    }
-    enum LanguageDirection: String, Hashable {
-        case leftToRight = "left-to-right"
-        case rightToLeft = "right-to-left"
     }
 
     let idiom: Idiom
@@ -150,7 +152,7 @@ struct IconDescriptor: Equatable, Encodable {
     }
 
     var generativeImageDescriptor: GenerativeImageDescriptor {
-        .init(length: imageLength, platform: platform ?? .macOS)
+        .init(length: imageLength, platform: platform ?? .macOS, languageDirection: languageDirection)
     }
 
     var imageSize: CGSize {
@@ -199,7 +201,7 @@ final class AppIconRenderer {
             let filename = descriptor.filename(with: appIconSet.name)
             let url = folder.appendingPathComponent(filename)
             let appIcon = appIcon(for: platform)
-            appIcon.writeImage(length: descriptor.length, to: url)
+            appIcon.writeImage(length: descriptor.length, languageDirection: descriptor.languageDirection, to: url)
         }
     }
 
@@ -212,12 +214,12 @@ final class AppIconRenderer {
         }
     }
 
-    func macOSExampleImage(length: CGFloat) -> NSImage {
-        macOSAppIcon.image(length: length)
+    func macOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
+        macOSAppIcon.image(length: length, languageDirection: languageDirection)
     }
 
-    func iOSExampleImage(length: CGFloat) -> NSImage {
-        iOSAppIcon.image(length: length)
+    func iOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
+        iOSAppIcon.image(length: length, languageDirection: languageDirection)
     }
 
     func writeFiles() {

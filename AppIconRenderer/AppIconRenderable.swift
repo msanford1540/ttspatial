@@ -9,7 +9,7 @@ import AppKit
 import CoreGraphics
 
 protocol AppIconRenderable {
-    func drawImage(_ context: CGContext, length: CGFloat)
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?)
 }
 
 private struct FaceMetrics {
@@ -18,11 +18,11 @@ private struct FaceMetrics {
 }
 
 extension AppIconRenderable {
-    func image(length: CGFloat) -> NSImage {
+    func image(length: CGFloat, languageDirection: LanguageDirection?) -> NSImage {
         let size = NSSize(width: length, height: length)
         return NSImage(size: size, flipped: true) { _ in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, length: length)
+            drawImage(context, length: length, languageDirection: languageDirection)
             return true
         }
     }
@@ -49,17 +49,19 @@ extension AppIconRenderable {
         context.drawPath(using: .stroke)
     }
 
-    fileprivate func drawGamePieces(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics) {
+    fileprivate func drawGamePieces(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, languageDirection: LanguageDirection?) {
         let gridMetrics = gridMetrics(length: length, faceMetrics: faceMetrics)
         let gamePieceWidth = gridMetrics.width * 0.26
         let margin = ((((gridMetrics.width / 2) - gamePieceWidth) / 2) + gridMetrics.margin)
         let offset = length - margin - gamePieceWidth
-
         let gamePieceSize = CGSize(width: gamePieceWidth, height: gamePieceWidth)
-        drawO(context, length: length, rect: .init(origin: .init(x: margin, y: margin), size: gamePieceSize))
-        drawO(context, length: length, rect: .init(origin: .init(x: offset, y: offset), size: gamePieceSize))
-        drawX(context, length: length, rect: .init(origin: .init(x: margin, y: offset), size: gamePieceSize))
-        drawX(context, length: length, rect: .init(origin: .init(x: offset, y: margin), size: gamePieceSize))
+        let isRTL = languageDirection == .rightToLeft
+        let leading = isRTL ? offset : margin
+        let trailing = isRTL ? margin : offset
+        drawO(context, length: length, rect: .init(origin: .init(x: leading, y: margin), size: gamePieceSize))
+        drawO(context, length: length, rect: .init(origin: .init(x: trailing, y: offset), size: gamePieceSize))
+        drawX(context, length: length, rect: .init(origin: .init(x: leading, y: offset), size: gamePieceSize))
+        drawX(context, length: length, rect: .init(origin: .init(x: trailing, y: margin), size: gamePieceSize))
     }
 
     fileprivate func drawGrid(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics) {
@@ -102,8 +104,8 @@ extension AppIconRenderable {
         return .init(margin: margin, width: width)
     }
 
-    func writeImage(length: Int, to file: URL) {
-        let image = image(length: .init(length))
+    func writeImage(length: Int, languageDirection: LanguageDirection?, to file: URL) {
+        let image = image(length: .init(length), languageDirection: languageDirection)
         writeImage(image, to: file)
     }
 
@@ -197,18 +199,18 @@ struct AppIconMacOS: AppIconRenderable {
         context.setBlendMode(.normal)
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat) {
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
         let faceMetrics = faceMetrics(length: length, faceWidth: 824)
         drawBackground(context, length: length, faceMetrics: faceMetrics)
         drawGrid(context, length: length, faceMetrics: faceMetrics)
-        drawGamePieces(context, length: length, faceMetrics: faceMetrics)
+        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
     }
 }
 
 struct AppIconIOS: AppIconRenderable {
-    func drawImage(_ context: CGContext, length: CGFloat) {
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
         let faceMetrics = faceMetrics(length: length, faceWidth: 888)
         drawGrid(context, length: length, faceMetrics: faceMetrics)
-        drawGamePieces(context, length: length, faceMetrics: faceMetrics)
+        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
     }
 }
