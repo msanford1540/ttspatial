@@ -214,3 +214,81 @@ struct AppIconIOS: AppIconRenderable {
         drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
     }
 }
+
+struct AppIconVisionOS: AppIconRenderable {
+    enum RenderLayer {
+        case front
+        case middle
+        case back
+        case middleAndFront
+        case all
+
+        var folderName: String {
+            let name = switch self {
+            case .front:
+                "Front"
+            case .middle:
+                "Middle"
+            case .back:
+                "Back"
+            case .middleAndFront:
+                "MiddleFront"
+            case .all:
+                "All"
+            }
+            return "\(name).solidimagestacklayer"
+        }
+    }
+    private func drawBackground(_ context: CGContext, length: CGFloat) {
+        let gradient = CGGradient(
+            colorsSpace: nil,
+            colors: [
+                NSColor.white.cgColor,
+                NSColor(red: 0.925, green: 0.925, blue: 1, alpha: 1).cgColor,
+                NSColor(red: 0.825, green: 0.825, blue: 1, alpha: 1).cgColor
+            ] as CFArray,
+            locations: [0.5, 0.75, 1]
+        )
+        guard let gradient else { return }
+        context.drawLinearGradient(
+            gradient,
+            start: .init(x: 0, y: 0),
+            end: .init(x: 0, y: length),
+            options: []
+        )
+        context.setBlendMode(.normal)
+    }
+
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, layer: RenderLayer) {
+        let faceMetrics = faceMetrics(length: length, faceWidth: 777)
+        switch layer {
+        case .front:
+            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+        case .middle:
+            drawGrid(context, length: length, faceMetrics: faceMetrics)
+        case .back:
+            drawBackground(context, length: length)
+        case .middleAndFront:
+            drawGrid(context, length: length, faceMetrics: faceMetrics)
+            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+        case .all:
+            drawBackground(context, length: length)
+            drawGrid(context, length: length, faceMetrics: faceMetrics)
+            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+        }
+    }
+
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
+        drawImage(context, length: length, languageDirection: languageDirection, layer: .all)
+    }
+
+    func image(layer: RenderLayer) -> NSImage {
+        let length: CGFloat = 1024
+        let size = NSSize(width: length, height: length)
+        return NSImage(size: size, flipped: true) { _ in
+            guard let context = NSGraphicsContext.current?.cgContext else { return false }
+            drawImage(context, length: length, languageDirection: nil, layer: layer)
+            return true
+        }
+    }
+}

@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-let path = "/Users/msanford1540/Developer/tictacspatial/TicTacSpatial-iOS/Assets.xcassets/AppIcon.appiconset"
+private let folder = "/Users/msanford1540/Developer/tictacspatial"
+let path = "\(folder)/TicTacSpatial-iOS/Assets.xcassets/AppIcon.appiconset"
+let visionOSPath = "\(folder)/TicTacSpatial-visionOS/Assets.xcassets/AppIcon.solidimagestack"
 
 @main @MainActor
 struct AppIconRendererApp: App {
-    let render = AppIconRenderer(path: path)
+    let render = AppIconRenderer(path: path, visionOSPath: visionOSPath)
 
     var body: some Scene {
         WindowGroup {
@@ -34,6 +36,16 @@ struct AppIconRendererApp: App {
                             .scaledToFit()
                             .border(.black)
                         Image(nsImage: render.iOSExampleImage(length: length, languageDirection: .rightToLeft))
+                            .resizable()
+                            .scaledToFit()
+                            .border(.black)
+                    }
+                    VStack {
+                        Image(nsImage: render.visionOSExampleImage(length: length, languageDirection: .leftToRight))
+                            .resizable()
+                            .scaledToFit()
+                            .border(.black)
+                        Image(nsImage: render.visionOSExampleImage(length: length, languageDirection: .rightToLeft))
                             .resizable()
                             .scaledToFit()
                             .border(.black)

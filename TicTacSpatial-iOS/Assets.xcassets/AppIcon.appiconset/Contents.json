@@ -1,70 +1,74 @@
 {
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
   "images" : [
     {
-      "filename" : "ttt-appicon-iOS-1024.png",
       "platform" : "ios",
+      "filename" : "ttt-appicon-iOS-1024.png",
       "size" : "1024x1024",
       "idiom" : "universal"
     },
     {
-      "idiom" : "mac",
-      "size" : "16x16",
       "filename" : "ttt-appicon-macOS-16.png",
-      "scale" : "1x"
-    },
-    {
-      "scale" : "1x",
-      "idiom" : "mac",
-      "size" : "16x16",
-      "language-direction" : "left-to-right",
-      "filename" : "ttt-appicon-macOS-16.png"
-    },
-    {
       "size" : "16x16",
       "scale" : "1x",
-      "filename" : "ttt-appicon-macOS-rtl-16.png",
-      "language-direction" : "right-to-left",
       "idiom" : "mac"
     },
     {
-      "filename" : "ttt-appicon-macOS-32.png",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16"
-    },
-    {
       "size" : "16x16",
-      "scale" : "2x",
+      "filename" : "ttt-appicon-macOS-16.png",
+      "scale" : "1x",
       "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-32.png",
       "language-direction" : "left-to-right"
     },
     {
-      "idiom" : "mac",
-      "scale" : "2x",
-      "filename" : "ttt-appicon-macOS-rtl-32.png",
       "size" : "16x16",
-      "language-direction" : "right-to-left"
+      "idiom" : "mac",
+      "filename" : "ttt-appicon-macOS-rtl-16.png",
+      "language-direction" : "right-to-left",
+      "scale" : "1x"
     },
     {
-      "scale" : "1x",
-      "idiom" : "mac",
+      "size" : "16x16",
       "filename" : "ttt-appicon-macOS-32.png",
-      "size" : "32x32"
+      "scale" : "2x",
+      "idiom" : "mac"
     },
     {
       "language-direction" : "left-to-right",
-      "scale" : "1x",
-      "size" : "32x32",
+      "scale" : "2x",
+      "size" : "16x16",
       "idiom" : "mac",
       "filename" : "ttt-appicon-macOS-32.png"
     },
     {
+      "idiom" : "mac",
+      "language-direction" : "right-to-left",
+      "scale" : "2x",
+      "filename" : "ttt-appicon-macOS-rtl-32.png",
+      "size" : "16x16"
+    },
+    {
+      "size" : "32x32",
+      "idiom" : "mac",
+      "scale" : "1x",
+      "filename" : "ttt-appicon-macOS-32.png"
+    },
+    {
+      "language-direction" : "left-to-right",
+      "scale" : "1x",
+      "filename" : "ttt-appicon-macOS-32.png",
+      "size" : "32x32",
+      "idiom" : "mac"
+    },
+    {
+      "idiom" : "mac",
       "size" : "32x32",
       "scale" : "1x",
-      "language-direction" : "right-to-left",
-      "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-rtl-32.png"
+      "filename" : "ttt-appicon-macOS-rtl-32.png",
+      "language-direction" : "right-to-left"
     },
     {
       "scale" : "2x",
@@ -73,142 +77,138 @@
       "size" : "32x32"
     },
     {
-      "idiom" : "mac",
       "filename" : "ttt-appicon-macOS-64.png",
-      "language-direction" : "left-to-right",
       "scale" : "2x",
+      "idiom" : "mac",
+      "language-direction" : "left-to-right",
       "size" : "32x32"
     },
     {
       "filename" : "ttt-appicon-macOS-rtl-64.png",
       "language-direction" : "right-to-left",
-      "scale" : "2x",
       "idiom" : "mac",
+      "scale" : "2x",
       "size" : "32x32"
     },
     {
-      "scale" : "1x",
       "size" : "128x128",
+      "filename" : "ttt-appicon-macOS-128.png",
       "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-128.png"
-    },
-    {
-      "size" : "128x128",
-      "idiom" : "mac",
-      "scale" : "1x",
-      "language-direction" : "left-to-right",
-      "filename" : "ttt-appicon-macOS-128.png"
-    },
-    {
-      "language-direction" : "right-to-left",
-      "idiom" : "mac",
-      "size" : "128x128",
-      "filename" : "ttt-appicon-macOS-rtl-128.png",
       "scale" : "1x"
     },
     {
-      "scale" : "2x",
-      "size" : "128x128",
+      "filename" : "ttt-appicon-macOS-128.png",
       "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-256.png"
+      "size" : "128x128",
+      "language-direction" : "left-to-right",
+      "scale" : "1x"
     },
     {
-      "scale" : "2x",
+      "filename" : "ttt-appicon-macOS-rtl-128.png",
       "size" : "128x128",
       "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-256.png",
-      "language-direction" : "left-to-right"
-    },
-    {
-      "language-direction" : "right-to-left",
-      "filename" : "ttt-appicon-macOS-rtl-256.png",
-      "scale" : "2x",
-      "size" : "128x128",
-      "idiom" : "mac"
+      "scale" : "1x",
+      "language-direction" : "right-to-left"
     },
     {
       "filename" : "ttt-appicon-macOS-256.png",
-      "scale" : "1x",
-      "size" : "256x256",
+      "scale" : "2x",
+      "size" : "128x128",
       "idiom" : "mac"
     },
     {
-      "size" : "256x256",
-      "language-direction" : "left-to-right",
-      "scale" : "1x",
+      "size" : "128x128",
+      "filename" : "ttt-appicon-macOS-256.png",
       "idiom" : "mac",
+      "language-direction" : "left-to-right",
+      "scale" : "2x"
+    },
+    {
+      "size" : "128x128",
+      "filename" : "ttt-appicon-macOS-rtl-256.png",
+      "idiom" : "mac",
+      "scale" : "2x",
+      "language-direction" : "right-to-left"
+    },
+    {
+      "idiom" : "mac",
+      "size" : "256x256",
+      "scale" : "1x",
       "filename" : "ttt-appicon-macOS-256.png"
     },
     {
-      "language-direction" : "right-to-left",
+      "language-direction" : "left-to-right",
+      "idiom" : "mac",
+      "scale" : "1x",
+      "filename" : "ttt-appicon-macOS-256.png",
+      "size" : "256x256"
+    },
+    {
       "filename" : "ttt-appicon-macOS-rtl-256.png",
-      "size" : "256x256",
+      "idiom" : "mac",
       "scale" : "1x",
-      "idiom" : "mac"
-    },
-    {
-      "size" : "256x256",
-      "idiom" : "mac",
-      "scale" : "2x",
-      "filename" : "ttt-appicon-macOS-512.png"
-    },
-    {
-      "language-direction" : "left-to-right",
-      "scale" : "2x",
-      "size" : "256x256",
-      "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-512.png"
-    },
-    {
-      "idiom" : "mac",
       "language-direction" : "right-to-left",
+      "size" : "256x256"
+    },
+    {
       "scale" : "2x",
       "size" : "256x256",
-      "filename" : "ttt-appicon-macOS-rtl-512.png"
-    },
-    {
-      "scale" : "1x",
-      "idiom" : "mac",
-      "size" : "512x512",
-      "filename" : "ttt-appicon-macOS-512.png"
-    },
-    {
-      "scale" : "1x",
-      "language-direction" : "left-to-right",
-      "idiom" : "mac",
       "filename" : "ttt-appicon-macOS-512.png",
-      "size" : "512x512"
+      "idiom" : "mac"
     },
     {
+      "size" : "256x256",
+      "idiom" : "mac",
+      "language-direction" : "left-to-right",
+      "scale" : "2x",
+      "filename" : "ttt-appicon-macOS-512.png"
+    },
+    {
+      "scale" : "2x",
+      "size" : "256x256",
       "idiom" : "mac",
       "filename" : "ttt-appicon-macOS-rtl-512.png",
-      "scale" : "1x",
-      "language-direction" : "right-to-left",
-      "size" : "512x512"
-    },
-    {
-      "scale" : "2x",
-      "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-1024.png",
-      "size" : "512x512"
-    },
-    {
-      "language-direction" : "left-to-right",
-      "idiom" : "mac",
-      "filename" : "ttt-appicon-macOS-1024.png",
-      "scale" : "2x",
-      "size" : "512x512"
+      "language-direction" : "right-to-left"
     },
     {
       "idiom" : "mac",
       "size" : "512x512",
+      "filename" : "ttt-appicon-macOS-512.png",
+      "scale" : "1x"
+    },
+    {
+      "scale" : "1x",
+      "language-direction" : "left-to-right",
+      "size" : "512x512",
+      "filename" : "ttt-appicon-macOS-512.png",
+      "idiom" : "mac"
+    },
+    {
+      "idiom" : "mac",
+      "scale" : "1x",
+      "filename" : "ttt-appicon-macOS-rtl-512.png",
+      "language-direction" : "right-to-left",
+      "size" : "512x512"
+    },
+    {
+      "idiom" : "mac",
+      "scale" : "2x",
+      "size" : "512x512",
+      "filename" : "ttt-appicon-macOS-1024.png"
+    },
+    {
+      "scale" : "2x",
+      "filename" : "ttt-appicon-macOS-1024.png",
+      "idiom" : "mac",
+      "language-direction" : "left-to-right",
+      "size" : "512x512"
+    },
+    {
+      "idiom" : "mac",
       "language-direction" : "right-to-left",
       "filename" : "ttt-appicon-macOS-rtl-1024.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "size" : "512x512"
     }
-  ],
-  "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  }
+  ]
 }

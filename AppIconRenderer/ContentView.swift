@@ -168,10 +168,13 @@ struct IconDescriptor: Equatable, Encodable {
 final class AppIconRenderer {
     private let iOSAppIcon = AppIconIOS()
     private let macOSAppIcon = AppIconMacOS()
+    private let visionOSAppIcon = AppIconVisionOS()
     let path: String
+    let visionOSPath: String
 
-    init(path: String) {
+    init(path: String, visionOSPath: String) {
         self.path = path
+        self.visionOSPath = visionOSPath
     }
 
     func writeMacOSImages(for appIconSet: AppIconSetDescriptor, folder: URL) {
@@ -189,7 +192,7 @@ final class AppIconRenderer {
         case .iOS:
             iOSAppIcon
         case .visionOS:
-            macOSAppIcon
+            visionOSAppIcon
         }
     }
 
@@ -222,11 +225,33 @@ final class AppIconRenderer {
         iOSAppIcon.image(length: length, languageDirection: languageDirection)
     }
 
-    func writeFiles() {
+    func visionOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
+        visionOSAppIcon.image(length: length, languageDirection: languageDirection)
+    }
+
+    private func writeMacOSiOSFiles() {
         let appIconSet = AppIconSetDescriptor(name: "ttt-appicon")
         let folder = URL(filePath: path, directoryHint: .isDirectory)
         writeContentsJSON(for: appIconSet, folder: folder)
         writeIOSImages(for: appIconSet, folder: folder)
         writeMacOSImages(for: appIconSet, folder: folder)
+    }
+
+    private func writeVisionOSFiles(layerCount: Int = 3) {
+        let validLayerCount = max(1, min(layerCount, 3))
+        if validLayerCount == 3 {
+            let frontImage = visionOSAppIcon.image(layer: .front)
+            let middleImage = visionOSAppIcon.image(layer: .middle)
+            let backImage = visionOSAppIcon.image(layer: .back)
+        } else if validLayerCount == 2 {
+            let middleAndFrontImage = visionOSAppIcon.image(layer: .middleAndFront)
+            let backImage = visionOSAppIcon.image(layer: .back)
+        } else {
+            let image = visionOSAppIcon.image(layer: .all)
+        }
+    }
+
+    func writeFiles() {
+        writeMacOSiOSFiles()
     }
 }
