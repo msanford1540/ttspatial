@@ -1,9 +1,9 @@
 {
   "images" : [
     {
-      "filename" : "Middle.jpg",
       "scale" : "2x",
-      "idiom" : "vision"
+      "idiom" : "vision",
+      "filename" : "Middle.jpg"
     }
   ],
   "info" : {

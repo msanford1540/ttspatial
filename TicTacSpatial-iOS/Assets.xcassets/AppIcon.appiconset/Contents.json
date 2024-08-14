@@ -1,49 +1,45 @@
 {
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
-  },
   "images" : [
     {
-      "size" : "20x20",
-      "filename" : "iOS-40.png",
       "scale" : "2x",
       "platform" : "ios",
+      "idiom" : "universal",
+      "size" : "20x20",
+      "filename" : "iOS-40.png"
+    },
+    {
+      "scale" : "3x",
+      "filename" : "iOS-60.png",
+      "platform" : "ios",
+      "size" : "20x20",
+      "idiom" : "universal"
+    },
+    {
+      "scale" : "2x",
+      "platform" : "ios",
+      "filename" : "iOS-58.png",
+      "size" : "29x29",
       "idiom" : "universal"
     },
     {
       "scale" : "3x",
-      "idiom" : "universal",
-      "size" : "20x20",
-      "filename" : "iOS-60.png",
-      "platform" : "ios"
-    },
-    {
-      "platform" : "ios",
-      "idiom" : "universal",
-      "size" : "29x29",
-      "filename" : "iOS-58.png",
-      "scale" : "2x"
-    },
-    {
-      "platform" : "ios",
-      "scale" : "3x",
-      "idiom" : "universal",
       "filename" : "iOS-87.png",
+      "platform" : "ios",
+      "idiom" : "universal",
       "size" : "29x29"
     },
     {
-      "size" : "38x38",
       "platform" : "ios",
       "filename" : "iOS-76.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "size" : "38x38",
+      "scale" : "2x",
+      "idiom" : "universal"
     },
     {
       "platform" : "ios",
+      "size" : "38x38",
       "scale" : "3x",
       "idiom" : "universal",
-      "size" : "38x38",
       "filename" : "iOS-114.png"
     },
     {
@@ -55,472 +51,343 @@
     },
     {
       "idiom" : "universal",
+      "scale" : "3x",
       "platform" : "ios",
       "size" : "40x40",
-      "filename" : "iOS-120.png",
-      "scale" : "3x"
+      "filename" : "iOS-120.png"
     },
     {
-      "platform" : "ios",
+      "scale" : "2x",
       "size" : "60x60",
       "filename" : "iOS-120.png",
       "idiom" : "universal",
-      "scale" : "2x"
+      "platform" : "ios"
     },
     {
-      "scale" : "3x",
-      "platform" : "ios",
+      "size" : "60x60",
       "idiom" : "universal",
+      "scale" : "3x",
       "filename" : "iOS-180.png",
-      "size" : "60x60"
+      "platform" : "ios"
     },
     {
+      "scale" : "2x",
       "size" : "64x64",
-      "scale" : "2x",
-      "platform" : "ios",
+      "idiom" : "universal",
       "filename" : "iOS-128.png",
-      "idiom" : "universal"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "iOS-192.png",
-      "platform" : "ios",
-      "size" : "64x64"
-    },
-    {
-      "filename" : "iOS-136.png",
-      "platform" : "ios",
-      "size" : "68x68",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "platform" : "ios",
-      "scale" : "2x",
-      "filename" : "iOS-152.png",
-      "idiom" : "universal",
-      "size" : "76x76"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "83.5x83.5",
-      "filename" : "iOS-167.png",
       "platform" : "ios"
     },
     {
       "platform" : "ios",
-      "size" : "1024x1024",
-      "idiom" : "universal",
-      "filename" : "iOS-1024.png"
+      "filename" : "iOS-192.png",
+      "scale" : "3x",
+      "size" : "64x64",
+      "idiom" : "universal"
+    },
+    {
+      "size" : "68x68",
+      "filename" : "iOS-136.png",
+      "platform" : "ios",
+      "scale" : "2x",
+      "idiom" : "universal"
     },
     {
       "scale" : "2x",
+      "size" : "76x76",
+      "filename" : "iOS-152.png",
       "platform" : "ios",
+      "idiom" : "universal"
+    },
+    {
+      "scale" : "2x",
+      "size" : "83.5x83.5",
+      "filename" : "iOS-167.png",
+      "platform" : "ios",
+      "idiom" : "universal"
+    },
+    {
+      "size" : "1024x1024",
       "idiom" : "universal",
+      "platform" : "ios",
+      "filename" : "iOS-1024.png"
+    },
+    {
+      "idiom" : "universal",
+      "platform" : "ios",
+      "scale" : "2x",
       "filename" : "iOS-dark-40.png",
       "size" : "20x20",
       "appearances" : [
         {
-          "appearance" : "luminosity",
-          "value" : "dark"
+          "value" : "dark",
+          "appearance" : "luminosity"
         }
       ]
     },
     {
-      "filename" : "iOS-dark-60.png",
-      "size" : "20x20",
       "platform" : "ios",
       "scale" : "3x",
       "idiom" : "universal",
+      "size" : "20x20",
+      "filename" : "iOS-dark-60.png",
       "appearances" : [
         {
-          "appearance" : "luminosity",
-          "value" : "dark"
+          "value" : "dark",
+          "appearance" : "luminosity"
         }
       ]
     },
     {
-      "size" : "29x29",
-      "filename" : "iOS-dark-58.png",
-      "scale" : "2x",
       "appearances" : [
         {
           "value" : "dark",
           "appearance" : "luminosity"
         }
       ],
+      "scale" : "2x",
+      "filename" : "iOS-dark-58.png",
       "platform" : "ios",
+      "size" : "29x29",
       "idiom" : "universal"
     },
     {
-      "idiom" : "universal",
       "size" : "29x29",
+      "appearances" : [
+        {
+          "value" : "dark",
+          "appearance" : "luminosity"
+        }
+      ],
+      "idiom" : "universal",
+      "scale" : "3x",
       "filename" : "iOS-dark-87.png",
-      "platform" : "ios",
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "scale" : "3x"
-    },
-    {
-      "platform" : "ios",
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "size" : "38x38",
-      "idiom" : "universal",
-      "filename" : "iOS-dark-76.png",
-      "scale" : "2x"
-    },
-    {
-      "scale" : "3x",
-      "size" : "38x38",
-      "platform" : "ios",
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "idiom" : "universal",
-      "filename" : "iOS-dark-114.png"
-    },
-    {
-      "filename" : "iOS-dark-80.png",
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "platform" : "ios",
-      "scale" : "2x",
-      "idiom" : "universal",
-      "size" : "40x40"
-    },
-    {
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "idiom" : "universal",
-      "filename" : "iOS-dark-120.png",
-      "scale" : "3x",
-      "platform" : "ios",
-      "size" : "40x40"
-    },
-    {
-      "scale" : "2x",
-      "platform" : "ios",
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "filename" : "iOS-dark-120.png",
-      "idiom" : "universal",
-      "size" : "60x60"
-    },
-    {
-      "scale" : "3x",
-      "size" : "60x60",
-      "filename" : "iOS-dark-180.png",
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "idiom" : "universal",
       "platform" : "ios"
     },
     {
       "idiom" : "universal",
-      "filename" : "iOS-dark-128.png",
-      "platform" : "ios",
-      "size" : "64x64",
       "appearances" : [
         {
           "appearance" : "luminosity",
           "value" : "dark"
         }
       ],
-      "scale" : "2x"
-    },
-    {
-      "platform" : "ios",
-      "filename" : "iOS-dark-192.png",
-      "appearances" : [
-        {
-          "value" : "dark",
-          "appearance" : "luminosity"
-        }
-      ],
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "64x64"
-    },
-    {
-      "platform" : "ios",
       "scale" : "2x",
-      "size" : "68x68",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "iOS-dark-136.png",
-      "idiom" : "universal"
-    },
-    {
-      "filename" : "iOS-dark-152.png",
-      "platform" : "ios",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "76x76",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ]
-    },
-    {
-      "filename" : "iOS-dark-167.png",
-      "platform" : "ios",
-      "scale" : "2x",
-      "size" : "83.5x83.5",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "idiom" : "universal"
-    },
-    {
-      "filename" : "iOS-dark-1024.png",
-      "idiom" : "universal",
-      "platform" : "ios",
-      "size" : "1024x1024",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ]
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "platform" : "ios",
-      "filename" : "iOS-tinted-40.png",
-      "size" : "20x20",
-      "appearances" : [
-        {
-          "value" : "tinted",
-          "appearance" : "luminosity"
-        }
-      ]
-    },
-    {
-      "platform" : "ios",
-      "filename" : "iOS-tinted-60.png",
-      "idiom" : "universal",
-      "scale" : "3x",
-      "size" : "20x20",
-      "appearances" : [
-        {
-          "value" : "tinted",
-          "appearance" : "luminosity"
-        }
-      ]
-    },
-    {
-      "filename" : "iOS-tinted-58.png",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "tinted"
-        }
-      ],
-      "idiom" : "universal",
-      "scale" : "2x",
-      "platform" : "ios",
-      "size" : "29x29"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "appearances" : [
-        {
-          "value" : "tinted",
-          "appearance" : "luminosity"
-        }
-      ],
-      "platform" : "ios",
-      "size" : "29x29",
-      "filename" : "iOS-tinted-87.png"
-    },
-    {
-      "appearances" : [
-        {
-          "value" : "tinted",
-          "appearance" : "luminosity"
-        }
-      ],
-      "scale" : "2x",
-      "idiom" : "universal",
-      "filename" : "iOS-tinted-76.png",
-      "platform" : "ios",
-      "size" : "38x38"
-    },
-    {
-      "idiom" : "universal",
-      "platform" : "ios",
-      "filename" : "iOS-tinted-114.png",
       "size" : "38x38",
+      "platform" : "ios",
+      "filename" : "iOS-dark-76.png"
+    },
+    {
+      "scale" : "3x",
+      "platform" : "ios",
+      "size" : "38x38",
+      "filename" : "iOS-dark-114.png",
+      "idiom" : "universal",
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "tinted"
+          "value" : "dark"
         }
-      ],
-      "scale" : "3x"
+      ]
     },
     {
-      "idiom" : "universal",
       "size" : "40x40",
       "appearances" : [
         {
-          "value" : "tinted",
+          "value" : "dark",
           "appearance" : "luminosity"
         }
       ],
-      "filename" : "iOS-tinted-80.png",
+      "filename" : "iOS-dark-80.png",
+      "idiom" : "universal",
       "scale" : "2x",
       "platform" : "ios"
     },
     {
-      "filename" : "iOS-tinted-120.png",
-      "platform" : "ios",
       "idiom" : "universal",
-      "appearances" : [
-        {
-          "value" : "tinted",
-          "appearance" : "luminosity"
-        }
-      ],
       "scale" : "3x",
-      "size" : "40x40"
-    },
-    {
+      "platform" : "ios",
+      "size" : "40x40",
+      "filename" : "iOS-dark-120.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "tinted"
+          "value" : "dark"
         }
-      ],
-      "platform" : "ios",
-      "filename" : "iOS-tinted-120.png",
-      "scale" : "2x",
-      "idiom" : "universal",
-      "size" : "60x60"
+      ]
     },
     {
+      "idiom" : "universal",
       "platform" : "ios",
+      "scale" : "2x",
+      "size" : "60x60",
+      "filename" : "iOS-dark-120.png",
+      "appearances" : [
+        {
+          "value" : "dark",
+          "appearance" : "luminosity"
+        }
+      ]
+    },
+    {
+      "filename" : "iOS-dark-180.png",
+      "platform" : "ios",
+      "scale" : "3x",
+      "idiom" : "universal",
       "size" : "60x60",
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "tinted"
+          "value" : "dark"
+        }
+      ]
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "iOS-dark-128.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "scale" : "2x",
+      "size" : "64x64"
+    },
+    {
+      "appearances" : [
+        {
+          "value" : "dark",
+          "appearance" : "luminosity"
         }
       ],
       "scale" : "3x",
-      "filename" : "iOS-tinted-180.png",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "iOS-dark-192.png",
+      "size" : "64x64",
+      "platform" : "ios"
     },
     {
       "idiom" : "universal",
       "platform" : "ios",
-      "size" : "64x64",
+      "size" : "68x68",
       "appearances" : [
         {
-          "value" : "tinted",
+          "value" : "dark",
           "appearance" : "luminosity"
         }
       ],
       "scale" : "2x",
-      "filename" : "iOS-tinted-128.png"
-    },
-    {
-      "size" : "64x64",
-      "platform" : "ios",
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "tinted"
-        }
-      ],
-      "scale" : "3x",
-      "idiom" : "universal",
-      "filename" : "iOS-tinted-192.png"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "tinted"
-        }
-      ],
-      "platform" : "ios",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "size" : "68x68",
-      "filename" : "iOS-tinted-136.png"
+      "filename" : "iOS-dark-136.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
       "size" : "76x76",
-      "filename" : "iOS-tinted-152.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "platform" : "ios",
+      "filename" : "iOS-dark-152.png"
+    },
+    {
+      "idiom" : "universal",
+      "platform" : "ios",
+      "appearances" : [
+        {
+          "value" : "dark",
+          "appearance" : "luminosity"
+        }
+      ],
+      "filename" : "iOS-dark-167.png",
+      "size" : "83.5x83.5",
+      "scale" : "2x"
+    },
+    {
+      "appearances" : [
+        {
+          "value" : "dark",
+          "appearance" : "luminosity"
+        }
+      ],
+      "filename" : "iOS-dark-1024.png",
+      "size" : "1024x1024",
+      "idiom" : "universal",
+      "platform" : "ios"
+    },
+    {
+      "filename" : "iOS-tinted-40.png",
+      "size" : "20x20",
+      "idiom" : "universal",
+      "platform" : "ios",
       "appearances" : [
         {
           "appearance" : "luminosity",
           "value" : "tinted"
         }
       ],
+      "scale" : "2x"
+    },
+    {
+      "filename" : "iOS-tinted-60.png",
+      "size" : "20x20",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "idiom" : "universal",
+      "scale" : "3x",
       "platform" : "ios"
     },
     {
+      "platform" : "ios",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "scale" : "2x",
+      "idiom" : "universal",
+      "filename" : "iOS-tinted-58.png",
+      "size" : "29x29"
+    },
+    {
+      "scale" : "3x",
+      "size" : "29x29",
+      "platform" : "ios",
+      "filename" : "iOS-tinted-87.png",
       "appearances" : [
         {
           "value" : "tinted",
           "appearance" : "luminosity"
         }
       ],
-      "size" : "83.5x83.5",
-      "platform" : "ios",
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "iOS-tinted-167.png"
+      "idiom" : "universal"
     },
     {
+      "filename" : "iOS-tinted-76.png",
+      "scale" : "2x",
       "platform" : "ios",
-      "filename" : "iOS-tinted-1024.png",
-      "size" : "1024x1024",
+      "size" : "38x38",
+      "appearances" : [
+        {
+          "value" : "tinted",
+          "appearance" : "luminosity"
+        }
+      ],
+      "idiom" : "universal"
+    },
+    {
+      "scale" : "3x",
+      "platform" : "ios",
+      "size" : "38x38",
+      "filename" : "iOS-tinted-114.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -530,204 +397,337 @@
       "idiom" : "universal"
     },
     {
-      "idiom" : "mac",
+      "scale" : "2x",
+      "platform" : "ios",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "filename" : "iOS-tinted-80.png",
+      "idiom" : "universal",
+      "size" : "40x40"
+    },
+    {
+      "scale" : "3x",
+      "platform" : "ios",
+      "idiom" : "universal",
+      "filename" : "iOS-tinted-120.png",
+      "size" : "40x40",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ]
+    },
+    {
+      "size" : "60x60",
+      "appearances" : [
+        {
+          "value" : "tinted",
+          "appearance" : "luminosity"
+        }
+      ],
+      "platform" : "ios",
+      "scale" : "2x",
+      "idiom" : "universal",
+      "filename" : "iOS-tinted-120.png"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "iOS-tinted-180.png",
+      "scale" : "3x",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "size" : "60x60",
+      "platform" : "ios"
+    },
+    {
+      "size" : "64x64",
+      "scale" : "2x",
+      "platform" : "ios",
+      "filename" : "iOS-tinted-128.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "iOS-tinted-192.png",
+      "scale" : "3x",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "64x64"
+    },
+    {
+      "scale" : "2x",
+      "filename" : "iOS-tinted-136.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "68x68",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ]
+    },
+    {
+      "size" : "76x76",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "idiom" : "universal",
+      "platform" : "ios",
+      "scale" : "2x",
+      "filename" : "iOS-tinted-152.png"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
+      "platform" : "ios",
+      "idiom" : "universal",
+      "filename" : "iOS-tinted-167.png",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
+    },
+    {
+      "platform" : "ios",
+      "size" : "1024x1024",
+      "appearances" : [
+        {
+          "value" : "tinted",
+          "appearance" : "luminosity"
+        }
+      ],
+      "idiom" : "universal",
+      "filename" : "iOS-tinted-1024.png"
+    },
+    {
       "scale" : "1x",
       "filename" : "macOS-16.png",
+      "idiom" : "mac",
       "size" : "16x16"
     },
     {
-      "filename" : "macOS-16.png",
-      "size" : "16x16",
-      "idiom" : "mac",
       "language-direction" : "left-to-right",
-      "scale" : "1x"
+      "size" : "16x16",
+      "scale" : "1x",
+      "idiom" : "mac",
+      "filename" : "macOS-16.png"
     },
     {
-      "scale" : "1x",
+      "idiom" : "mac",
       "size" : "16x16",
       "filename" : "macOS-rtl-16.png",
-      "language-direction" : "right-to-left",
+      "scale" : "1x",
+      "language-direction" : "right-to-left"
+    },
+    {
+      "size" : "16x16",
+      "filename" : "macOS-32.png",
+      "scale" : "2x",
       "idiom" : "mac"
     },
     {
-      "filename" : "macOS-32.png",
-      "idiom" : "mac",
       "size" : "16x16",
-      "scale" : "2x"
+      "filename" : "macOS-32.png",
+      "scale" : "2x",
+      "language-direction" : "left-to-right",
+      "idiom" : "mac"
     },
     {
-      "language-direction" : "left-to-right",
-      "filename" : "macOS-32.png",
+      "filename" : "macOS-rtl-32.png",
+      "language-direction" : "right-to-left",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "language-direction" : "right-to-left",
-      "filename" : "macOS-rtl-32.png",
-      "size" : "16x16",
-      "idiom" : "mac",
-      "scale" : "2x"
-    },
-    {
+      "scale" : "1x",
       "idiom" : "mac",
       "size" : "32x32",
-      "scale" : "1x",
       "filename" : "macOS-32.png"
     },
     {
-      "size" : "32x32",
-      "language-direction" : "left-to-right",
       "idiom" : "mac",
       "filename" : "macOS-32.png",
-      "scale" : "1x"
-    },
-    {
       "scale" : "1x",
-      "idiom" : "mac",
-      "filename" : "macOS-rtl-32.png",
-      "size" : "32x32",
-      "language-direction" : "right-to-left"
-    },
-    {
-      "size" : "32x32",
-      "filename" : "macOS-64.png",
-      "scale" : "2x",
-      "idiom" : "mac"
-    },
-    {
-      "size" : "32x32",
-      "filename" : "macOS-64.png",
-      "idiom" : "mac",
       "language-direction" : "left-to-right",
+      "size" : "32x32"
+    },
+    {
+      "language-direction" : "right-to-left",
+      "idiom" : "mac",
+      "scale" : "1x",
+      "filename" : "macOS-rtl-32.png",
+      "size" : "32x32"
+    },
+    {
+      "filename" : "macOS-64.png",
+      "idiom" : "mac",
+      "size" : "32x32",
       "scale" : "2x"
+    },
+    {
+      "idiom" : "mac",
+      "scale" : "2x",
+      "size" : "32x32",
+      "language-direction" : "left-to-right",
+      "filename" : "macOS-64.png"
     },
     {
       "size" : "32x32",
       "language-direction" : "right-to-left",
-      "idiom" : "mac",
+      "scale" : "2x",
       "filename" : "macOS-rtl-64.png",
-      "scale" : "2x"
+      "idiom" : "mac"
     },
     {
-      "size" : "128x128",
-      "idiom" : "mac",
-      "filename" : "macOS-128.png",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "macOS-128.png",
-      "language-direction" : "left-to-right",
       "idiom" : "mac",
       "scale" : "1x",
+      "size" : "128x128",
+      "filename" : "macOS-128.png"
+    },
+    {
+      "filename" : "macOS-128.png",
+      "idiom" : "mac",
+      "scale" : "1x",
+      "language-direction" : "left-to-right",
       "size" : "128x128"
     },
     {
-      "idiom" : "mac",
       "size" : "128x128",
-      "language-direction" : "right-to-left",
       "filename" : "macOS-rtl-128.png",
+      "idiom" : "mac",
+      "language-direction" : "right-to-left",
       "scale" : "1x"
     },
     {
-      "idiom" : "mac",
       "filename" : "macOS-256.png",
+      "scale" : "2x",
       "size" : "128x128",
+      "idiom" : "mac"
+    },
+    {
+      "language-direction" : "left-to-right",
+      "size" : "128x128",
+      "filename" : "macOS-256.png",
+      "idiom" : "mac",
       "scale" : "2x"
     },
     {
-      "language-direction" : "left-to-right",
-      "scale" : "2x",
       "size" : "128x128",
-      "idiom" : "mac",
-      "filename" : "macOS-256.png"
-    },
-    {
       "filename" : "macOS-rtl-256.png",
-      "idiom" : "mac",
       "scale" : "2x",
-      "size" : "128x128",
-      "language-direction" : "right-to-left"
-    },
-    {
-      "idiom" : "mac",
-      "filename" : "macOS-256.png",
-      "scale" : "1x",
-      "size" : "256x256"
-    },
-    {
-      "language-direction" : "left-to-right",
-      "idiom" : "mac",
-      "filename" : "macOS-256.png",
-      "scale" : "1x",
-      "size" : "256x256"
-    },
-    {
-      "filename" : "macOS-rtl-256.png",
-      "size" : "256x256",
-      "scale" : "1x",
       "language-direction" : "right-to-left",
       "idiom" : "mac"
     },
     {
+      "scale" : "1x",
+      "filename" : "macOS-256.png",
+      "size" : "256x256",
+      "idiom" : "mac"
+    },
+    {
+      "size" : "256x256",
+      "filename" : "macOS-256.png",
+      "language-direction" : "left-to-right",
+      "scale" : "1x",
+      "idiom" : "mac"
+    },
+    {
+      "filename" : "macOS-rtl-256.png",
+      "scale" : "1x",
+      "idiom" : "mac",
+      "language-direction" : "right-to-left",
+      "size" : "256x256"
+    },
+    {
       "idiom" : "mac",
       "filename" : "macOS-512.png",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
+      "language-direction" : "left-to-right",
       "filename" : "macOS-512.png",
       "scale" : "2x",
       "size" : "256x256",
-      "language-direction" : "left-to-right",
       "idiom" : "mac"
-    },
-    {
-      "scale" : "2x",
-      "size" : "256x256",
-      "language-direction" : "right-to-left",
-      "idiom" : "mac",
-      "filename" : "macOS-rtl-512.png"
-    },
-    {
-      "filename" : "macOS-512.png",
-      "scale" : "1x",
-      "idiom" : "mac",
-      "size" : "512x512"
-    },
-    {
-      "scale" : "1x",
-      "size" : "512x512",
-      "language-direction" : "left-to-right",
-      "idiom" : "mac",
-      "filename" : "macOS-512.png"
     },
     {
       "filename" : "macOS-rtl-512.png",
-      "scale" : "1x",
-      "size" : "512x512",
+      "idiom" : "mac",
       "language-direction" : "right-to-left",
+      "scale" : "2x",
+      "size" : "256x256"
+    },
+    {
+      "size" : "512x512",
+      "scale" : "1x",
+      "filename" : "macOS-512.png",
       "idiom" : "mac"
     },
     {
-      "filename" : "macOS-1024.png",
-      "scale" : "2x",
-      "idiom" : "mac",
-      "size" : "512x512"
-    },
-    {
-      "filename" : "macOS-1024.png",
+      "size" : "512x512",
+      "scale" : "1x",
       "idiom" : "mac",
       "language-direction" : "left-to-right",
+      "filename" : "macOS-512.png"
+    },
+    {
+      "scale" : "1x",
+      "idiom" : "mac",
+      "size" : "512x512",
+      "filename" : "macOS-rtl-512.png",
+      "language-direction" : "right-to-left"
+    },
+    {
+      "filename" : "macOS-1024.png",
       "scale" : "2x",
-      "size" : "512x512"
+      "size" : "512x512",
+      "idiom" : "mac"
     },
     {
       "scale" : "2x",
-      "language-direction" : "right-to-left",
+      "filename" : "macOS-1024.png",
+      "language-direction" : "left-to-right",
+      "size" : "512x512",
+      "idiom" : "mac"
+    },
+    {
       "size" : "512x512",
       "filename" : "macOS-rtl-1024.png",
-      "idiom" : "mac"
+      "scale" : "2x",
+      "idiom" : "mac",
+      "language-direction" : "right-to-left"
     }
-  ]
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
 }
