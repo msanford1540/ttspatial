@@ -484,30 +484,6 @@
     },
     {
       "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "1x",
-      "size" : "16x16"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
-      "scale" : "1x",
-      "size" : "16x16"
-    },
-    {
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "16x16"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "2x",
-      "size" : "16x16"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
       "scale" : "2x",
       "size" : "16x16"
     },
@@ -518,30 +494,6 @@
     },
     {
       "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "1x",
-      "size" : "32x32"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
-      "scale" : "1x",
-      "size" : "32x32"
-    },
-    {
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "32x32"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "2x",
-      "size" : "32x32"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
       "scale" : "2x",
       "size" : "32x32"
     },
@@ -552,30 +504,6 @@
     },
     {
       "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "1x",
-      "size" : "128x128"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
-      "scale" : "1x",
-      "size" : "128x128"
-    },
-    {
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "128x128"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "2x",
-      "size" : "128x128"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
       "scale" : "2x",
       "size" : "128x128"
     },
@@ -586,30 +514,6 @@
     },
     {
       "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "1x",
-      "size" : "256x256"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
-      "scale" : "1x",
-      "size" : "256x256"
-    },
-    {
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "256x256"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "2x",
-      "size" : "256x256"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
       "scale" : "2x",
       "size" : "256x256"
     },
@@ -620,30 +524,6 @@
     },
     {
       "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "1x",
-      "size" : "512x512"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
-      "scale" : "1x",
-      "size" : "512x512"
-    },
-    {
-      "idiom" : "mac",
-      "scale" : "2x",
-      "size" : "512x512"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "left-to-right",
-      "scale" : "2x",
-      "size" : "512x512"
-    },
-    {
-      "idiom" : "mac",
-      "language-direction" : "right-to-left",
       "scale" : "2x",
       "size" : "512x512"
     }
