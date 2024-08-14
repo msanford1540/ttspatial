@@ -1,9 +1,9 @@
 {
   "images" : [
     {
-      "filename" : "ttt-icon-bttom.jpg",
-      "idiom" : "vision",
-      "scale" : "2x"
+      "filename" : "Back.jpg",
+      "scale" : "2x",
+      "idiom" : "vision"
     }
   ],
   "info" : {

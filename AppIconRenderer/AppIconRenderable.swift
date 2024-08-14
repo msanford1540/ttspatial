@@ -135,18 +135,7 @@ extension AppIconRenderable {
     }
 
     func writeImage(_ image: NSImage, to file: URL) {
-        guard let tiff = image.tiffRepresentation,
-              let imageRep = NSBitmapImageRep(data: tiff),
-              let pngData = imageRep.representation(using: .png, properties: [:]) else {
-            print("failed to get image data respresentation")
-            return
-        }
-        do {
-            try pngData.write(to: file, options: [])
-            print("generated image: \(file)")
-        } catch {
-            print("error: \(error as NSError)")
-        }
+        image.write(to: file)
     }
 }
 
@@ -325,6 +314,20 @@ struct AppIconVisionOS: AppIconRenderable {
             return "\(name).solidimagestacklayer"
         }
     }
+
+    func layerInfo(for layers: [LayerDescriptor]) -> [(LayerDescriptor, RenderLayer)] {
+        switch layers.count {
+        case 0:
+            []
+        case 2:
+            [(layers[0], .middleAndFront), (layers[1], .back)]
+        case 3...:
+            [(layers[0], .front), (layers[1], .middle), (layers[2], .back)]
+        default:
+            [(layers[0], .all)]
+        }
+    }
+
     private func drawBackground(_ context: CGContext, length: CGFloat) {
         let gradient = CGGradient(
             colorsSpace: nil,
@@ -333,7 +336,7 @@ struct AppIconVisionOS: AppIconRenderable {
                 NSColor(red: 0.925, green: 0.925, blue: 1, alpha: 1).cgColor,
                 NSColor(red: 0.825, green: 0.825, blue: 1, alpha: 1).cgColor
             ] as CFArray,
-            locations: [0.5, 0.75, 1]
+            locations: [0, 0.6, 0.9]
         )
         guard let gradient else { return }
         context.drawLinearGradient(
@@ -384,6 +387,23 @@ struct AppIconVisionOS: AppIconRenderable {
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
             drawImage(context, length: length, languageDirection: languageDirection, layer: layer)
             return true
+        }
+    }
+}
+
+extension NSImage {
+    func write(to file: URL, as fileType: NSBitmapImageRep.FileType = .png) {
+        guard let tiff = tiffRepresentation,
+              let imageRep = NSBitmapImageRep(data: tiff),
+              let imageData = imageRep.representation(using: fileType, properties: [:]) else {
+            print("failed to get image data respresentation")
+            return
+        }
+        do {
+            try imageData.write(to: file, options: [])
+            print("generated image: \(file)")
+        } catch {
+            print("error: \(error as NSError)")
         }
     }
 }

@@ -33,13 +33,9 @@ struct AppIconRendererApp: App {
                             .frame(height: secondaryLength)
                     }
                     VStack {
-//                        GeometryReader { geometry in
-//                            let physicalLength = min(geometry.size.width, geometry.size.height)
-                            Image(nsImage: render.iOSExampleImage(length: length, appearanceType: nil))
-                                .resizable()
-                                .scaledToFit()
-//                                .clipShape(RoundedRectangle(cornerRadius: physicalLength * 0.155))
-//                        }
+                        Image(nsImage: render.iOSExampleImage(length: length, appearanceType: nil))
+                            .resizable()
+                            .scaledToFit()
                         HStack {
                             Image(nsImage: render.iOSExampleImage(length: length, appearanceType: .dark))
                                 .resizable()

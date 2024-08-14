@@ -44,6 +44,8 @@ private let exampleDescriptors: [IconDescriptor] = [
 struct ContentsInfo: Codable {
     let author: String
     let version: Int
+
+    static let `default` = ContentsInfo(author: "xcode", version: 1)
 }
 
 protocol AppIconContents: Codable {}
@@ -73,6 +75,16 @@ struct AppIconiOSmacOSContents: AppIconContents {
 
     var generativeImageDescriptors: Set<GenerativeImageDescriptor> {
         Set(images.map(\.generativeImageDescriptor))
+    }
+}
+
+struct AppIconLayerContents: Encodable {
+    let images: [VisionIconDescriptor]
+    let info: ContentsInfo
+
+    init(_ iconDescriptor: VisionIconDescriptor) {
+        self.images = [iconDescriptor]
+        self.info = .default
     }
 }
 
@@ -144,6 +156,30 @@ struct LayerDescriptor: Equatable, Codable {
     let filename: String
 }
 
+struct VisionIconDescriptor: Equatable, Encodable {
+    let idiom: Idiom
+    let filename: String
+    let scale: Int = 2
+
+    init(filename: String) {
+        self.idiom = .vision
+        self.filename = filename
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case idiom
+        case filename
+        case scale
+    }
+
+    func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(idiom.rawValue, forKey: .idiom)
+        try container.encode(filename, forKey: .filename)
+        try container.encode("\(scale)x", forKey: .scale)
+    }
+}
+
 struct IconDescriptor: Equatable, Codable {
     let idiom: Idiom
     let platform: Platform?
@@ -194,7 +230,6 @@ struct IconDescriptor: Equatable, Codable {
             throw NSError(domain: "\(Self.self)", code: 0, userInfo: nil)
         }
         self.appearances = try container.decodeIfPresent([Appearance].self, forKey: .appearances)
-        print("canvasSize: \(canvasSize)")
     }
 
     func encode(to encoder: any Encoder) throws {
@@ -302,6 +337,48 @@ final class AppIconRenderer {
         }
     }
 
+    private func writeContentsJSON(for contents: AppIconVisionOSContents, folder: URL) {
+        let fileURL = folder.appendingPathComponent("Contents.json")
+        do {
+            try contents.writeJSON(to: fileURL)
+        } catch {
+            print("writeContentsJSON error: \(error as NSError)")
+        }
+    }
+
+    private func writeLayer(folder: URL, filename: String, image: NSImage, layer: AppIconVisionOS.RenderLayer) {
+        do {
+            let layerFolder = folder.appending(path: filename, directoryHint: .isDirectory)
+            let contentFolder = layerFolder.appending(path: "Content.imageset", directoryHint: .isDirectory)
+            try FileManager.default.createDirectory(at: contentFolder, withIntermediateDirectories: true)
+
+            let parentContentsEncoder = JSONEncoder()
+            parentContentsEncoder.outputFormatting = [.prettyPrinted]
+            let parentContentsData = try parentContentsEncoder.encode(ContentsInfo.default)
+            let parentContentsFileURL = layerFolder.appending(path: "Contents.json", directoryHint: .notDirectory)
+            try parentContentsData.write(to: parentContentsFileURL)
+
+            let baseFilename = filename.dropFileExtension()
+            let imageFilename = "\(baseFilename).jpg"
+            let layerContents = AppIconLayerContents(.init(filename: imageFilename))
+            let layerContentsEncoder = JSONEncoder()
+            layerContentsEncoder.outputFormatting = [.prettyPrinted]
+            let layerContentsData = try layerContentsEncoder.encode(layerContents)
+            let layerContentsFileURL = contentFolder.appending(path: "Contents.json", directoryHint: .notDirectory)
+            try layerContentsData.write(to: layerContentsFileURL)
+
+            let imageFileURL = contentFolder.appending(path: imageFilename, directoryHint: .notDirectory)
+            let fileType: NSBitmapImageRep.FileType = if layer == .all || layer == .back {
+                .jpeg
+            } else {
+                .png
+            }
+            image.write(to: imageFileURL, as: fileType)
+        } catch {
+            print("writeLayer error: \(error as NSError)")
+        }
+    }
+
     func macOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
         macOSAppIcon.image(length: length, languageDirection: languageDirection, appearance: nil)
     }
@@ -321,17 +398,22 @@ final class AppIconRenderer {
         writeMacOSImages(for: contents, folder: folder)
     }
 
-    private func writeVisionOSFiles(layerCount: Int = 3) {
-        let validLayerCount = max(1, min(layerCount, 3))
-        if validLayerCount == 3 {
-            let frontImage = visionOSAppIcon.image(layer: .front)
-            let middleImage = visionOSAppIcon.image(layer: .middle)
-            let backImage = visionOSAppIcon.image(layer: .back)
-        } else if validLayerCount == 2 {
-            let middleAndFrontImage = visionOSAppIcon.image(layer: .middleAndFront)
-            let backImage = visionOSAppIcon.image(layer: .back)
-        } else {
-            let image = visionOSAppIcon.image(layer: .all)
+    private func writeVisionOSFiles(for contents: AppIconVisionOSContents) {
+        do {
+            if FileManager.default.fileExists(atPath: visionOSPath) {
+                try FileManager.default.removeItem(atPath: visionOSPath)
+                try FileManager.default.createDirectory(atPath: visionOSPath, withIntermediateDirectories: false)
+            }
+        } catch {
+            print("failed to write visionOS files. error: \(error as NSError)")
+            return
+        }
+        let folder = URL(filePath: visionOSPath, directoryHint: .isDirectory)
+        writeContentsJSON(for: contents, folder: folder)
+        let layerInfos = visionOSAppIcon.layerInfo(for: contents.layers)
+        for layerInfo in layerInfos {
+            let layer = layerInfo.1
+            writeLayer(folder: folder, filename: layerInfo.0.filename, image: visionOSAppIcon.image(layer: layer), layer: layer)
         }
     }
 
@@ -341,6 +423,23 @@ final class AppIconRenderer {
             writeiOSmacOSFiles(for: contents)
         } catch {
             assertionFailure("\(error as NSError)")
+        }
+        do {
+            let contents = try AppIconVisionOSContents(filename: "Contents-visionos")
+            writeVisionOSFiles(for: contents)
+        } catch {
+            assertionFailure("\(error as NSError)")
+        }
+    }
+}
+
+private extension String {
+    func dropFileExtension() -> String {
+        let components = components(separatedBy: ".")
+        return if components.count > 1 {
+            components.dropLast().joined(separator: ".")
+        } else {
+            self
         }
     }
 }
