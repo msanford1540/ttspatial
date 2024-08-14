@@ -359,7 +359,12 @@ final class AppIconRenderer {
             try parentContentsData.write(to: parentContentsFileURL)
 
             let baseFilename = filename.dropFileExtension()
-            let imageFilename = "\(baseFilename).jpg"
+            let fileType: NSBitmapImageRep.FileType = if layer == .all || layer == .back {
+                .jpeg
+            } else {
+                .png
+            }
+            let imageFilename = "\(baseFilename).\(fileType == .jpeg ? "jpg" : "png")"
             let layerContents = AppIconLayerContents(.init(filename: imageFilename))
             let layerContentsEncoder = JSONEncoder()
             layerContentsEncoder.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -368,11 +373,6 @@ final class AppIconRenderer {
             try layerContentsData.write(to: layerContentsFileURL)
 
             let imageFileURL = contentFolder.appending(path: imageFilename, directoryHint: .notDirectory)
-            let fileType: NSBitmapImageRep.FileType = if layer == .all || layer == .back {
-                .jpeg
-            } else {
-                .png
-            }
             image.write(to: imageFileURL, as: fileType)
         } catch {
             print("writeLayer error: \(error as NSError)")
