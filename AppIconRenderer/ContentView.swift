@@ -63,7 +63,7 @@ extension AppIconContents {
 
     func writeJSON(to url: URL) throws {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         let data = try encoder.encode(self)
         try data.write(to: url)
     }
@@ -353,7 +353,7 @@ final class AppIconRenderer {
             try FileManager.default.createDirectory(at: contentFolder, withIntermediateDirectories: true)
 
             let parentContentsEncoder = JSONEncoder()
-            parentContentsEncoder.outputFormatting = [.prettyPrinted]
+            parentContentsEncoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let parentContentsData = try parentContentsEncoder.encode(ContentsInfo.default)
             let parentContentsFileURL = layerFolder.appending(path: "Contents.json", directoryHint: .notDirectory)
             try parentContentsData.write(to: parentContentsFileURL)
@@ -362,7 +362,7 @@ final class AppIconRenderer {
             let imageFilename = "\(baseFilename).jpg"
             let layerContents = AppIconLayerContents(.init(filename: imageFilename))
             let layerContentsEncoder = JSONEncoder()
-            layerContentsEncoder.outputFormatting = [.prettyPrinted]
+            layerContentsEncoder.outputFormatting = [.prettyPrinted, .sortedKeys]
             let layerContentsData = try layerContentsEncoder.encode(layerContents)
             let layerContentsFileURL = contentFolder.appending(path: "Contents.json", directoryHint: .notDirectory)
             try layerContentsData.write(to: layerContentsFileURL)

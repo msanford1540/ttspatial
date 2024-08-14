@@ -1,9 +1,9 @@
 {
   "images" : [
     {
-      "scale" : "2x",
+      "filename" : "Back.jpg",
       "idiom" : "vision",
-      "filename" : "Back.jpg"
+      "scale" : "2x"
     }
   ],
   "info" : {
