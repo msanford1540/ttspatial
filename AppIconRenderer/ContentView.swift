@@ -7,86 +7,105 @@
 
 import SwiftUI
 
-struct AppIconSetDescriptor {
-    let name: String
-    let iconDescriptors: [IconDescriptor] = [
-        .init(.universal, platform: .iOS, 1024, scale: nil),
-        .init(.mac, 16),
-        .init(.mac, 16, languageDirection: .leftToRight),
-        .init(.mac, 16, languageDirection: .rightToLeft),
-        .init(.mac, 16, scale: 2),
-        .init(.mac, 16, languageDirection: .leftToRight, scale: 2),
-        .init(.mac, 16, languageDirection: .rightToLeft, scale: 2),
-        .init(.mac, 32),
-        .init(.mac, 32, languageDirection: .leftToRight),
-        .init(.mac, 32, languageDirection: .rightToLeft),
-        .init(.mac, 32, scale: 2),
-        .init(.mac, 32, languageDirection: .leftToRight, scale: 2),
-        .init(.mac, 32, languageDirection: .rightToLeft, scale: 2),
-        .init(.mac, 128),
-        .init(.mac, 128, languageDirection: .leftToRight),
-        .init(.mac, 128, languageDirection: .rightToLeft),
-        .init(.mac, 128, scale: 2),
-        .init(.mac, 128, languageDirection: .leftToRight, scale: 2),
-        .init(.mac, 128, languageDirection: .rightToLeft, scale: 2),
-        .init(.mac, 256),
-        .init(.mac, 256, languageDirection: .leftToRight),
-        .init(.mac, 256, languageDirection: .rightToLeft),
-        .init(.mac, 256, scale: 2),
-        .init(.mac, 256, languageDirection: .leftToRight, scale: 2),
-        .init(.mac, 256, languageDirection: .rightToLeft, scale: 2),
-        .init(.mac, 512),
-        .init(.mac, 512, languageDirection: .leftToRight),
-        .init(.mac, 512, languageDirection: .rightToLeft),
-        .init(.mac, 512, scale: 2),
-        .init(.mac, 512, languageDirection: .leftToRight, scale: 2),
-        .init(.mac, 512, languageDirection: .rightToLeft, scale: 2)
-    ]
+private let exampleDescriptors: [IconDescriptor] = [
+    .init(.universal, platform: .iOS, 1024, scale: nil),
+    .init(.mac, 16),
+    .init(.mac, 16, languageDirection: .leftToRight),
+    .init(.mac, 16, languageDirection: .rightToLeft),
+    .init(.mac, 16, scale: 2),
+    .init(.mac, 16, languageDirection: .leftToRight, scale: 2),
+    .init(.mac, 16, languageDirection: .rightToLeft, scale: 2),
+    .init(.mac, 32),
+    .init(.mac, 32, languageDirection: .leftToRight),
+    .init(.mac, 32, languageDirection: .rightToLeft),
+    .init(.mac, 32, scale: 2),
+    .init(.mac, 32, languageDirection: .leftToRight, scale: 2),
+    .init(.mac, 32, languageDirection: .rightToLeft, scale: 2),
+    .init(.mac, 128),
+    .init(.mac, 128, languageDirection: .leftToRight),
+    .init(.mac, 128, languageDirection: .rightToLeft),
+    .init(.mac, 128, scale: 2),
+    .init(.mac, 128, languageDirection: .leftToRight, scale: 2),
+    .init(.mac, 128, languageDirection: .rightToLeft, scale: 2),
+    .init(.mac, 256),
+    .init(.mac, 256, languageDirection: .leftToRight),
+    .init(.mac, 256, languageDirection: .rightToLeft),
+    .init(.mac, 256, scale: 2),
+    .init(.mac, 256, languageDirection: .leftToRight, scale: 2),
+    .init(.mac, 256, languageDirection: .rightToLeft, scale: 2),
+    .init(.mac, 512),
+    .init(.mac, 512, languageDirection: .leftToRight),
+    .init(.mac, 512, languageDirection: .rightToLeft),
+    .init(.mac, 512, scale: 2),
+    .init(.mac, 512, languageDirection: .leftToRight, scale: 2),
+    .init(.mac, 512, languageDirection: .rightToLeft, scale: 2)
+]
 
-    init(name: String) {
-        self.name = name
+struct ContentsInfo: Codable {
+    let author: String
+    let version: Int
+}
+
+protocol AppIconContents: Codable {}
+
+extension AppIconContents {
+    init(filename: String) throws {
+        guard let templateURL = Bundle.main.url(forResource: filename, withExtension: "json") else {
+            throw URLError(.resourceUnavailable)
+        }
+        let decoder = JSONDecoder()
+        let templateData = try Data(contentsOf: templateURL)
+        let contents = try decoder.decode(Self.self, from: templateData)
+        self = contents
     }
 
-    var generativeImageDescriptors: Set<GenerativeImageDescriptor> {
-        Set(iconDescriptors.map(\.generativeImageDescriptor))
-    }
-
-    func writeContentsJSON(to url: URL) throws {
+    func writeJSON(to url: URL) throws {
         let encoder = JSONEncoder()
-        encoder.userInfo = [.appIconNameKey: name]
         encoder.outputFormatting = .prettyPrinted
-        let contents = Contents(images: iconDescriptors)
-        let data = try encoder.encode(contents)
+        let data = try encoder.encode(self)
         try data.write(to: url)
     }
 }
 
-struct Contents: Encodable {
-    struct Info: Encodable {
-        let author = "xcode"
-        let version = 1
-    }
+struct AppIconiOSmacOSContents: AppIconContents {
     let images: [IconDescriptor]
-    let info = Info()
+    let info: ContentsInfo
 
-    init(images: [IconDescriptor]) {
-        self.images = images
+    var generativeImageDescriptors: Set<GenerativeImageDescriptor> {
+        Set(images.map(\.generativeImageDescriptor))
     }
 }
 
-enum Platform: String, Hashable {
+struct AppIconVisionOSContents: AppIconContents {
+    let layers: [LayerDescriptor]
+    let info: ContentsInfo
+}
+
+enum Platform: String, Hashable, Codable {
     case macOS = "macos"
     case iOS = "ios"
     case visionOS = "visionos"
 }
 
 struct GenerativeImageDescriptor: Hashable {
-    let length: Int
+    let length: Float
     let platform: Platform
     let languageDirection: LanguageDirection?
+    let appearance: Appearance?
 
-    func filename(with baseName: String) -> String {
-        "\(baseName)-\(platform)-\(languageDirection == .rightToLeft ? "rtl-" : "")\(length).png"
+    var filename: String {
+        "\(platform)-\(appearance.map { "\($0.value.rawValue)-" } ?? "")\(languageDirection == .rightToLeft ? "rtl-" : "")\(lengthString).png"
+    }
+
+    private var lengthString: String {
+        let sizeRounded = Int((length * 10).rounded())
+        let number = Int(length.rounded(.down))
+        let remainder = sizeRounded % 10
+        return if remainder == 0 {
+            String(number)
+        } else {
+            "\(number)_\(remainder)"
+        }
     }
 }
 
@@ -94,19 +113,42 @@ extension CodingUserInfoKey {
     static let appIconNameKey = CodingUserInfoKey(rawValue: "appIconName")!
 }
 
-enum LanguageDirection: String, Hashable {
+enum LanguageDirection: String, Hashable, Codable {
     case leftToRight = "left-to-right"
     case rightToLeft = "right-to-left"
 }
 
-struct IconDescriptor: Equatable, Encodable {
-    enum Idiom: String, Hashable {
-        case ios, mac, universal
+enum Idiom: String, Hashable, Codable {
+    case ios, mac, universal, vision
+}
+
+enum AppearanceType: String, Hashable, Codable {
+    case tinted, dark
+}
+
+struct Appearance: Codable, Hashable {
+    let appearance: String
+    let value: AppearanceType
+
+    init(appearance: String, value: AppearanceType) {
+        self.appearance = appearance
+        self.value = value
     }
 
+    init(_ value: AppearanceType) {
+        self.init(appearance: "luminosity", value: value)
+    }
+}
+
+struct LayerDescriptor: Equatable, Codable {
+    let filename: String
+}
+
+struct IconDescriptor: Equatable, Codable {
     let idiom: Idiom
     let platform: Platform?
-    let canvasSize: Int
+    let appearances: [Appearance]?
+    let canvasSize: Float
     let languageDirection: LanguageDirection?
     let scale: Int?
 
@@ -117,22 +159,48 @@ struct IconDescriptor: Equatable, Encodable {
         case scale
         case size
         case filename
+        case appearances
     }
 
-    init(_ idiom: Idiom, platform: Platform? = nil, _ canvasSize: Int, languageDirection: LanguageDirection? = nil, scale: Int? = 1) {
+    init(_ idiom: Idiom, platform: Platform? = nil, _ canvasSize: Float, languageDirection: LanguageDirection? = nil, scale: Int? = 1) {
         self.idiom = idiom
         self.platform = platform
         self.canvasSize = canvasSize
         self.languageDirection = languageDirection
         self.scale = scale
+        self.appearances = nil
+    }
+
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.idiom = try container.decode(Idiom.self, forKey: .idiom)
+        self.languageDirection = try container.decodeIfPresent(LanguageDirection.self, forKey: .languageDirection)
+        self.platform = try container.decodeIfPresent(Platform.self, forKey: .platform)
+        if let scaleString = try container.decodeIfPresent(String.self, forKey: .scale) {
+            if let scale = Int(scaleString.dropLast()) {
+                assert(scale >= 1 && scale <= 3, "invalid scale factor")
+                self.scale = scale
+            } else {
+                assertionFailure("failed to parse scale")
+                self.scale = nil
+            }
+        } else {
+            self.scale = nil
+        }
+        let sizeString = try container.decode(String.self, forKey: .size)
+        if let size = sizeString.components(separatedBy: "x").first.flatMap(Float.init) {
+            self.canvasSize = size
+        } else {
+            throw NSError(domain: "\(Self.self)", code: 0, userInfo: nil)
+        }
+        self.appearances = try container.decodeIfPresent([Appearance].self, forKey: .appearances)
+        print("canvasSize: \(canvasSize)")
     }
 
     func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        if let name = encoder.userInfo[.appIconNameKey] as? String {
-            let filename = generativeImageDescriptor.filename(with: name)
-            try container.encode(filename, forKey: .filename)
-        }
+        let filename = generativeImageDescriptor.filename
+        try container.encode(filename, forKey: .filename)
         try container.encode(idiom.rawValue, forKey: .idiom)
         if let languageDirection {
             try container.encode(languageDirection.rawValue, forKey: .languageDirection)
@@ -140,19 +208,32 @@ struct IconDescriptor: Equatable, Encodable {
         if let platform {
             try container.encode(platform.rawValue, forKey: .platform)
         }
-
         if let scale {
             try container.encode("\(scale)x", forKey: .scale)
         }
-        try container.encode("\(canvasSize)x\(canvasSize)", forKey: .size)
+        try container.encode("\(canvasSizeText)x\(canvasSizeText)", forKey: .size)
+        if let appearances {
+            try container.encode(appearances, forKey: .appearances)
+        }
     }
 
-    private var imageLength: Int {
-        canvasSize * (scale ?? 1)
+    private var canvasSizeText: String {
+        let sizeRounded = Int((canvasSize * 10).rounded())
+        let number = Int(canvasSize.rounded(.down))
+        let remainder = sizeRounded % 10
+        return if remainder == 0 {
+            String(number)
+        } else {
+            "\(number).\(remainder)"
+        }
+    }
+
+    private var imageLength: Float {
+        canvasSize * Float(scale ?? 1)
     }
 
     var generativeImageDescriptor: GenerativeImageDescriptor {
-        .init(length: imageLength, platform: platform ?? .macOS, languageDirection: languageDirection)
+        .init(length: imageLength, platform: platform ?? .macOS, languageDirection: languageDirection, appearance: appearances?.first)
     }
 
     var imageSize: CGSize {
@@ -169,20 +250,20 @@ final class AppIconRenderer {
     private let iOSAppIcon = AppIconIOS()
     private let macOSAppIcon = AppIconMacOS()
     private let visionOSAppIcon = AppIconVisionOS()
-    let path: String
+    let iOSMacOSPath: String
     let visionOSPath: String
 
-    init(path: String, visionOSPath: String) {
-        self.path = path
+    init(iOSMacOSPath: String, visionOSPath: String) {
+        self.iOSMacOSPath = iOSMacOSPath
         self.visionOSPath = visionOSPath
     }
 
-    func writeMacOSImages(for appIconSet: AppIconSetDescriptor, folder: URL) {
-        writeImages(for: appIconSet, folder: folder, platform: .macOS)
+    func writeMacOSImages(for contents: AppIconiOSmacOSContents, folder: URL) {
+        writeImages(for: contents, folder: folder, platform: .macOS)
     }
 
-    func writeIOSImages(for appIconSet: AppIconSetDescriptor, folder: URL) {
-        writeImages(for: appIconSet, folder: folder, platform: .iOS)
+    func writeIOSImages(for contents: AppIconiOSmacOSContents, folder: URL) {
+        writeImages(for: contents, folder: folder, platform: .iOS)
     }
 
     private func appIcon(for platform: Platform) -> any AppIconRenderable {
@@ -196,45 +277,48 @@ final class AppIconRenderer {
         }
     }
 
-    private func writeImages(for appIconSet: AppIconSetDescriptor,
+    private func writeImages(for contents: AppIconiOSmacOSContents,
                              folder: URL,
                              platform: Platform) {
-        let descriptors = appIconSet.generativeImageDescriptors.filter { $0.platform == platform }
+        let descriptors = contents.generativeImageDescriptors.filter { $0.platform == platform }
         for descriptor in descriptors {
-            let filename = descriptor.filename(with: appIconSet.name)
-            let url = folder.appendingPathComponent(filename)
+            let url = folder.appendingPathComponent(descriptor.filename)
             let appIcon = appIcon(for: platform)
-            appIcon.writeImage(length: descriptor.length, languageDirection: descriptor.languageDirection, to: url)
+            appIcon.writeImage(
+                length: descriptor.length,
+                languageDirection: descriptor.languageDirection,
+                appearance: descriptor.appearance,
+                to: url
+            )
         }
     }
 
-    private func writeContentsJSON(for appIconSet: AppIconSetDescriptor, folder: URL) {
+    private func writeContentsJSON(for contents: AppIconiOSmacOSContents, folder: URL) {
         let fileURL = folder.appendingPathComponent("Contents.json")
         do {
-            try appIconSet.writeContentsJSON(to: fileURL)
+            try contents.writeJSON(to: fileURL)
         } catch {
             print("writeContentsJSON error: \(error as NSError)")
         }
     }
 
     func macOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
-        macOSAppIcon.image(length: length, languageDirection: languageDirection)
+        macOSAppIcon.image(length: length, languageDirection: languageDirection, appearance: nil)
     }
 
-    func iOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
-        iOSAppIcon.image(length: length, languageDirection: languageDirection)
+    func iOSExampleImage(length: CGFloat, appearanceType: AppearanceType?) -> NSImage {
+        iOSAppIcon.image(length: length, languageDirection: nil, appearance: appearanceType.map(Appearance.init))
     }
 
-    func visionOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
-        visionOSAppIcon.image(length: length, languageDirection: languageDirection)
+    func visionOSExampleImage(length: CGFloat, layer: AppIconVisionOS.RenderLayer) -> NSImage {
+        visionOSAppIcon.image(length: length, layer: layer)
     }
 
-    private func writeMacOSiOSFiles() {
-        let appIconSet = AppIconSetDescriptor(name: "ttt-appicon")
-        let folder = URL(filePath: path, directoryHint: .isDirectory)
-        writeContentsJSON(for: appIconSet, folder: folder)
-        writeIOSImages(for: appIconSet, folder: folder)
-        writeMacOSImages(for: appIconSet, folder: folder)
+    private func writeiOSmacOSFiles(for contents: AppIconiOSmacOSContents) {
+        let folder = URL(filePath: iOSMacOSPath, directoryHint: .isDirectory)
+        writeContentsJSON(for: contents, folder: folder)
+        writeIOSImages(for: contents, folder: folder)
+        writeMacOSImages(for: contents, folder: folder)
     }
 
     private func writeVisionOSFiles(layerCount: Int = 3) {
@@ -252,6 +336,11 @@ final class AppIconRenderer {
     }
 
     func writeFiles() {
-        writeMacOSiOSFiles()
+        do {
+            let contents = try AppIconiOSmacOSContents(filename: "Contents-ios")
+            writeiOSmacOSFiles(for: contents)
+        } catch {
+            assertionFailure("\(error as NSError)")
+        }
     }
 }

@@ -8,18 +8,19 @@
 import SwiftUI
 
 private let folder = "/Users/msanford1540/Developer/tictacspatial"
-let path = "\(folder)/TicTacSpatial-iOS/Assets.xcassets/AppIcon.appiconset"
+let iOSMacOSPath = "\(folder)/TicTacSpatial-iOS/Assets.xcassets/AppIcon.appiconset"
 let visionOSPath = "\(folder)/TicTacSpatial-visionOS/Assets.xcassets/AppIcon.solidimagestack"
 
 @main @MainActor
 struct AppIconRendererApp: App {
-    let render = AppIconRenderer(path: path, visionOSPath: visionOSPath)
+    let render = AppIconRenderer(iOSMacOSPath: iOSMacOSPath, visionOSPath: visionOSPath)
 
     var body: some Scene {
         WindowGroup {
             GeometryReader { geometry in
                 HStack {
                     let length = min(geometry.size.width, geometry.size.height)
+                    let secondaryLength = length * 0.333
                     VStack {
                         Image(nsImage: render.macOSExampleImage(length: length, languageDirection: .leftToRight))
                             .resizable()
@@ -29,27 +30,50 @@ struct AppIconRendererApp: App {
                             .resizable()
                             .scaledToFit()
                             .border(.black)
+                            .frame(height: secondaryLength)
                     }
                     VStack {
-                        Image(nsImage: render.iOSExampleImage(length: length, languageDirection: .leftToRight))
-                            .resizable()
-                            .scaledToFit()
-                            .border(.black)
-                        Image(nsImage: render.iOSExampleImage(length: length, languageDirection: .rightToLeft))
-                            .resizable()
-                            .scaledToFit()
-                            .border(.black)
+//                        GeometryReader { geometry in
+//                            let physicalLength = min(geometry.size.width, geometry.size.height)
+                            Image(nsImage: render.iOSExampleImage(length: length, appearanceType: nil))
+                                .resizable()
+                                .scaledToFit()
+//                                .clipShape(RoundedRectangle(cornerRadius: physicalLength * 0.155))
+//                        }
+                        HStack {
+                            Image(nsImage: render.iOSExampleImage(length: length, appearanceType: .dark))
+                                .resizable()
+                                .scaledToFit()
+                                .border(.black)
+                            Image(nsImage: render.iOSExampleImage(length: length, appearanceType: .tinted))
+                                .resizable()
+                                .scaledToFit()
+                                .border(.black)
+                        }
+                        .frame(height: secondaryLength)
                     }
                     VStack {
-                        Image(nsImage: render.visionOSExampleImage(length: length, languageDirection: .leftToRight))
+                        Image(nsImage: render.visionOSExampleImage(length: length, layer: .all))
                             .resizable()
                             .scaledToFit()
-                            .border(.black)
-                        Image(nsImage: render.visionOSExampleImage(length: length, languageDirection: .rightToLeft))
-                            .resizable()
-                            .scaledToFit()
-                            .border(.black)
+                            .clipShape(Circle())
+                        HStack {
+                            Image(nsImage: render.visionOSExampleImage(length: length, layer: .front))
+                                .resizable()
+                                .scaledToFit()
+                                .overlay(Circle().stroke(.black))
+                           Image(nsImage: render.visionOSExampleImage(length: length, layer: .middle))
+                                .resizable()
+                                .scaledToFit()
+                                .overlay(Circle().stroke(.black))
+                            Image(nsImage: render.visionOSExampleImage(length: length, layer: .back))
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                        }
+                        .frame(height: secondaryLength)
                     }
+                    Spacer()
                 }
             }
             .frame(maxHeight: 1024)

@@ -9,7 +9,7 @@ import AppKit
 import CoreGraphics
 
 protocol AppIconRenderable {
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?)
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?)
 }
 
 private struct FaceMetrics {
@@ -18,17 +18,25 @@ private struct FaceMetrics {
 }
 
 extension AppIconRenderable {
-    func image(length: CGFloat, languageDirection: LanguageDirection?) -> NSImage {
+    func image(length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) -> NSImage {
         let size = NSSize(width: length, height: length)
         return NSImage(size: size, flipped: true) { _ in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, length: length, languageDirection: languageDirection)
+            drawImage(context, length: length, languageDirection: languageDirection, appearance: appearance)
             return true
         }
     }
 
-    private func drawX(_ context: CGContext, length: CGFloat, rect: CGRect) {
-        context.setStrokeColor(NSColor(red: 64.0/255.0, green: 64.0/255.0, blue: 255.0/255.0, alpha: 1).cgColor)
+    private func drawX(_ context: CGContext, length: CGFloat, rect: CGRect, appearance: Appearance?) {
+        let strokeColor: NSColor = switch appearance?.value {
+        case .none:
+                .init(red: 64.0/255.0, green: 64.0/255.0, blue: 255.0/255.0, alpha: 1)
+        case .dark:
+                .init(red: 28.0/255.0, green: 183.0/255.0, blue: 249.0/255.0, alpha: 1)
+        case .tinted:
+                .init(white: 0.5, alpha: 1)
+        }
+        context.setStrokeColor(strokeColor.cgColor)
         context.setLineCap(.round)
         context.setLineWidth(rect.width / 3.5)
 
@@ -41,15 +49,24 @@ extension AppIconRenderable {
         context.drawPath(using: .fillStroke)
     }
 
-    private func drawO(_ context: CGContext, length: CGFloat, rect: CGRect) {
-        context.setStrokeColor(NSColor.orange.cgColor)
+    private func drawO(_ context: CGContext, length: CGFloat, rect: CGRect, appearance: Appearance?) {
+        let strokeColor: NSColor = switch appearance?.value {
+        case .none:
+                .orange
+        case .dark:
+                .init(red: 246.0/255.0, green: 142.0/255.0, blue: 27.0/255.0, alpha: 1)
+        case .tinted:
+                .init(white: 0.75, alpha: 1)
+        }
+        context.setStrokeColor(strokeColor.cgColor)
         context.setLineWidth(rect.width / 3.5)
 
         context.addEllipse(in: rect)
         context.drawPath(using: .stroke)
     }
 
-    fileprivate func drawGamePieces(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, languageDirection: LanguageDirection?) {
+    fileprivate func drawGamePieces(_ context: CGContext, length: CGFloat,
+                                    faceMetrics: FaceMetrics, languageDirection: LanguageDirection?, appearance: Appearance?) {
         let gridMetrics = gridMetrics(length: length, faceMetrics: faceMetrics)
         let gamePieceWidth = gridMetrics.width * 0.26
         let margin = ((((gridMetrics.width / 2) - gamePieceWidth) / 2) + gridMetrics.margin)
@@ -58,18 +75,26 @@ extension AppIconRenderable {
         let isRTL = languageDirection == .rightToLeft
         let leading = isRTL ? offset : margin
         let trailing = isRTL ? margin : offset
-        drawO(context, length: length, rect: .init(origin: .init(x: leading, y: margin), size: gamePieceSize))
-        drawO(context, length: length, rect: .init(origin: .init(x: trailing, y: offset), size: gamePieceSize))
-        drawX(context, length: length, rect: .init(origin: .init(x: leading, y: offset), size: gamePieceSize))
-        drawX(context, length: length, rect: .init(origin: .init(x: trailing, y: margin), size: gamePieceSize))
+        drawO(context, length: length, rect: .init(origin: .init(x: leading, y: margin), size: gamePieceSize), appearance: appearance)
+        drawO(context, length: length, rect: .init(origin: .init(x: trailing, y: offset), size: gamePieceSize), appearance: appearance)
+        drawX(context, length: length, rect: .init(origin: .init(x: leading, y: offset), size: gamePieceSize), appearance: appearance)
+        drawX(context, length: length, rect: .init(origin: .init(x: trailing, y: margin), size: gamePieceSize), appearance: appearance)
     }
 
-    fileprivate func drawGrid(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics) {
+    fileprivate func drawGrid(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, appearance: Appearance?) {
         let gridMetrics = gridMetrics(length: length, faceMetrics: faceMetrics)
         let width = gridMetrics.width
         let margin = gridMetrics.margin
         let lineLength = width + margin
-        context.setStrokeColor(NSColor(red: 64.0/255.0, green: 128.0/255.0, blue: 64.0/255.0, alpha: 1).cgColor)
+        let strokeColor: NSColor = switch appearance?.value {
+        case .none:
+                .init(red: 64.0/255.0, green: 128.0/255.0, blue: 64.0/255.0, alpha: 1)
+        case .dark:
+                .init(red: 77.0/255.0, green: 235.0/255.0, blue: 103.0/255.0, alpha: 1)
+        case .tinted:
+                .init(white: 1, alpha: 1)
+        }
+        context.setStrokeColor(strokeColor.cgColor)
         context.setLineWidth(width / 22)
         context.setLineCap(.round)
 
@@ -104,8 +129,8 @@ extension AppIconRenderable {
         return .init(margin: margin, width: width)
     }
 
-    func writeImage(length: Int, languageDirection: LanguageDirection?, to file: URL) {
-        let image = image(length: .init(length), languageDirection: languageDirection)
+    func writeImage(length: Float, languageDirection: LanguageDirection?, appearance: Appearance?, to file: URL) {
+        let image = image(length: .init(length), languageDirection: languageDirection, appearance: appearance)
         writeImage(image, to: file)
     }
 
@@ -148,7 +173,7 @@ struct AppIconMacOS: AppIconRenderable {
         context.setShadow(offset: .zero, blur: .zero, color: nil)
     }
 
-    fileprivate func drawBackground(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics) {
+    private func drawBackground(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, appearance: Appearance?) {
         let margin = faceMetrics.margin
         let width = faceMetrics.width
         let radius = width * 0.23
@@ -156,7 +181,6 @@ struct AppIconMacOS: AppIconRenderable {
         if applyDecor {
             drawBackgroundShadow(context, length: length, faceMetrics: faceMetrics)
         }
-        context.setFillColor(.white)
         let rect: CGRect = .init(x: margin, y: margin, width: width, height: width)
         let min = rect.minX
         let mid = rect.midX
@@ -168,7 +192,6 @@ struct AppIconMacOS: AppIconRenderable {
         context.addArc(tangent1End: .init(x: min, y: max), tangent2End: .init(x: min, y: mid), radius: radius)
         context.closePath()
         context.clip()
-        context.fillPath()
 
         let gradient: CGGradient? = if applyDecor {
             .init(
@@ -199,19 +222,82 @@ struct AppIconMacOS: AppIconRenderable {
         context.setBlendMode(.normal)
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) {
         let faceMetrics = faceMetrics(length: length, faceWidth: 824)
-        drawBackground(context, length: length, faceMetrics: faceMetrics)
-        drawGrid(context, length: length, faceMetrics: faceMetrics)
-        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+        drawBackground(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
+        drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
+        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: appearance)
+    }
+
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
+        drawImage(context, length: length, languageDirection: languageDirection, appearance: nil)
     }
 }
 
 struct AppIconIOS: AppIconRenderable {
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
+    private func drawBackground(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, appearance: Appearance?) {
+        let applyDecor = length > 100
+
+        let gradient: CGGradient?
+        switch appearance?.value {
+        case nil:
+            gradient = if applyDecor {
+                .init(
+                    colorsSpace: nil,
+                    colors: [
+                        NSColor.white.cgColor,
+                        NSColor(red: 0.925, green: 0.925, blue: 1, alpha: 1).cgColor,
+                        NSColor(red: 0.825, green: 0.825, blue: 1, alpha: 1).cgColor
+                    ] as CFArray,
+                    locations: [0.5, 0.7, 0.95]
+                )
+            } else {
+                .init(
+                    colorsSpace: nil,
+                    colors: [
+                        NSColor.white.cgColor
+                    ] as CFArray,
+                    locations: [0]
+                )
+            }
+//        case .dark:
+//            gradient = if applyDecor {
+//                .init(
+//                    colorsSpace: nil,
+//                    colors: [
+//                        NSColor(white: 0.175, alpha: 1).cgColor,
+//                        NSColor(white: 0.135, alpha: 1).cgColor,
+//                        NSColor(white: 0.05, alpha: 1).cgColor
+//                    ] as CFArray,
+//                    locations: [0.05, 0.2, 0.4]
+//                )
+//            } else {
+//                .init(
+//                    colorsSpace: nil,
+//                    colors: [
+//                        NSColor(white: 0.05, alpha: 1).cgColor
+//                    ] as CFArray,
+//                    locations: [0]
+//                )
+//            }
+        case .dark, .tinted:
+            return
+        }
+        guard let gradient else { return }
+        context.drawLinearGradient(
+            gradient,
+            start: .init(x: 0, y: 0),
+            end: .init(x: 0, y: length),
+            options: []
+        )
+        context.setBlendMode(.normal)
+    }
+
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) {
         let faceMetrics = faceMetrics(length: length, faceWidth: 888)
-        drawGrid(context, length: length, faceMetrics: faceMetrics)
-        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+        drawBackground(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
+        drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
+        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: appearance)
     }
 }
 
@@ -259,26 +345,26 @@ struct AppIconVisionOS: AppIconRenderable {
         context.setBlendMode(.normal)
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, layer: RenderLayer) {
-        let faceMetrics = faceMetrics(length: length, faceWidth: 777)
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection? = nil, layer: RenderLayer) {
+        let faceMetrics = faceMetrics(length: length, faceWidth: 824)
         switch layer {
         case .front:
-            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: nil)
         case .middle:
-            drawGrid(context, length: length, faceMetrics: faceMetrics)
+            drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: nil)
         case .back:
             drawBackground(context, length: length)
         case .middleAndFront:
-            drawGrid(context, length: length, faceMetrics: faceMetrics)
-            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+            drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: nil)
+            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: nil)
         case .all:
             drawBackground(context, length: length)
-            drawGrid(context, length: length, faceMetrics: faceMetrics)
-            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection)
+            drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: nil)
+            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: nil)
         }
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
+    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) {
         drawImage(context, length: length, languageDirection: languageDirection, layer: .all)
     }
 
@@ -288,6 +374,15 @@ struct AppIconVisionOS: AppIconRenderable {
         return NSImage(size: size, flipped: true) { _ in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
             drawImage(context, length: length, languageDirection: nil, layer: layer)
+            return true
+        }
+    }
+
+    func image(length: CGFloat, languageDirection: LanguageDirection? = nil, layer: RenderLayer) -> NSImage {
+        let size = NSSize(width: length, height: length)
+        return NSImage(size: size, flipped: true) { _ in
+            guard let context = NSGraphicsContext.current?.cgContext else { return false }
+            drawImage(context, length: length, languageDirection: languageDirection, layer: layer)
             return true
         }
     }
