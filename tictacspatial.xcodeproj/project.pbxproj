@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -258,6 +258,7 @@
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
+		F5F8ED9B2C5D32CB007BB22A /* AppIconRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppIconRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
 		F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -273,6 +274,10 @@
 		F5FDC9BB2BCDFB7E001EC38B /* marker-o.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "marker-o.usdz"; sourceTree = "<group>"; };
 		F5FDC9BC2BCDFB7E001EC38B /* marker-x.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "marker-x.usdz"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F5F8ED9C2C5D32CB007BB22A /* AppIconRenderer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppIconRenderer; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F5036B262BBC7AF400847D6A /* Frameworks */ = {
@@ -306,6 +311,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F555D5D82BD4488600B92AA4 /* TicTacToeController.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5F8ED982C5D32CB007BB22A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +368,7 @@
 				F555D5DD2BD4488600B92AA4 /* TicTacToeControllerTests */,
 				F5FDC98D2BCDE366001EC38B /* TicTacToeEngine */,
 				F5FDC99B2BCDE366001EC38B /* TicTacToeEngineTests */,
+				F5F8ED9C2C5D32CB007BB22A /* AppIconRenderer */,
 				F5036B2A2BBC7AF400847D6A /* Products */,
 				F5FDC9AF2BCDE5CD001EC38B /* Frameworks */,
 			);
@@ -372,6 +385,7 @@
 				F5FDC9952BCDE366001EC38B /* TicTacToeEngineTests.xctest */,
 				F555D5CE2BD4488600B92AA4 /* TicTacToeController.framework */,
 				F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */,
+				F5F8ED9B2C5D32CB007BB22A /* AppIconRenderer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -711,6 +725,28 @@
 			productReference = F555D5D72BD4488600B92AA4 /* TicTacToeControllerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F5F8ED9A2C5D32CB007BB22A /* AppIconRenderer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F5F8EDA92C5D32CC007BB22A /* Build configuration list for PBXNativeTarget "AppIconRenderer" */;
+			buildPhases = (
+				F5F8ED972C5D32CB007BB22A /* Sources */,
+				F5F8ED982C5D32CB007BB22A /* Frameworks */,
+				F5F8ED992C5D32CB007BB22A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F5F8ED9C2C5D32CB007BB22A /* AppIconRenderer */,
+			);
+			name = AppIconRenderer;
+			packageProductDependencies = (
+			);
+			productName = AppIconRenderer;
+			productReference = F5F8ED9B2C5D32CB007BB22A /* AppIconRenderer.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F5FDC9512BCDD8CE001EC38B /* TicTacSpatial-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5FDC9742BCDD8D0001EC38B /* Build configuration list for PBXNativeTarget "TicTacSpatial-iOS" */;
@@ -795,7 +831,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					F5036B282BBC7AF400847D6A = {
@@ -811,6 +847,9 @@
 					F555D5D62BD4488600B92AA4 = {
 						CreatedOnToolsVersion = 15.3;
 						TestTargetID = F5FDC9512BCDD8CE001EC38B;
+					};
+					F5F8ED9A2C5D32CB007BB22A = {
+						CreatedOnToolsVersion = 16.0;
 					};
 					F5FDC9512BCDD8CE001EC38B = {
 						CreatedOnToolsVersion = 15.3;
@@ -851,6 +890,7 @@
 				F555D5D62BD4488600B92AA4 /* TicTacToeControllerTests */,
 				F5FDC98B2BCDE366001EC38B /* TicTacToeEngine */,
 				F5FDC9942BCDE366001EC38B /* TicTacToeEngineTests */,
+				F5F8ED9A2C5D32CB007BB22A /* AppIconRenderer */,
 			);
 		};
 /* End PBXProject section */
@@ -881,6 +921,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F555D5D52BD4488600B92AA4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5F8ED992C5D32CB007BB22A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1010,6 +1057,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F555D5DF2BD4488600B92AA4 /* TicTacToeControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5F8ED972C5D32CB007BB22A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1507,6 +1561,66 @@
 			};
 			name = Release;
 		};
+		F5F8EDA72C5D32CC007BB22A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AppIconRenderer/AppIconRenderer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AppIconRenderer/Preview Content\"";
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.AppIconRenderer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F5F8EDA82C5D32CC007BB22A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AppIconRenderer/AppIconRenderer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AppIconRenderer/Preview Content\"";
+				DEVELOPMENT_TEAM = 66GSQHF5G6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.msanford1540.AppIconRenderer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		F5FDC9752BCDD8D0001EC38B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1831,6 +1945,15 @@
 			buildConfigurations = (
 				F555D5E92BD4488600B92AA4 /* Debug */,
 				F555D5EA2BD4488600B92AA4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5F8EDA92C5D32CC007BB22A /* Build configuration list for PBXNativeTarget "AppIconRenderer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5F8EDA72C5D32CC007BB22A /* Debug */,
+				F5F8EDA82C5D32CC007BB22A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

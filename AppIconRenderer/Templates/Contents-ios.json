@@ -1,112 +1,96 @@
 {
   "images" : [
     {
-      "filename" : "iOS-40.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "iOS-60.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
-      "filename" : "iOS-58.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "iOS-87.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
-      "filename" : "iOS-76.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "38x38"
     },
     {
-      "filename" : "iOS-114.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "38x38"
     },
     {
-      "filename" : "iOS-80.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "iOS-120.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-      "filename" : "iOS-120.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "iOS-180.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
-      "filename" : "iOS-128.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "64x64"
     },
     {
-      "filename" : "iOS-192.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "64x64"
     },
     {
-      "filename" : "iOS-136.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "68x68"
     },
     {
-      "filename" : "iOS-152.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
-      "filename" : "iOS-167.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "83.5x83.5"
     },
     {
-      "filename" : "iOS-1024.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -118,7 +102,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-40.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -131,7 +114,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-60.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -144,7 +126,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-58.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -157,7 +138,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-87.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -170,7 +150,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-76.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -183,7 +162,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-114.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -196,7 +174,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-80.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -209,7 +186,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-120.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -222,7 +198,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-120.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -235,7 +210,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-180.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -248,7 +222,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-128.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -261,7 +234,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-192.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -274,7 +246,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-136.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -287,7 +258,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-152.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -300,7 +270,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-167.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -313,7 +282,6 @@
           "value" : "dark"
         }
       ],
-      "filename" : "iOS-dark-1024.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -325,7 +293,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-40.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -338,7 +305,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-60.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -351,7 +317,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-58.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -364,7 +329,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-87.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -377,7 +341,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-76.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -390,7 +353,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-114.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -403,7 +365,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-80.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -416,7 +377,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-120.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -429,7 +389,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-120.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -442,7 +401,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-180.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -455,7 +413,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-128.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -468,7 +425,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-192.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -481,7 +437,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-136.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -494,7 +449,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-152.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -507,7 +461,6 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-167.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -520,67 +473,56 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "iOS-tinted-1024.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
     },
     {
-      "filename" : "macOS-16.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "16x16"
     },
     {
-      "filename" : "macOS-32.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "filename" : "macOS-32.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"
     },
     {
-      "filename" : "macOS-64.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
-      "filename" : "macOS-128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
-      "filename" : "macOS-256.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "macOS-256.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "macOS-512.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "macOS-512.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "macOS-1024.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
