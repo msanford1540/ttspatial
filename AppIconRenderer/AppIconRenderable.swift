@@ -9,7 +9,7 @@ import AppKit
 import CoreGraphics
 
 protocol AppIconRenderable {
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?)
+    func drawImage(_ context: CGContext, renderContext: RenderContext)
 }
 
 private struct FaceMetrics {
@@ -17,82 +17,122 @@ private struct FaceMetrics {
     let width: CGFloat
 }
 
+struct RenderContext: Hashable {
+    let length: CGFloat
+    let languageDirection: LanguageDirection?
+    let appearanceType: AppearanceType?
+    let platform: Platform
+
+    init(length: CGFloat, languageDirection: LanguageDirection? = nil, appearanceType: AppearanceType? = nil, platform: Platform) {
+        self.length = length
+        self.languageDirection = languageDirection
+        self.appearanceType = appearanceType
+        self.platform = platform
+    }
+
+    var filename: String {
+        "\(platform)-\(appearanceType.map { "\($0.rawValue)-" } ?? "")\(languageDirection == .rightToLeft ? "rtl-" : "")\(length.formatted("_")).png"
+    }
+}
+
 extension AppIconRenderable {
-    func image(length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) -> NSImage {
-        let size = NSSize(width: length, height: length)
+    func image(renderContext: RenderContext) -> NSImage {
+        let size = NSSize(width: renderContext.length, height: renderContext.length)
         return NSImage(size: size, flipped: true) { _ in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, length: length, languageDirection: languageDirection, appearance: appearance)
+            drawImage(context, renderContext: renderContext)
             return true
         }
     }
 
-    private func drawX(_ context: CGContext, length: CGFloat, rect: CGRect, appearance: Appearance?) {
-        let strokeColor: NSColor = switch appearance?.value {
+    private func drawGamePieceShadowIfNeeded(_ context: CGContext, renderContext: RenderContext, lineWidth: CGFloat, drawShape: () -> Void) {
+        guard renderContext.platform == .macOS, renderContext.length > 100 else { return }
+        // draw shadow
+        let blur: CGFloat = 0.3 * lineWidth
+        let shadowOffset = CGSize(width: .zero, height: -blur)
+        context.setShadow(offset: shadowOffset, blur: blur, color: .init(red: 0.1, green: 0.1, blue: 0.1, alpha: 0.4))
+        drawShape()
+        context.setBlendMode(.copy)
+        context.fillPath()
+        context.setShadow(offset: .zero, blur: .zero, color: nil)
+        context.setBlendMode(.normal)
+    }
+
+    private func drawX(_ context: CGContext, renderContext: RenderContext, rect: CGRect) {
+        func drawShape() {
+            context.move(to: rect.origin)
+            context.addLine(to: .init(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height))
+            context.drawPath(using: .fillStroke)
+
+            context.move(to: .init(x: rect.origin.x + rect.width, y: rect.origin.y))
+            context.addLine(to: .init(x: rect.origin.x, y: rect.origin.y + rect.height))
+            context.drawPath(using: .fillStroke)
+        }
+
+        let lineWidth = rect.width / 3.5
+        let strokeColor: NSColor = switch renderContext.appearanceType {
         case .none:
-                .init(red: 64.0/255.0, green: 64.0/255.0, blue: 255.0/255.0, alpha: 1)
+            .init(red: 64.0/255.0, green: 64.0/255.0, blue: 255.0/255.0, alpha: 1)
         case .dark:
-                .init(red: 28.0/255.0, green: 183.0/255.0, blue: 249.0/255.0, alpha: 1)
+            .init(red: 28.0/255.0, green: 183.0/255.0, blue: 249.0/255.0, alpha: 1)
         case .tinted:
-                .init(white: 0.5, alpha: 1)
+            .init(white: 0.5, alpha: 1)
         }
         context.setStrokeColor(strokeColor.cgColor)
         context.setLineCap(.round)
-        context.setLineWidth(rect.width / 3.5)
-
-        context.move(to: rect.origin)
-        context.addLine(to: .init(x: rect.origin.x + rect.width, y: rect.origin.y + rect.height))
-        context.drawPath(using: .fillStroke)
-
-        context.move(to: .init(x: rect.origin.x + rect.width, y: rect.origin.y))
-        context.addLine(to: .init(x: rect.origin.x, y: rect.origin.y + rect.height))
-        context.drawPath(using: .fillStroke)
+        context.setLineWidth(lineWidth)
+        drawGamePieceShadowIfNeeded(context, renderContext: renderContext, lineWidth: lineWidth, drawShape: drawShape)
+        drawShape()
     }
 
-    private func drawO(_ context: CGContext, length: CGFloat, rect: CGRect, appearance: Appearance?) {
-        let strokeColor: NSColor = switch appearance?.value {
+    private func drawO(_ context: CGContext, renderContext: RenderContext, rect: CGRect) {
+        func drawShape() {
+            context.addEllipse(in: rect)
+            context.drawPath(using: .stroke)
+        }
+
+        let lineWidth = rect.width / 3.5
+        let strokeColor: NSColor = switch renderContext.appearanceType {
         case .none:
-                .orange
+            .orange
         case .dark:
-                .init(red: 246.0/255.0, green: 142.0/255.0, blue: 27.0/255.0, alpha: 1)
+            .init(red: 246.0/255.0, green: 142.0/255.0, blue: 27.0/255.0, alpha: 1)
         case .tinted:
-                .init(white: 0.75, alpha: 1)
+            .init(white: 0.75, alpha: 1)
         }
         context.setStrokeColor(strokeColor.cgColor)
-        context.setLineWidth(rect.width / 3.5)
-
-        context.addEllipse(in: rect)
-        context.drawPath(using: .stroke)
+        context.setLineWidth(lineWidth)
+        drawGamePieceShadowIfNeeded(context, renderContext: renderContext, lineWidth: lineWidth, drawShape: drawShape)
+        drawShape()
     }
-
-    fileprivate func drawGamePieces(_ context: CGContext, length: CGFloat,
-                                    faceMetrics: FaceMetrics, languageDirection: LanguageDirection?, appearance: Appearance?) {
-        let gridMetrics = gridMetrics(length: length, faceMetrics: faceMetrics)
+    
+    fileprivate func drawGamePieces(_ context: CGContext, renderContext: RenderContext, faceMetrics: FaceMetrics) {
+        let gridMetrics = gridMetrics(length: renderContext.length, faceMetrics: faceMetrics)
         let gamePieceWidth = gridMetrics.width * 0.26
         let margin = ((((gridMetrics.width / 2) - gamePieceWidth) / 2) + gridMetrics.margin)
-        let offset = length - margin - gamePieceWidth
+        let offset = renderContext.length - margin - gamePieceWidth
         let gamePieceSize = CGSize(width: gamePieceWidth, height: gamePieceWidth)
-        let isRTL = languageDirection == .rightToLeft
+        let isRTL = renderContext.languageDirection == .rightToLeft
         let leading = isRTL ? offset : margin
         let trailing = isRTL ? margin : offset
-        drawO(context, length: length, rect: .init(origin: .init(x: leading, y: margin), size: gamePieceSize), appearance: appearance)
-        drawO(context, length: length, rect: .init(origin: .init(x: trailing, y: offset), size: gamePieceSize), appearance: appearance)
-        drawX(context, length: length, rect: .init(origin: .init(x: leading, y: offset), size: gamePieceSize), appearance: appearance)
-        drawX(context, length: length, rect: .init(origin: .init(x: trailing, y: margin), size: gamePieceSize), appearance: appearance)
+        drawO(context, renderContext: renderContext, rect: .init(origin: .init(x: leading, y: margin), size: gamePieceSize))
+        drawO(context, renderContext: renderContext, rect: .init(origin: .init(x: trailing, y: offset), size: gamePieceSize))
+        drawX(context, renderContext: renderContext, rect: .init(origin: .init(x: leading, y: offset), size: gamePieceSize))
+        drawX(context, renderContext: renderContext, rect: .init(origin: .init(x: trailing, y: margin), size: gamePieceSize))
     }
 
-    fileprivate func drawGrid(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, appearance: Appearance?) {
-        let gridMetrics = gridMetrics(length: length, faceMetrics: faceMetrics)
+    fileprivate func drawGrid(_ context: CGContext, renderContext: RenderContext, faceMetrics: FaceMetrics) {
+        let gridMetrics = gridMetrics(length: renderContext.length, faceMetrics: faceMetrics)
         let width = gridMetrics.width
         let margin = gridMetrics.margin
         let lineLength = width + margin
-        let strokeColor: NSColor = switch appearance?.value {
+        let strokeColor: NSColor = switch renderContext.appearanceType {
         case .none:
-                .init(red: 64.0/255.0, green: 128.0/255.0, blue: 64.0/255.0, alpha: 1)
+            .init(red: 64.0/255.0, green: 128.0/255.0, blue: 64.0/255.0, alpha: 1)
         case .dark:
-                .init(red: 77.0/255.0, green: 235.0/255.0, blue: 103.0/255.0, alpha: 1)
+            .init(red: 77.0/255.0, green: 235.0/255.0, blue: 103.0/255.0, alpha: 1)
         case .tinted:
-                .init(white: 1, alpha: 1)
+            .init(white: 1, alpha: 1)
         }
         context.setStrokeColor(strokeColor.cgColor)
         context.setLineWidth(width / 22)
@@ -129,8 +169,8 @@ extension AppIconRenderable {
         return .init(margin: margin, width: width)
     }
 
-    func writeImage(length: Float, languageDirection: LanguageDirection?, appearance: Appearance?, to file: URL) {
-        let image = image(length: .init(length), languageDirection: languageDirection, appearance: appearance)
+    func writeImage(renderContext: RenderContext, to file: URL) {
+        let image = image(renderContext: renderContext)
         writeImage(image, to: file)
     }
 
@@ -140,7 +180,8 @@ extension AppIconRenderable {
 }
 
 struct AppIconMacOS: AppIconRenderable {
-    private func drawBackgroundShadow(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics) {
+    private func drawBackgroundShadow(_ context: CGContext, renderContext: RenderContext, faceMetrics: FaceMetrics) {
+        let length = renderContext.length
         let shadowOffset = CGSize(width: .zero, height: faceMetrics.margin / -5)
         let innerWidth = faceMetrics.width * 0.99
         let innerMargin: CGFloat = (length - innerWidth) / 2
@@ -162,13 +203,13 @@ struct AppIconMacOS: AppIconRenderable {
         context.setShadow(offset: .zero, blur: .zero, color: nil)
     }
 
-    private func drawBackground(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, appearance: Appearance?) {
+    private func drawBackground(_ context: CGContext, renderContext: RenderContext, faceMetrics: FaceMetrics) {
         let margin = faceMetrics.margin
         let width = faceMetrics.width
         let radius = width * 0.23
-        let applyDecor = length > 100
+        let applyDecor = renderContext.length > 100
         if applyDecor {
-            drawBackgroundShadow(context, length: length, faceMetrics: faceMetrics)
+            drawBackgroundShadow(context, renderContext: renderContext, faceMetrics: faceMetrics)
         }
         let rect: CGRect = .init(x: margin, y: margin, width: width, height: width)
         let min = rect.minX
@@ -205,30 +246,26 @@ struct AppIconMacOS: AppIconRenderable {
         context.drawLinearGradient(
             gradient,
             start: .init(x: 0, y: 0),
-            end: .init(x: 0, y: length),
+            end: .init(x: 0, y: renderContext.length),
             options: []
         )
         context.setBlendMode(.normal)
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) {
-        let faceMetrics = faceMetrics(length: length, faceWidth: 824)
-        drawBackground(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
-        drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
-        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: appearance)
-    }
-
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?) {
-        drawImage(context, length: length, languageDirection: languageDirection, appearance: nil)
+    func drawImage(_ context: CGContext, renderContext: RenderContext) {
+        let faceMetrics = faceMetrics(length: renderContext.length, faceWidth: 824)
+        drawBackground(context, renderContext: renderContext, faceMetrics: faceMetrics)
+        drawGrid(context, renderContext: renderContext, faceMetrics: faceMetrics)
+        drawGamePieces(context, renderContext: renderContext, faceMetrics: faceMetrics)
     }
 }
 
 struct AppIconIOS: AppIconRenderable {
-    private func drawBackground(_ context: CGContext, length: CGFloat, faceMetrics: FaceMetrics, appearance: Appearance?) {
-        let applyDecor = length > 100
+    private func drawBackground(_ context: CGContext, renderContext: RenderContext, faceMetrics: FaceMetrics) {
+        let applyDecor = renderContext.length > 100
 
         let gradient: CGGradient?
-        switch appearance?.value {
+        switch renderContext.appearanceType {
         case nil:
             gradient = if applyDecor {
                 .init(
@@ -249,26 +286,6 @@ struct AppIconIOS: AppIconRenderable {
                     locations: [0]
                 )
             }
-//        case .dark:
-//            gradient = if applyDecor {
-//                .init(
-//                    colorsSpace: nil,
-//                    colors: [
-//                        NSColor(white: 0.175, alpha: 1).cgColor,
-//                        NSColor(white: 0.135, alpha: 1).cgColor,
-//                        NSColor(white: 0.05, alpha: 1).cgColor
-//                    ] as CFArray,
-//                    locations: [0.05, 0.2, 0.4]
-//                )
-//            } else {
-//                .init(
-//                    colorsSpace: nil,
-//                    colors: [
-//                        NSColor(white: 0.05, alpha: 1).cgColor
-//                    ] as CFArray,
-//                    locations: [0]
-//                )
-//            }
         case .dark, .tinted:
             return
         }
@@ -276,17 +293,17 @@ struct AppIconIOS: AppIconRenderable {
         context.drawLinearGradient(
             gradient,
             start: .init(x: 0, y: 0),
-            end: .init(x: 0, y: length),
+            end: .init(x: 0, y: renderContext.length),
             options: []
         )
         context.setBlendMode(.normal)
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) {
-        let faceMetrics = faceMetrics(length: length, faceWidth: 888)
-        drawBackground(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
-        drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: appearance)
-        drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: appearance)
+    func drawImage(_ context: CGContext, renderContext: RenderContext) {
+        let faceMetrics = faceMetrics(length: renderContext.length, faceWidth: 888)
+        drawBackground(context, renderContext: renderContext, faceMetrics: faceMetrics)
+        drawGrid(context, renderContext: renderContext, faceMetrics: faceMetrics)
+        drawGamePieces(context, renderContext: renderContext, faceMetrics: faceMetrics)
     }
 }
 
@@ -328,7 +345,7 @@ struct AppIconVisionOS: AppIconRenderable {
         }
     }
 
-    private func drawBackground(_ context: CGContext, length: CGFloat) {
+    private func drawBackground(_ context: CGContext, renderContext: RenderContext) {
         let gradient = CGGradient(
             colorsSpace: nil,
             colors: [
@@ -342,50 +359,52 @@ struct AppIconVisionOS: AppIconRenderable {
         context.drawLinearGradient(
             gradient,
             start: .init(x: 0, y: 0),
-            end: .init(x: 0, y: length),
+            end: .init(x: 0, y: renderContext.length),
             options: []
         )
         context.setBlendMode(.normal)
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection? = nil, layer: RenderLayer) {
-        let faceMetrics = faceMetrics(length: length, faceWidth: 824)
+    func drawImage(_ context: CGContext, renderContext: RenderContext, layer: RenderLayer) {
+        let faceMetrics = faceMetrics(length: renderContext.length, faceWidth: 824)
         switch layer {
         case .front:
-            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: nil)
+            drawGamePieces(context, renderContext: renderContext, faceMetrics: faceMetrics)
         case .middle:
-            drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: nil)
+            drawGrid(context, renderContext: renderContext, faceMetrics: faceMetrics)
         case .back:
-            drawBackground(context, length: length)
+            drawBackground(context, renderContext: renderContext)
         case .middleAndFront:
-            drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: nil)
-            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: nil)
+            drawGrid(context, renderContext: renderContext, faceMetrics: faceMetrics)
+            drawGamePieces(context, renderContext: renderContext, faceMetrics: faceMetrics)
         case .all:
-            drawBackground(context, length: length)
-            drawGrid(context, length: length, faceMetrics: faceMetrics, appearance: nil)
-            drawGamePieces(context, length: length, faceMetrics: faceMetrics, languageDirection: languageDirection, appearance: nil)
+            drawBackground(context, renderContext: renderContext)
+            drawGrid(context, renderContext: renderContext, faceMetrics: faceMetrics)
+            drawGamePieces(context, renderContext: renderContext, faceMetrics: faceMetrics)
         }
     }
 
-    func drawImage(_ context: CGContext, length: CGFloat, languageDirection: LanguageDirection?, appearance: Appearance?) {
-        drawImage(context, length: length, languageDirection: languageDirection, layer: .all)
+    func drawImage(_ context: CGContext, renderContext: RenderContext) {
+        drawImage(context, renderContext: renderContext, layer: .all)
     }
 
     func image(layer: RenderLayer) -> NSImage {
         let length: CGFloat = 1024
+        let renderContext = RenderContext(length: length, platform: .visionOS)
         let size = NSSize(width: length, height: length)
         return NSImage(size: size, flipped: true) { _ in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, length: length, languageDirection: nil, layer: layer)
+            drawImage(context, renderContext: renderContext, layer: layer)
             return true
         }
     }
 
-    func image(length: CGFloat, languageDirection: LanguageDirection? = nil, layer: RenderLayer) -> NSImage {
+    func image(renderContext: RenderContext, layer: RenderLayer) -> NSImage {
+        let length = renderContext.length
         let size = NSSize(width: length, height: length)
         return NSImage(size: size, flipped: true) { _ in
             guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, length: length, languageDirection: languageDirection, layer: layer)
+            drawImage(context, renderContext: renderContext, layer: layer)
             return true
         }
     }

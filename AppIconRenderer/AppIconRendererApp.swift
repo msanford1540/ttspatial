@@ -74,7 +74,7 @@ struct AppIconRendererApp: App {
             }
             .frame(maxHeight: 1024)
             .padding()
-            .onAppear {
+            .task {
                 render.writeFiles()
             }
         }
