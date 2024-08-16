@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,17 @@
 		F53242C42C35C496003DB901 /* Color+Convience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53242C32C35C489003DB901 /* Color+Convience.swift */; };
 		F53242C62C35C558003DB901 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53242C52C35C553003DB901 /* HomeMenu.swift */; };
 		F53242C82C35C743003DB901 /* HomeMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53242C72C35C741003DB901 /* HomeMenu.swift */; };
+		F5372E352C6FD6E0008F6E57 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E332C6FD6E0008F6E57 /* Models.swift */; };
+		F5372E362C6FD6E0008F6E57 /* AppIconRendererApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E312C6FD6E0008F6E57 /* AppIconRendererApp.swift */; };
+		F5372E372C6FD6E0008F6E57 /* AppIconVisionOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E282C6FD6E0008F6E57 /* AppIconVisionOS.swift */; };
+		F5372E382C6FD6E0008F6E57 /* AppIconContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E2D2C6FD6E0008F6E57 /* AppIconContents.swift */; };
+		F5372E392C6FD6E0008F6E57 /* AppIconRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E2E2C6FD6E0008F6E57 /* AppIconRenderable.swift */; };
+		F5372E3A2C6FD6E0008F6E57 /* AppIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E302C6FD6E0008F6E57 /* AppIconRenderer.swift */; };
+		F5372E3B2C6FD6E0008F6E57 /* AppIconIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E262C6FD6E0008F6E57 /* AppIconIOS.swift */; };
+		F5372E3C2C6FD6E0008F6E57 /* AppIconMacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5372E272C6FD6E0008F6E57 /* AppIconMacOS.swift */; };
+		F5372E3D2C6FD6E0008F6E57 /* Contents-visionos.json in Resources */ = {isa = PBXBuildFile; fileRef = F5372E2B2C6FD6E0008F6E57 /* Contents-visionos.json */; };
+		F5372E3E2C6FD6E0008F6E57 /* Contents-ios.json in Resources */ = {isa = PBXBuildFile; fileRef = F5372E2A2C6FD6E0008F6E57 /* Contents-ios.json */; };
+		F5372E3F2C6FD6E0008F6E57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5372E322C6FD6E0008F6E57 /* Assets.xcassets */; };
 		F54655312C3BB0F800B6E2E5 /* marker-o.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9BB2BCDFB7E001EC38B /* marker-o.usdz */; };
 		F54655322C3BB0F800B6E2E5 /* marker-x.usdz in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9BC2BCDFB7E001EC38B /* marker-x.usdz */; };
 		F54BFA442C54A9930016AF86 /* GameSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54BFA432C54A9910016AF86 /* GameSessionViewModel.swift */; };
@@ -211,6 +222,18 @@
 		F53242C32C35C489003DB901 /* Color+Convience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Convience.swift"; sourceTree = "<group>"; };
 		F53242C52C35C553003DB901 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
 		F53242C72C35C741003DB901 /* HomeMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenu.swift; sourceTree = "<group>"; };
+		F5372E262C6FD6E0008F6E57 /* AppIconIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconIOS.swift; sourceTree = "<group>"; };
+		F5372E272C6FD6E0008F6E57 /* AppIconMacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconMacOS.swift; sourceTree = "<group>"; };
+		F5372E282C6FD6E0008F6E57 /* AppIconVisionOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconVisionOS.swift; sourceTree = "<group>"; };
+		F5372E2A2C6FD6E0008F6E57 /* Contents-ios.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Contents-ios.json"; sourceTree = "<group>"; };
+		F5372E2B2C6FD6E0008F6E57 /* Contents-visionos.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Contents-visionos.json"; sourceTree = "<group>"; };
+		F5372E2D2C6FD6E0008F6E57 /* AppIconContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconContents.swift; sourceTree = "<group>"; };
+		F5372E2E2C6FD6E0008F6E57 /* AppIconRenderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconRenderable.swift; sourceTree = "<group>"; };
+		F5372E2F2C6FD6E0008F6E57 /* AppIconRenderer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppIconRenderer.entitlements; sourceTree = "<group>"; };
+		F5372E302C6FD6E0008F6E57 /* AppIconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconRenderer.swift; sourceTree = "<group>"; };
+		F5372E312C6FD6E0008F6E57 /* AppIconRendererApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconRendererApp.swift; sourceTree = "<group>"; };
+		F5372E322C6FD6E0008F6E57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F5372E332C6FD6E0008F6E57 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		F54BFA432C54A9910016AF86 /* GameSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionViewModel.swift; sourceTree = "<group>"; };
 		F54BFA452C54AA100016AF86 /* GameSessionValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSessionValue.swift; sourceTree = "<group>"; };
 		F54BFA472C54AA8D0016AF86 /* SharePlayMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayMessage.swift; sourceTree = "<group>"; };
@@ -274,10 +297,6 @@
 		F5FDC9BB2BCDFB7E001EC38B /* marker-o.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "marker-o.usdz"; sourceTree = "<group>"; };
 		F5FDC9BC2BCDFB7E001EC38B /* marker-x.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "marker-x.usdz"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		F5F8ED9C2C5D32CB007BB22A /* AppIconRenderer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppIconRenderer; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F5036B262BBC7AF400847D6A /* Frameworks */ = {
@@ -368,7 +387,7 @@
 				F555D5DD2BD4488600B92AA4 /* TicTacToeControllerTests */,
 				F5FDC98D2BCDE366001EC38B /* TicTacToeEngine */,
 				F5FDC99B2BCDE366001EC38B /* TicTacToeEngineTests */,
-				F5F8ED9C2C5D32CB007BB22A /* AppIconRenderer */,
+				F5372E342C6FD6E0008F6E57 /* AppIconRenderer */,
 				F5036B2A2BBC7AF400847D6A /* Products */,
 				F5FDC9AF2BCDE5CD001EC38B /* Frameworks */,
 			);
@@ -416,6 +435,41 @@
 				F5036B422BBC7AF600847D6A /* TicTacSpatialTests.swift */,
 			);
 			path = "TicTacSpatial-visionOS-Tests";
+			sourceTree = "<group>";
+		};
+		F5372E292C6FD6E0008F6E57 /* Renderables */ = {
+			isa = PBXGroup;
+			children = (
+				F5372E262C6FD6E0008F6E57 /* AppIconIOS.swift */,
+				F5372E272C6FD6E0008F6E57 /* AppIconMacOS.swift */,
+				F5372E282C6FD6E0008F6E57 /* AppIconVisionOS.swift */,
+			);
+			path = Renderables;
+			sourceTree = "<group>";
+		};
+		F5372E2C2C6FD6E0008F6E57 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				F5372E2A2C6FD6E0008F6E57 /* Contents-ios.json */,
+				F5372E2B2C6FD6E0008F6E57 /* Contents-visionos.json */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		F5372E342C6FD6E0008F6E57 /* AppIconRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				F5372E2C2C6FD6E0008F6E57 /* Templates */,
+				F5372E2D2C6FD6E0008F6E57 /* AppIconContents.swift */,
+				F5372E2E2C6FD6E0008F6E57 /* AppIconRenderable.swift */,
+				F5372E302C6FD6E0008F6E57 /* AppIconRenderer.swift */,
+				F5372E312C6FD6E0008F6E57 /* AppIconRendererApp.swift */,
+				F5372E292C6FD6E0008F6E57 /* Renderables */,
+				F5372E332C6FD6E0008F6E57 /* Models.swift */,
+				F5372E2F2C6FD6E0008F6E57 /* AppIconRenderer.entitlements */,
+				F5372E322C6FD6E0008F6E57 /* Assets.xcassets */,
+			);
+			path = AppIconRenderer;
 			sourceTree = "<group>";
 		};
 		F54BFA612C56A57D0016AF86 /* Gameboards */ = {
@@ -737,9 +791,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				F5F8ED9C2C5D32CB007BB22A /* AppIconRenderer */,
-			);
 			name = AppIconRenderer;
 			packageProductDependencies = (
 			);
@@ -931,6 +982,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5372E3D2C6FD6E0008F6E57 /* Contents-visionos.json in Resources */,
+				F5372E3E2C6FD6E0008F6E57 /* Contents-ios.json in Resources */,
+				F5372E3F2C6FD6E0008F6E57 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1064,6 +1118,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5372E352C6FD6E0008F6E57 /* Models.swift in Sources */,
+				F5372E362C6FD6E0008F6E57 /* AppIconRendererApp.swift in Sources */,
+				F5372E372C6FD6E0008F6E57 /* AppIconVisionOS.swift in Sources */,
+				F5372E382C6FD6E0008F6E57 /* AppIconContents.swift in Sources */,
+				F5372E392C6FD6E0008F6E57 /* AppIconRenderable.swift in Sources */,
+				F5372E3A2C6FD6E0008F6E57 /* AppIconRenderer.swift in Sources */,
+				F5372E3B2C6FD6E0008F6E57 /* AppIconIOS.swift in Sources */,
+				F5372E3C2C6FD6E0008F6E57 /* AppIconMacOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
