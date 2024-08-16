@@ -22,15 +22,13 @@ struct AppIconRendererApp: App {
                     let length = min(geometry.size.width, geometry.size.height)
                     let secondaryLength = length * 0.333
                     VStack {
-                        Image(nsImage: render.macOSExampleImage(length: length, languageDirection: .leftToRight))
-                            .resizable()
-                            .scaledToFit()
+                        let topImageLength = length - secondaryLength - 16
+                        Image(nsImage: render.macOSExampleImage(length: topImageLength, languageDirection: .leftToRight))
+                            .frame(width: topImageLength, height: topImageLength)
                             .border(.black)
-                        Image(nsImage: render.macOSExampleImage(length: length, languageDirection: .rightToLeft))
-                            .resizable()
-                            .scaledToFit()
+                        Image(nsImage: render.macOSExampleImage(length: secondaryLength, languageDirection: .rightToLeft))
+                            .frame(width: secondaryLength, height: secondaryLength)
                             .border(.black)
-                            .frame(height: secondaryLength)
                     }
                     VStack {
                         Image(nsImage: render.iOSExampleImage(length: length, appearanceType: nil))
