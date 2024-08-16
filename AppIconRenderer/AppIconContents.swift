@@ -158,7 +158,12 @@ struct IconDescriptor: Equatable, Codable {
     }
 
     var renderContext: RenderContext {
-        .init(length: .init(imageLength), languageDirection: languageDirection, appearanceType: appearances?.first?.value, platform: platform ?? .macOS)
+        .init(
+            length: .init(imageLength),
+            languageDirection: languageDirection,
+            appearanceType: appearances?.first?.value,
+            platform: platform ?? .macOS
+        )
     }
 
     var imageSize: CGSize {
