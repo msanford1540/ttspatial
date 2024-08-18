@@ -7,6 +7,7 @@
 
 import AppKit
 import CoreGraphics
+import UniformTypeIdentifiers
 
 protocol AppIconRenderable {
     func drawImage(_ context: CGContext, renderContext: RenderContext)
@@ -36,13 +37,24 @@ struct RenderContext: Hashable {
 }
 
 extension AppIconRenderable {
-    func image(renderContext: RenderContext) -> NSImage {
-        let size = NSSize(width: renderContext.length, height: renderContext.length)
-        return NSImage(size: size, flipped: true) { _ in
-            guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, renderContext: renderContext)
-            return true
+    func cgImage(renderContext: RenderContext) -> CGImage {
+        let length = Int(renderContext.length)
+        guard let cgContext = CGContext(
+            data: nil,
+            width: length,
+            height: length,
+            bitsPerComponent: 8,
+            bytesPerRow: .zero,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
+        ) else {
+            fatalError("failed to create cgContext")
         }
+        drawImage(cgContext, renderContext: renderContext)
+        guard let cgImage = cgContext.makeImage() else {
+            fatalError("failed to create cgImage")
+        }
+        return cgImage
     }
 
     private func drawGamePieceShadowIfNeeded(_ context: CGContext, renderContext: RenderContext, lineWidth: CGFloat, drawShape: () -> Void) {
@@ -113,8 +125,8 @@ extension AppIconRenderable {
         let offset = renderContext.length - margin - gamePieceWidth
         let gamePieceSize = CGSize(width: gamePieceWidth, height: gamePieceWidth)
         let isRTL = renderContext.languageDirection == .rightToLeft
-        let leading = isRTL ? offset : margin
-        let trailing = isRTL ? margin : offset
+        let leading = isRTL ? margin : offset
+        let trailing = isRTL ? offset : margin
         drawO(context, renderContext: renderContext, rect: .init(origin: .init(x: leading, y: margin), size: gamePieceSize))
         drawO(context, renderContext: renderContext, rect: .init(origin: .init(x: trailing, y: offset), size: gamePieceSize))
         drawX(context, renderContext: renderContext, rect: .init(origin: .init(x: leading, y: offset), size: gamePieceSize))
@@ -170,28 +182,17 @@ extension AppIconRenderable {
     }
 
     func writeImage(renderContext: RenderContext, to file: URL) {
-        let image = image(renderContext: renderContext)
-        writeImage(image, to: file)
-    }
-
-    func writeImage(_ image: NSImage, to file: URL) {
+        let image = cgImage(renderContext: renderContext)
         image.write(to: file)
     }
 }
 
-extension NSImage {
-    func write(to file: URL, as fileType: NSBitmapImageRep.FileType = .png) {
-        guard let tiff = tiffRepresentation,
-              let imageRep = NSBitmapImageRep(data: tiff),
-              let imageData = imageRep.representation(using: fileType, properties: [:]) else {
-            print("failed to get image data respresentation")
-            return
-        }
-        do {
-            try imageData.write(to: file, options: [])
-            print("generated image: \(file)")
-        } catch {
-            print("error: \(error as NSError)")
-        }
+extension CGImage {
+    @discardableResult func write(to destinationURL: URL, as fileType: UTType = .png) -> Bool {
+        guard let destination = CGImageDestinationCreateWithURL(
+            destinationURL as CFURL, fileType.identifier as CFString, 1, nil
+        ) else { return false }
+        CGImageDestinationAddImage(destination, self, nil)
+        return CGImageDestinationFinalize(destination)
     }
 }

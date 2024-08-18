@@ -38,7 +38,7 @@ struct AppIconVisionOS: AppIconRenderable {
                 NSColor(red: 0.925, green: 0.925, blue: 1, alpha: 1).cgColor,
                 NSColor(red: 0.825, green: 0.825, blue: 1, alpha: 1).cgColor
             ] as CFArray,
-            locations: [0, 0.6, 0.9]
+            locations: [1, 0.4, 0.1]
         )
         guard let gradient else { return }
         context.drawLinearGradient(
@@ -73,24 +73,24 @@ struct AppIconVisionOS: AppIconRenderable {
         drawImage(context, renderContext: renderContext, layer: .all)
     }
 
-    func image(layer: RenderLayer) -> NSImage {
-        let length: CGFloat = 1024
-        let renderContext = RenderContext(length: length, platform: .visionOS)
-        let size = NSSize(width: length, height: length)
-        return NSImage(size: size, flipped: true) { _ in
-            guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, renderContext: renderContext, layer: layer)
-            return true
+    func cgImage(layer: RenderLayer) -> CGImage {
+        let length = 1024
+        let renderContext = RenderContext(length: .init(length), platform: .visionOS)
+        guard let cgContext = CGContext(
+            data: nil,
+            width: length,
+            height: length,
+            bitsPerComponent: 8,
+            bytesPerRow: .zero,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
+        ) else {
+            fatalError("failed to create cgContext")
         }
-    }
-
-    func image(renderContext: RenderContext, layer: RenderLayer) -> NSImage {
-        let length = renderContext.length
-        let size = NSSize(width: length, height: length)
-        return NSImage(size: size, flipped: true) { _ in
-            guard let context = NSGraphicsContext.current?.cgContext else { return false }
-            drawImage(context, renderContext: renderContext, layer: layer)
-            return true
+        drawImage(cgContext, renderContext: renderContext, layer: layer)
+        guard let cgImage = cgContext.makeImage() else {
+            fatalError("failed to create cgImage")
         }
+        return cgImage
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import AppKit
+import UniformTypeIdentifiers
 
 final class AppIconRenderer {
     private let iOSAppIcon = AppIconIOS()
@@ -68,7 +69,7 @@ final class AppIconRenderer {
         }
     }
 
-    private func writeLayer(folder: URL, filename: String, image: NSImage, layer: AppIconVisionOS.RenderLayer) {
+    private func writeLayer(folder: URL, filename: String, image: CGImage, layer: AppIconVisionOS.RenderLayer) {
         do {
             let layerFolder = folder.appending(path: filename, directoryHint: .isDirectory)
             let contentFolder = layerFolder.appending(path: "Content.imageset", directoryHint: .isDirectory)
@@ -81,7 +82,7 @@ final class AppIconRenderer {
             try parentContentsData.write(to: parentContentsFileURL)
 
             let baseFilename = filename.dropFileExtension()
-            let fileType: NSBitmapImageRep.FileType = if layer == .all || layer == .back {
+            let fileType: UTType = if layer == .all || layer == .back {
                 .jpeg
             } else {
                 .png
@@ -103,17 +104,16 @@ final class AppIconRenderer {
 
     func macOSExampleImage(length: CGFloat, languageDirection: LanguageDirection) -> NSImage {
         let renderContext = RenderContext(length: length, languageDirection: languageDirection, platform: .macOS)
-        return macOSAppIcon.image(renderContext: renderContext)
+        return NSImage(cgImage: macOSAppIcon.cgImage(renderContext: renderContext), length: length)
     }
 
     func iOSExampleImage(length: CGFloat, appearanceType: AppearanceType?) -> NSImage {
         let renderContext = RenderContext(length: length, appearanceType: appearanceType, platform: .iOS)
-        return iOSAppIcon.image(renderContext: renderContext)
+        return NSImage(cgImage: iOSAppIcon.cgImage(renderContext: renderContext), length: length)
     }
 
     func visionOSExampleImage(length: CGFloat, layer: AppIconVisionOS.RenderLayer) -> NSImage {
-        let renderContext = RenderContext(length: length, platform: .visionOS)
-        return visionOSAppIcon.image(renderContext: renderContext, layer: layer)
+        NSImage(cgImage: visionOSAppIcon.cgImage(layer: layer), length: length)
     }
 
     private func writeiOSmacOSFiles(for contents: AppIconiOSmacOSContents) {
@@ -138,7 +138,12 @@ final class AppIconRenderer {
         let layerInfos = visionOSAppIcon.layerInfo(for: contents.layers)
         for layerInfo in layerInfos {
             let layer = layerInfo.1
-            writeLayer(folder: folder, filename: layerInfo.0.filename, image: visionOSAppIcon.image(layer: layer), layer: layer)
+            writeLayer(
+                folder: folder,
+                filename: layerInfo.0.filename,
+                image: visionOSAppIcon.cgImage(layer: layer),
+                layer: layer
+            )
         }
     }
 
@@ -166,5 +171,11 @@ private extension String {
         } else {
             self
         }
+    }
+}
+
+private extension NSImage {
+    convenience init(cgImage: CGImage, length: CGFloat) {
+        self.init(cgImage: cgImage, size: .init(width: length, height: length))
     }
 }
