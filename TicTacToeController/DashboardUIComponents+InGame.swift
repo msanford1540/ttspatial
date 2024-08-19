@@ -48,7 +48,17 @@ public struct InGameDashboardContent: View {
                 if sharePlayGameSession.opponentLeft {
                     Text("Opponent left")
                 } else {
+#if os(visionOS)
+                    HStack {
+                        EndGameButton()
+                        ResetRotationButton()
+                            .frame(width: 96, height: 96)
+                            .padding(.leading)
+                    }
+                    .offset(x: 58)
+#else
                     EndGameButton()
+#endif
                 }
             }
             .font(.endGameButton)

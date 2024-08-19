@@ -165,6 +165,26 @@ public struct SharePlayButton: View {
     }
 }
 
+public struct ResetRotationButton: View {
+    @EnvironmentObject private var viewModel: HomeMenuViewModel
+
+    public init() {}
+
+    public var body: some View {
+        Button(action: resetRotation) {
+            Image(systemName: "arrow.uturn.backward.square")
+                .resizable()
+                .scaledToFit()
+        }
+        .buttonStyle(.borderless)
+        .opacity(viewModel.gameboardDimensions == .cube4 ? 1 : 0)
+    }
+
+    private func resetRotation() {
+        viewModel.cube4Controller.scene.transform.rotation = .zero
+    }
+}
+
 public struct WinCountView: View {
     private let count: Int
 
