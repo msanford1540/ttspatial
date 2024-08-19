@@ -60,7 +60,7 @@ struct AppIconMacOS: AppIconRenderable {
                     NSColor(red: 0.925, green: 0.925, blue: 1, alpha: 1).cgColor,
                     NSColor(red: 0.825, green: 0.825, blue: 1, alpha: 1).cgColor
                 ] as CFArray,
-                locations: [0.5, 0.75, 1]
+                locations: [0.5, 0.25, 0]
             )
         } else {
             .init(
