@@ -28,12 +28,22 @@ public struct HomeMenu: View {
             .font(.largeTitle)
             .padding(.horizontal)
 
-            DashboardButton("Play Game", action: viewModel.playGame)
+            HStack {
+                DashboardButton("Play Game", action: viewModel.playGame)
+                ResetRotationButton()
+                    .frame(width: 96, height: 96)
+                    .padding(.leading)
+            }
+            .offset(x: 58)
             SharePlayButton()
         }
         .padding()
         .frame(width: 1200, height: 360)
         .font(.extraLargeTitle)
         .glassBackgroundEffect()
+    }
+
+    private func resetRotation() {
+        viewModel.cube4Controller.scene.transform.rotation = .zero
     }
 }

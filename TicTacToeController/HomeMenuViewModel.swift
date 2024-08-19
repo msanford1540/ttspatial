@@ -23,6 +23,7 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     public let cube4Controller = Cube4GameboardController()
     private var subscribers: Set<AnyCancellable> = .empty
     private var didInit = false
+    private var autorotateTimer: Timer?
 #if os(visionOS)
     public var dashboard: Entity = .empty
     public var homeMenu: Entity = .empty
@@ -49,6 +50,17 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
                 onRealityViewUpdate(gameboardDimensions: gameboardDimensions)
             }
             .store(in: &subscribers)
+
+        gameSessionViewModel.$isGameSessionActive
+            .removeDuplicates()
+            .sink { [unowned self] isGameSessionActive in
+                if isGameSessionActive {
+                    stopAutorotateTimer()
+                } else {
+                    startAutorotateTimer()
+                }
+            }
+            .store(in: &subscribers)
     }
 
     private func observeSharePlayEvents() {
@@ -68,6 +80,24 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
                 }
             }
         }
+    }
+
+    private func startAutorotateTimer() {
+        guard autorotateTimer == nil else { return }
+        cube4Controller.scene.transform.rotation = .zero
+        autorotateTimer = Timer.scheduledTimer(withTimeInterval: (1 / 60), repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.cube4Controller.scene.transform.rotation *= .init(angle: 0.01, axis: .init(x: 0, y: 1, z: 0))
+            }
+        }
+    }
+
+    private func stopAutorotateTimer() {
+        guard let autorotateTimer else { return }
+        autorotateTimer.invalidate()
+        self.autorotateTimer = nil
+        cube4Controller.scene.transform.rotation = .zero
+
     }
 
     private func startNewRemoteGameSession(with dimensions: GameboardDimensions?) {
@@ -227,7 +257,7 @@ public extension HomeMenuViewModel {
         return root
     }
 
-    func onRealityViewUpdate(gameboardDimensions: GameboardDimensions? = nil) {
+    private func onRealityViewUpdate(gameboardDimensions: GameboardDimensions? = nil) {
         Task {
             let selectedGameboardDimensions = gameboardDimensions ?? self.gameboardDimensions
             let (hiddenScene, visibleScene) = switch selectedGameboardDimensions {

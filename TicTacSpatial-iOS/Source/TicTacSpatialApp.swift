@@ -62,9 +62,23 @@ private struct ControlView: View {
                     .padding(.bottom)
 #endif
             }
+            VStack {
+                HStack {
+                    Spacer()
+                    ResetRotationButton()
+                        .frame(width: 28, height: 28)
+                        .offset(.init(width: 0, height: -44))
+                        .padding(.horizontal)
+                }
+                Spacer()
+            }
         }
         .background(Color.panel(for: colorScheme))
         .frame(height: preferredHeight)
+    }
+
+    private func resetRotation() {
+        viewModel.cube4Controller.scene.transform.rotation = .zero
     }
 
     private var preferredHeight: CGFloat {

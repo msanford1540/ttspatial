@@ -47,3 +47,7 @@ public extension SIMD3<Float> {
     }
     // swiftlint:enable identifier_name
 }
+
+public extension simd_quatf {
+    static let zero: simd_quatf = .init(angle: .zero, axis: .zero)
+}

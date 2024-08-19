@@ -20,7 +20,7 @@ struct TicTacSpatialApp: App {
                 .environmentObject(viewModel)
                 .environmentObject(viewModel.gameSessionViewModel)
                 .environmentObject(viewModel.sharePlaySession)
-                .frame(depth: 1600)
+                .frame(depth: 1800)
         }
         .windowStyle(.volumetric)
         .defaultSize(width: 1.33, height: 1.4, depth: 1.85, in: .meters)
