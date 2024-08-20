@@ -76,14 +76,12 @@ final class GameEngine<Gameboard: GameboardProtocol> {
 
         let opponent = currentTurn.opponent
         let gameOverInfo = gameboard.gameOverInfo(currentTurn: opponent)
-        if gameOverInfo.isGameOver {
-            self.winningInfo = gameOverInfo.winningInfo
-            self.isGameOver = true
+        self.winningInfo = gameOverInfo.winningInfo
+        self.isGameOver = gameOverInfo.isGameOver
+        if isGameOver {
             sendUpdate(.move(move), currentTurn)
             sendUpdate(.gameOver(gameOverInfo.winningInfo), nil)
         } else {
-            self.winningInfo = nil
-            self.isGameOver = false
             self.currentTurn = opponent
             sendUpdate(.move(move), opponent)
         }
