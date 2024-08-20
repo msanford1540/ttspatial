@@ -32,16 +32,7 @@ public struct Grid3Gameboard: GameboardProtocol {
     }
 
     public var description: String {
-        func text(_ vPos: Vertical3Position, _ hPos: Horizontal3Position) -> String {
-            let location = Location(vPos, hPos)
-            return markers[location].map(\.description) ?? " "
-        }
-
-        let row1 = "\(text(.top, .left))|\(text(.top, .middle))|\(text(.top, .right))"
-        let row2 = "\(text(.middle, .left))|\(text(.middle, .middle))|\(text(.middle, .right))"
-        let row3 = "\(text(.bottom, .left))|\(text(.bottom, .middle))|\(text(.bottom, .right))"
-        let hLine = "-----"
-        return [row1, hLine, row2, hLine, row3, ""].joined(separator: "\n")
+        Self.description(for: markers)
     }
 
     public static func locations(for winningLine: WinningLine) -> Set<Grid3Location> {
@@ -59,6 +50,19 @@ public struct Grid3Gameboard: GameboardProtocol {
                 .map { (yPos, xPos) in Location(yPos, xPos) }
             )
         }
+    }
+
+    static func description(for markers: [Grid3Location: PlayerMarker]) -> String {
+        func text(_ vPos: Vertical3Position, _ hPos: Horizontal3Position) -> String {
+            let location = Location(vPos, hPos)
+            return markers[location].map(\.description) ?? .space
+        }
+
+        let row1 = "\(text(.top, .left))|\(text(.top, .middle))|\(text(.top, .right))"
+        let row2 = "\(text(.middle, .left))|\(text(.middle, .middle))|\(text(.middle, .right))"
+        let row3 = "\(text(.bottom, .left))|\(text(.bottom, .middle))|\(text(.bottom, .right))"
+        let hLine = "-----"
+        return [row1, hLine, row2, hLine, row3, .empty].joined(separator: .newLine)
     }
 }
 
@@ -80,7 +84,7 @@ public struct Grid3GameboardSnapshot: GameboardSnapshotProtocol {
     }
 
     public var description: String {
-        .empty
+        "\(Grid3Gameboard.description(for: markers))\n\(stateDescription)\n"
     }
 
     public static func locations(for winningLine: WinningLine) -> Set<Grid3Location> {

@@ -32,22 +32,27 @@ public struct Cube4Gameboard: GameboardProtocol {
     }
 
     public var description: String {
-        func text(_ vPos: Vertical4Position, _ hPos: Horizontal4Position, _ zPos: Depth4Position) -> String {
-            let location = Location(vPos, hPos, zPos)
-            return markers[location].map(\.description) ?? " "
+        Self.description(for: markers)
+    }
+
+    static func description(for markers: [Cube4Location: PlayerMarker]) -> String {
+        func text(_ yPos: Vertical4Position, _ xPos: Horizontal4Position, _ zPos: Depth4Position) -> String {
+            let location = Location(yPos, xPos, zPos)
+            return markers[location].map(\.description) ?? .space
         }
 
-        let hLine = "-----"
-        let rows = Vertical4Position.allCases.map { vPos in
-            Depth4Position.allCases.reduce(into: String.empty) { result, zPos in
-                let boardRow = Horizontal4Position.allCases.map { hPos in
-                    "\(text(vPos, hPos, zPos))|\(text(vPos, hPos, zPos))|\(text(vPos, hPos, zPos))"
+        let hLine = "-------"
+        let depthDelimiter = "   "
+        let gridDelimiter = Array(repeating: hLine, count: 4).joined(separator: depthDelimiter)
+        let rows = Vertical4Position.allCases.map { yPos in
+            Depth4Position.allCases
+                .map { zPos in
+                    "\(text(yPos, .left, zPos))|\(text(yPos, .middleLeft, zPos))|\(text(yPos, .middleRight, zPos))|\(text(yPos, .right, zPos))"
                 }
-                result += boardRow.joined(separator: "   ")
-            }
+                .joined(separator: depthDelimiter)
         }
-        let boardRows = rows.joined(separator: "\(hLine)   \(hLine)   \(hLine)\n")
-        return "\(boardRows)\n"
+        let boardRows = rows.joined(separator: "\(String.newLine)\(gridDelimiter)\(String.newLine)")
+        return "\(boardRows)\(String.newLine)"
     }
 
     public static func locations(for winningLine: WinningLine) -> Set<Location> {
@@ -115,7 +120,7 @@ public struct Cube4GameboardSnapshot: GameboardSnapshotProtocol {
     }
 
     public var description: String {
-        .empty
+        "\(Cube4Gameboard.description(for: markers))\n\(stateDescription)\n"
     }
 
     public static func locations(for winningLine: WinningLine) -> Set<Location> {

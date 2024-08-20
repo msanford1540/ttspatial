@@ -63,9 +63,9 @@
 		F58960F52C0AC2A3003B4940 /* Logger+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50FB2092C0A06A1007CDA1F /* Logger+Convenience.swift */; };
 		F58960F72C0AC36C003B4940 /* RealityKit+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */; };
 		F58CC69E2C27C99300A09B8D /* Cube4Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC69D2C27C98C00A09B8D /* Cube4Gameboard.swift */; };
-		F58CC6A22C27C9FB00A09B8D /* GridGameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A12C27C9F500A09B8D /* GridGameboard.swift */; };
-		F58CC6A52C27CA8900A09B8D /* CubeFourGameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A42C27CA8500A09B8D /* CubeFourGameboardController.swift */; };
-		F58CC6A72C27CB8900A09B8D /* GridGameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A62C27CB8700A09B8D /* GridGameboardController.swift */; };
+		F58CC6A22C27C9FB00A09B8D /* Grid3Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A12C27C9F500A09B8D /* Grid3Gameboard.swift */; };
+		F58CC6A52C27CA8900A09B8D /* Cube4GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A42C27CA8500A09B8D /* Cube4GameboardController.swift */; };
+		F58CC6A72C27CB8900A09B8D /* Grid3GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58CC6A62C27CB8700A09B8D /* Grid3GameboardController.swift */; };
 		F59061EF2C2A83B500231FD9 /* HomeMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59061EE2C2A83AF00231FD9 /* HomeMenuViewModel.swift */; };
 		F592C9F32C540AD900CA3C12 /* DashboardUIComponents+PlayAgain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F592C9F22C540ACB00CA3C12 /* DashboardUIComponents+PlayAgain.swift */; };
 		F592C9F52C540B3500CA3C12 /* DashboardUIComponents+InGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F592C9F42C540B2900CA3C12 /* DashboardUIComponents+InGame.swift */; };
@@ -272,9 +272,9 @@
 		F58960F32C0AC26A003B4940 /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealityKit+Helpers.swift"; sourceTree = "<group>"; };
 		F58CC69D2C27C98C00A09B8D /* Cube4Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube4Gameboard.swift; sourceTree = "<group>"; };
-		F58CC6A12C27C9F500A09B8D /* GridGameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridGameboard.swift; sourceTree = "<group>"; };
-		F58CC6A42C27CA8500A09B8D /* CubeFourGameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeFourGameboardController.swift; sourceTree = "<group>"; };
-		F58CC6A62C27CB8700A09B8D /* GridGameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridGameboardController.swift; sourceTree = "<group>"; };
+		F58CC6A12C27C9F500A09B8D /* Grid3Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid3Gameboard.swift; sourceTree = "<group>"; };
+		F58CC6A42C27CA8500A09B8D /* Cube4GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube4GameboardController.swift; sourceTree = "<group>"; };
+		F58CC6A62C27CB8700A09B8D /* Grid3GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid3GameboardController.swift; sourceTree = "<group>"; };
 		F59061EE2C2A83AF00231FD9 /* HomeMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuViewModel.swift; sourceTree = "<group>"; };
 		F592C9F22C540ACB00CA3C12 /* DashboardUIComponents+PlayAgain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardUIComponents+PlayAgain.swift"; sourceTree = "<group>"; };
 		F592C9F42C540B2900CA3C12 /* DashboardUIComponents+InGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardUIComponents+InGame.swift"; sourceTree = "<group>"; };
@@ -549,7 +549,7 @@
 			isa = PBXGroup;
 			children = (
 				F555D60A2BE1351500B92AA4 /* Gameboard.swift */,
-				F58CC6A12C27C9F500A09B8D /* GridGameboard.swift */,
+				F58CC6A12C27C9F500A09B8D /* Grid3Gameboard.swift */,
 				F58CC69D2C27C98C00A09B8D /* Cube4Gameboard.swift */,
 			);
 			path = Gameboards;
@@ -559,8 +559,8 @@
 			isa = PBXGroup;
 			children = (
 				F58960F32C0AC26A003B4940 /* GameboardController.swift */,
-				F58CC6A62C27CB8700A09B8D /* GridGameboardController.swift */,
-				F58CC6A42C27CA8500A09B8D /* CubeFourGameboardController.swift */,
+				F58CC6A62C27CB8700A09B8D /* Grid3GameboardController.swift */,
+				F58CC6A42C27CA8500A09B8D /* Cube4GameboardController.swift */,
 			);
 			path = GameboardControllers;
 			sourceTree = "<group>";
@@ -1090,13 +1090,13 @@
 				F592C9F32C540AD900CA3C12 /* DashboardUIComponents+PlayAgain.swift in Sources */,
 				F54BFA462C54AA120016AF86 /* GameSessionValue.swift in Sources */,
 				F512E81D2BF3AE7A00955FD2 /* Utilities.swift in Sources */,
-				F58CC6A72C27CB8900A09B8D /* GridGameboardController.swift in Sources */,
+				F58CC6A72C27CB8900A09B8D /* Grid3GameboardController.swift in Sources */,
 				F555D5F72BD4494000B92AA4 /* TicTacSpatialActivity.swift in Sources */,
 				F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */,
 				F54BFA442C54A9930016AF86 /* GameSessionViewModel.swift in Sources */,
 				F55906372C56B52000907BF6 /* DashboardPicker.swift in Sources */,
 				F54BFA4C2C54AD600016AF86 /* RotationSender.swift in Sources */,
-				F58CC6A52C27CA8900A09B8D /* CubeFourGameboardController.swift in Sources */,
+				F58CC6A52C27CA8900A09B8D /* Cube4GameboardController.swift in Sources */,
 				F550D1732C58378100F468E0 /* RealityRotateViewModifier.swift in Sources */,
 				F592C9F52C540B3500CA3C12 /* DashboardUIComponents+InGame.swift in Sources */,
 				F58960F42C0AC26A003B4940 /* GameboardController.swift in Sources */,
@@ -1158,7 +1158,7 @@
 				F5FDC9902BCDE366001EC38B /* GameCore.docc in Sources */,
 				F555D6072BE131DD00B92AA4 /* WinningLine.swift in Sources */,
 				F555D5EF2BD448E700B92AA4 /* TicTacToeController.docc in Sources */,
-				F58CC6A22C27C9FB00A09B8D /* GridGameboard.swift in Sources */,
+				F58CC6A22C27C9FB00A09B8D /* Grid3Gameboard.swift in Sources */,
 				F5FDC9AA2BCDE387001EC38B /* GameSession.swift in Sources */,
 				F5FDC9AD2BCDE38C001EC38B /* Collection+Convenience.swift in Sources */,
 				F5FDC9AE2BCDE38C001EC38B /* Queue.swift in Sources */,
