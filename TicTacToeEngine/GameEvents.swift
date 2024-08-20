@@ -140,3 +140,17 @@ public struct GameStateUpdate<WinningLine: WinningLineProtocol, GameboardLocatio
         hasher.combine(id)
     }
 }
+
+public struct GameOverInfo<WinningLine: WinningLineProtocol>: Equatable, Sendable, CustomStringConvertible {
+    public let isGameOver: Bool
+    public let winningInfo: WinningInfo<WinningLine>?
+
+    public init(isGameOver: Bool, winningInfo: WinningInfo<WinningLine>?) {
+        self.isGameOver = isGameOver
+        self.winningInfo = winningInfo
+    }
+
+    public var description: String {
+        "isGameOver: \(isGameOver), winningInfo: \(winningInfo.map(\.description) ?? .nil)"
+    }
+}

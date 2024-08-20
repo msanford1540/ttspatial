@@ -74,25 +74,18 @@ final class GameEngine<Gameboard: GameboardProtocol> {
         let move = GameMove(location: location, mark: mark)
         moves.append(move)
 
-        let winningLines = Gameboard.WinningLine.allCases.filter { gameboard.winner(for: $0) != nil }
-        if winningLines.isEmpty {
-            let opponent = currentTurn.opponent
-            let possibleWinningLines = gameboard.candidateWinningLines.filter { isPossible($0, turn: opponent) }
-            isGameOver = possibleWinningLines.isEmpty
-            if isGameOver {
-                sendUpdate(.move(.init(location: location, mark: mark)), currentTurn)
-                sendUpdate(.gameOver(nil), nil)
-            } else {
-                self.currentTurn = opponent
-                sendUpdate(.move(.init(location: location, mark: mark)), opponent)
-            }
-        } else {
-            winningLines.map { Gameboard.locations(for: $0) }.flatMap { $0 }.forEach { assert(gameboard.marker(at: $0) == mark) }
-            let winningInfo = WinningInfo(player: mark, lines: Set(winningLines))
-            self.winningInfo = winningInfo
-            isGameOver = true
+        let opponent = currentTurn.opponent
+        let gameOverInfo = gameboard.gameOverInfo(currentTurn: opponent)
+        if gameOverInfo.isGameOver {
+            self.winningInfo = gameOverInfo.winningInfo
+            self.isGameOver = true
             sendUpdate(.move(move), currentTurn)
-            sendUpdate(.gameOver(winningInfo), nil)
+            sendUpdate(.gameOver(gameOverInfo.winningInfo), nil)
+        } else {
+            self.winningInfo = nil
+            self.isGameOver = false
+            self.currentTurn = opponent
+            sendUpdate(.move(move), opponent)
         }
     }
 

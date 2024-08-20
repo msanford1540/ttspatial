@@ -68,16 +68,6 @@ extension GameboardInspectable {
             }
         }
     }
-}
-
-extension GameboardProtocol {
-    init(snapshot: Snapshot) {
-        self.init()
-        Location.allCases.forEach {
-            guard let mark = snapshot.marker(at: $0) else { return }
-            markPlayer(mark, at: $0)
-        }
-    }
 
     func winner(for winningLine: WinningLine) -> PlayerMarker? {
         let allMarks = Self.locations(for: winningLine).map(marker(at:))
@@ -89,6 +79,39 @@ extension GameboardProtocol {
             }
         }
     }
+
+    private func isPossible(_ line: CandidateWinningLine<WinningLine, Location>, turn: PlayerMarker) -> Bool {
+        let boardUnmarkedCount = unmarkedLocations.count
+        if boardUnmarkedCount != line.unmarkedCount { return true }
+        return boardUnmarkedCount == WinningLine.locationCount - 1 && line.markCount.mark == turn
+    }
+
+    func gameOverInfo(currentTurn: PlayerMarker) -> GameOverInfo<WinningLine> {
+        let isGameOver: Bool
+        let winningInfo: WinningInfo<WinningLine>?
+        let winningLines = WinningLine.allCases.filter { winner(for: $0) != nil }
+        let winningPlayer = winningLines.first.flatMap(winner(for:))
+        if let winningPlayer {
+            winningInfo = WinningInfo(player: winningPlayer, lines: Set(winningLines))
+            isGameOver = true
+        } else {
+            winningInfo = nil
+            isGameOver = candidateWinningLines
+                .filter { isPossible($0, turn: currentTurn) }
+                .isEmpty
+        }
+        return .init(isGameOver: isGameOver, winningInfo: winningInfo)
+    }
+}
+
+extension GameboardProtocol {
+    init(snapshot: Snapshot) {
+        self.init()
+        Location.allCases.forEach {
+            guard let mark = snapshot.marker(at: $0) else { return }
+            markPlayer(mark, at: $0)
+        }
+    }
 }
 
 public protocol GameboardSnapshotProtocol: GameboardInspectable, Sendable, Codable {
@@ -98,6 +121,22 @@ public protocol GameboardSnapshotProtocol: GameboardInspectable, Sendable, Codab
 public extension GameboardSnapshotProtocol {
     var isGameOver: Bool {
         currentTurn == nil
+    }
+
+    var winningInfo: WinningInfo<WinningLine>? {
+        let winningLines = Self.WinningLine.allCases.filter { winner(for: $0) != nil }
+        let winningMark = winningLines.first.flatMap { winner(for: $0) }
+        return winningMark.map { WinningInfo(player: $0, lines: Set(winningLines)) }
+    }
+
+    internal var stateDescription: String {
+        if let currentTurn {
+            "Current turn: \(currentTurn)"
+        } else if let winningInfo {
+            "Winner: \(winningInfo.player)"
+        } else {
+            "Tie Game"
+        }
     }
 }
 

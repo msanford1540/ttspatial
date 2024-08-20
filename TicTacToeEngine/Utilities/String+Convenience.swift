@@ -9,6 +9,8 @@ import Foundation
 
 public extension String {
     static let `nil` = "<nil>"
+    static let space = " "
+    static let newLine = "\n"
 
     var nonEmpty: String? {
         isEmpty ? nil : self
