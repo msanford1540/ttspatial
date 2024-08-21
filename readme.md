@@ -1,5 +1,5 @@
 ## Summary
-Provide an example of an Apple cross-platform, collaborative RealityKit app by using Tic-Tac-Toe gameplay. There are 2 gameboards, a 2-dimensional 3x3 and a 3 dimensional 4x4x4. The game modes supported are against a bot (easy, mediaum or hard levels) and a remote opponent using SharePlay.
+Provide an example of an Apple cross-platform, Swift 6, collaborative RealityKit app by using Tic-Tac-Toe gameplay. There are 2 gameboards, a 2-dimensional 3x3 and a 3 dimensional 4x4x4. The game modes supported are against a bot (easy, mediaum or hard levels) and a remote opponent using SharePlay.
 
 This runs on iOS, iPadOS, macOS (not Catalyst) and visionsOS. 
 
