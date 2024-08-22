@@ -6,7 +6,7 @@ This runs on iOS, iPadOS, macOS (not Catalyst) and visionsOS.
 Code resuse is done across 2 dimensions; platform and gameboard size. The bot logic and the game engine itself is the same regardless of gameboard size. This app takes an MVVM approach. Most of the views can be resused across platform as is or with minor changes. The view models do not have any platform specific changes.
 
 ## Best Practices
-- SWift 6
+- Swift 6
 - Combine
 - Structured Concurrency
 - RealityKit
