@@ -192,22 +192,6 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         await performBotMoveIfNeeded()
     }
 
-    private func player(for mark: PlayerMarker) -> Player {
-        switch mark {
-        case .x: xPlayer
-        case .o: oPlayer
-        }
-    }
-
-    private func performBotMoveIfNeeded() async {
-        let snapshot = gameEngine.snapshot
-        guard let currentTurn = snapshot.currentTurn,
-              case .bot(let bot) = player(for: currentTurn),
-              let moveLocation = bot.move(for: snapshot) else { return }
-        try? await Task.sleep(for: .seconds(1))
-        gameEngine.markCurrentPlayer(at: moveLocation)
-    }
-
     public func handleMessage(_ message: GameMessageType<Gameboard.Snapshot>) {
         switch message {
         case .snapshot(let gameSnapshot):
@@ -248,14 +232,6 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     }
 #endif
 
-    private func startNewGame() {
-        observeGameEngineUpdates()
-
-        Task {
-            await performBotMoveIfNeeded()
-        }
-    }
-
     public func dequeueEvent() -> GameEvent<Gameboard>? {
         guard let pendingGameEvent else { return nil }
         self.pendingGameEvent = nil
@@ -271,7 +247,41 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         }
     }
 
-    private func onGameStateUpdate(_ update: GameStateUpdate<Gameboard>) {
+    public var isHumanVersusBot: Bool {
+        (xPlayer.isHuman && oPlayer.isBot) || (xPlayer.isBot && oPlayer.isHuman)
+    }
+
+    public var isRemoteGame: Bool {
+        xPlayer.isRemote || oPlayer.isRemote
+    }
+}
+
+private extension GameSession {
+    func player(for mark: PlayerMarker) -> Player {
+        switch mark {
+        case .x: xPlayer
+        case .o: oPlayer
+        }
+    }
+
+    func performBotMoveIfNeeded() async {
+        let snapshot = gameEngine.snapshot
+        guard let currentTurn = snapshot.currentTurn,
+              case .bot(let bot) = player(for: currentTurn),
+              let moveLocation = bot.move(for: snapshot) else { return }
+        try? await Task.sleep(for: .seconds(1))
+        gameEngine.markCurrentPlayer(at: moveLocation)
+    }
+
+    func startNewGame() {
+        observeGameEngineUpdates()
+
+        Task {
+            await performBotMoveIfNeeded()
+        }
+    }
+
+    func onGameStateUpdate(_ update: GameStateUpdate<Gameboard>) {
         if processingEventID == nil {
             processGameState(with: update)
         } else {
@@ -279,7 +289,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         }
     }
 
-    private func observeGameEngineUpdates() {
+    func observeGameEngineUpdates() {
         Task {
             for await update in gameEngine.updateStream {
                 onGameStateUpdate(update)
@@ -287,7 +297,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         }
     }
 
-    private func processGameState(with update: GameStateUpdate<Gameboard>) {
+    func processGameState(with update: GameStateUpdate<Gameboard>) {
         func updateUndoAndReplay() {
             canUndo = currentTurn.map { isHumanTurn && gameEngine.canUndo(for: $0) } ?? false
             canReplay = gameEngine.hasActiveGameMadeMove
@@ -314,14 +324,6 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
             case .o: oWinCount += 1
             }
         }
-    }
-
-    public var isHumanVersusBot: Bool {
-        (xPlayer.isHuman && oPlayer.isBot) || (xPlayer.isBot && oPlayer.isHuman)
-    }
-
-    public var isRemoteGame: Bool {
-        xPlayer.isRemote || oPlayer.isRemote
     }
 }
 
