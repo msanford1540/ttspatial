@@ -65,11 +65,15 @@ public final class GameSessionViewModel: ObservableObject {
         case let grid3Snapshot as Grid3GameboardSnapshot:
             let grid3GameSession = GameSession<Grid3Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType, snapshot: grid3Snapshot)
             startGameSession(grid3GameSession)
+#if DEBUG
             grid3GameSession.allowUndoAndReplay()
+#endif
         case let cube4Snapshot as Cube4GameboardSnapshot:
             let cube4GameSession = GameSession<Cube4Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType, snapshot: cube4Snapshot)
             startGameSession(cube4GameSession)
+#if DEBUG
             cube4GameSession.allowUndoAndReplay()
+#endif
         default:
             fatalError("invalid snapshot type")
         }
