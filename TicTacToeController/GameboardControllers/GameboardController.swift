@@ -92,7 +92,7 @@ import TicTacToeEngine
         await entity.animateScale(to: .init(x: 1, y: 1, z: 1), duration: .milliseconds(500))
     }
 
-    public func updateUI(_ event: GameEvent<Gameboard.WinningLine, Gameboard.Location>) async throws {
+    public func updateUI(_ event: GameEvent<Gameboard>) async throws {
         switch event {
         case .move(let gameMove):
             try await onMove(gameMove)
@@ -100,8 +100,8 @@ import TicTacToeEngine
             try await onUndo(gameMove)
         case .gameOver(let winningInfo):
             try await onGameOver(winningInfo)
-        case .reset:
-            try await onReset()
+        case .reset(let gameboard):
+            try await onReset(gameboard)
         @unknown default:
             assertionFailure("unknown game event type")
         }
@@ -147,19 +147,9 @@ import TicTacToeEngine
         let location = gameMove.location
         let mark = gameMove.mark
         let animationDuration: Duration = .markDuration
-        guard let blankEntity = blankEntities[location] else {
-            assertionFailure("expected entity")
+        guard let markedEntity = markUI(mark, at: location, duration: animationDuration / 2) else {
             return
         }
-        let postion = blankEntity.position
-        Task {
-            await blankEntity.animateOpacityToMinInput(duration: animationDuration / 2)
-        }
-        let templateEntity = templateEntity(for: mark)
-        let markedEntity = templateEntity.clone(recursive: true)
-        markedEntity.position = postion
-        markedEntity.isEnabled = true
-        places.addChild(markedEntity)
 #if os(visionOS)
         markedEntity.components.set(OpacityComponent(opacity: .zero))
         Task {
@@ -173,10 +163,34 @@ import TicTacToeEngine
         try await Task.sleep(for: animationDuration / 2)
     }
 
-    func onReset() async throws {
+    @discardableResult
+    private func markUI(_ mark: PlayerMarker, at location: Gameboard.Location, duration: Duration) -> Entity? {
+        guard let blankEntity = blankEntities[location] else {
+            assertionFailure("expected entity")
+            return nil
+        }
+        let postion = blankEntity.position
+        Task {
+            await blankEntity.animateOpacityToMinInput(duration: duration)
+        }
+        let templateEntity = templateEntity(for: mark)
+        let markedEntity = templateEntity.clone(recursive: true)
+        markedEntity.position = postion
+        markedEntity.isEnabled = true
+        places.addChild(markedEntity)
+        return markedEntity
+    }
+
+    func onReset(_ gameboard: Gameboard? = nil) async throws {
         var didAnimate = false
         let animationDuration: Duration = .removeDuration
-        let entities = Array(xEntities.values) + Array(oEntities.values) + Array(lineEntities.values)
+        let xLocations = gameboard?.locations(for: .x) ?? .empty
+        let oLocations = gameboard?.locations(for: .o) ?? .empty
+        let xToBlankLocations = Set(xEntities.keys).subtracting(xLocations)
+        let oToBlankLocations = Set(oEntities.keys).subtracting(oLocations)
+        let xToBlankEntities = xEntities.filter { xToBlankLocations.contains($0.key) }.values
+        let oToBlankEntities = oEntities.filter { oToBlankLocations.contains($0.key) }.values
+        let entities = Array(xToBlankEntities) + Array(oToBlankEntities) + Array(lineEntities.values)
         entities.forEach { entity in
             didAnimate = true
             Task {
@@ -184,8 +198,17 @@ import TicTacToeEngine
                 entity.removeFromParent()
             }
         }
-        xEntities = .empty
-        oEntities = .empty
+
+        xEntities = xLocations
+            .subtracting(xEntities.keys)
+            .reduce(into: .empty) { result, location in
+                result[location] = markUI(.x, at: location, duration: animationDuration)
+            }
+        oEntities = oLocations
+            .subtracting(oEntities.keys)
+            .reduce(into: .empty) { result, location in
+                result[location] = markUI(.o, at: location, duration: animationDuration)
+            }
         lineEntities = .empty
         blankEntities.values.forEach { entity in
             didAnimate = true
@@ -292,6 +315,24 @@ enum WinningLineType {
         case .straight(let hasDepth): hasDepth
         case .diagonal(let hasDepth): hasDepth
         case .crossDiagonal: true
+        }
+    }
+}
+
+private extension GameboardInspectable {
+    var markers: [Location: PlayerMarker] {
+        Location.allCases.reduce(into: .empty) { result, location in
+            if let marker = marker(at: location) {
+                result[location] = marker
+            }
+        }
+    }
+
+    func locations(for playerMarker: PlayerMarker) -> Set<Location> {
+        Location.allCases.reduce(into: .empty) { result, location in
+            if marker(at: location) == playerMarker {
+                result.insert(location)
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ public enum GameboardDimensions: Hashable, Identifiable, Codable, CustomStringCo
     }
 }
 
-public protocol GameboardInspectable: CustomStringConvertible {
+public protocol GameboardInspectable: Sendable, Codable, CustomStringConvertible {
     associatedtype Location: GameboardLocationProtocol
     associatedtype WinningLine: WinningLineProtocol
 
@@ -115,6 +115,7 @@ extension GameboardProtocol {
 }
 
 public protocol GameboardSnapshotProtocol: GameboardInspectable, Sendable, Codable {
+    init(markers: [Location: PlayerMarker], currentTurn: PlayerMarker?)
     var currentTurn: PlayerMarker? { get }
 }
 

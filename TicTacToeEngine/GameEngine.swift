@@ -8,8 +8,8 @@
 import Foundation
 
 final class GameEngine<Gameboard: GameboardProtocol> {
-    public let updateStream: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>
-    private let continuation: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>.Continuation?
+    public let updateStream: AsyncStream<GameStateUpdate<Gameboard>>
+    private let continuation: AsyncStream<GameStateUpdate<Gameboard>>.Continuation?
     private(set) var currentTurn: PlayerMarker? = .x
     private(set) var winningInfo: WinningInfo<Gameboard.WinningLine>?
     private(set) var isGameOver: Bool = false
@@ -17,13 +17,13 @@ final class GameEngine<Gameboard: GameboardProtocol> {
     private(set) var gameboard: Gameboard
 
     private init(gameboard: Gameboard, currentTurn: PlayerMarker?) {
-        var continuation: AsyncStream<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>.Continuation?
+        var continuation: AsyncStream<GameStateUpdate<Gameboard>>.Continuation?
         self.updateStream = AsyncStream { continuation = $0 }
         self.continuation = continuation
         assert(continuation != nil)
         self.gameboard = gameboard
         self.currentTurn = currentTurn
-        sendUpdate(.reset, currentTurn)
+        sendUpdate(.reset(gameboard), currentTurn)
     }
 
     convenience init(gameboard: Gameboard, startingPlayer: PlayerMarker) {
@@ -87,7 +87,7 @@ final class GameEngine<Gameboard: GameboardProtocol> {
         }
     }
 
-    private func sendUpdate(_ event: GameEvent<Gameboard.WinningLine, Gameboard.Location>, _ currentTurn: PlayerMarker?) {
+    private func sendUpdate(_ event: GameEvent<Gameboard>, _ currentTurn: PlayerMarker?) {
         continuation?.yield(.init(event: event, currentTurn: currentTurn))
     }
 

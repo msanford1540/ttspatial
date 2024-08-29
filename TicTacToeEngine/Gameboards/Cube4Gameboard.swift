@@ -10,7 +10,7 @@ public struct Cube4Gameboard: GameboardProtocol {
     public typealias WinningLine = Cube4WinningLine
     public typealias Snapshot = Cube4GameboardSnapshot
 
-    public let dimensions: GameboardDimensions = .cube4
+    public var dimensions: GameboardDimensions { .cube4 }
     fileprivate var markers: [Location: PlayerMarker] = .empty
 
     public init() {}
@@ -110,7 +110,7 @@ public struct Cube4GameboardSnapshot: GameboardSnapshotProtocol {
     fileprivate let markers: [Location: PlayerMarker]
     public let currentTurn: PlayerMarker?
 
-    init(markers: [Location: PlayerMarker], currentTurn: PlayerMarker?) {
+    public init(markers: [Location: PlayerMarker], currentTurn: PlayerMarker?) {
         self.markers = markers
         self.currentTurn = currentTurn
     }

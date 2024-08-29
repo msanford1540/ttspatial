@@ -51,3 +51,11 @@ public extension SIMD3<Float> {
 public extension simd_quatf {
     static let zero: simd_quatf = .init(angle: .zero, axis: .zero)
 }
+
+#if DEBUG
+public enum Screenshot {
+    case homeMenu
+    case cube4Game
+    case grid3Game
+}
+#endif

@@ -24,7 +24,7 @@ struct Quanterion: Codable, CustomStringConvertible, Sendable {
         .init(angle: angle, axis: .init(x: axisX, y: axisY, z: axisZ))
     }
 
-    public var description: String {
+    var description: String {
         "(w: \(angle), x: \(axisX), y: \(axisY), z: \(axisZ)"
     }
 }

@@ -109,7 +109,7 @@ public struct Grid3Location: GameboardLocationProtocol {
     public let x: Horizontal3Position
     public let y: Vertical3Position
 
-    init(_ y: Vertical3Position, _ x: Horizontal3Position) {
+    public init(_ y: Vertical3Position, _ x: Horizontal3Position) {
         self.x = x
         self.y = y
     }
@@ -136,7 +136,7 @@ public struct Cube4Location: GameboardLocationProtocol {
     public let y: Vertical4Position
     public let z: Depth4Position
 
-    init(_ y: Vertical4Position, _ x: Horizontal4Position, _ z: Depth4Position) {
+    public init(_ y: Vertical4Position, _ x: Horizontal4Position, _ z: Depth4Position) {
         self.x = x
         self.y = y
         self.z = z

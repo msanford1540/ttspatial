@@ -19,6 +19,9 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     @Published public var sharePlaySession: SharePlayGameSession
     @Published public var gameSessionViewModel: GameSessionViewModel
     @Published public var botLevelName: String = .empty
+#if DEBUG
+    private var screenshot: Screenshot?
+#endif
     public let grid3Controller = Grid3GameboardController()
     public let cube4Controller = Cube4GameboardController()
     private var subscribers: Set<AnyCancellable> = .empty
@@ -87,7 +90,19 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         cube4Controller.scene.transform.rotation = .zero
         autorotateTimer = Timer.scheduledTimer(withTimeInterval: (1 / 60), repeats: true) { [weak self] _ in
             Task { @MainActor in
-                self?.cube4Controller.scene.transform.rotation *= .init(angle: 0.01, axis: .init(x: 0, y: 1, z: 0))
+                guard let self else { return }
+#if DEBUG
+                switch self.screenshot {
+                case .homeMenu:
+                    self.cube4Controller.scene.transform.rotation = .init(angle: 0.65, axis: .init(x: 0, y: 1, z: 0))
+                case .grid3Game, .cube4Game:
+                    break
+                case nil:
+                    self.cube4Controller.scene.transform.rotation *= .init(angle: 0.01, axis: .init(x: 0, y: 1, z: 0))
+                }
+#else
+                self.cube4Controller.scene.transform.rotation *= .init(angle: 0.01, axis: .init(x: 0, y: 1, z: 0))
+#endif
             }
         }
     }
@@ -162,9 +177,23 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     }
 
     public func playGame() {
+#if DEBUG
+        switch screenshot {
+        case .homeMenu, nil:
+            gameSessionViewModel.playGame(
+                dimensions: gameboardDimensions, xPlayerType: .human, oPlayerType: .bot(selectedBotLevel)
+            )
+        case .grid3Game:
+            gameSessionViewModel.showGame(for: .grid3Game)
+        case .cube4Game:
+            gameSessionViewModel.showGame(for: .cube4Game)
+            cube4Controller.scene.transform.rotation = .init(angle: 0.9, axis: .init(x: 0.2, y: 1, z: 0))
+        }
+#else
         gameSessionViewModel.playGame(
             dimensions: gameboardDimensions, xPlayerType: .human, oPlayerType: .bot(selectedBotLevel)
         )
+#endif
     }
 
     public func showHint(at location: any GameboardLocationProtocol) {
