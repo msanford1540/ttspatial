@@ -79,20 +79,24 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     @Published public private(set) var canUndo: Bool = false
     @Published public private(set) var canReplay: Bool = false
     private var isWaitingToStartNewRemoteGame: Bool = false
-    private var pendingGameEvent: GameEvent<Gameboard.WinningLine, Gameboard.Location>?
+    private var pendingGameEvent: GameEvent<Gameboard>?
     private var mostRecentHintLocation: Gameboard.Location?
+#if DEBUG
+    private var forceUndoAndReplay: Bool = false
+#endif
 
-    private var queue = Queue<GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>>()
+    private var queue = Queue<GameStateUpdate<Gameboard>>()
     private var gameEngine: GameEngine<Gameboard>
     private var startingPlayer: PlayerMarker = .x
     @Published private var xPlayer: Player
     @Published private var oPlayer: Player
 
-    public init(xPlayerType: PlayerType, oPlayerType: PlayerType) {
+    public init(xPlayerType: PlayerType, oPlayerType: PlayerType, snapshot: Gameboard.Snapshot? = nil) {
         xPlayer = Player(playerType: xPlayerType)
         oPlayer = Player(playerType: oPlayerType)
         currentTurn = startingPlayer
-        gameEngine = GameEngine(gameboard: Gameboard(), startingPlayer: startingPlayer)
+        let gameSnapshot = snapshot ?? Gameboard.Snapshot(markers: .empty, currentTurn: startingPlayer)
+        gameEngine = GameEngine(snapshot: gameSnapshot)
         setupPipelines()
         startNewGame()
     }
@@ -238,6 +242,12 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         startNewGame()
     }
 
+#if DEBUG
+    public func allowUndoAndReplay() {
+        forceUndoAndReplay = true
+    }
+#endif
+
     private func startNewGame() {
         observeGameEngineUpdates()
 
@@ -246,7 +256,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         }
     }
 
-    public func dequeueEvent() -> GameEvent<Gameboard.WinningLine, Gameboard.Location>? {
+    public func dequeueEvent() -> GameEvent<Gameboard>? {
         guard let pendingGameEvent else { return nil }
         self.pendingGameEvent = nil
         return pendingGameEvent
@@ -261,7 +271,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         }
     }
 
-    private func onGameStateUpdate(_ update: GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>) {
+    private func onGameStateUpdate(_ update: GameStateUpdate<Gameboard>) {
         if processingEventID == nil {
             processGameState(with: update)
         } else {
@@ -277,12 +287,25 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         }
     }
 
-    private func processGameState(with update: GameStateUpdate<Gameboard.WinningLine, Gameboard.Location>) {
+    private func processGameState(with update: GameStateUpdate<Gameboard>) {
+        func updateUndoAndReplay() {
+            canUndo = currentTurn.map { isHumanTurn && gameEngine.canUndo(for: $0) } ?? false
+            canReplay = gameEngine.hasActiveGameMadeMove
+        }
+
         processingEventID = update.id
         pendingGameEvent = update.event
         currentTurn = update.currentTurn
-        canUndo = currentTurn.map { isHumanTurn && gameEngine.canUndo(for: $0) } ?? false
-        canReplay = gameEngine.hasActiveGameMadeMove
+#if DEBUG
+        if forceUndoAndReplay {
+            canUndo = true
+            canReplay = true
+        } else {
+            updateUndoAndReplay()
+        }
+#else
+        updateUndoAndReplay()
+#endif
         mostRecentHintLocation = nil
 
         if let winningPlayer = update.event.winningInfo?.player {
@@ -303,7 +326,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
 }
 
 private extension GameEvent {
-    var winningInfo: WinningInfo<WinningLine>? {
+    var winningInfo: WinningInfo<Gameboard.WinningLine>? {
         switch self {
         case .move, .undo, .reset: nil
         case .gameOver(let winningInfo): winningInfo

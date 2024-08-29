@@ -36,19 +36,81 @@ public final class GameSessionViewModel: ObservableObject {
     @Published public private(set) var canReplay: Bool = false
     private var gameSubscribers: Set<AnyCancellable> = .empty
 
+    private func startGameSession<Gameboard: GameboardProtocol>(_ gameSession: GameSession<Gameboard>) {
+        switch gameSession {
+        case let grid3GameSession as GameSession<Grid3Gameboard>:
+            self.gameSession = .grid3(grid3GameSession)
+        case let cube4GameSession as GameSession<Cube4Gameboard>:
+            self.gameSession = .cube4(cube4GameSession)
+        default:
+            fatalError("invalid game session type")
+        }
+        setupPipelines(gameSession)
+        isGameSessionActive = true
+    }
+
     func playGame(dimensions: GameboardDimensions, xPlayerType: PlayerType, oPlayerType: PlayerType) {
         switch dimensions {
         case .grid3:
-            let rawGameSession = GameSession<Grid3Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
-            gameSession = .grid3(rawGameSession)
-            setupPipelines(rawGameSession)
+            let grid3GameSession = GameSession<Grid3Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
+            startGameSession(grid3GameSession)
         case .cube4:
-            let rawGameSession = GameSession<Cube4Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
-            gameSession = .cube4(rawGameSession)
-            setupPipelines(rawGameSession)
+            let cube4GameSession = GameSession<Cube4Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType)
+            startGameSession(cube4GameSession)
         }
-        isGameSessionActive = true
     }
+
+    func showGame<Snapshot: GameboardSnapshotProtocol>(snapshot: Snapshot, xPlayerType: PlayerType, oPlayerType: PlayerType) {
+        switch snapshot {
+        case let grid3Snapshot as Grid3GameboardSnapshot:
+            let grid3GameSession = GameSession<Grid3Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType, snapshot: grid3Snapshot)
+            startGameSession(grid3GameSession)
+            grid3GameSession.allowUndoAndReplay()
+        case let cube4Snapshot as Cube4GameboardSnapshot:
+            let cube4GameSession = GameSession<Cube4Gameboard>(xPlayerType: xPlayerType, oPlayerType: oPlayerType, snapshot: cube4Snapshot)
+            startGameSession(cube4GameSession)
+            cube4GameSession.allowUndoAndReplay()
+        default:
+            fatalError("invalid snapshot type")
+        }
+    }
+
+#if DEBUG
+    func showGame(for screenshot: Screenshot) {
+        switch screenshot {
+        case .grid3Game:
+            let snapshot = Grid3GameboardSnapshot(
+                markers: [
+                    .init(.bottom, .left): .x,
+                    .init(.middle, .middle): .x,
+                    .init(.middle, .right): .o,
+                    .init(.top, .right): .o
+                ],
+                currentTurn: .x
+            )
+            showGame(snapshot: snapshot, xPlayerType: .human, oPlayerType: .bot(.medium))
+        case .cube4Game:
+            let snapshot = Cube4GameboardSnapshot(
+                markers: [
+                    .init(.bottom, .left, .front): .x,
+                    .init(.bottom, .left, .middleFront): .x,
+                    .init(.bottom, .left, .back): .x,
+                    .init(.top, .right, .front): .x,
+                    .init(.middleTop, .middleRight, .front): .o,
+                    .init(.middleBottom, .middleLeft, .front): .o,
+                    .init(.middleTop, .middleRight, .middleFront): .o,
+                    .init(.bottom, .right, .front): .o
+                ],
+                currentTurn: .x
+            )
+            showGame(snapshot: snapshot, xPlayerType: .human, oPlayerType: .bot(.medium))
+        default:
+            break
+        }
+        xWinCount = 1
+        oWinCount = 2
+    }
+#endif
 
     public var gameStatusText: String {
         return switch gameOverState {

@@ -10,7 +10,7 @@ public struct Grid3Gameboard: GameboardProtocol {
     public typealias WinningLine = Grid3WinningLine
     public typealias Snapshot = Grid3GameboardSnapshot
 
-    public let dimensions: GameboardDimensions = .grid3
+    public var dimensions: GameboardDimensions { .grid3 }
     fileprivate var markers: [Location: PlayerMarker] = .empty
 
     public init() {}
@@ -74,7 +74,7 @@ public struct Grid3GameboardSnapshot: GameboardSnapshotProtocol {
     fileprivate let markers: [Grid3Location: PlayerMarker]
     public let currentTurn: PlayerMarker?
 
-    init(markers: [Grid3Location: PlayerMarker], currentTurn: PlayerMarker?) {
+    public init(markers: [Grid3Location: PlayerMarker], currentTurn: PlayerMarker?) {
         self.markers = markers
         self.currentTurn = currentTurn
     }

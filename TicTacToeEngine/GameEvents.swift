@@ -88,8 +88,8 @@ public struct GameMove<GameboardLocation: GameboardLocationProtocol>: Sendable, 
 
 @frozen
 public enum GameEventValue: Sendable, Codable, CustomStringConvertible {
-    case grid3(GameEvent<Grid3WinningLine, Grid3Location>)
-    case cube4(GameEvent<Cube4WinningLine, Cube4Location>)
+    case grid3(GameEvent<Grid3Gameboard>)
+    case cube4(GameEvent<Cube4Gameboard>)
 
     public var description: String {
         switch self {
@@ -101,11 +101,11 @@ public enum GameEventValue: Sendable, Codable, CustomStringConvertible {
     }
 }
 
-public enum GameEvent<WinningLine: WinningLineProtocol, GameboardLocation: GameboardLocationProtocol>: Sendable, Codable, CustomStringConvertible {
-    case move(GameMove<GameboardLocation>)
-    case undo(GameMove<GameboardLocation>)
-    case gameOver(WinningInfo<WinningLine>?)
-    case reset
+public enum GameEvent<Gameboard: GameboardProtocol>: Sendable, Codable, CustomStringConvertible {
+    case move(GameMove<Gameboard.Location>)
+    case undo(GameMove<Gameboard.Location>)
+    case gameOver(WinningInfo<Gameboard.WinningLine>?)
+    case reset(Gameboard?)
 
     public var description: String {
         switch self {
@@ -121,12 +121,12 @@ public enum GameEvent<WinningLine: WinningLineProtocol, GameboardLocation: Gameb
     }
 }
 
-public struct GameStateUpdate<WinningLine: WinningLineProtocol, GameboardLocation: GameboardLocationProtocol>: Hashable, Sendable, Codable {
+public struct GameStateUpdate<Gameboard: GameboardProtocol>: Hashable, Sendable, Codable {
     public let id: UUID
-    public let event: GameEvent<WinningLine, GameboardLocation>
+    public let event: GameEvent<Gameboard>
     public let currentTurn: PlayerMarker?
 
-    init(event: GameEvent<WinningLine, GameboardLocation>, currentTurn: PlayerMarker?) {
+    init(event: GameEvent<Gameboard>, currentTurn: PlayerMarker?) {
         self.id = UUID()
         self.event = event
         self.currentTurn = currentTurn
