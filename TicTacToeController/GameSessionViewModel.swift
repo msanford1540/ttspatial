@@ -119,11 +119,11 @@ public final class GameSessionViewModel: ObservableObject {
     public var gameStatusText: String {
         return switch gameOverState {
         case .won:
-            "You Won!!!"
+            Localized.GameStatus.won
         case .lost:
-            "You lost"
+            Localized.GameStatus.lost
         case .tie:
-            "Tie Game"
+            Localized.GameStatus.tie
         case nil:
             .empty
         }

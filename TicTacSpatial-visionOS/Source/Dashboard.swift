@@ -77,13 +77,13 @@ private struct PlayAgainDashboard: View {
             .padding()
             VStack {
                 Text(gameStatusText)
-                Text("Play Again?")
+                Text(Localized.Dashboard.playAgainQuestionTitle)
                 HStack(spacing: 24) {
-                    DashboardButton("Stop") {
+                    DashboardButton(Localized.Dashboard.stop) {
                         gameSessionViewModel.endGameSession()
                         homeMenuViewModel.resetGameboard()
                     }
-                    DashboardButton("Play") {
+                    DashboardButton(Localized.Dashboard.play) {
                         gameSessionViewModel.startNewGame()
                     }
                 }
@@ -96,15 +96,7 @@ private struct PlayAgainDashboard: View {
     }
 
     private var gameStatusText: String {
-        guard let gameOverState = gameSessionViewModel.gameOverState else { return .empty }
-        return switch gameOverState {
-        case .won:
-            "You Won!!!"
-        case .lost:
-            "You lost"
-        case .tie:
-            "Tie Game"
-        }
+        gameSessionViewModel.gameStatusText
     }
 }
 

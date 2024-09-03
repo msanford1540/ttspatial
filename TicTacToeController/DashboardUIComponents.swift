@@ -123,7 +123,7 @@ public struct StartOverButton: View {
     public init() {}
 
     public var body: some View {
-        DashboardButton("Start Over") {
+        DashboardButton(Localized.Dashboard.startOver) {
             gameSessionViewModel.startNewGame()
         }
     }
@@ -155,7 +155,7 @@ public struct SharePlayButton: View {
     public init() {}
 
     public var body: some View {
-        DashboardButton("Start Activity", systemImage: "shareplay") {
+        DashboardButton(Localized.Dashboard.startActivity, systemImage: "shareplay") {
             if !gameSessionViewModel.isGameSessionActive {
                 sharePlaySession.startNewGameSession()
             }

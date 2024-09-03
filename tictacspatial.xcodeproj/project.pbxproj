@@ -73,6 +73,8 @@
 		F59776472BCF08240090DF5F /* TicTacToeEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5FDC98C2BCDE366001EC38B /* TicTacToeEngine.framework */; platformFilters = (ios, maccatalyst, macos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5CC50BE2BCFF14400EC88FB /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */; };
 		F5E2979A2C5B0E9B00A48E78 /* TTTScenes in Frameworks */ = {isa = PBXBuildFile; productRef = F5E297992C5B0E9B00A48E78 /* TTTScenes */; };
+		F5E7F2352C876610006FBB79 /* Localized+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E7F2342C87660C006FBB79 /* Localized+UI.swift */; };
+		F5E7F2372C87788A006FBB79 /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E7F2362C877887006FBB79 /* Localized.swift */; };
 		F5FDC9552BCDD8CE001EC38B /* TicTacSpatialApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */; };
 		F5FDC9592BCDD8CF001EC38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC9582BCDD8CF001EC38B /* Assets.xcassets */; };
 		F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5FDC95C2BCDD8CF001EC38B /* Preview Assets.xcassets */; };
@@ -281,6 +283,8 @@
 		F5A19BFA2BBE26C8007D8C1E /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		F5CC50BD2BCFF14400EC88FB /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialActivity.swift; sourceTree = "<group>"; };
+		F5E7F2342C87660C006FBB79 /* Localized+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Localized+UI.swift"; sourceTree = "<group>"; };
+		F5E7F2362C877887006FBB79 /* Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
 		F5F8ED9B2C5D32CB007BB22A /* AppIconRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppIconRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9522BCDD8CE001EC38B /* TicTacSpatial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacSpatial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5FDC9542BCDD8CE001EC38B /* TicTacSpatialApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacSpatialApp.swift; sourceTree = "<group>"; };
@@ -523,6 +527,7 @@
 		F555D5EE2BD448E700B92AA4 /* TicTacToeController */ = {
 			isa = PBXGroup;
 			children = (
+				F5E7F2342C87660C006FBB79 /* Localized+UI.swift */,
 				F55906362C56B51800907BF6 /* DashboardPicker.swift */,
 				F5CC50BF2BD0525400EC88FB /* TicTacSpatialActivity.swift */,
 				F54BFA492C54ACF60016AF86 /* SharePlayGameSession.swift */,
@@ -608,6 +613,7 @@
 		F5FDC9852BCDDFC7001EC38B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F5E7F2362C877887006FBB79 /* Localized.swift */,
 				F51E95CD2BC4258300FC33D3 /* Collection+Convenience.swift */,
 				F50FB20D2C0A0E1D007CDA1F /* String+Convenience.swift */,
 				F51E95D12BC8275200FC33D3 /* Queue.swift */,
@@ -1095,6 +1101,7 @@
 				F555D6012BD4CC6A00B92AA4 /* DashboardUIComponents.swift in Sources */,
 				F54BFA442C54A9930016AF86 /* GameSessionViewModel.swift in Sources */,
 				F55906372C56B52000907BF6 /* DashboardPicker.swift in Sources */,
+				F5E7F2352C876610006FBB79 /* Localized+UI.swift in Sources */,
 				F54BFA4C2C54AD600016AF86 /* RotationSender.swift in Sources */,
 				F58CC6A52C27CA8900A09B8D /* Cube4GameboardController.swift in Sources */,
 				F550D1732C58378100F468E0 /* RealityRotateViewModifier.swift in Sources */,
@@ -1154,6 +1161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F58960F52C0AC2A3003B4940 /* Logger+Convenience.swift in Sources */,
+				F5E7F2372C87788A006FBB79 /* Localized.swift in Sources */,
 				F50FB20E2C0A0E1D007CDA1F /* String+Convenience.swift in Sources */,
 				F5FDC9902BCDE366001EC38B /* GameCore.docc in Sources */,
 				F555D6072BE131DD00B92AA4 /* WinningLine.swift in Sources */,

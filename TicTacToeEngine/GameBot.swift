@@ -28,7 +28,7 @@ class BaseBot<Snapshot: GameboardSnapshotProtocol>: GameBotProtocol {
 }
 
 final class EasyBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
-    override var name: String { "Easy" }
+    override var name: String { Localized.BotLevel.easy }
 
     override func move(for snapshot: Snapshot) -> Snapshot.Location? {
         snapshot.bestMove(thresholdFactor: .zero)
@@ -38,7 +38,7 @@ final class EasyBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
 }
 
 final class MediumBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
-    override var name: String { "Medium" }
+    override var name: String { Localized.BotLevel.medium }
 
     override func move(for snapshot: Snapshot) -> Snapshot.Location? {
         let isBestMove = (1...5).randomElement() == 1
@@ -50,7 +50,7 @@ final class MediumBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
 }
 
 final class AdvancedBot<Snapshot: GameboardSnapshotProtocol>: BaseBot<Snapshot> {
-    override var name: String { "Advanced" }
+    override var name: String { Localized.BotLevel.advanced }
 
     override func move(for snapshot: Snapshot) -> Snapshot.Location? {
         snapshot.bestMove(thresholdFactor: 1)

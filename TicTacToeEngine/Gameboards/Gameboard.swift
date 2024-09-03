@@ -131,6 +131,7 @@ public extension GameboardSnapshotProtocol {
     }
 
     internal var stateDescription: String {
+        // Intentionally not localized. Development use only.
         if let currentTurn {
             "Current turn: \(currentTurn)"
         } else if let winningInfo {

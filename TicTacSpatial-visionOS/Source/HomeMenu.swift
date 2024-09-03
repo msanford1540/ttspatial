@@ -18,18 +18,18 @@ public struct HomeMenu: View {
         VStack(spacing: 24) {
             HStack(spacing: 48) {
                 DashboardPicker(
-                    "Gameboard", items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
+                    Localized.HomeMenu.gameboard, items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
                 )
 
                 DashboardPicker(
-                    "Bot Level", items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel
+                    Localized.HomeMenu.botLevel, items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel
                 )
             }
             .font(.largeTitle)
             .padding(.horizontal)
 
             HStack {
-                DashboardButton("Play Game", action: viewModel.playGame)
+                DashboardButton(Localized.HomeMenu.playAgainButtonTitle, action: viewModel.playGame)
                 ResetRotationButton()
                     .frame(width: 96, height: 96)
                     .padding(.leading)
