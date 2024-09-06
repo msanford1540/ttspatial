@@ -90,9 +90,9 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         isAutoRotatingEnabled = true
         cube4Controller.scene.transform.rotation = .zero
 
-        let rotationAngle: Float = 0.01 * (Localized.isLayoutRightToLeft ? -1 : 1)
-        let yAxis: SIMD3<Float> = .init(0, 1, 0)
-        let rotateDelta: simd_quatf = .init(angle: rotationAngle, axis: yAxis)
+        let rotationAngle = Float(0.01) * (Localized.isLayoutRightToLeft ? -1 : 1)
+        let yAxis = SIMD3<Float>(0, 1, 0)
+        let rotateDelta = simd_quatf(angle: rotationAngle, axis: yAxis)
         Task {
             while isAutoRotatingEnabled {
 #if DEBUG
