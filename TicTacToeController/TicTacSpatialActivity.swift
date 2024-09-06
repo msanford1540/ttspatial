@@ -15,7 +15,7 @@ import OSLog
 struct TicTacSpatialActivity: GroupActivity {
     public var metadata: GroupActivityMetadata {
         var metadata = GroupActivityMetadata()
-        metadata.title = Localized.SharePlay.appName
+        metadata.title = Localized.appName
         metadata.type = .generic
         return metadata
     }

@@ -117,18 +117,6 @@ public struct DashboardButton<Content: View>: View {
     }
 }
 
-public struct StartOverButton: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-
-    public init() {}
-
-    public var body: some View {
-        DashboardButton(Localized.Dashboard.startOver) {
-            gameSessionViewModel.startNewGame()
-        }
-    }
-}
-
 public struct EndGameButton: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
