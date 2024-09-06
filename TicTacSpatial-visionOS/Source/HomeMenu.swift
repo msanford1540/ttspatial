@@ -29,7 +29,7 @@ public struct HomeMenu: View {
             .padding(.horizontal)
 
             HStack {
-                DashboardButton(Localized.HomeMenu.playAgainButtonTitle, action: viewModel.playGame)
+                DashboardButton(Localized.HomeMenu.playGame, action: viewModel.playGame)
                 ResetRotationButton()
                     .frame(width: 96, height: 96)
                     .padding(.leading)

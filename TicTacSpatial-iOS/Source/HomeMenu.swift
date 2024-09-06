@@ -28,7 +28,7 @@ public struct HomeMenu: View {
                 Spacer()
             }
 
-            DashboardButton(Localized.HomeMenu.playAgainButtonTitle, action: viewModel.playGame)
+            DashboardButton(Localized.HomeMenu.playGame, action: viewModel.playGame)
                 .font(.title2)
             Spacer()
         }

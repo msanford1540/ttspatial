@@ -7,6 +7,21 @@
 
 import TicTacToeEngine
 
+#if canImport(UIKit)
+import UIKit
+typealias Application = UIApplication
+#elseif canImport(AppKit)
+import AppKit
+typealias Application = NSApplication
+#endif
+
+@MainActor
+public extension Localized {
+    static var isLayoutRightToLeft: Bool {
+        Application.shared.userInterfaceLayoutDirection == .rightToLeft
+    }
+}
+
 public extension Localized {
     enum SharePlay {}
 }
@@ -73,7 +88,7 @@ public extension Localized.Dashboard {
     )
 
     static let playAgainStatusOpponentNotPlaying = NSLocalizedString(
-        "DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_READY",
+        "DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_NOT_PLAYING",
         value: "Your opponent is not playing again.",
         comment: ""
     )
@@ -169,32 +184,18 @@ public extension Localized.HomeMenu {
     )
 
     static let playAgainButtonTitle = NSLocalizedString(
-        "DASHBOARD_PLAY_AGAIN",
+        "HOME_MENU_PLAY_AGAIN",
         value: "Play Again",
+        comment: ""
+    )
+
+    static let playGame = NSLocalizedString(
+        "HOME_MENU_PLAY_GAME",
+        value: "Play Game",
         comment: ""
     )
 }
 
 public extension Localized {
     enum BotLevel {}
-}
-
-public extension Localized.BotLevel {
-    static let easy = NSLocalizedString(
-        "BOT_LEVEL_EASY",
-        value: "Easy",
-        comment: ""
-    )
-
-    static let medium = NSLocalizedString(
-        "BOT_LEVEL_MEDIUM",
-        value: "Medium",
-        comment: ""
-    )
-
-    static let advanced = NSLocalizedString(
-        "BOT_LEVEL_ADVANCED",
-        value: "Hard",
-        comment: ""
-    )
 }

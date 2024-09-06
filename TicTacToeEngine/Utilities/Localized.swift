@@ -7,11 +7,11 @@
 
 public enum Localized {}
 
-extension Localized {
+public extension Localized {
     enum BotLevel {}
 }
 
-extension Localized.BotLevel {
+public extension Localized.BotLevel {
     static let easy = NSLocalizedString(
         "BOT_LEVEL_EASY",
         value: "Easy",
@@ -31,11 +31,11 @@ extension Localized.BotLevel {
     )
 }
 
-extension Localized {
+public extension Localized {
     enum Player {}
 }
 
-extension Localized.Player {
+public extension Localized.Player {
     static let meName = NSLocalizedString(
         "PLAYER_NAME_ME",
         value: "Me",

@@ -59,6 +59,10 @@
 		F559062F2C56A89600907BF6 /* TTTScenes in Frameworks */ = {isa = PBXBuildFile; productRef = F559062E2C56A89600907BF6 /* TTTScenes */; };
 		F55906352C56B34600907BF6 /* TTTScenes in Frameworks */ = {isa = PBXBuildFile; productRef = F55906342C56B34600907BF6 /* TTTScenes */; };
 		F55906372C56B52000907BF6 /* DashboardPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55906362C56B51800907BF6 /* DashboardPicker.swift */; };
+		F581D8EA2C8A939000576245 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F581D8E82C8A939000576245 /* Localizable.strings */; };
+		F581D8EB2C8A939000576245 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F581D8E82C8A939000576245 /* Localizable.strings */; };
+		F581D8F32C8A958D00576245 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F581D8F12C8A958D00576245 /* Localizable.strings */; };
+		F581D8F42C8A958D00576245 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F581D8F12C8A958D00576245 /* Localizable.strings */; };
 		F58960F42C0AC26A003B4940 /* GameboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F32C0AC26A003B4940 /* GameboardController.swift */; };
 		F58960F52C0AC2A3003B4940 /* Logger+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50FB2092C0A06A1007CDA1F /* Logger+Convenience.swift */; };
 		F58960F72C0AC36C003B4940 /* RealityKit+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */; };
@@ -271,6 +275,8 @@
 		F555D6082BE1322A00B92AA4 /* GameboardLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardLocation.swift; sourceTree = "<group>"; };
 		F555D60A2BE1351500B92AA4 /* Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
 		F55906362C56B51800907BF6 /* DashboardPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPicker.swift; sourceTree = "<group>"; };
+		F581D8E72C8A939000576245 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		F581D8F02C8A958D00576245 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = Localizable.strings; sourceTree = "<group>"; };
 		F58960F32C0AC26A003B4940 /* GameboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameboardController.swift; sourceTree = "<group>"; };
 		F58960F62C0AC36C003B4940 /* RealityKit+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RealityKit+Helpers.swift"; sourceTree = "<group>"; };
 		F58CC69D2C27C98C00A09B8D /* Cube4Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube4Gameboard.swift; sourceTree = "<group>"; };
@@ -391,6 +397,7 @@
 				F555D5DD2BD4488600B92AA4 /* TicTacToeControllerTests */,
 				F5FDC98D2BCDE366001EC38B /* TicTacToeEngine */,
 				F5FDC99B2BCDE366001EC38B /* TicTacToeEngineTests */,
+				F581D8E62C8A92DD00576245 /* Localization */,
 				F5372E342C6FD6E0008F6E57 /* AppIconRenderer */,
 				F5036B2A2BBC7AF400847D6A /* Products */,
 				F5FDC9AF2BCDE5CD001EC38B /* Frameworks */,
@@ -549,6 +556,31 @@
 			);
 			path = TicTacToeController;
 			sourceTree = SOURCE_ROOT;
+		};
+		F581D8E62C8A92DD00576245 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				F581D8F22C8A958D00576245 /* ar.lproj */,
+				F581D8E92C8A939000576245 /* en.lproj */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		F581D8E92C8A939000576245 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				F581D8E82C8A939000576245 /* Localizable.strings */,
+			);
+			path = en.lproj;
+			sourceTree = "<group>";
+		};
+		F581D8F22C8A958D00576245 /* ar.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				F581D8F12C8A958D00576245 /* Localizable.strings */,
+			);
+			path = ar.lproj;
+			sourceTree = "<group>";
 		};
 		F58CC69C2C27C97300A09B8D /* Gameboards */ = {
 			isa = PBXGroup;
@@ -930,6 +962,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
 			);
 			mainGroup = F5036B202BBC7AF400847D6A;
 			packageReferences = (
@@ -957,7 +990,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F581D8F42C8A958D00576245 /* Localizable.strings in Resources */,
 				F5036B382BBC7AF600847D6A /* Preview Assets.xcassets in Resources */,
+				F581D8EA2C8A939000576245 /* Localizable.strings in Resources */,
 				F51E959C2BC3289D00FC33D3 /* readme.md in Resources */,
 				F5036B352BBC7AF600847D6A /* Assets.xcassets in Resources */,
 			);
@@ -998,6 +1033,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F581D8EB2C8A939000576245 /* Localizable.strings in Resources */,
+				F581D8F32C8A958D00576245 /* Localizable.strings in Resources */,
 				F54655312C3BB0F800B6E2E5 /* marker-o.usdz in Resources */,
 				F54655322C3BB0F800B6E2E5 /* marker-x.usdz in Resources */,
 				F5FDC95D2BCDD8CF001EC38B /* Preview Assets.xcassets in Resources */,
@@ -1273,6 +1310,25 @@
 			targetProxy = F5FDC9B22BCDE5CD001EC38B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F581D8E82C8A939000576245 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F581D8E72C8A939000576245 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		F581D8F12C8A958D00576245 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F581D8F02C8A958D00576245 /* ar */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F5036B442BBC7AF600847D6A /* Debug */ = {

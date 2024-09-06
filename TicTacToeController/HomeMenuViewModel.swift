@@ -26,7 +26,7 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     public let cube4Controller = Cube4GameboardController()
     private var subscribers: Set<AnyCancellable> = .empty
     private var didInit = false
-    private var autorotateTimer: Timer?
+    private var isAutoRotatingEnabled: Bool = false
 #if os(visionOS)
     public var dashboard: Entity = .empty
     public var homeMenu: Entity = .empty
@@ -86,33 +86,36 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     }
 
     private func startAutorotateTimer() {
-        guard autorotateTimer == nil else { return }
+        if isAutoRotatingEnabled { return }
+        isAutoRotatingEnabled = true
         cube4Controller.scene.transform.rotation = .zero
-        autorotateTimer = Timer.scheduledTimer(withTimeInterval: (1 / 60), repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                guard let self else { return }
+
+        let rotationAngle: Float = 0.01 * (Localized.isLayoutRightToLeft ? -1 : 1)
+        let yAxis: SIMD3<Float> = .init(0, 1, 0)
+        let rotateDelta: simd_quatf = .init(angle: rotationAngle, axis: yAxis)
+        Task {
+            while isAutoRotatingEnabled {
 #if DEBUG
                 switch self.screenshot {
                 case .homeMenu:
-                    self.cube4Controller.scene.transform.rotation = .init(angle: 0.65, axis: .init(x: 0, y: 1, z: 0))
+                    cube4Controller.scene.transform.rotation = .init(angle: 0.65, axis: yAxis)
                 case .grid3Game, .cube4Game:
                     break
                 case nil:
-                    self.cube4Controller.scene.transform.rotation *= .init(angle: 0.01, axis: .init(x: 0, y: 1, z: 0))
+                    cube4Controller.scene.transform.rotation *= rotateDelta
                 }
 #else
-                self.cube4Controller.scene.transform.rotation *= .init(angle: 0.01, axis: .init(x: 0, y: 1, z: 0))
+                cube4Controller.scene.transform.rotation *= rotateDelta
 #endif
+                try await Task.sleep(for: .milliseconds(16))
             }
         }
     }
 
     private func stopAutorotateTimer() {
-        guard let autorotateTimer else { return }
-        autorotateTimer.invalidate()
-        self.autorotateTimer = nil
+        guard isAutoRotatingEnabled else { return }
+        isAutoRotatingEnabled = false
         cube4Controller.scene.transform.rotation = .zero
-
     }
 
     private func startNewRemoteGameSession(with dimensions: GameboardDimensions?) {
