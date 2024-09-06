@@ -85,11 +85,7 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         }
     }
 
-    private func startAutorotateTimer() {
-        if isAutoRotatingEnabled { return }
-        isAutoRotatingEnabled = true
-        cube4Controller.scene.transform.rotation = .zero
-
+    private func autorotate() {
         let rotationAngle = Float(0.01) * (Localized.isLayoutRightToLeft ? -1 : 1)
         let yAxis = SIMD3<Float>(0, 1, 0)
         let rotateDelta = simd_quatf(angle: rotationAngle, axis: yAxis)
@@ -110,6 +106,13 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
                 try await Task.sleep(for: .milliseconds(16))
             }
         }
+    }
+
+    private func startAutorotateTimer() {
+        if isAutoRotatingEnabled { return }
+        isAutoRotatingEnabled = true
+        cube4Controller.scene.transform.rotation = .zero
+        autorotate()
     }
 
     private func stopAutorotateTimer() {
