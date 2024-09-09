@@ -15,9 +15,8 @@ import AppKit
 typealias Application = NSApplication
 #endif
 
-@MainActor
 public extension Localized {
-    static var isLayoutRightToLeft: Bool {
+    @MainActor static var isLayoutRightToLeft: Bool {
         Application.shared.userInterfaceLayoutDirection == .rightToLeft
     }
 }
@@ -25,4 +24,9 @@ public extension Localized {
 public extension Localized {
     // intentionally not localized given this is the name of the app
     static let appName = "Tic-Tac-Spatial"
+}
+
+private class BundleFinder {}
+extension Bundle {
+    static let module = Bundle(for: BundleFinder.self)
 }

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="AppIconRenderer/AppIconRenderer-InfoPlist.xcstrings" source-language="en" target-language="ar" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>AppIconRenderer</source>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
+        <source/>
+        <note>Copyright (human-readable)</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="TicTacSpatial-iOS/InfoPlist.xcstrings" source-language="en" target-language="ar" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>Tic-Tac-Spatial</source>
+        <target state="translated">تيك تاك مكانية</target>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>TicTacSpatial</source>
+        <target state="translated">TicTacSpatial</target>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="TicTacSpatial-visionOS/InfoPlist.xcstrings" source-language="en" target-language="ar" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>Tic-Tac-Spatial</source>
+        <target state="translated">تيك تاك مكانية</target>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>TicTacSpatial</source>
+        <target state="translated">TicTacSpatial</target>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="TicTacToeController/Resources/Localizable.xcstrings" source-language="en" target-language="ar" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+    </header>
+    <body>
+      <trans-unit id="%lld" xml:space="preserve">
+        <source>%lld</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_2D" xml:space="preserve">
+        <source>2D</source>
+        <note>Button title for a two dimensional gameboard (3x3)</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_3D" xml:space="preserve">
+        <source>3D</source>
+        <note>Button title for a three dimensional gameboard (4x4x4)</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_HINT" xml:space="preserve">
+        <source>Hint</source>
+        <note>Button title to show the best next move to make</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_OPPONENT_LEFT" xml:space="preserve">
+        <source>Opponent left</source>
+        <note>Message to user that the opponent over a network game has left the game</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_PLAY_AGAIN_QUESTION_MESSAGE" xml:space="preserve">
+        <source>Do you want to play again?</source>
+        <note>Alert message when asking if the user wants to play again</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_PLAY_AGAIN_QUESTION_TITLE" xml:space="preserve">
+        <source>Play Again?</source>
+        <note>Alert title when asking if the user wants to play again</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_NOT_PLAYING" xml:space="preserve">
+        <source>Your opponent is not playing again.</source>
+        <note>Status message for a network game stating the opponent has declined to play again</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_READY" xml:space="preserve">
+        <source>Your opponent is ready to play again!</source>
+        <note>Status message for a network game stating the opponent has agreed to play again</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_WAITING" xml:space="preserve">
+        <source>Waiting for your opponent to play again.</source>
+        <note>Status message for a network game stating the opponent has not yet decided to play again or not</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_REPLAY" xml:space="preserve">
+        <source>Replay</source>
+        <note>Button title during a game to show the last move made</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_START_ACTIVITY" xml:space="preserve">
+        <source>Start Activity</source>
+        <note>Button title to start a SharePlay (network) game</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_STOP_PLAYING" xml:space="preserve">
+        <source>Stop Playing</source>
+        <note>Button title to stop playing against the current opponent</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_UNDO" xml:space="preserve">
+        <source>Undo</source>
+        <note>Button title to undo the last human move</note>
+      </trans-unit>
+      <trans-unit id="GAME_STATUS_LOST" xml:space="preserve">
+        <source>You lost</source>
+        <note>Game over message stating that the first person player lost</note>
+      </trans-unit>
+      <trans-unit id="GAME_STATUS_TIE" xml:space="preserve">
+        <source>Tie Game</source>
+        <note>Game over message stating that the players tied the game</note>
+      </trans-unit>
+      <trans-unit id="GAME_STATUS_WON" xml:space="preserve">
+        <source>You Won!!!</source>
+        <note>Game over message stating that the first person player won</note>
+      </trans-unit>
+      <trans-unit id="HOME_MENU_BOT_LEVEL" xml:space="preserve">
+        <source>Bot Level</source>
+        <note>Control label for selecting the bot difficulty level</note>
+      </trans-unit>
+      <trans-unit id="HOME_MENU_GAMEBOARD" xml:space="preserve">
+        <source>Gameboard</source>
+        <note>Control label for selecting the gameboard type</note>
+      </trans-unit>
+      <trans-unit id="HOME_MENU_PLAY_AGAIN" xml:space="preserve">
+        <source>Play Again</source>
+        <target state="translated">العب مرة أخرى</target>
+        <note>Button title to start playing a game with the same opponent as the previous game</note>
+      </trans-unit>
+      <trans-unit id="HOME_MENU_PLAY_GAME" xml:space="preserve">
+        <source>Play Game</source>
+        <target state="translated">العب اللعبة</target>
+        <note>Button title to start playing a new game</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="TicTacToeEngine/Localizable.xcstrings" source-language="en" target-language="ar" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+    </header>
+    <body>
+      <trans-unit id="BOT_LEVEL_ADVANCED" xml:space="preserve">
+        <source>Hard</source>
+        <target state="translated">صعب</target>
+        <note>Out of three bot levels, this is the name of the most difficultly level</note>
+      </trans-unit>
+      <trans-unit id="BOT_LEVEL_EASY" xml:space="preserve">
+        <source>Easy</source>
+        <target state="translated">سهل</target>
+        <note>Out of three bot levels, this is the name of the least difficultly level</note>
+      </trans-unit>
+      <trans-unit id="BOT_LEVEL_MEDIUM" xml:space="preserve">
+        <source>Medium</source>
+        <target state="translated">واسطة</target>
+        <note>Out of three bot levels, this is the name of the middle difficultly level</note>
+      </trans-unit>
+      <trans-unit id="PLAYER_NAME_FRIEND" xml:space="preserve">
+        <source>Friend</source>
+        <target state="translated">صديق</target>
+        <note>Player name of the opponent when playing over SharePlay</note>
+      </trans-unit>
+      <trans-unit id="PLAYER_NAME_ME" xml:space="preserve">
+        <source>Me</source>
+        <target state="translated">أنا</target>
+        <note>Player name of the first person across all game types</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

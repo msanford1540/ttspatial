@@ -12,21 +12,24 @@ public extension Localized {
 }
 
 public extension Localized.GameStatus {
-    static let tie = NSLocalizedString(
-        "GAME_STATUS_TIE",
-        value: "Tie Game",
+    static let tie = String(
+        localized: "GAME_STATUS_TIE",
+        defaultValue: "Tie Game",
+        bundle: .module,
         comment: "Game over message stating that the players tied the game"
     )
 
-    static let won = NSLocalizedString(
-        "GAME_STATUS_WON",
-        value: "You Won!!!",
+    static let won = String(
+        localized: "GAME_STATUS_WON",
+        defaultValue: "You Won!!!",
+        bundle: .module,
         comment: "Game over message stating that the first person player won"
     )
 
-    static let lost = NSLocalizedString(
-        "GAME_STATUS_LOST",
-        value: "You lost",
+    static let lost = String(
+        localized: "GAME_STATUS_LOST",
+        defaultValue: "You lost",
+        bundle: .module,
         comment: "Game over message stating that the first person player lost"
     )
 }

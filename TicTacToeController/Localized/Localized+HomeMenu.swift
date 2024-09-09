@@ -12,27 +12,31 @@ public extension Localized {
 }
 
 public extension Localized.HomeMenu {
-    static let gameboard = NSLocalizedString(
-        "HOME_MENU_GAMEBOARD",
-        value: "Gameboard",
+    static let gameboard = String(
+        localized: "HOME_MENU_GAMEBOARD",
+        defaultValue: "Gameboard",
+        bundle: .module,
         comment: "Control label for selecting the gameboard type"
     )
 
-    static let botLevel = NSLocalizedString(
-        "HOME_MENU_BOT_LEVEL",
-        value: "Bot Level",
+    static let botLevel = String(
+        localized: "HOME_MENU_BOT_LEVEL",
+        defaultValue: "Bot Level",
+        bundle: .module,
         comment: "Control label for selecting the bot difficulty level"
     )
 
-    static let playAgainButtonTitle = NSLocalizedString(
-        "HOME_MENU_PLAY_AGAIN",
-        value: "Play Again",
+    static let playAgainButtonTitle = String(
+        localized: "HOME_MENU_PLAY_AGAIN",
+        defaultValue: "Play Again",
+        bundle: .module,
         comment: "Button title to start playing a game with the same opponent as the previous game"
     )
 
-    static let playGame = NSLocalizedString(
-        "HOME_MENU_PLAY_GAME",
-        value: "Play Game",
+    static let playGame = String(
+        localized: "HOME_MENU_PLAY_GAME",
+        defaultValue: "Play Game",
+        bundle: .module,
         comment: "Button title to start playing a new game"
     )
 }

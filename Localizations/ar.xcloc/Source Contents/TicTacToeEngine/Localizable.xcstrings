@@ -1,0 +1,66 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "BOT_LEVEL_ADVANCED" : {
+      "comment" : "Out of three bot levels, this is the name of the most difficultly level",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hard"
+          }
+        }
+      }
+    },
+    "BOT_LEVEL_EASY" : {
+      "comment" : "Out of three bot levels, this is the name of the least difficultly level",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Easy"
+          }
+        }
+      }
+    },
+    "BOT_LEVEL_MEDIUM" : {
+      "comment" : "Out of three bot levels, this is the name of the middle difficultly level",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Medium"
+          }
+        }
+      }
+    },
+    "PLAYER_NAME_FRIEND" : {
+      "comment" : "Player name of the opponent when playing over SharePlay",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Friend"
+          }
+        }
+      }
+    },
+    "PLAYER_NAME_ME" : {
+      "comment" : "Player name of the first person across all game types",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Me"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

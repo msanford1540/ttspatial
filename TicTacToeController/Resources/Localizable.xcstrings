@@ -1,0 +1,261 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld" : {
+
+    },
+    "DASHBOARD_2D" : {
+      "comment" : "Button title for a two dimensional gameboard (3x3)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "2D"
+          }
+        }
+      }
+    },
+    "DASHBOARD_3D" : {
+      "comment" : "Button title for a three dimensional gameboard (4x4x4)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "3D"
+          }
+        }
+      }
+    },
+    "DASHBOARD_HINT" : {
+      "comment" : "Button title to show the best next move to make",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hint"
+          }
+        }
+      }
+    },
+    "DASHBOARD_OPPONENT_LEFT" : {
+      "comment" : "Message to user that the opponent over a network game has left the game",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Opponent left"
+          }
+        }
+      }
+    },
+    "DASHBOARD_PLAY_AGAIN_QUESTION_MESSAGE" : {
+      "comment" : "Alert message when asking if the user wants to play again",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Do you want to play again?"
+          }
+        }
+      }
+    },
+    "DASHBOARD_PLAY_AGAIN_QUESTION_TITLE" : {
+      "comment" : "Alert title when asking if the user wants to play again",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Play Again?"
+          }
+        }
+      }
+    },
+    "DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_NOT_PLAYING" : {
+      "comment" : "Status message for a network game stating the opponent has declined to play again",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your opponent is not playing again."
+          }
+        }
+      }
+    },
+    "DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_READY" : {
+      "comment" : "Status message for a network game stating the opponent has agreed to play again",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your opponent is ready to play again!"
+          }
+        }
+      }
+    },
+    "DASHBOARD_PLAY_AGAIN_STATUS_OPPONENT_WAITING" : {
+      "comment" : "Status message for a network game stating the opponent has not yet decided to play again or not",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Waiting for your opponent to play again."
+          }
+        }
+      }
+    },
+    "DASHBOARD_REPLAY" : {
+      "comment" : "Button title during a game to show the last move made",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Replay"
+          }
+        }
+      }
+    },
+    "DASHBOARD_START_ACTIVITY" : {
+      "comment" : "Button title to start a SharePlay (network) game",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Start Activity"
+          }
+        }
+      }
+    },
+    "DASHBOARD_STOP_PLAYING" : {
+      "comment" : "Button title to stop playing against the current opponent",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Stop Playing"
+          }
+        }
+      }
+    },
+    "DASHBOARD_UNDO" : {
+      "comment" : "Button title to undo the last human move",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Undo"
+          }
+        }
+      }
+    },
+    "GAME_STATUS_LOST" : {
+      "comment" : "Game over message stating that the first person player lost",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You lost"
+          }
+        }
+      }
+    },
+    "GAME_STATUS_TIE" : {
+      "comment" : "Game over message stating that the players tied the game",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Tie Game"
+          }
+        }
+      }
+    },
+    "GAME_STATUS_WON" : {
+      "comment" : "Game over message stating that the first person player won",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You Won!!!"
+          }
+        }
+      }
+    },
+    "HOME_MENU_BOT_LEVEL" : {
+      "comment" : "Control label for selecting the bot difficulty level",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Bot Level"
+          }
+        }
+      }
+    },
+    "HOME_MENU_GAMEBOARD" : {
+      "comment" : "Control label for selecting the gameboard type",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Gameboard"
+          }
+        }
+      }
+    },
+    "HOME_MENU_PLAY_AGAIN" : {
+      "comment" : "Button title to start playing a game with the same opponent as the previous game",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العب مرة أخرى"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Play Again"
+          }
+        }
+      }
+    },
+    "HOME_MENU_PLAY_GAME" : {
+      "comment" : "Button title to start playing a new game",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العب اللعبة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Play Game"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
