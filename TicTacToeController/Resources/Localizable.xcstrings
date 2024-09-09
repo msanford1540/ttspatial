@@ -2,12 +2,25 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%lld" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "DASHBOARD_2D" : {
       "comment" : "Button title for a two dimensional gameboard (3x3)",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اثنين الأبعاد"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -20,6 +33,12 @@
       "comment" : "Button title for a three dimensional gameboard (4x4x4)",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثلاثي الأبعاد"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -32,6 +51,12 @@
       "comment" : "Button title to show the best next move to make",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تَلمِيح"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -44,6 +69,12 @@
       "comment" : "Message to user that the opponent over a network game has left the game",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخصم اليسار"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -56,6 +87,12 @@
       "comment" : "Alert message when asking if the user wants to play again",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد اللعب مرة أخرى؟"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -68,6 +105,12 @@
       "comment" : "Alert title when asking if the user wants to play again",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العب مرة أخرى؟"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -80,6 +123,12 @@
       "comment" : "Status message for a network game stating the opponent has declined to play again",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خصمك لن يلعب مرة أخرى."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -92,6 +141,12 @@
       "comment" : "Status message for a network game stating the opponent has agreed to play again",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خصمك جاهز للعب مرة أخرى!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -104,6 +159,12 @@
       "comment" : "Status message for a network game stating the opponent has not yet decided to play again or not",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في انتظار خصمك للعب مرة أخرى."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -116,6 +177,12 @@
       "comment" : "Button title during a game to show the last move made",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة التشغيل"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -128,6 +195,12 @@
       "comment" : "Button title to start a SharePlay (network) game",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بدء النشاط"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -140,6 +213,12 @@
       "comment" : "Button title to stop playing against the current opponent",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توقف عن اللعب"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -152,6 +231,12 @@
       "comment" : "Button title to undo the last human move",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التراجع"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -164,6 +249,12 @@
       "comment" : "Game over message stating that the first person player lost",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد خسرت"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -176,6 +267,12 @@
       "comment" : "Game over message stating that the players tied the game",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لعبة التعادل"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -188,6 +285,12 @@
       "comment" : "Game over message stating that the first person player won",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد فزت!!!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -200,6 +303,12 @@
       "comment" : "Control label for selecting the bot difficulty level",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستوى الصعوبة"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -212,6 +321,12 @@
       "comment" : "Control label for selecting the gameboard type",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لوحة اللعبة"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
