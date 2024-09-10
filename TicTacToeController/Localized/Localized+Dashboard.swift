@@ -96,6 +96,13 @@ public extension Localized.Dashboard {
         comment: "Button title to stop playing against the current opponent"
     )
 
+    static let endGame = String(
+        localized: "DASHBOARD_END_GAME",
+        defaultValue: "End Game",
+        bundle: .module,
+        comment: "Button title to end the current game"
+    )
+
     static let startActivity = String(
         localized: "DASHBOARD_START_ACTIVITY",
         defaultValue: "Start Activity",

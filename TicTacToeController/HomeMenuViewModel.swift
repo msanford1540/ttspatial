@@ -20,7 +20,7 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     @Published public var gameSessionViewModel: GameSessionViewModel
     @Published public var botLevelName: String = .empty
 #if DEBUG
-    private var screenshot: Screenshot?
+    private let screenshot: Screenshot? = .homeMenu
 #endif
     public let grid3Controller = Grid3GameboardController()
     public let cube4Controller = Cube4GameboardController()
@@ -86,7 +86,8 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     }
 
     private func autorotate() {
-        let rotationAngle = Float(0.01) * (Localized.isLayoutRightToLeft ? -1 : 1)
+        let layoutMultiplier: Float = Localized.isLayoutRightToLeft ? -1 : 1
+        let rotationAngle = Float(0.01) * layoutMultiplier
         let yAxis = SIMD3<Float>(0, 1, 0)
         let rotateDelta = simd_quatf(angle: rotationAngle, axis: yAxis)
         Task {
@@ -94,7 +95,8 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
 #if DEBUG
                 switch self.screenshot {
                 case .homeMenu:
-                    cube4Controller.scene.transform.rotation = .init(angle: 0.65, axis: yAxis)
+                    let angle = Float(0.65) * layoutMultiplier
+                    cube4Controller.scene.transform.rotation = .init(angle: angle, axis: yAxis)
                 case .grid3Game, .cube4Game:
                     break
                 case nil:
@@ -193,7 +195,10 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
             gameSessionViewModel.showGame(for: .grid3Game)
         case .cube4Game:
             gameSessionViewModel.showGame(for: .cube4Game)
-            cube4Controller.scene.transform.rotation = .init(angle: 0.9, axis: .init(x: 0.2, y: 1, z: 0))
+            let layoutMultiplier: Float = Localized.isLayoutRightToLeft ? -1 : 1
+            let angle: Float = 0.9 * layoutMultiplier
+            let xValue: Float = 0.2 * layoutMultiplier
+            cube4Controller.scene.transform.rotation = .init(angle: angle, axis: .init(x: xValue, y: 1, z: 0))
         }
 #else
         gameSessionViewModel.playGame(

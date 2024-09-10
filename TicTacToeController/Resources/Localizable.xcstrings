@@ -47,6 +47,24 @@
         }
       }
     },
+    "DASHBOARD_END_GAME" : {
+      "comment" : "Button title to end the current game",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نهاية اللعبة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "End Game"
+          }
+        }
+      }
+    },
     "DASHBOARD_HINT" : {
       "comment" : "Button title to show the best next move to make",
       "extractionState" : "extracted_with_value",

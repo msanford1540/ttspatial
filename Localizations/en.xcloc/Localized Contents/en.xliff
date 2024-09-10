@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="AppIconRenderer/AppIconRenderer-InfoPlist.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242"/>
     </header>
     <body>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -19,7 +19,7 @@
   </file>
   <file original="TicTacSpatial-iOS/InfoPlist.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -36,7 +36,7 @@
   </file>
   <file original="TicTacSpatial-visionOS/InfoPlist.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -53,7 +53,7 @@
   </file>
   <file original="TicTacToeController/Resources/Localizable.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242"/>
     </header>
     <body>
       <trans-unit id="%lld" xml:space="preserve">
@@ -70,6 +70,11 @@
         <source>3D</source>
         <target state="new">3D</target>
         <note>Button title for a three dimensional gameboard (4x4x4)</note>
+      </trans-unit>
+      <trans-unit id="DASHBOARD_END_GAME" xml:space="preserve">
+        <source>End Game</source>
+        <target state="new">End Game</target>
+        <note>Button title to end the current game</note>
       </trans-unit>
       <trans-unit id="DASHBOARD_HINT" xml:space="preserve">
         <source>Hint</source>
@@ -165,7 +170,7 @@
   </file>
   <file original="TicTacToeEngine/Localizable.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A5230g"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242"/>
     </header>
     <body>
       <trans-unit id="BOT_LEVEL_ADVANCED" xml:space="preserve">

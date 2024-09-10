@@ -125,7 +125,7 @@ public struct EndGameButton: View {
     public init() {}
 
     public var body: some View {
-        DashboardButton("End Game") {
+        DashboardButton(Localized.Dashboard.endGame) {
             gameSessionViewModel.endGameSession()
             homeMenuViewModel.resetGameboard()
             if sharePlaySession.isActive {

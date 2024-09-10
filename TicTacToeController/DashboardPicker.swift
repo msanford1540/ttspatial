@@ -167,11 +167,11 @@ extension BotLevel: DashboardPickerItem {
     public var imageName: String {
         switch self {
         case .easy:
-            "1.circle"
+            "1.circle.fill"
         case .medium:
-            "2.circle"
+            "2.circle.fill"
         case .hard:
-            "3.circle"
+            "3.circle.fill"
         }
     }
 }
