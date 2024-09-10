@@ -20,15 +20,15 @@ public struct HomeMenu: View {
             HStack {
                 Spacer()
                 DashboardPicker(
-                    "Gameboard", items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
+                    Localized.HomeMenu.gameboard, items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
                 )
                 DashboardPicker(
-                    "Bot Level", items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel
+                    Localized.HomeMenu.botLevel, items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel
                 )
                 Spacer()
             }
 
-            DashboardButton("Play Game", action: viewModel.playGame)
+            DashboardButton(Localized.HomeMenu.playGame, action: viewModel.playGame)
                 .font(.title2)
             Spacer()
         }

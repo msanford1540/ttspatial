@@ -9,11 +9,13 @@ Code resuse is done across 2 dimensions; platform and gameboard size. The bot lo
 - Swift 6
 - Combine
 - Structured Concurrency
+- SwiftUI
 - RealityKit
 - SharePlay
-- Unit Tests
 - Cross Platform Code Reuse (90%+)
+- Localization with RTL support using .xcstrings
 - iOS/macOS dark mode & light mode support
+- Unit Tests
 
 ## App Code Design
 ### GameEngine (Gameboards types)
@@ -35,4 +37,3 @@ This has no UI depedencies and no understanding the type of player (human, bot, 
 - Use CoreML for the bot AI
 - More RealityKit UI polish
 - Support a command line interface, which could run on macOS and Linux.
-- Localization

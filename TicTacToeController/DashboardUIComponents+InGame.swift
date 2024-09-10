@@ -24,16 +24,16 @@ public struct InGameDashboardContent: View {
             HStack {
                 Group {
                     if gameSessionViewModel.gameSession?.isHumanVersusBot == true {
-                        DashboardButton("Hint", hPadding: gameButtonHPadding) {
+                        DashboardButton(Localized.Dashboard.hint, hPadding: gameButtonHPadding) {
                             guard let hint = gameSessionViewModel.currentPlayerHint else { return }
                             homeMenuViewModel.showHint(at: hint)
                         }
-                        DashboardButton("Undo", hPadding: gameButtonHPadding) {
+                        DashboardButton(Localized.Dashboard.undo, hPadding: gameButtonHPadding) {
                             gameSessionViewModel.undoLastHumanMove()
                         }
                         .disabled(!gameSessionViewModel.canUndo)
                     }
-                    DashboardButton("Replay", hPadding: gameButtonHPadding) {
+                    DashboardButton(Localized.Dashboard.replay, hPadding: gameButtonHPadding) {
                         let move = gameSessionViewModel.mostRecentMove
                         homeMenuViewModel.showReplay(with: move)
                     }
@@ -46,7 +46,7 @@ public struct InGameDashboardContent: View {
 
             Group {
                 if sharePlayGameSession.opponentLeft {
-                    Text("Opponent left")
+                    Text(Localized.Dashboard.opponentLeft)
                 } else {
 #if os(visionOS)
                     HStack {

@@ -117,18 +117,6 @@ public struct DashboardButton<Content: View>: View {
     }
 }
 
-public struct StartOverButton: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-
-    public init() {}
-
-    public var body: some View {
-        DashboardButton("Start Over") {
-            gameSessionViewModel.startNewGame()
-        }
-    }
-}
-
 public struct EndGameButton: View {
     @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
     @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
@@ -155,7 +143,7 @@ public struct SharePlayButton: View {
     public init() {}
 
     public var body: some View {
-        DashboardButton("Start Activity", systemImage: "shareplay") {
+        DashboardButton(Localized.Dashboard.startActivity, systemImage: "shareplay") {
             if !gameSessionViewModel.isGameSessionActive {
                 sharePlaySession.startNewGameSession()
             }

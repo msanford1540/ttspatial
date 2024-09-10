@@ -16,8 +16,8 @@ public struct PlayAgainButtons: View {
 
     public var body: some View {
         HStack {
-            DashboardButton("Stop Playing", action: homeMenuViewModel.onStopPlaying)
-            DashboardButton("Play Again", hPadding: playAgainHPadding, action: homeMenuViewModel.onPlayAgain)
+            DashboardButton(Localized.Dashboard.stopPlaying, action: homeMenuViewModel.onStopPlaying)
+            DashboardButton(Localized.HomeMenu.playAgainButtonTitle, hPadding: playAgainHPadding, action: homeMenuViewModel.onPlayAgain)
         }
     }
 
@@ -46,22 +46,22 @@ public struct PlayAgainContent: View {
             Text(gameSessionViewModel.gameStatusText)
             switch sharePlayGameSession.playAgainState {
             case .waitingForResponses, .none:
-                Text("Do you want to play again?") // with buttons
-                Text("Your opponent is ready to play again.")
+                Text(Localized.Dashboard.playAgainQuestionTitle) // with buttons
+                Text(Localized.Dashboard.playAgainQuestionMessage)
                     .opacity(0)
                     .font(.system(size: 10))
                 PlayAgainButtons()
             case .waitingForOpponentResponse:
-                Text("Waiting for your opponent to play again.") // without buttons
+                Text(Localized.Dashboard.playAgainStatusOpponentWaiting) // without buttons
             case .waitingForMyResponse:
-                Text("Do you want to play again?") // with buttons
-                Text("Your opponent is ready to play again.")
+                Text(Localized.Dashboard.playAgainQuestionMessage) // with buttons
+                Text(Localized.Dashboard.playAgainStatusOpponentReady)
                     .font(.system(size: 10))
                 PlayAgainButtons()
             case .opponentAccepted:
-                Text("Your opponent is ready to play again!")
+                Text(Localized.Dashboard.playAgainStatusOpponentReady)
             case .opponentDenied:
-                Text("Your opponent is not playing again.")
+                Text(Localized.Dashboard.playAgainStatusOpponentNotPlaying)
             }
             Spacer()
         }

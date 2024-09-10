@@ -136,9 +136,9 @@ extension GameboardDimensions: DashboardPickerItem {
     public var name: String {
         switch self {
         case .grid3:
-            "2D"
+            Localized.Dashboard.twoDimension
         case .cube4:
-            "3D"
+            Localized.Dashboard.threeDimension
         }
     }
 
@@ -156,11 +156,11 @@ extension BotLevel: DashboardPickerItem {
     public var name: String {
         switch self {
         case .easy:
-            "Easy"
+            Localized.BotLevel.easy
         case .medium:
-            "Medium"
+            Localized.BotLevel.medium
         case .hard:
-            "Hard"
+            Localized.BotLevel.advanced
         }
     }
 

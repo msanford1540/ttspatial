@@ -26,17 +26,12 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
             self = switch playerType {
             case .bot(let botType):
                 switch botType {
-                case .easy:
-                    .bot(EasyBot<Gameboard.Snapshot>())
-                case .medium:
-                    .bot(MediumBot<Gameboard.Snapshot>())
-                case .hard:
-                    .bot(AdvancedBot<Gameboard.Snapshot>())
+                case .easy: .bot(EasyBot<Gameboard.Snapshot>())
+                case .medium: .bot(MediumBot<Gameboard.Snapshot>())
+                case .hard: .bot(AdvancedBot<Gameboard.Snapshot>())
                 }
-            case .remote:
-                    .remote
-            case .human:
-                    .human
+            case .remote: .remote
+            case .human: .human
             }
         }
 
@@ -340,8 +335,8 @@ private extension GameSession.Player {
     var playerName: String {
         switch self {
         case .bot(let bot): bot.name
-        case .remote: "Friend"
-        case .human: "Me"
+        case .remote: Localized.Player.friendName
+        case .human: Localized.Player.meName
         }
     }
 }
