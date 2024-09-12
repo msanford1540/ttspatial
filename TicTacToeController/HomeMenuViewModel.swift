@@ -20,7 +20,7 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     @Published public var gameSessionViewModel: GameSessionViewModel
     @Published public var botLevelName: String = .empty
 #if DEBUG
-    private var screenshot: Screenshot?
+    private var screenshot: Screenshot? = .homeMenu
 #endif
     public let grid3Controller = Grid3GameboardController()
     public let cube4Controller = Cube4GameboardController()
