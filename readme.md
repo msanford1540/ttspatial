@@ -50,8 +50,7 @@ This has no UI depedencies and no understanding the type of player (human, bot, 
 ### Misc Videos
 Spin 3D Gameboard on macOS video...
 
-[![Spin 3D Gameboard on macOS](AppStore/videos/tts-spin-thumb.jpg)](https://youtube.com/shorts/E5XcrhkDIUI?feature=share)
+[(AppStore/videos/tts-spin.mp4)]
 
 SharePlay on visionOS video...
-
-[![SharePlay on visionOS](https://i9.ytimg.com/vi/49ViLCElGXk/mq2.jpg?sqp=CPCDjLcG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgVyhHMA8=&rs=AOn4CLA13_obWKwjzItorIPcecmSL3wEqg)](https://youtu.be/49ViLCElGXk)
+[(tts-shareplay.mp4)]
