@@ -50,8 +50,9 @@ This has no UI depedencies and no understanding the type of player (human, bot, 
 ### Misc Videos
 Spin 3D Gameboard on macOS video...
 
-https://github.com/msanford1540/msanford1540.github.io/blob/main/tictacspatial/tts-spin.mp4
+
+https://github.com/user-attachments/assets/08c1f18e-85ee-4bb4-b700-bb3fbea2977e
 
 SharePlay on visionOS video...
 
-https://github.com/msanford1540/msanford1540.github.io/blob/main/tictacspatial/tts-shareplay.mp4
+https://github.com/user-attachments/assets/0ba91d37-1dad-4c47-9e64-abcabd7cb1e4
