@@ -6,14 +6,14 @@ This runs on iOS, iPadOS, macOS (not Catalyst) and visionsOS.
 Code resuse is done across 2 dimensions; platform and gameboard size. The bot logic and the game engine itself is the same regardless of gameboard size. This app takes an MVVM approach. Most of the views can be resused across platform as is or with minor changes. The view models do not have any platform specific changes.
 
 ## Best Practices
-- Swift 6
+- 100% Swift 6
 - Combine
 - Structured Concurrency
 - SwiftUI
 - RealityKit
 - SharePlay
 - Cross Platform Code Reuse (90%+)
-- Localization with RTL support using .xcstrings
+- Localization with RTL support using .xcstrings (in Arabic)
 - iOS/macOS dark mode & light mode support
 - Unit Tests
 
@@ -37,3 +37,21 @@ This has no UI depedencies and no understanding the type of player (human, bot, 
 - Use CoreML for the bot AI
 - More RealityKit UI polish
 - Support a command line interface, which could run on macOS and Linux.
+
+## Screenshots
+### Landing Pages
+<img src="AppStore/english/iphone-home.jpg" height="300">
+<img src="AppStore/english/ipad-home.jpg" height="300">
+<img src="AppStore/english/mac-home.jpg" height="300">
+<img src="AppStore/english/avp-home.jpg" height="300">
+
+## [More Screenshots](https://github.com/msanford1540/ttspatial/tree/develop/AppStore/english)
+
+### Misc Videos
+Spin 3D Gameboard on macOS video...
+
+[![Spin 3D Gameboard on macOS](AppStore/videos/tts-spin-thumb.jpg)](https://youtube.com/shorts/E5XcrhkDIUI?feature=share)
+
+SharePlay on visionOS video...
+
+[![SharePlay on visionOS](https://i9.ytimg.com/vi/49ViLCElGXk/mq2.jpg?sqp=CPCDjLcG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgVyhHMA8=&rs=AOn4CLA13_obWKwjzItorIPcecmSL3wEqg)](https://youtu.be/49ViLCElGXk)
