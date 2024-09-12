@@ -45,11 +45,13 @@ This has no UI depedencies and no understanding the type of player (human, bot, 
 <img src="AppStore/english/mac-home.jpg" height="300">
 <img src="AppStore/english/avp-home.jpg" height="300">
 
-### Misc Videos
-<video width="320" controls>
-  <source src="AppStore/videos/tts-spin.mp4" type="video/mp4">
-</video>
+## [More Screenshots](https://github.com/msanford1540/ttspatial/tree/develop/AppStore/english)
 
-<video height="320" controls>
-  <source src="AppStore/videos/tts-shareplay.mp4" type="video/mp4">
-</video>
+### Misc Videos
+Spin 3D Gameboard on macOS video...
+
+[![Spin 3D Gameboard on macOS](AppStore/videos/tts-spin-thumb.jpg)](https://youtube.com/shorts/E5XcrhkDIUI?feature=share)
+
+SharePlay on visionOS video...
+
+[![SharePlay on visionOS](https://i9.ytimg.com/vi/49ViLCElGXk/mq2.jpg?sqp=CPCDjLcG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgVyhHMA8=&rs=AOn4CLA13_obWKwjzItorIPcecmSL3wEqg)](https://youtu.be/49ViLCElGXk)
