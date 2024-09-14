@@ -12,10 +12,10 @@ Code resuse is done across 2 dimensions; platform and gameboard size. The bot lo
 - SwiftUI
 - RealityKit
 - SharePlay
-- Cross Platform Code Reuse (90%+)
+- Swift Testing Unit Tests
 - Localization with RTL support using .xcstrings (in Arabic)
+- Cross Platform Code Reuse (90%+)
 - iOS/macOS dark mode & light mode support
-- Unit Tests
 
 ## App Code Design
 ### GameEngine (Gameboards types)
