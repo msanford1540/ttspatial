@@ -6,7 +6,7 @@
 //
 
 import Combine
-import GroupActivities
+@preconcurrency import GroupActivities
 import TicTacToeEngine
 import simd
 import OSLog

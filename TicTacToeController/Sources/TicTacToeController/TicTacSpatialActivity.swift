@@ -12,7 +12,7 @@ import TicTacToeEngine
 import simd
 import OSLog
 
-struct TicTacSpatialActivity: GroupActivity {
+struct TicTacSpatialActivity: GroupActivity, Sendable {
     public var metadata: GroupActivityMetadata {
         var metadata = GroupActivityMetadata()
         metadata.title = Localized.appName

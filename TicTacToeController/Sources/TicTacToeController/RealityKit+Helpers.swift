@@ -5,6 +5,7 @@
 //  Created by Mike Sanford (1540) on 5/31/24.
 //
 
+import Foundation
 import RealityKit
 
 private let defaultDuration: Duration = .seconds(1)

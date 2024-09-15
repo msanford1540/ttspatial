@@ -25,8 +25,3 @@ public extension Localized {
     // intentionally not localized given this is the name of the app
     static let appName = "Tic-Tac-Spatial"
 }
-
-private class BundleFinder {}
-extension Bundle {
-    static let module = Bundle(for: BundleFinder.self)
-}
