@@ -10,7 +10,7 @@ import Combine
 import TicTacToeEngine
 import simd
 import RealityKit
-internal import TTTScenes
+import TTTScenes
 
 @MainActor
 public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {

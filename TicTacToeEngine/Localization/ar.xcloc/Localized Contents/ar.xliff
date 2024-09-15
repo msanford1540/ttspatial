@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Sources/TicTacToeEngine/Resources/Localizable.xcstrings" source-language="en" target-language="ar" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242"/>
+    </header>
+    <body>
+      <trans-unit id="BOT_LEVEL_ADVANCED" xml:space="preserve">
+        <source>Hard</source>
+        <target state="translated">صعب</target>
+        <note>Out of three bot levels, this is the name of the most difficultly level</note>
+      </trans-unit>
+      <trans-unit id="BOT_LEVEL_EASY" xml:space="preserve">
+        <source>Easy</source>
+        <target state="translated">سهل</target>
+        <note>Out of three bot levels, this is the name of the least difficultly level</note>
+      </trans-unit>
+      <trans-unit id="BOT_LEVEL_MEDIUM" xml:space="preserve">
+        <source>Medium</source>
+        <target state="translated">واسطة</target>
+        <note>Out of three bot levels, this is the name of the middle difficultly level</note>
+      </trans-unit>
+      <trans-unit id="PLAYER_NAME_FRIEND" xml:space="preserve">
+        <source>Friend</source>
+        <target state="translated">صديق</target>
+        <note>Player name of the opponent when playing over SharePlay</note>
+      </trans-unit>
+      <trans-unit id="PLAYER_NAME_ME" xml:space="preserve">
+        <source>Me</source>
+        <target state="translated">أنا</target>
+        <note>Player name of the first person across all game types</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
