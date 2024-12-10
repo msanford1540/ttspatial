@@ -8,6 +8,7 @@
 import Combine
 import TicTacToeEngine
 
+@MainActor
 public enum GameSessionValue {
     case grid3(GameSession<Grid3Gameboard>)
     case cube4(GameSession<Cube4Gameboard>)
@@ -18,7 +19,6 @@ public enum GameLocationValue {
     case cube4(Cube4Location)
 }
 
-@MainActor
 public extension GameSessionValue {
     var xPlayerType: PlayerType {
         switch self {
@@ -69,12 +69,12 @@ public extension GameSessionValue {
         }
     }
 
-    var isGameOverPublisher: Published<Bool>.Publisher {
+    var gameSession: any GameSessionProtocol {
         switch self {
         case .grid3(let gameSession):
-            gameSession.$isGameOver
+            gameSession
         case .cube4(let gameSession):
-            gameSession.$isGameOver
+            gameSession
         }
     }
 }

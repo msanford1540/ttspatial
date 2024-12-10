@@ -20,21 +20,21 @@ public struct GameMoveValue {
     public let location: GameLocationValue
 }
 
-@MainActor
-public final class GameSessionViewModel: ObservableObject {
-    @Published public private(set) var gameSession: GameSessionValue?
+@MainActor @Observable
+public final class GameSessionViewModel {
+    public private(set) var gameSession: GameSessionValue?
 
-    @Published public private(set) var isGameSessionActive: Bool = false
-    @Published public private(set) var isGameOver: Bool = false
-    @Published public private(set) var currentTurn: PlayerMarker?
-    @Published public private(set) var xPlayerName: String = .empty
-    @Published public private(set) var oPlayerName: String = .empty
-    @Published public private(set) var xWinCount: Int = .zero
-    @Published public private(set) var oWinCount: Int = .zero
-    @Published public private(set) var gameOverState: GameOverState?
-    @Published public private(set) var canUndo: Bool = false
-    @Published public private(set) var canReplay: Bool = false
-    private var gameSubscribers: Set<AnyCancellable> = .empty
+    public private(set) var isGameSessionActive: Bool = false
+    public private(set) var isGameOver: Bool = false
+    public private(set) var currentTurn: PlayerMarker?
+    public private(set) var xPlayerName: String = .empty
+    public private(set) var oPlayerName: String = .empty
+    public private(set) var xWinCount: Int = .zero
+    public private(set) var oWinCount: Int = .zero
+    public private(set) var gameOverState: GameOverState?
+    public private(set) var canUndo: Bool = false
+    public private(set) var canReplay: Bool = false
+    @ObservationIgnored private var gameSubscribers: Set<AnyCancellable> = .empty
 
     private func startGameSession<Gameboard: GameboardProtocol>(_ gameSession: GameSession<Gameboard>) {
         switch gameSession {
@@ -196,41 +196,26 @@ public final class GameSessionViewModel: ObservableObject {
 
     private func setupPipelines<Gameboard: GameboardProtocol>(_ gameSession: GameSession<Gameboard>) {
         gameSubscribers = .empty
-
-        gameSession.$currentTurn
-            .sink { [unowned self] in currentTurn = $0 }
-            .store(in: &gameSubscribers)
-
-        gameSession.$xPlayerName
-            .sink { [unowned self] in xPlayerName = $0 }
-            .store(in: &gameSubscribers)
-
-        gameSession.$oPlayerName
-            .sink { [unowned self] in oPlayerName = $0 }
-            .store(in: &gameSubscribers)
-
-        gameSession.$xWinCount
-            .sink { [unowned self] in xWinCount = $0 }
-            .store(in: &gameSubscribers)
-
-        gameSession.$oWinCount
-            .sink { [unowned self] in oWinCount = $0 }
-            .store(in: &gameSubscribers)
-
-        gameSession.$canUndo
-            .sink { [unowned self] in canUndo = $0 }
-            .store(in: &gameSubscribers)
-
-        gameSession.$canReplay
-            .sink { [unowned self] in canReplay = $0 }
-            .store(in: &gameSubscribers)
-
-        gameSession.$isGameOver
-            .sink { [unowned self] in isGameOver = $0 }
-            .store(in: &gameSubscribers)
-
-        $isGameOver
-            .sink { [unowned self] isGameOver in
+        withObservationTracking {
+            _ = gameSession.currentTurn
+            _ = gameSession.xPlayerName
+            _ = gameSession.oPlayerName
+            _ = gameSession.xWinCount
+            _ = gameSession.oWinCount
+            _ = gameSession.canUndo
+            _ = gameSession.canReplay
+            _ = gameSession.isGameOver
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                currentTurn = gameSession.currentTurn
+                xPlayerName = gameSession.xPlayerName
+                oPlayerName = gameSession.oPlayerName
+                xWinCount = gameSession.xWinCount
+                oWinCount = gameSession.oWinCount
+                canUndo = gameSession.canUndo
+                canReplay = gameSession.canReplay
+                isGameOver = gameSession.isGameOver
                 gameOverState = if isGameOver, let myself = gameSession.humanPlayer {
                     if let winningPlayer = gameSession.winningPlayer {
                         winningPlayer == myself ? .won : .lost
@@ -240,8 +225,9 @@ public final class GameSessionViewModel: ObservableObject {
                 } else {
                     nil
                 }
+
             }
-            .store(in: &gameSubscribers)
+        }
     }
 
     public func endGameSession() {

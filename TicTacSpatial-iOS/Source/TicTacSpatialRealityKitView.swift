@@ -12,8 +12,8 @@ import TicTacToeEngine
 
 struct TicTacSpatialRealityView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: HomeMenuViewModel
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @Environment(HomeMenuViewModel.self) private var viewModel
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
 
     var body: some View {
         RealityView { content in

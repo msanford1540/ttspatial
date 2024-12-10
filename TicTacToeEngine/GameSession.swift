@@ -16,7 +16,12 @@ public enum PlayerType {
 }
 
 @MainActor
-public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
+public protocol GameSessionProtocol: Observable {
+    var isGameOver: Bool { get }
+}
+
+@MainActor @Observable
+public final class GameSession<Gameboard: GameboardProtocol>: GameSessionProtocol {
     enum Player {
         case bot(BaseBot<Gameboard.Snapshot>)
         case remote
@@ -64,27 +69,27 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
         }
     }
 
-    @Published public private(set) var xWinCount: Int = 0
-    @Published public private(set) var oWinCount: Int = 0
-    @Published public private(set) var xPlayerName: String = .empty
-    @Published public private(set) var oPlayerName: String = .empty
-    @Published public private(set) var processingEventID: UUID?
-    @Published public private(set) var currentTurn: PlayerMarker?
-    @Published public private(set) var isGameOver: Bool = false
-    @Published public private(set) var canUndo: Bool = false
-    @Published public private(set) var canReplay: Bool = false
-    private var isWaitingToStartNewRemoteGame: Bool = false
-    private var pendingGameEvent: GameEvent<Gameboard>?
-    private var mostRecentHintLocation: Gameboard.Location?
+    public private(set) var xWinCount: Int = 0
+    public private(set) var oWinCount: Int = 0
+    public private(set) var xPlayerName: String = .empty
+    public private(set) var oPlayerName: String = .empty
+    public private(set) var processingEventID: UUID?
+    public private(set) var currentTurn: PlayerMarker?
+    public private(set) var isGameOver: Bool = false
+    public private(set) var canUndo: Bool = false
+    public private(set) var canReplay: Bool = false
+    @ObservationIgnored private var isWaitingToStartNewRemoteGame: Bool = false
+    @ObservationIgnored private var pendingGameEvent: GameEvent<Gameboard>?
+    @ObservationIgnored private var mostRecentHintLocation: Gameboard.Location?
 #if DEBUG
-    private var forceUndoAndReplay: Bool = false
+    @ObservationIgnored private var forceUndoAndReplay: Bool = false
 #endif
 
-    private var queue = Queue<GameStateUpdate<Gameboard>>()
-    private var gameEngine: GameEngine<Gameboard>
-    private var startingPlayer: PlayerMarker = .x
-    @Published private var xPlayer: Player
-    @Published private var oPlayer: Player
+    @ObservationIgnored private var queue = Queue<GameStateUpdate<Gameboard>>()
+    @ObservationIgnored private var gameEngine: GameEngine<Gameboard>
+    @ObservationIgnored private var startingPlayer: PlayerMarker = .x
+    private var xPlayer: Player
+    private var oPlayer: Player
 
     public init(xPlayerType: PlayerType, oPlayerType: PlayerType, snapshot: Gameboard.Snapshot? = nil) {
         xPlayer = Player(playerType: xPlayerType)
@@ -146,15 +151,18 @@ public final class GameSession<Gameboard: GameboardProtocol>: ObservableObject {
     }
 
     private func setupPipelines() {
-        $xPlayer
-            .map(\.playerName)
-            .assign(to: &$xPlayerName)
-        $oPlayer
-            .map(\.playerName)
-            .assign(to: &$oPlayerName)
-        $currentTurn
-            .map { $0 == nil }
-            .assign(to: &$isGameOver)
+        withObservationTracking {
+            access(keyPath: \.xPlayer)
+            access(keyPath: \.oPlayer)
+            access(keyPath: \.currentTurn)
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                xPlayerName = xPlayer.playerName
+                oPlayerName = oPlayer.playerName
+                isGameOver = currentTurn == nil
+            }
+        }
     }
 
     public func setHumanPlayer(_ mark: PlayerMarker) {

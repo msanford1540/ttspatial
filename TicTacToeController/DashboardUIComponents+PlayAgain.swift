@@ -9,8 +9,8 @@ import SwiftUI
 import TicTacToeEngine
 
 public struct PlayAgainButtons: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
+    @Environment(HomeMenuViewModel.self) private var homeMenuViewModel
 
     public init() {}
 
@@ -33,8 +33,8 @@ public struct PlayAgainButtons: View {
 }
 
 public struct PlayAgainContent: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    @EnvironmentObject private var sharePlayGameSession: SharePlayGameSession
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
+    @Environment(SharePlayGameSession.self) private var sharePlayGameSession
     private let spacing: CGFloat?
 
     public init(spacing: CGFloat? = nil) {

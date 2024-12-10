@@ -9,9 +9,9 @@ import SwiftUI
 import TicTacToeEngine
 
 public struct InGameDashboardContent: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
-    @EnvironmentObject private var sharePlayGameSession: SharePlayGameSession
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
+    @Environment(HomeMenuViewModel.self) private var homeMenuViewModel
+    @Environment(SharePlayGameSession.self) private var sharePlayGameSession
 
     private let spacing: CGFloat?
 

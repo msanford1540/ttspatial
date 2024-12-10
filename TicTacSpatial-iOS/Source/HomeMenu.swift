@@ -11,7 +11,9 @@ import TicTacToeController
 
 public struct HomeMenu: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @Environment(HomeMenuViewModel.self) private var viewModel
+    @State private var gameboardDimensions: GameboardDimensions = .cube4
+    @State private var selectedBotLevel: BotLevel = .easy
 
     public init() {}
 
@@ -20,12 +22,18 @@ public struct HomeMenu: View {
             HStack {
                 Spacer()
                 DashboardPicker(
-                    Localized.HomeMenu.gameboard, items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
+                    Localized.HomeMenu.gameboard, items: [GameboardDimensions.grid3, .cube4], selection: $gameboardDimensions
                 )
                 DashboardPicker(
-                    Localized.HomeMenu.botLevel, items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel
+                    Localized.HomeMenu.botLevel, items: [BotLevel.easy, .medium, .hard], selection: $selectedBotLevel
                 )
                 Spacer()
+            }
+            .onChange(of: viewModel.gameboardDimensions) { _, newValue in
+                gameboardDimensions = newValue
+            }
+            .onChange(of: viewModel.selectedBotLevel) { _, newValue in
+                selectedBotLevel = newValue
             }
 
             DashboardButton(Localized.HomeMenu.playGame, action: viewModel.playGame)

@@ -7,29 +7,29 @@
 
 import SwiftUI
 import Combine
+import Observation
 import TicTacToeEngine
 import simd
 import RealityKit
 import TTTScenes
 
-@MainActor
-public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
-    @Published public var gameboardDimensions: GameboardDimensions = .cube4
-    @Published public var selectedBotLevel: BotLevel = .easy
-    @Published public var sharePlaySession: SharePlayGameSession
-    @Published public var gameSessionViewModel: GameSessionViewModel
-    @Published public var botLevelName: String = .empty
+@MainActor @Observable
+public final class HomeMenuViewModel {
+    public var gameboardDimensions: GameboardDimensions = .cube4
+    public var selectedBotLevel: BotLevel = .easy
+    public var sharePlaySession: SharePlayGameSession
+    public var gameSessionViewModel: GameSessionViewModel
+    public var botLevelName: String = .empty
 #if DEBUG
-    private var screenshot: Screenshot?
+    @ObservationIgnored private var screenshot: Screenshot?
 #endif
-    public let grid3Controller = Grid3GameboardController()
-    public let cube4Controller = Cube4GameboardController()
-    private var subscribers: Set<AnyCancellable> = .empty
-    private var didInit = false
-    private var isAutoRotatingEnabled: Bool = false
+    @ObservationIgnored public let grid3Controller = Grid3GameboardController()
+    @ObservationIgnored public let cube4Controller = Cube4GameboardController()
+    @ObservationIgnored private var didInit = false
+    @ObservationIgnored private var isAutoRotatingEnabled: Bool = false
 #if os(visionOS)
-    public var dashboard: Entity = .empty
-    public var homeMenu: Entity = .empty
+    @ObservationIgnored public var dashboard: Entity = .empty
+    @ObservationIgnored public var homeMenu: Entity = .empty
 #endif
 
     public init() {
@@ -42,28 +42,49 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     }
 
     private func setupPipelines() {
-        gameSessionViewModel.objectWillChange
-            .sink { [unowned self] _ in
-                onRealityViewUpdate()
+        withObservationTracking { @MainActor [weak self] in
+            self?.access(keyPath: \.gameboardDimensions)
+        } onChange: {
+            Task { [weak self] in
+                await self?.onRealityViewUpdate()
             }
-            .store(in: &subscribers)
+        }
 
-        $gameboardDimensions
-            .sink { [unowned self] gameboardDimensions in
-                onRealityViewUpdate(gameboardDimensions: gameboardDimensions)
-            }
-            .store(in: &subscribers)
-
-        gameSessionViewModel.$isGameSessionActive
-            .removeDuplicates()
-            .sink { [unowned self] isGameSessionActive in
-                if isGameSessionActive {
-                    stopAutorotateTimer()
-                } else {
-                    startAutorotateTimer()
+        withObservationTracking { @MainActor [weak self] in
+            self?.access(keyPath: \.grid3Rotation)
+            self?.access(keyPath: \.cube4Rotation)
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                switch gameboardDimensions {
+                case .grid3:
+                    rotation = grid3Rotation
+                case .cube4:
+                    rotation = cube4Rotation
                 }
             }
-            .store(in: &subscribers)
+        }
+
+        withObservationTracking { @MainActor in
+            if gameSessionViewModel.isGameSessionActive {
+                stopAutorotateTimer()
+            } else {
+                startAutorotateTimer()
+            }
+            gameSessionViewModel.access(keyPath: \.isGameOver)
+            gameSessionViewModel.access(keyPath: \.currentTurn)
+            gameSessionViewModel.access(keyPath: \.xPlayerName)
+            gameSessionViewModel.access(keyPath: \.oPlayerName)
+            gameSessionViewModel.access(keyPath: \.xWinCount)
+            gameSessionViewModel.access(keyPath: \.oWinCount)
+            gameSessionViewModel.access(keyPath: \.gameOverState)
+            gameSessionViewModel.access(keyPath: \.canUndo)
+            gameSessionViewModel.access(keyPath: \.canReplay)
+        } onChange: {
+            Task { @MainActor [weak self] in
+                self?.onRealityViewUpdate()
+            }
+        }
     }
 
     private func observeSharePlayEvents() {
@@ -155,34 +176,35 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
         }
     }
 
-    public func updateSceneRotation() {
-        switch gameboardDimensions {
-        case .grid3:
-            grid3Controller.scene.transform.rotation = grid3Controller.rotation
-        case .cube4:
-            cube4Controller.scene.transform.rotation = cube4Controller.rotation
-        }
-    }
-
-    public var rotation: simd_quatf {
-        get {
-            switch gameboardDimensions {
-            case .grid3:
-                grid3Controller.rotation
-            case .cube4:
-                cube4Controller.rotation
-            }
-        }
-        set {
-            switch gameboardDimensions {
-            case .grid3:
-                grid3Controller.rotation = newValue
-            case .cube4:
-                cube4Controller.rotation = newValue
-            }
-            objectWillChange.send()
-        }
-    }
+//    public func updateSceneRotation() {
+//        switch gameboardDimensions {
+//        case .grid3:
+//            rotation = grid3Rotation
+//        case .cube4:
+//            rotation = cube4Rotation
+//        }
+//    }
+    public var rotation: simd_quatf = .init()
+    private var grid3Rotation: simd_quatf = .init()
+    private var cube4Rotation: simd_quatf = .init()
+//    public var rotation: simd_quatf {
+//        get {
+//            switch gameboardDimensions {
+//            case .grid3:
+//                grid3Controller.rotation
+//            case .cube4:
+//                cube4Controller.rotation
+//            }
+//        }
+//        set {
+//            switch gameboardDimensions {
+//            case .grid3:
+//                grid3Controller.rotation = newValue
+//            case .cube4:
+//                cube4Controller.rotation = newValue
+//            }
+//        }
+//    }
 
     public func playGame() {
 #if DEBUG
@@ -233,16 +255,15 @@ public final class HomeMenuViewModel: ObservableObject, @unchecked Sendable {
     }
 
     public func resetGameboard() {
-        Task {
+        Task { @MainActor in
             switch gameboardDimensions {
             case .grid3:
-                grid3Controller.rotation = .init()
+                grid3Rotation = .init()
                 try await grid3Controller.onReset()
             case .cube4:
-                cube4Controller.rotation = .init()
+                cube4Rotation = .init()
                 try await cube4Controller.onReset()
             }
-            objectWillChange.send()
         }
     }
 
@@ -292,15 +313,13 @@ public extension HomeMenuViewModel {
             grid3Controller.setup(scene: scene)
         }
         content.add(root)
-        objectWillChange.send()
         onRealityViewUpdate()
         return root
     }
 
-    private func onRealityViewUpdate(gameboardDimensions: GameboardDimensions? = nil) {
+    private func onRealityViewUpdate() {
         Task {
-            let selectedGameboardDimensions = gameboardDimensions ?? self.gameboardDimensions
-            let (hiddenScene, visibleScene) = switch selectedGameboardDimensions {
+            let (hiddenScene, visibleScene) = switch gameboardDimensions {
             case .grid3:
                 (cube4Controller.scene, grid3Controller.scene)
             case .cube4:

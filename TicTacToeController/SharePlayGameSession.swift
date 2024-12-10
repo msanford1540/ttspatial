@@ -29,22 +29,22 @@ public enum PlayGameEvent {
     case rotationUpdate(simd_quatf)
 }
 
-@MainActor
-public final class SharePlayGameSession: ObservableObject {
-    @Published public private(set) var playAgainState: PlayAgainState?
-    @Published public private(set) var opponentLeft: Bool = false
-    @Published var groupSession: GroupSession<TicTacSpatialActivity>?
-    public private(set) var meMarker: PlayerMarker?
+@MainActor @Observable
+public final class SharePlayGameSession {
+    public private(set) var playAgainState: PlayAgainState?
+    public private(set) var opponentLeft: Bool = false
+    var groupSession: GroupSession<TicTacSpatialActivity>?
+    @ObservationIgnored public private(set) var meMarker: PlayerMarker?
     public let eventStream: AsyncStream<PlayGameEvent>
     private let eventContinuation: AsyncStream<PlayGameEvent>.Continuation?
     private let gameSessionViewModel: GameSessionViewModel
-    private var messenger: GroupSessionMessenger?
-    private var realTimeMessenger: GroupSessionMessenger?
-    private var subscribers: Set<AnyCancellable> = .empty
-    private var tasks = Set<Task<Void, Never>>()
-    private var sender: RotationSender?
+    @ObservationIgnored private var messenger: GroupSessionMessenger?
+    @ObservationIgnored private var realTimeMessenger: GroupSessionMessenger?
+    @ObservationIgnored private var subscribers: Set<AnyCancellable> = .empty
+    @ObservationIgnored private var tasks = Set<Task<Void, Never>>()
+    @ObservationIgnored private var sender: RotationSender?
     private let logger = Logger(category: "sharePlayGameSession")
-    private var groupActivity: GroupActivity?
+    @ObservationIgnored private var groupActivity: GroupActivity?
 
     public init(gameSessionViewModel: GameSessionViewModel) {
         self.gameSessionViewModel = gameSessionViewModel
@@ -373,12 +373,17 @@ private extension SharePlayGameSession {
                 }
             }
             .store(in: &subscribers)
+        setupPlayAgainState(gameSession: gameSession)
+    }
 
-        gameSession.isGameOverPublisher
-            .removeDuplicates()
-            .sink { [unowned self] isGameOver in
-                playAgainState = isGameOver ? .waitingForResponses : nil
+    private func setupPlayAgainState(gameSession: GameSessionValue) {
+        withObservationTracking {
+            _ = gameSession.gameSession.isGameOver
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                playAgainState = gameSession.gameSession.isGameOver ? .waitingForResponses : nil
             }
-            .store(in: &subscribers)
+        }
     }
 }

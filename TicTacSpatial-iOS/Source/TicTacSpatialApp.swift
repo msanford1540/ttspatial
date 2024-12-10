@@ -13,12 +13,12 @@ import TicTacToeEngine
 @main @MainActor
 struct TicTacSpatialApp: App {
     @Environment(\.colorScheme) private var colorScheme
-    @StateObject private var viewModel: HomeMenuViewModel
-    @ObservedObject private var gameSessionViewModel: GameSessionViewModel
+    @State private var viewModel: HomeMenuViewModel
+    @State private var gameSessionViewModel: GameSessionViewModel
 
     init() {
         let homeViewModel = HomeMenuViewModel()
-        _viewModel = StateObject(wrappedValue: homeViewModel)
+        _viewModel = State(wrappedValue: homeViewModel)
         gameSessionViewModel = homeViewModel.gameSessionViewModel
     }
 
@@ -32,9 +32,9 @@ struct TicTacSpatialApp: App {
                 }
                 ControlView()
             }
-            .environmentObject(viewModel)
-            .environmentObject(viewModel.gameSessionViewModel)
-            .environmentObject(viewModel.sharePlaySession)
+            .environment(viewModel)
+            .environment(viewModel.gameSessionViewModel)
+            .environment(viewModel.sharePlaySession)
         }
 #if os(macOS)
         .defaultSize(.init(width: 520, height: 600))
@@ -44,8 +44,8 @@ struct TicTacSpatialApp: App {
 
 private struct ControlView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: HomeMenuViewModel
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @Environment(HomeMenuViewModel.self) private var viewModel
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
 
     var body: some View {
         ZStack {

@@ -21,7 +21,7 @@ import TicTacToeEngine
     private var mostRecentMove: GameMove<Gameboard.Location>?
     private var isHintInProgress = false
 
-    var rotation: simd_quatf = .init()
+//    var rotation: simd_quatf = .init()
     var xEntities: [Gameboard.Location: Entity] = .empty
     var oEntities: [Gameboard.Location: Entity] = .empty
     var lineEntities: [Gameboard.WinningLine: Entity] = .empty

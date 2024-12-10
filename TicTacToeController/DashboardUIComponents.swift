@@ -20,7 +20,7 @@ public func modelName(for marker: PlayerMarker) -> String {
 
 public struct CurrentTurnSection: View {
     @StateObject private var viewModel = CurrentTurnSectionViewModel()
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
     private let turnMarkerSize: CGFloat
     private let margin: CGFloat
 
@@ -118,9 +118,9 @@ public struct DashboardButton<Content: View>: View {
 }
 
 public struct EndGameButton: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
+    @Environment(HomeMenuViewModel.self) private var homeMenuViewModel
+    @Environment(SharePlayGameSession.self) private var sharePlaySession
 
     public init() {}
 
@@ -136,8 +136,8 @@ public struct EndGameButton: View {
 }
 
 public struct SharePlayButton: View {
-    @EnvironmentObject private var sharePlaySession: SharePlayGameSession
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @Environment(SharePlayGameSession.self) private var sharePlaySession
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
     @ObservedObject private var sharePlayObserver = GroupStateObserver()
 
     public init() {}
@@ -154,7 +154,7 @@ public struct SharePlayButton: View {
 }
 
 public struct ResetRotationButton: View {
-    @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @Environment(HomeMenuViewModel.self) private var viewModel
 
     public init() {}
 
@@ -187,7 +187,7 @@ public struct WinCountView: View {
 
 public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameContent: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: GameSessionViewModel
+    @Environment(GameSessionViewModel.self) private var viewModel
     private let margin: CGFloat
     private let turnMarkerSize: CGFloat
     private let innerPlayerView: (PlayerMarker) -> PlayerContent
@@ -234,7 +234,7 @@ public struct PlayersDashboard<PlayerContent: View, WinContent: View, NameConten
 
 private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: View>: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var viewModel: GameSessionViewModel
+    @Environment(GameSessionViewModel.self) private var viewModel
     let marker: PlayerMarker
     let innerPlayerView: (PlayerMarker) -> PlayerContent
     let winCountView: (Int) -> WinContent
@@ -276,7 +276,7 @@ private struct PlayerView<PlayerContent: View, WinContent: View, NameContent: Vi
 }
 
 public struct DashboardMainContent: View {
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
 
     public init() {}
 

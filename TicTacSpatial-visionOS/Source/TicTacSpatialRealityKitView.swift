@@ -7,12 +7,11 @@
 
 import SwiftUI
 import RealityKit
-import Combine
 import TicTacToeController
 import TicTacToeEngine
 
 struct TicTacSpatialRealityView: View {
-    @EnvironmentObject private var viewModel: HomeMenuViewModel
+    @Environment(HomeMenuViewModel.self) private var viewModel: HomeMenuViewModel
 
     var body: some View {
         RealityView { content, attachments in
@@ -38,7 +37,7 @@ struct TicTacSpatialRealityView: View {
             }
             Attachment(id: AttachmentID.home) {
                 HomeMenu()
-                    .environmentObject(viewModel)
+                    .environment(viewModel)
                     .environmentObject(viewModel.sharePlaySession)
             }
         }

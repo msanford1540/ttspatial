@@ -15,9 +15,9 @@ import TicTacToeEngine
 
 struct Dashboard: View {
     @Environment(\.colorScheme) private var colorScheme
-    @EnvironmentObject private var gameSessionViewModel: GameSessionViewModel
-    @EnvironmentObject private var homeMenuViewModel: HomeMenuViewModel
-    @EnvironmentObject private var sharePlayGameSession: SharePlayGameSession
+    @Environment(GameSessionViewModel.self) private var gameSessionViewModel
+    @Environment(HomeMenuViewModel.self) private var homeMenuViewModel
+    @Environment(SharePlayGameSession.self) private var sharePlayGameSession
 
     var body: some View {
         ZStack(alignment: .bottom) {
