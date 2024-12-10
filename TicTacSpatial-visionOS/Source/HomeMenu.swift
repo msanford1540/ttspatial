@@ -9,24 +9,30 @@ import SwiftUI
 import TicTacToeEngine
 import TicTacToeController
 
-public struct HomeMenu: View {
-    @EnvironmentObject private var viewModel: HomeMenuViewModel
+struct HomeMenu: View {
+    @Environment(HomeMenuViewModel.self) private var viewModel
+    @State private var gameboardDimensions: GameboardDimensions = .cube4
+    @State private var selectedBotLevel: BotLevel = .easy
 
-    public init() {}
-
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 24) {
             HStack(spacing: 48) {
                 DashboardPicker(
-                    Localized.HomeMenu.gameboard, items: [GameboardDimensions.grid3, .cube4], selection: $viewModel.gameboardDimensions
+                    Localized.HomeMenu.gameboard, items: [GameboardDimensions.grid3, .cube4], selection: $gameboardDimensions
                 )
 
                 DashboardPicker(
-                    Localized.HomeMenu.botLevel, items: [BotLevel.easy, .medium, .hard], selection: $viewModel.selectedBotLevel
+                    Localized.HomeMenu.botLevel, items: [BotLevel.easy, .medium, .hard], selection: $selectedBotLevel
                 )
             }
             .font(.largeTitle)
             .padding(.horizontal)
+            .onChange(of: gameboardDimensions) { _, newValue in
+                viewModel.gameboardDimensions = newValue
+            }
+            .onChange(of: selectedBotLevel) { _, newValue in
+                viewModel.selectedBotLevel = newValue
+            }
 
             HStack {
                 DashboardButton(Localized.HomeMenu.playGame, action: viewModel.playGame)

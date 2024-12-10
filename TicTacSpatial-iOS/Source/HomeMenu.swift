@@ -9,15 +9,13 @@ import SwiftUI
 import TicTacToeEngine
 import TicTacToeController
 
-public struct HomeMenu: View {
+struct HomeMenu: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(HomeMenuViewModel.self) private var viewModel
     @State private var gameboardDimensions: GameboardDimensions = .cube4
     @State private var selectedBotLevel: BotLevel = .easy
 
-    public init() {}
-
-    public var body: some View {
+    var body: some View {
         VStack {
             HStack {
                 Spacer()

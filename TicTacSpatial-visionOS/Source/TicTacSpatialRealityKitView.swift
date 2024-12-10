@@ -32,13 +32,13 @@ struct TicTacSpatialRealityView: View {
         } attachments: {
             Attachment(id: AttachmentID.dashboard) {
                 Dashboard()
-                    .environmentObject(viewModel.gameSessionViewModel)
-                    .environmentObject(viewModel.sharePlaySession)
+                    .environment(viewModel.gameSessionViewModel)
+                    .environment(viewModel.sharePlaySession)
             }
             Attachment(id: AttachmentID.home) {
                 HomeMenu()
                     .environment(viewModel)
-                    .environmentObject(viewModel.sharePlaySession)
+                    .environment(viewModel.sharePlaySession)
             }
         }
         .gesture(
