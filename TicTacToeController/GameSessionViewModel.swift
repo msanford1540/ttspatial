@@ -205,6 +205,7 @@ public final class GameSessionViewModel {
         } onChange: {
             Task { @MainActor [weak self] in
                 guard let self else { return }
+                setupPipelines(gameSession)
                 currentTurn = gameSession.currentTurn
                 xPlayerName = gameSession.xPlayerName
                 oPlayerName = gameSession.oPlayerName

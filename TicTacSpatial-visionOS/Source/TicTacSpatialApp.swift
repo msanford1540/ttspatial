@@ -12,14 +12,14 @@ import RealityKit
 
 @main @MainActor
 struct TicTacSpatialApp: App {
-    @StateObject private var viewModel = HomeMenuViewModel()
+    @State private var viewModel = HomeMenuViewModel()
 
     var body: some SwiftUI.Scene {
         WindowGroup {
             TicTacSpatialRealityView()
-                .environmentObject(viewModel)
-                .environmentObject(viewModel.gameSessionViewModel)
-                .environmentObject(viewModel.sharePlaySession)
+                .environment(viewModel)
+                .environment(viewModel.gameSessionViewModel)
+                .environment(viewModel.sharePlaySession)
                 .frame(depth: 1800)
         }
         .windowStyle(.volumetric)

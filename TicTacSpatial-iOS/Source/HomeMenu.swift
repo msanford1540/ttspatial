@@ -29,11 +29,11 @@ public struct HomeMenu: View {
                 )
                 Spacer()
             }
-            .onChange(of: viewModel.gameboardDimensions) { _, newValue in
-                gameboardDimensions = newValue
+            .onChange(of: gameboardDimensions) { _, newValue in
+                viewModel.gameboardDimensions = newValue
             }
-            .onChange(of: viewModel.selectedBotLevel) { _, newValue in
-                selectedBotLevel = newValue
+            .onChange(of: selectedBotLevel) { _, newValue in
+                viewModel.selectedBotLevel = newValue
             }
 
             DashboardButton(Localized.HomeMenu.playGame, action: viewModel.playGame)

@@ -157,6 +157,7 @@ public final class GameSession<Gameboard: GameboardProtocol>: GameSessionProtoco
         } onChange: {
             Task { @MainActor [weak self] in
                 guard let self else { return }
+                setupPipelines()
                 xPlayerName = xPlayer.playerName
                 oPlayerName = oPlayer.playerName
                 isGameOver = currentTurn == nil

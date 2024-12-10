@@ -41,15 +41,19 @@ public final class HomeMenuViewModel {
         observeSharePlayEvents()
     }
 
-    private func setupPipelines() {
+    private func setupGameboardDimensionsPipeline() {
         withObservationTracking { @MainActor [weak self] in
             self?.access(keyPath: \.gameboardDimensions)
         } onChange: {
-            Task { [weak self] in
-                await self?.onRealityViewUpdate()
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                setupGameboardDimensionsPipeline()
+                onRealityViewUpdate()
             }
         }
+    }
 
+    private func setupGameSessionPipeline() {
         withObservationTracking { @MainActor in
             if gameSessionViewModel.isGameSessionActive {
                 stopAutorotateTimer()
@@ -67,9 +71,16 @@ public final class HomeMenuViewModel {
             gameSessionViewModel.access(keyPath: \.canReplay)
         } onChange: {
             Task { @MainActor [weak self] in
-                self?.onRealityViewUpdate()
+                guard let self else { return }
+                setupGameSessionPipeline()
+                onRealityViewUpdate()
             }
         }
+    }
+
+    private func setupPipelines() {
+        setupGameboardDimensionsPipeline()
+        setupGameSessionPipeline()
     }
 
     private func observeSharePlayEvents() {

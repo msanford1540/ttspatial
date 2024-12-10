@@ -18,7 +18,7 @@ public func modelName(for marker: PlayerMarker) -> String {
 }
 
 public struct CurrentTurnSection: View {
-    @StateObject private var viewModel = CurrentTurnSectionViewModel()
+    @State private var viewModel = CurrentTurnSectionViewModel()
     @Environment(GameSessionViewModel.self) private var gameSessionViewModel
     private let turnMarkerSize: CGFloat
     private let margin: CGFloat

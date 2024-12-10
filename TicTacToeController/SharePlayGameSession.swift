@@ -384,6 +384,7 @@ private extension SharePlayGameSession {
         } onChange: {
             Task { @MainActor [weak self] in
                 guard let self else { return }
+                setupPlayAgainState(gameSession: gameSession)
                 playAgainState = gameSession.gameSession.isGameOver ? .waitingForResponses : nil
             }
         }
