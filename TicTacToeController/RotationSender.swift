@@ -7,26 +7,37 @@
 
 import GroupActivities
 import simd
-import Combine
 import OSLog
 
-final class RotationSender: @unchecked Sendable {
-    @Published var rotation: simd_quatf?
+actor RotationSender {
     private let messenger: GroupSessionMessenger
-    private var subscriber: AnyCancellable?
     private let logger = Logger(category: "rotationSender")
+    private var isThrottling: Bool = false
+    private var mostRecentRotation: simd_quatf?
 
     init(messenger: GroupSessionMessenger) {
         self.messenger = messenger
-        self.subscriber = $rotation
-            .throttle(for: .milliseconds(33), scheduler: ImmediateScheduler.shared, latest: true)
-            .sink { [unowned self] rotation in
-                guard let rotation else { return }
-                send(rotation: rotation)
-            }
     }
 
-    private func send(rotation: simd_quatf) {
+    func send(rotation: simd_quatf) {
+        sendRotationThrottled(rotation)
+    }
+
+    private func sendRotationThrottled(_ rotation: simd_quatf) {
+        mostRecentRotation = rotation
+        guard !isThrottling else { return }
+        isThrottling = true
+        Task {
+            try await Task.sleep(for: .milliseconds(33), tolerance: .milliseconds(3))
+            if let mostRecentRotation {
+                sendRotationNow(mostRecentRotation)
+            }
+            mostRecentRotation = nil
+            isThrottling = false
+        }
+    }
+
+    private func sendRotationNow(_ rotation: simd_quatf) {
         Task {
             let quanterion = Quanterion(rotation: rotation)
             do {

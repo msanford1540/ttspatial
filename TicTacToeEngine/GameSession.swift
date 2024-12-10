@@ -5,8 +5,7 @@
 //  Created by Mike Sanford (1540) on 4/8/24.
 //
 
-import Foundation
-import Combine
+import Observation
 
 @frozen
 public enum PlayerType {

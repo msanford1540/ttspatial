@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 import Observation
 import TicTacToeEngine
 import simd
@@ -20,6 +19,7 @@ public final class HomeMenuViewModel {
     public var sharePlaySession: SharePlayGameSession
     public var gameSessionViewModel: GameSessionViewModel
     public var botLevelName: String = .empty
+    public var rotation: simd_quatf = .init()
 #if DEBUG
     @ObservationIgnored private var screenshot: Screenshot?
 #endif
@@ -47,21 +47,6 @@ public final class HomeMenuViewModel {
         } onChange: {
             Task { [weak self] in
                 await self?.onRealityViewUpdate()
-            }
-        }
-
-        withObservationTracking { @MainActor [weak self] in
-            self?.access(keyPath: \.grid3Rotation)
-            self?.access(keyPath: \.cube4Rotation)
-        } onChange: {
-            Task { @MainActor [weak self] in
-                guard let self else { return }
-                switch gameboardDimensions {
-                case .grid3:
-                    rotation = grid3Rotation
-                case .cube4:
-                    rotation = cube4Rotation
-                }
             }
         }
 
@@ -176,36 +161,6 @@ public final class HomeMenuViewModel {
         }
     }
 
-//    public func updateSceneRotation() {
-//        switch gameboardDimensions {
-//        case .grid3:
-//            rotation = grid3Rotation
-//        case .cube4:
-//            rotation = cube4Rotation
-//        }
-//    }
-    public var rotation: simd_quatf = .init()
-    private var grid3Rotation: simd_quatf = .init()
-    private var cube4Rotation: simd_quatf = .init()
-//    public var rotation: simd_quatf {
-//        get {
-//            switch gameboardDimensions {
-//            case .grid3:
-//                grid3Controller.rotation
-//            case .cube4:
-//                cube4Controller.rotation
-//            }
-//        }
-//        set {
-//            switch gameboardDimensions {
-//            case .grid3:
-//                grid3Controller.rotation = newValue
-//            case .cube4:
-//                cube4Controller.rotation = newValue
-//            }
-//        }
-//    }
-
     public func playGame() {
 #if DEBUG
         switch screenshot {
@@ -258,12 +213,11 @@ public final class HomeMenuViewModel {
         Task { @MainActor in
             switch gameboardDimensions {
             case .grid3:
-                grid3Rotation = .init()
                 try await grid3Controller.onReset()
             case .cube4:
-                cube4Rotation = .init()
                 try await cube4Controller.onReset()
             }
+            rotation = .init()
         }
     }
 

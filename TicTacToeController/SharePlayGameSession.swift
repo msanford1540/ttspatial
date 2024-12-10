@@ -121,7 +121,9 @@ public final class SharePlayGameSession {
     public func sendRotationIfNeeded(_ rotation: simd_quatf) {
         // only send rotation if the user is the player that has the current turn
         guard isActive, let sender, gameSession?.isHumanTurn == true else { return }
-        sender.rotation = rotation
+        Task {
+            await sender.send(rotation: rotation)
+        }
     }
 
     public var isActive: Bool {

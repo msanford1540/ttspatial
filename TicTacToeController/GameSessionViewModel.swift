@@ -5,7 +5,6 @@
 //  Created by Mike Sanford (1540) on 7/26/24.
 //
 
-import Combine
 import TicTacToeEngine
 
 @frozen
@@ -34,7 +33,6 @@ public final class GameSessionViewModel {
     public private(set) var gameOverState: GameOverState?
     public private(set) var canUndo: Bool = false
     public private(set) var canReplay: Bool = false
-    @ObservationIgnored private var gameSubscribers: Set<AnyCancellable> = .empty
 
     private func startGameSession<Gameboard: GameboardProtocol>(_ gameSession: GameSession<Gameboard>) {
         switch gameSession {
@@ -195,7 +193,6 @@ public final class GameSessionViewModel {
     }
 
     private func setupPipelines<Gameboard: GameboardProtocol>(_ gameSession: GameSession<Gameboard>) {
-        gameSubscribers = .empty
         withObservationTracking {
             _ = gameSession.currentTurn
             _ = gameSession.xPlayerName
@@ -232,7 +229,6 @@ public final class GameSessionViewModel {
 
     public func endGameSession() {
         gameSession = nil
-        gameSubscribers = .empty
         currentTurn = nil
         xPlayerName = .empty
         oPlayerName = .empty
